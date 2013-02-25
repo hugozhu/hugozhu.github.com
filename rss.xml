@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
-<rss version="2.0">
-  <channel>
+<rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://hugozhu.myalert.info</link>
-    <pubDate>2013-02-25 09:41:30 +0800</pubDate>
+    <pubDate>2013-02-25 11:07:10 +0800</pubDate>
     <item>
-      <title>hello_world</title>
-      <link>http://hugozhu.myalert.info/default/hello_world/</link>
-      <pubDate>2013-02-24 12:00:00 +0800</pubDate>
-      <description></description>
+      <title>Java properties to enviorment variables</title>
+      <link>http://hugozhu.myalert.info/Java/Java properties to enviorment variables/</link>
+      <pubDate>2013-02-25 12:00:00 +0800</pubDate>
+      <description>&lt;pre&gt;&lt;code&gt;#!/bin/bash&#xA;&#xA;property_file=env.properties&#xA;&#xA;get_prop(){&#xA;   propfile=$1&#xA;   key=$2&#xA;   grep  &amp;quot;^${2}=&amp;quot; ${1}| sed &amp;quot;s%${2}=\(.*\)%\1%&amp;quot;&#xA;}&#xA;&#xA;for line in `grep -v &amp;quot;^#&amp;quot; $property_file | sed -e &#39;/^$/d&#39;`&#xA;do&#xA;   key=$(echo $line | awk -F &amp;quot;=&amp;quot; &#39;{print $1}&#39;)&#xA;   export $key=$(get_prop $property_file $key)&#xA;done&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
     </item>
     <item>
       <title>你的第一篇博客</title>
