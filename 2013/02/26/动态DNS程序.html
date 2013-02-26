@@ -98,11 +98,15 @@
 
 <p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
 
-<p>获得domain_id可以用：
-    curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo;</p>
+<p>获得domain_id可以用：</p>
 
-<p>获得record_id：
-    curl -k <a href="https://dnsapi.cn/Record.List">https://dnsapi.cn/Record.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&rdquo;</p>
+<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
+</code></pre>
+
+<p>获得record_id：</p>
+
+<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
+</code></pre>
 
 <hr />
 
@@ -235,14 +239,14 @@ func main() {
       <ul>
         <ul>
           
+            <li class="prev"><a href="/2013/02/26/系统调试和分析工具.html" title="系统调试和分析工具">&larr; Previous</a></li>
           
-            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/26/系统调试和分析工具.html" title="系统调试和分析工具">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/25/Java properties to enviorment variables.html" title="Java properties to enviorment variables">Next &rarr;</a></li>
           
           
         </ul>

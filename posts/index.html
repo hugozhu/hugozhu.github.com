@@ -94,6 +94,21 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h3 class="title"><a href="/2013/02/26/系统调试和分析工具.html">系统调试和分析工具</a> <span class="date">2013-02-26</span></h3>
+
+  <p>Linux下的调试和分析工具集</p>
+
+<hr />
+
+<p><img src="/assets/media/tools.jpg" width="600"/></p>
+
+
+  <div class="more">
+    <a href="/2013/02/26/系统调试和分析工具.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/2013/02/26/动态DNS程序.html">动态DNS程序</a> <span class="date">2013-02-26</span></h3>
 
   <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
@@ -102,11 +117,15 @@
 
 <p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
 
-<p>获得domain_id可以用：
-    curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo;</p>
+<p>获得domain_id可以用：</p>
 
-<p>获得record_id：
-    curl -k <a href="https://dnsapi.cn/Record.List">https://dnsapi.cn/Record.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&rdquo;</p>
+<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
+</code></pre>
+
+<p>获得record_id：</p>
+
+<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
+</code></pre>
 
 <hr />
 
@@ -126,21 +145,6 @@ import (
 
   <div class="more">
     <a href="/2013/02/26/动态DNS程序.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/2013/02/26/系统调试和分析工具.html">系统调试和分析工具</a> <span class="date">2013-02-26</span></h3>
-
-  <p>Linux下的调试和分析工具集</p>
-
-<hr />
-
-<p><img src="/assets/media/tools.jpg" width="600"/></p>
-
-
-  <div class="more">
-    <a href="/2013/02/26/系统调试和分析工具.html" class="btn">read more..</a>
   </div>
 </div>
 
