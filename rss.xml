@@ -2,12 +2,12 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://hugozhu.myalert.info</link>
-    <pubDate>2013-02-26 03:29:44 +0800</pubDate>
+    <pubDate>2013-02-26 08:12:11 +0800</pubDate>
     <item>
       <title>系统调试和分析工具</title>
       <link>http://hugozhu.myalert.info/2012/linux-perf-tools.html</link>
       <pubDate>2013-02-26 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;Linux下的调试和分析工具集&lt;/p&gt;&#xA;&#xA;&lt;hr /&gt;&#xA;&#xA;&lt;p&gt;&lt;img src=&#34;/assets/media/tools.jpg&#34; alt=&#34;tools.jpg&#34; /&gt;&#xA;&lt;/p&gt;&#xA;</description>
+      <description>&lt;p&gt;Linux下的调试和分析工具集&lt;/p&gt;&#xA;&#xA;&lt;hr /&gt;&#xA;&#xA;&lt;p&gt;&lt;img src=&#34;/assets/media/tools.jpg&#34; width=&#34;600&#34;/&gt;&lt;/p&gt;&#xA;</description>
     </item>
     <item>
       <title>Java properties to enviorment variables</title>
