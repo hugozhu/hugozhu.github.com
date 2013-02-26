@@ -92,7 +92,15 @@
 
 <div class="row">
   <div class="span8">
-    <p>动态根据宽带public ip更新dnspod登记的域名，按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑 替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。 获得domain_id可以用curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo; 获得record_id类似 curl -k <a href="https://dnsapi.cn/Record.List">https://dnsapi.cn/Record.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&rdquo;</p>
+    <h1>动态根据宽带public ip更新dnspod登记的域名</h1>
+
+<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。
+替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
+
+<p>获得domain_id可以用：
+    curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo;
+获得record_id：
+    curl -k <a href="https://dnsapi.cn/Record.List">https://dnsapi.cn/Record.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&rdquo;</p>
 
 <hr />
 
@@ -122,62 +130,100 @@ var (
     check_interval = 30 * time.Second
 )
 
-func get_public_ip() (string, error) {
-        conn, err := net.DialTimeout(&quot;tcp&quot;, &quot;ns1.dnspod.net:6666&quot;, timeout*time.Second)
-        defer func() {
-                if x := recover(); x != nil {
-                        log.Println(&quot;Can't get public ip&quot;, x)
-                }
-            if conn!=nil {
-                    conn.Close()
-            }
-        }()
+var current_ip = &quot;&quot;
 
-        if err == nil {
-            deadline := time.Now().Add(timeout*time.Second)
-            err = conn.SetDeadline(deadline)
-            if err!=nil {
-                    return &quot;&quot;, err
-            }
-                var bytes []byte
-                bytes, err = ioutil.ReadAll(conn)
-                if err == nil {
-                        return string(bytes), nil
-                }
+func get_public_ip() (string, error) {
+    conn, err := net.DialTimeout(&quot;tcp&quot;, &quot;ns1.dnspod.net:6666&quot;, timeout*time.Second)
+    defer func() {
+        if x := recover(); x != nil {
+            log.Println(&quot;Can't get public ip&quot;, x)
         }
-        return &quot;&quot;, err
+        if conn!=nil {
+            conn.Close()
+        }
+    }()
+
+    if err == nil {
+        var bytes []byte
+        deadline := time.Now().Add(timeout*time.Second)
+        err = conn.SetDeadline(deadline)
+        if err!=nil {
+            return &quot;&quot;, err
+        }
+        bytes, err = ioutil.ReadAll(conn)
+        if err == nil {
+            return string(bytes), nil
+        }
+    }
+    return &quot;&quot;, err
+}
+
+func timeoutDialler(timeout time.Duration) func(net, addr string) (c net.Conn, err error) {
+    return func(netw, addr string) (net.Conn, error) {
+        c, err := net.DialTimeout(netw, addr, timeout)
+        if err != nil {
+            return nil, err
+        }
+        deadline := time.Now().Add(timeout)
+        err = c.SetDeadline(deadline)
+        if err != nil {
+            return nil, err
+        }
+        return c, nil
+    }
 }
 
 func update_dnspod(ip string) bool {
-    client := new(http.Client)
-    body.Set(&quot;value&quot;, ip)
+    client := &amp;http.Client{
+        Transport: &amp;http.Transport{
+            Dial: timeoutDialler(timeout * time.Second),
+        },
+    }
+    body := url.Values{
+        &quot;login_email&quot;:    {login_email},
+        &quot;login_password&quot;: {login_password},
+        &quot;format&quot;:         {format},
+        &quot;domain_id&quot;:      {domain_id},
+        &quot;record_id&quot;:      {record_id},
+        &quot;sub_domain&quot;:     {sub_domain},
+        &quot;record_line&quot;:    {record_line},
+        &quot;value&quot;:          {ip},
+    }
 
     req, err := http.NewRequest(&quot;POST&quot;, &quot;https://dnsapi.cn/Record.Ddns&quot;, strings.NewReader(body.Encode()))
     req.Header.Set(&quot;Accept&quot;, &quot;text/json&quot;)
     req.Header.Set(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;)
 
     resp, err := client.Do(req)
+
     defer resp.Body.Close()
+
     if err != nil {
         return false
     }
-
     bytes, _ := ioutil.ReadAll(resp.Body)
     log.Println(string(bytes))
     return resp.StatusCode == 200
 }
 
+func init() {
+}
+
 func main() {
     for {
         ip, err := get_public_ip()
-        if err == nil {
+        if ip != &quot;&quot; &amp;&amp; err == nil {
+            log.Println(&quot;got ip:&quot; + ip)
             if ip != current_ip {
+                log.Println(&quot;update dnspod with new ip:&quot; + ip)
                 if update_dnspod(ip) {
                     current_ip = ip
                 }
             }
+        } else {
+            log.Println(&quot;error:&quot;, err)
         }
-        time.Sleep(check_interval)
+        time.Sleep(interval * time.Second)
     }
 }
 </code></pre>
@@ -187,14 +233,14 @@ func main() {
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/26/系统调试和分析工具.html" title="系统调试和分析工具">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/25/Java properties to enviorment variables.html" title="Java properties to enviorment variables">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/26/系统调试和分析工具.html" title="系统调试和分析工具">Next &rarr;</a></li>
           
           
         </ul>
