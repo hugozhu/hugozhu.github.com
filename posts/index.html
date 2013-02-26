@@ -96,14 +96,16 @@
     <div class="post">
   <h3 class="title"><a href="/2013/02/26/动态DNS程序.html">动态DNS程序</a> <span class="date">2013-02-26</span></h3>
 
-  <h1>动态根据宽带public ip更新dnspod登记的域名</h1>
+  <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
 
-<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。
-替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
+<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
+
+<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
 
 <p>获得domain_id可以用：
-    curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo;
-获得record_id：
+    curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo;</p>
+
+<p>获得record_id：
     curl -k <a href="https://dnsapi.cn/Record.List">https://dnsapi.cn/Record.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&rdquo;</p>
 
 <hr />
