@@ -94,7 +94,7 @@
 <div class="row">
   <div class="span12">
     <div class="post">
-  <h3 class="title"><a href="/2012/linux-perf-tools.html">系统调试和分析工具</a> <span class="date">2013-02-26</span></h3>
+  <h3 class="title"><a href="/2013/02/26/系统调试和分析工具.html">系统调试和分析工具</a> <span class="date">2013-02-26</span></h3>
 
   <p>Linux下的调试和分析工具集</p>
 
@@ -104,12 +104,52 @@
 
 
   <div class="more">
-    <a href="/2012/linux-perf-tools.html" class="btn">read more..</a>
+    <a href="/2013/02/26/系统调试和分析工具.html" class="btn">read more..</a>
   </div>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/Blog/Java properties to enviorment variables/">Java properties to enviorment variables</a> <span class="date">2013-02-25</span></h3>
+  <h3 class="title"><a href="/2013/02/26/动态DNS程序.html">动态DNS程序</a> <span class="date">2013-02-26</span></h3>
+
+  <p>动态根据宽带public ip更新dnspod登记的域名，按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑 替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。 获得domain_id可以用curl curl -k <a href="https://dnsapi.cn/Domain.List">https://dnsapi.cn/Domain.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&rdquo; 获得record_id类似 curl -k <a href="https://dnsapi.cn/Record.List">https://dnsapi.cn/Record.List</a> -d &ldquo;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&rdquo;</p>
+
+<hr />
+
+<pre><code>package main
+
+import (
+  &quot;io/ioutil&quot;
+  &quot;log&quot;
+  &quot;net&quot;
+  &quot;net/http&quot;
+  &quot;net/url&quot;
+  &quot;strings&quot;
+  &quot;time&quot;
+)
+
+var (
+    body = url.Values{
+        &quot;login_email&quot;:    {&quot;email&quot;},
+        &quot;login_password&quot;: {&quot;password&quot;},
+        &quot;format&quot;:         {&quot;json&quot;},
+        &quot;domain_id&quot;:      {&quot;0&quot;},
+        &quot;record_id&quot;:      {&quot;0&quot;},
+        &quot;sub_domain&quot;:     {&quot;www&quot;},
+        &quot;record_line&quot;:    {&quot;默认&quot;},
+    }
+    current_ip     = &quot;&quot;
+    check_interval = 30 * time.Second
+)
+</code></pre>
+
+
+  <div class="more">
+    <a href="/2013/02/26/动态DNS程序.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/2013/02/25/Java properties to enviorment variables.html">Java properties to enviorment variables</a> <span class="date">2013-02-25</span></h3>
 
   <pre><code>#!/bin/bash
 
@@ -130,7 +170,7 @@ done
 
 
   <div class="more">
-    <a href="/Blog/Java properties to enviorment variables/" class="btn">read more..</a>
+    <a href="/2013/02/25/Java properties to enviorment variables.html" class="btn">read more..</a>
   </div>
 </div>
 

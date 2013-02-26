@@ -4,12 +4,17 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2012/linux-perf-tools.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/02/26/系统调试和分析工具.html</loc>
 		<lastmod>2013-02-26</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/Blog/Java properties to enviorment variables/</loc>
+		<loc>http://hugozhu.myalert.info/2013/02/26/动态DNS程序.html</loc>
+		<lastmod>2013-02-26</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://hugozhu.myalert.info/2013/02/25/Java properties to enviorment variables.html</loc>
 		<lastmod>2013-02-25</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
