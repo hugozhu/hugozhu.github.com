@@ -189,15 +189,23 @@ import (
 property_file=env.properties
 
 get_prop(){
-   propfile=$1
-   key=$2
-   grep  &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=\(.*\)%\1%&quot;
+    propfile=$1
+    key=$2
+    grep  &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=\(.*\)%\1%&quot;
+}
+trim() {
+    trimmed=$1
+    trimmed=${trimmed%% }
+    trimmed=${trimmed## }
+    echo &quot;$trimmed&quot;
 }
 
-for line in `grep -v &quot;^#&quot; $property_file | sed -e '/^$/d'`
+grep -v &quot;^#&quot; $property_file | sed -e '/^$/d' | while read line
 do
-   key=$(echo $line | awk -F &quot;=&quot; '{print $1}')
-   export $key=$(get_prop $property_file $key)
+    key=$(echo $line | awk -F &quot;=&quot; '{print $1}')
+    trimmed_key=$(trim $key)
+    export $trimmed_key=$(trim $(get_prop $property_file &quot;$key&quot;))
+    echo $trimmed_key=${!trimmed_key}
 done
 </code></pre>
 
