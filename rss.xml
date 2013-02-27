@@ -2,7 +2,7 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://hugozhu.myalert.info</link>
-    <pubDate>2013-02-27 05:54:18 +0800</pubDate>
+    <pubDate>2013-02-27 06:00:31 +0800</pubDate>
     <item>
       <title>在Pi和Github上搭建自己的个人博客</title>
       <link>http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html</link>
@@ -25,7 +25,7 @@
       <title>Java properties to enviorment variables</title>
       <link>http://hugozhu.myalert.info/2013/02/25/Java properties to enviorment variables.html</link>
       <pubDate>2013-02-25 12:00:00 +0800</pubDate>
-      <description>&lt;pre&gt;&lt;code&gt;#!/bin/bash&#xA;&#xA;property_file=env.properties&#xA;&#xA;get_prop(){&#xA;    propfile=$1&#xA;    key=$2&#xA;    grep  &amp;quot;^${2}=&amp;quot; ${1}| sed &amp;quot;s%${2}=\(.*\)%\1%&amp;quot;&#xA;}&#xA;trim() {&#xA;    trimmed=$1&#xA;    trimmed=${trimmed%% }&#xA;    trimmed=${trimmed## }&#xA;    echo &amp;quot;$trimmed&amp;quot;&#xA;}&#xA;&#xA;grep -v &amp;quot;^#&amp;quot; $property_file | sed -e &#39;/^$/d&#39; | while read line&#xA;do&#xA;    key=$(echo $line | awk -F &amp;quot;=&amp;quot; &#39;{print $1}&#39;)&#xA;    trimmed_key=$(trim $key)&#xA;    export $trimmed_key=$(trim $(get_prop $property_file &amp;quot;$key&amp;quot;))&#xA;    echo $trimmed_key=${!trimmed_key}&#xA;done&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
+      <description>&lt;h1&gt;将Java的Proprties文件导出成环境变量&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;比如env.properties如下&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;MYSQL_URL = //localhost:3306/test?autoReconnect=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=gbk&#xA;MYSQL_USER = root&#xA;MYSQL_PASS = &#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;p&gt;执行下面的脚本后就相当于&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;export MYSQL_URL=&amp;quot;//localhost:3306/test?autoReconnect=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=gbk&amp;quot;&#xA;export MYSQL_USER=&amp;quot;root&amp;quot;&#xA;export MYSQL_PASS=&amp;quot;&amp;quot; &#xA;&#xA;#!/bin/bash&#xA;&#xA;property_file=env.properties&#xA;&#xA;get_prop(){&#xA;    propfile=$1&#xA;    key=$2&#xA;    grep  &amp;quot;^${2}=&amp;quot; ${1}| sed &amp;quot;s%${2}=\(.*\)%\1%&amp;quot;&#xA;}&#xA;trim() {&#xA;    trimmed=$1&#xA;    trimmed=${trimmed%% }&#xA;    trimmed=${trimmed## }&#xA;    echo &amp;quot;$trimmed&amp;quot;&#xA;}&#xA;&#xA;grep -v &amp;quot;^#&amp;quot; $property_file | sed -e &#39;/^$/d&#39; | while read line&#xA;do&#xA;    key=$(echo $line | awk -F &amp;quot;=&amp;quot; &#39;{print $1}&#39;)&#xA;    trimmed_key=$(trim $key)&#xA;    export $trimmed_key=$(trim $(get_prop $property_file &amp;quot;$key&amp;quot;))&#xA;    echo $trimmed_key=${!trimmed_key}&#xA;done&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
     </item>
     <item>
       <title>我的第一篇博客</title>

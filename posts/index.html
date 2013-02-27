@@ -184,29 +184,24 @@ import (
 <div class="post">
   <h3 class="title"><a href="/2013/02/25/Java properties to enviorment variables.html">Java properties to enviorment variables</a> <span class="date">2013-02-25</span></h3>
 
-  <pre><code>#!/bin/bash
+  <h1>将Java的Proprties文件导出成环境变量</h1>
+
+<p>比如env.properties如下</p>
+
+<pre><code>MYSQL_URL = //localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk
+MYSQL_USER = root
+MYSQL_PASS = 
+</code></pre>
+
+<p>执行下面的脚本后就相当于</p>
+
+<pre><code>export MYSQL_URL=&quot;//localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk&quot;
+export MYSQL_USER=&quot;root&quot;
+export MYSQL_PASS=&quot;&quot; 
+
+#!/bin/bash
 
 property_file=env.properties
-
-get_prop(){
-    propfile=$1
-    key=$2
-    grep  &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=\(.*\)%\1%&quot;
-}
-trim() {
-    trimmed=$1
-    trimmed=${trimmed%% }
-    trimmed=${trimmed## }
-    echo &quot;$trimmed&quot;
-}
-
-grep -v &quot;^#&quot; $property_file | sed -e '/^$/d' | while read line
-do
-    key=$(echo $line | awk -F &quot;=&quot; '{print $1}')
-    trimmed_key=$(trim $key)
-    export $trimmed_key=$(trim $(get_prop $property_file &quot;$key&quot;))
-    echo $trimmed_key=${!trimmed_key}
-done
 </code></pre>
 
 
