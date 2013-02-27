@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Java properties to enviorment variables - When Go meets Raspberry Pi</title>
+    <title>动态DNS程序 - When Go meets Raspberry Pi</title>
   
     <meta name="author" content="Hugo Zhu">
 
@@ -87,52 +87,151 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Java properties to enviorment variables </h1>
+  <h1>动态DNS程序 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h1>将Java的Properties文件导出成环境变量</h1>
+    <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
 
-<p>比如env.properties如下（=附近可以有空格，也可以有空行）</p>
+<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
 
-<pre><code>MYSQL_URL = jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk
-MYSQL_USER = root
-MYSQL_PASS = 
+<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
+
+<p>获得domain_id可以用：</p>
+
+<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
 </code></pre>
 
-<p>执行下面的脚本后就相当于</p>
+<p>获得record_id：</p>
 
-<pre><code>export MYSQL_URL=&quot;//localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk&quot;
-export MYSQL_USER=&quot;root&quot;
-export MYSQL_PASS=&quot;&quot; 
+<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
 </code></pre>
 
-<p>env.sh脚本代码</p>
+<hr />
 
-<pre><code>#!/bin/bash
+<pre><code>package main
 
-property_file=env.properties
+import (
+  &quot;io/ioutil&quot;
+  &quot;log&quot;
+  &quot;net&quot;
+  &quot;net/http&quot;
+  &quot;net/url&quot;
+  &quot;strings&quot;
+  &quot;time&quot;
+)
 
-get_prop(){
-    propfile=$1
-    key=$2
-    grep  &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=\(.*\)%\1%&quot;
+var (
+    body = url.Values{
+        &quot;login_email&quot;:    {&quot;email&quot;},
+        &quot;login_password&quot;: {&quot;password&quot;},
+        &quot;format&quot;:         {&quot;json&quot;},
+        &quot;domain_id&quot;:      {&quot;0&quot;},
+        &quot;record_id&quot;:      {&quot;0&quot;},
+        &quot;sub_domain&quot;:     {&quot;www&quot;},
+        &quot;record_line&quot;:    {&quot;默认&quot;},
+    }
+    current_ip     = &quot;&quot;
+    check_interval = 30 * time.Second
+)
+
+var current_ip = &quot;&quot;
+
+func get_public_ip() (string, error) {
+    conn, err := net.DialTimeout(&quot;tcp&quot;, &quot;ns1.dnspod.net:6666&quot;, timeout*time.Second)
+    defer func() {
+        if x := recover(); x != nil {
+            log.Println(&quot;Can't get public ip&quot;, x)
+        }
+        if conn!=nil {
+            conn.Close()
+        }
+    }()
+
+    if err == nil {
+        var bytes []byte
+        deadline := time.Now().Add(timeout*time.Second)
+        err = conn.SetDeadline(deadline)
+        if err!=nil {
+            return &quot;&quot;, err
+        }
+        bytes, err = ioutil.ReadAll(conn)
+        if err == nil {
+            return string(bytes), nil
+        }
+    }
+    return &quot;&quot;, err
 }
-trim() {
-    trimmed=$1
-    trimmed=${trimmed%% }
-    trimmed=${trimmed## }
-    echo &quot;$trimmed&quot;
+
+func timeoutDialler(timeout time.Duration) func(net, addr string) (c net.Conn, err error) {
+    return func(netw, addr string) (net.Conn, error) {
+        c, err := net.DialTimeout(netw, addr, timeout)
+        if err != nil {
+            return nil, err
+        }
+        deadline := time.Now().Add(timeout)
+        err = c.SetDeadline(deadline)
+        if err != nil {
+            return nil, err
+        }
+        return c, nil
+    }
 }
 
-grep -v &quot;^#&quot; $property_file | sed -e '/^$/d' | while read line
-do
-    key=$(echo $line | awk -F &quot;=&quot; '{print $1}')
-    trimmed_key=$(trim $key)
-    export $trimmed_key=$(trim $(get_prop $property_file &quot;$key&quot;))
-    echo $trimmed_key=${!trimmed_key}
-done
+func update_dnspod(ip string) bool {
+    client := &amp;http.Client{
+        Transport: &amp;http.Transport{
+            Dial: timeoutDialler(timeout * time.Second),
+        },
+    }
+    body := url.Values{
+        &quot;login_email&quot;:    {login_email},
+        &quot;login_password&quot;: {login_password},
+        &quot;format&quot;:         {format},
+        &quot;domain_id&quot;:      {domain_id},
+        &quot;record_id&quot;:      {record_id},
+        &quot;sub_domain&quot;:     {sub_domain},
+        &quot;record_line&quot;:    {record_line},
+        &quot;value&quot;:          {ip},
+    }
+
+    req, err := http.NewRequest(&quot;POST&quot;, &quot;https://dnsapi.cn/Record.Ddns&quot;, strings.NewReader(body.Encode()))
+    req.Header.Set(&quot;Accept&quot;, &quot;text/json&quot;)
+    req.Header.Set(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;)
+
+    resp, err := client.Do(req)
+
+    defer resp.Body.Close()
+
+    if err != nil {
+        return false
+    }
+    bytes, _ := ioutil.ReadAll(resp.Body)
+    log.Println(string(bytes))
+    return resp.StatusCode == 200
+}
+
+func init() {
+}
+
+func main() {
+    for {
+        ip, err := get_public_ip()
+        if ip != &quot;&quot; &amp;&amp; err == nil {
+            log.Println(&quot;got ip:&quot; + ip)
+            if ip != current_ip {
+                log.Println(&quot;update dnspod with new ip:&quot; + ip)
+                if update_dnspod(ip) {
+                    current_ip = ip
+                }
+            }
+        } else {
+            log.Println(&quot;error:&quot;, err)
+        }
+        time.Sleep(interval * time.Second)
+    }
+}
 </code></pre>
 
     <hr>
@@ -140,14 +239,14 @@ done
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/26/linux_perf_tools.html" title="系统调试和分析工具">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" title="在Pi和Github上搭建自己的个人博客">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2012/new-born.html" title="我的第一篇博客">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/26/linux_perf_tools.html" title="系统调试和分析工具">Next &rarr;</a></li>
           
           
         </ul>
@@ -208,7 +307,7 @@ done
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-25</span></div>
+      <div class="date"><span>2013-02-26</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -223,7 +322,11 @@ done
       <ul class="tag_box">
       
         <li>
-  <a href="/tags#Java-ref">Java <span>1</span></a>
+  <a href="/tags#Linux-ref">Linux <span>2</span></a>
+</li>
+      
+        <li>
+  <a href="/tags#Network-ref">Network <span>1</span></a>
 </li>
       
       </ul>
