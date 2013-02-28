@@ -4,6 +4,11 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
+		<loc>http://hugozhu.myalert.info/2013/02/28/logging-in-java.html</loc>
+		<lastmod>2013-02-28</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://hugozhu.myalert.info/2013/02/27/collaborating-development-with-github.html</loc>
 		<lastmod>2013-02-27</lastmod>
 		<changefreq>weekly</changefreq>
