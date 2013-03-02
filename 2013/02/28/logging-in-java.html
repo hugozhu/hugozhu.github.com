@@ -109,7 +109,7 @@
 
 <h2>日志规范</h2>
 
-<p>程序框架应该提供统一的日志记录接口，日志格式也需要有一定规范，相应的还可以利用已有或开发出日志工具。
+<p>程序框架应该提供统一的日志记录接口，日志格式也需要有一定的规范，方便利用日志工具来分析日志。
 首先我们有必要了解一下Linux普遍使用的<a href="http://en.wikipedia.org/wiki/Syslog">Syslog</a>标准协议，协议规定日志中应包含产生日志的模块(Facility)，严重性（Severity Level），时间，主机名或IP，进程名，进程ID和日志内容，根据模块和严重性可以配置相应的动作：是否需要记录，日志存储路径（文件或网络）。</p>
 
 <p>下面是部分常见的Syslog模块类型：</p>
@@ -257,9 +257,13 @@
 
 <h2>Java日志最佳实践</h2>
 
+<h3>定义日志变量</h3>
+
+<p>需要定义成final static</p>
+
 <h3>日志分级</h3>
 
-<p>Java的日志框架一般会提供以下日志级别，缺省打开info级别，也就是debug，trace级别的日志在生产环境不会输出，在开发和测试环境可以通过不通的日志配置文件打开debug级别。</p>
+<p>Java的日志框架一般会提供以下日志级别，缺省打开info级别，也就是debug，trace级别的日志在生产环境不会输出，在开发和测试环境可以通过不同的日志配置文件打开debug级别。</p>
 
 <ol>
 <li><strong>fatal</strong> - 严重的，造成服务中断的错误；</li>
@@ -361,8 +365,8 @@ logger.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
       <ul>
         <ul>
           
+            <li class="prev"><a href="/2013/03/01/resource-management-in-java.html" title="Java的资源管理">&larr; Previous</a></li>
           
-            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
@@ -435,7 +439,7 @@ logger.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
       <ul class="tag_box">
       
         <li>
-  <a href="/categories#Blog-ref">Blog <span>7</span></a>
+  <a href="/categories#Blog-ref">Blog <span>10</span></a>
 </li>
       
       </ul>
@@ -444,11 +448,11 @@ logger.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
       <ul class="tag_box">
       
         <li>
-  <a href="/tags#Java-ref">Java <span>2</span></a>
+  <a href="/tags#Java-ref">Java <span>3</span></a>
 </li>
       
         <li>
-  <a href="/tags#代码之美-ref">代码之美 <span>1</span></a>
+  <a href="/tags#代码之美-ref">代码之美 <span>2</span></a>
 </li>
       
       </ul>

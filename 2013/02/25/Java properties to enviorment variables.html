@@ -122,6 +122,7 @@ get_prop(){
     key=$2
     grep  &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=\(.*\)%\1%&quot;
 }
+
 trim() {
     trimmed=$1
     trimmed=${trimmed%% }
@@ -129,13 +130,13 @@ trim() {
     echo &quot;$trimmed&quot;
 }
 
-grep -v &quot;^#&quot; $property_file | sed -e '/^$/d' | while read line
+`grep -v &quot;^#&quot; $property_file | sed -e '/^$/d' | while read line
 do
     key=$(echo $line | awk -F &quot;=&quot; '{print $1}')
     trimmed_key=$(trim $key)
-    export $trimmed_key=$(trim $(get_prop $property_file &quot;$key&quot;))
-    echo $trimmed_key=${!trimmed_key}
-done
+    trimmed_val=$(trim $(get_prop $property_file &quot;$key&quot;)
+    echo &quot;export $trimmed_key=\&quot;$trimmed_val\&quot;)&quot;
+done`
 </code></pre>
 
     <hr>
@@ -143,7 +144,7 @@ done
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/26/dynamic-dns-script.html" title="动态DNS程序">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/02/26/linux_perf_tools.html" title="系统调试和分析工具">&larr; Previous</a></li>
           
           
 
@@ -217,7 +218,7 @@ done
       <ul class="tag_box">
       
         <li>
-  <a href="/categories#Blog-ref">Blog <span>7</span></a>
+  <a href="/categories#Blog-ref">Blog <span>10</span></a>
 </li>
       
       </ul>
@@ -226,7 +227,7 @@ done
       <ul class="tag_box">
       
         <li>
-  <a href="/tags#Java-ref">Java <span>2</span></a>
+  <a href="/tags#Java-ref">Java <span>3</span></a>
 </li>
       
       </ul>
