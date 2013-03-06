@@ -4,6 +4,11 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
+		<loc>http://hugozhu.myalert.info/2013/03/06/raspberry-pi-with-xmbc.html</loc>
+		<lastmod>2013-03-06</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://hugozhu.myalert.info/2013/03/05/java-SynchronousQueue-notes.html</loc>
 		<lastmod>2013-03-05</lastmod>
 		<changefreq>weekly</changefreq>
@@ -24,12 +29,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/02/28/the-evolution-of-online-advertsing-system.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/02/28/logging-in-java.html</loc>
 		<lastmod>2013-02-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/02/28/logging-in-java.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/02/28/the-evolution-of-online-advertsing-system.html</loc>
 		<lastmod>2013-02-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
