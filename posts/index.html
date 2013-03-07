@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Blogs - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="My blogs">
+    <meta name="description" content="My blogs 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -34,7 +34,7 @@
 
 <a href="https://github.com/hugozhu"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 
-    <div class="navbar">
+    <div class="navbar">      
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="/" style="padding-left:46px;">Hugo Zhu</a>
@@ -82,9 +82,15 @@
 
 
             
+            <li style="padding-left:10px">
+              <form class="navbar-search pull-right" method="GET" action="https://www.google.com/search">
+                <input type="text" name="as_q" class="search-query" placeholder=" Search... ">
+                <input type="hidden" name="as_sitesearch" value="hugozhu.myalert.info">
+              </form>               
+            </li>
           </ul>
         </div>
-      </div>
+      </div>     
     </div>
 
     <div class="container">
@@ -258,6 +264,46 @@ done
 </div>
 
 <div class="post">
+  <h3 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h3>
+
+  <h2>Overview</h2>
+
+<p><strong><em>（未完）</em></strong></p>
+
+<p>广告按业务划分有以下几类：</p>
+
+<ol>
+<li>展示广告（Banner广告）</li>
+<li>搜索广告（关键词广告）</li>
+</ol>
+
+<p>按计费模式有：</p>
+
+<ol>
+<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
+<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
+<li>CPC: 按有效点击次数计费；</li>
+<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
+</ol>
+
+<p>广告系统按结构可划分为以下子系统：</p>
+
+<ol>
+<li>广告投送服务器</li>
+<li>广告数据库及业务系统</li>
+<li>用户行为跟踪系统</li>
+<li>日志传输系统</li>
+<li>流式数据分析和计算平台</li>
+<li>离线数据分析和计算平台</li>
+</ol>
+
+
+  <div class="more">
+    <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/2013/02/28/logging-in-java.html">Java程序的日志</a> <span class="date">2013-02-28</span></h3>
 
   <h2>Overview</h2>
@@ -340,46 +386,6 @@ done
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h3>
-
-  <h2>Overview</h2>
-
-<p><strong><em>（未完）</em></strong></p>
-
-<p>广告按业务划分有以下几类：</p>
-
-<ol>
-<li>展示广告（Banner广告）</li>
-<li>搜索广告（关键词广告）</li>
-</ol>
-
-<p>按计费模式有：</p>
-
-<ol>
-<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
-<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
-<li>CPC: 按有效点击次数计费；</li>
-<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
-</ol>
-
-<p>广告系统按结构可划分为以下子系统：</p>
-
-<ol>
-<li>广告投送服务器</li>
-<li>广告数据库及业务系统</li>
-<li>用户行为跟踪系统</li>
-<li>日志传输系统</li>
-<li>流式数据分析和计算平台</li>
-<li>离线数据分析和计算平台</li>
-</ol>
-
-
-  <div class="more">
-    <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
   <h3 class="title"><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html">在Pi和Github上搭建自己的个人博客</a> <span class="date">2013-02-27</span></h3>
 
   <h1>方法如下：</h1>
@@ -446,17 +452,42 @@ done
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/2013/02/26/linux_perf_tools.html">系统调试和分析工具</a> <span class="date">2013-02-26</span></h3>
+  <h3 class="title"><a href="/2013/02/26/dynamic-dns-script.html">动态DNS程序</a> <span class="date">2013-02-26</span></h3>
 
-  <p>Linux下的调试和分析工具集</p>
+  <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
+
+<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
+
+<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
+
+<p>获得domain_id可以用：</p>
+
+<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
+</code></pre>
+
+<p>获得record_id：</p>
+
+<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
+</code></pre>
 
 <hr />
 
-<p><img src="/assets/media/tools.jpg" width="600"/></p>
+<pre><code>package main
+
+import (
+  &quot;io/ioutil&quot;
+  &quot;log&quot;
+  &quot;net&quot;
+  &quot;net/http&quot;
+  &quot;net/url&quot;
+  &quot;strings&quot;
+  &quot;time&quot;
+)
+</code></pre>
 
 
   <div class="more">
-    <a href="/2013/02/26/linux_perf_tools.html" class="btn btn-small">阅读全文</a>
+    <a href="/2013/02/26/dynamic-dns-script.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
