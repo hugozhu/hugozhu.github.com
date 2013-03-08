@@ -266,7 +266,7 @@
 
 <h3>定义日志变量</h3>
 
-<p>需要定义成final static</p>
+<p>日志变量往往不变，最好定义成final static，变量名用大写。</p>
 
 <h3>日志分级</h3>
 
@@ -284,42 +284,42 @@
 <p>在程序里要合理使用日志分级:</p>
 
 <pre><code>//调试的时候可以知道进入了方法
-logger.debug(&quot;entering getting content&quot;);
+LOGGER.debug(&quot;entering getting content&quot;);
 String content = CacheManager.getCachedContent();
 if (content == null) {
 
     //使用warn，因为程序还可以继续执行，但类似警告太多可能说明缓存服务不可用了，值得引起注意
-    logger.warn(&quot;Got empty content from cache, need perform database lookup&quot;); 
+    LOGGER.warn(&quot;Got empty content from cache, need perform database lookup&quot;); 
 
     Connection conn = ConnectionFactory.getConnection();
     if (conn == null) {
-        logger.error(&quot;Can't get database connection, failed to return content&quot;); //尽量提供详细的信息，知道错误的原因，而不能简单的写logger.error(&quot;failed&quot;)
+        LOGGER.error(&quot;Can't get database connection, failed to return content&quot;); //尽量提供详细的信息，知道错误的原因，而不能简单的写logger.error(&quot;failed&quot;)
     } else {
         try {
             content = conn.query(...);
         } catch (IOException e) {
             //异常要记录错误堆栈
-            logger.error(&quot;Failed to perform database lookup&quot;, e);
+            LOGGER.error(&quot;Failed to perform database lookup&quot;, e);
         } finally {
             ConnectionFactory.releaseConnection(conn);
         }
     }
 }
 //调试的时候可以知道方法返回了
-logger.debug(&quot;returning content: &quot;+ content);
+LOGGER.debug(&quot;returning content: &quot;+ content);
 return content;
 </code></pre>
 
 <p>上面这段示范代码演示了各种级别的使用，但其中有个问题是debug日志太多后可能会影响性能？有一种改进方法是：</p>
 
-<pre><code>if (logger.isDebugEnabled()) {
-    logger.debug(&quot;returning content: &quot;+ content);
+<pre><code>if (LOGGER.isDebugEnabled()) {
+    LOGGER.debug(&quot;returning content: &quot;+ content);
 }
 </code></pre>
 
 <p>但更好的方法是Slf4j提供的<a href="http://www.slf4j.org/faq.html#logging_performance">最佳实践</a>:</p>
 
-<pre><code>logger.debug(&quot;returning content: {}&quot;, content);
+<pre><code>LOGGER.debug(&quot;returning content: {}&quot;, content);
 </code></pre>
 
 <p>一方面可以减少参数构造的开销，另一方面也不用多写两行代码；</p>
@@ -335,7 +335,7 @@ return content;
 
 <pre><code>long startTime = System.currentTime();          
 // business logical          
-logger.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) + &quot;ms&quot;);　      
+LOGGER.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) + &quot;ms&quot;);　      
 </code></pre></li>
 
 <li><p>耗时程序的执行进度，不然程序开始运行后半天没一点输出挺让人着急啊~</p></li>
@@ -347,19 +347,29 @@ logger.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
 
 <p>日志中尽量不要包含敏感信息，对于敏感信息如用户身份证号码，密码可以加密后存储；以防止日志文件不慎外泄时保全用户的数据安全；日志通常不允许修改，必要时还可以通过校验位来鉴别日志是否正确。</p>
 
-<h3>日志可靠性</h3>
+<h2>日志监控方法</h2>
+
+<p>错误日志需要设置监控才能及时发现问题，所以在程序里记录日志的时候也需要考虑这点。</p>
+
+<ol>
+<li>错误次数</li>
+<li>错误等级</li>
+<li>错误关联的数据
+
+<ol>
+<li>应用名</li>
+<li>用户ID</li>
+<li>时间</li>
+<li>IP</li>
+<li>发生错误的页面</li>
+</ol></li>
+</ol>
+
+<h2>作业</h2>
 
 <p>TODO：</p>
 
-<h3>日志监控方法</h3>
-
-<p>TODO：</p>
-
-<h3>作业</h3>
-
-<p>TODO：</p>
-
-<h4>参考链接</h4>
+<h3>参考链接</h3>
 
 <ol>
 <li><a href="http://www.slf4j.org/manual.html">http://www.slf4j.org/manual.html</a></li>
