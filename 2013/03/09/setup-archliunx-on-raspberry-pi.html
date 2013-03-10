@@ -241,7 +241,7 @@ System Benchmarks Index Score                                          99.9
 
 
 ========================================================================
-   BYTE UNIX Benchmarks (Version 5.1.2)
+   BYTE UNIX Bench  marks (Version 5.1.2)
 
    System: raspberrypi2: GNU/Linux
    OS: GNU/Linux -- 3.6.11-8-ARCH+ -- #1 PREEMPT Sat Mar 9 00:38:58 UTC 2013
@@ -284,9 +284,61 @@ System Benchmarks Index Score                                          76.3
 
 </code></pre>
 
-<h2>Faq</h2>
+<p>看上去ArchLinux性能差了一节，看来官方推荐Raspian确实做了不少优化，我觉得介绍一下系统方面的优化，也是非常不错的内容。</p>
 
-<p>&hellip;</p>
+<h2>无线网络</h2>
+
+<p>我买的是基于RT5370芯片组的腾达W311MI，Raspberry Pi支持的很好。</p>
+
+<ol>
+<li><p>确认系统已经识别USB网卡，如下<code>RT5370 Wireless Adapter</code>就代表已经识别成功</p>
+
+<pre><code>[root@raspberrypi2 ~]# lsusb
+Bus 001 Device 002: ID 0424:9512 Standard Microsystems Corp. LAN9500 Ethernet 10/100 Adapter
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 003: ID 0424:ec00 Standard Microsystems Corp. 
+Bus 001 Device 004: ID 148f:5370 Ralink Technology, Corp. RT5370 Wireless Adapter
+</code></pre></li>
+
+<li><p>安装无线工具</p>
+
+<pre><code>pacman -S wireless_tools
+</code></pre></li>
+
+<li><p>设置开机启动无线网络</p>
+
+<p>使用<code>wifi-menu</code>手动连上wifi ap，可以连多个，相应的输入会保存在：/etc/network.d/，在下面的文件里输入相应的文件名</p>
+
+<p>修改/etc/conf.d/netcfg</p>
+
+<pre><code>DHCP_TIMEOUT=30 
+AUTO_PROFILES=(&quot;wlan0-Hugo2&quot; &quot;wlan0-hugo&quot;)
+</code></pre>
+
+<p>如果是隐藏SSID的要加一行&rdquo;HIDDEN=YES&rdquo;</p>
+
+<p>执行一下命令在重启时自动连上wifi
+<code>
+systemctl enable net-auto-wireless
+</code></p></li>
+
+<li><p>有条件的可以在路由器里设置好根据MAC地址总是分配同一个ip给Pi，这样就可以拔掉网线的束缚了~</p></li>
+
+<li><p>测试了断开后可以自动重连</p></li>
+
+<li><p>用scp测试从Mac通过无线传大文件到Raspberry Pi，传输速度只有1.6MB/s，如果通过网线传则有4MB/s</p></li>
+</ol>
+
+<p>#</p>
+
+<h1>Samba</h1>
+
+<ol>
+<li>安装相关包： <code>pacman -S samba</code></li>
+<li>生成一个配置文件： <code>cp /etc/samba/smb.conf.default /etc/samba/smb.conf</code></li>
+<li>加到启动脚本里： <code>systemctl enable smbd.service</code></li>
+<li>增加一个samba用户： <code>smbpasswd -a hugo</code></li>
+</ol>
 
     <hr>
     <div class="pagination">
