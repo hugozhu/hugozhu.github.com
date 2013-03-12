@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>动态DNS程序 - When Go meets Raspberry Pi</title>
+    <title>用发光二极管提示网站首页有访客到来 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="动态根据宽带外网IP更新dnspod登记的域名, Go语言实现 树莓派">
+    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -97,151 +97,43 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>动态DNS程序 </h1>
+  <h1>用发光二极管提示网站首页有访客到来 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
+    <p>本方法只适合小网站，主要是好玩。</p>
 
-<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
+<h1>硬件安装</h1>
 
-<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
+<p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg"/></p>
 
-<p>获得domain_id可以用：</p>
+<h1>软件准备</h1>
 
-<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
+<pre><code>pacman -S python2
+pacman -S python2-distribute
+    
 </code></pre>
 
-<p>获得record_id：</p>
+<h1><a href="http://code.google.com/p/webiopi/">Webiopi</a></h1>
 
-<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
-</code></pre>
+<p>这是一个使用RESTful API控制Pi的GPIO，使用起来非常简单</p>
 
-<hr />
+<p><img src="http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png"/></p>
 
-<pre><code>package main
+<h1>代码脚本</h1>
 
-import (
-  &quot;io/ioutil&quot;
-  &quot;log&quot;
-  &quot;net&quot;
-  &quot;net/http&quot;
-  &quot;net/url&quot;
-  &quot;strings&quot;
-  &quot;time&quot;
-)
+<pre><code>hugo@raspberrypi ~/bin $ cat traffic_led.sh 
+#!/bin/sh
 
-var (
-    body = url.Values{
-        &quot;login_email&quot;:    {&quot;email&quot;},
-        &quot;login_password&quot;: {&quot;password&quot;},
-        &quot;format&quot;:         {&quot;json&quot;},
-        &quot;domain_id&quot;:      {&quot;0&quot;},
-        &quot;record_id&quot;:      {&quot;0&quot;},
-        &quot;sub_domain&quot;:     {&quot;www&quot;},
-        &quot;record_line&quot;:    {&quot;默认&quot;},
-    }
-    current_ip     = &quot;&quot;
-    check_interval = 30 * time.Second
-)
-
-var current_ip = &quot;&quot;
-
-func get_public_ip() (string, error) {
-    conn, err := net.DialTimeout(&quot;tcp&quot;, &quot;ns1.dnspod.net:6666&quot;, timeout*time.Second)
-    defer func() {
-        if x := recover(); x != nil {
-            log.Println(&quot;Can't get public ip&quot;, x)
-        }
-        if conn!=nil {
-            conn.Close()
-        }
-    }()
-
-    if err == nil {
-        var bytes []byte
-        deadline := time.Now().Add(timeout*time.Second)
-        err = conn.SetDeadline(deadline)
-        if err!=nil {
-            return &quot;&quot;, err
-        }
-        bytes, err = ioutil.ReadAll(conn)
-        if err == nil {
-            return string(bytes), nil
-        }
-    }
-    return &quot;&quot;, err
+tail -f  /mnt/usb/logs/nginx/access.log  | grep --line-buffered &quot;GET / HTTP&quot; | while read LINE; do  {
+   #echo $LINE
+   curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/0&quot;
+   sleep 0.2
+   curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/1&quot;
+   sleep 0.2
 }
-
-func timeoutDialler(timeout time.Duration) func(net, addr string) (c net.Conn, err error) {
-    return func(netw, addr string) (net.Conn, error) {
-        c, err := net.DialTimeout(netw, addr, timeout)
-        if err != nil {
-            return nil, err
-        }
-        deadline := time.Now().Add(timeout)
-        err = c.SetDeadline(deadline)
-        if err != nil {
-            return nil, err
-        }
-        return c, nil
-    }
-}
-
-func update_dnspod(ip string) bool {
-    client := &amp;http.Client{
-        Transport: &amp;http.Transport{
-            Dial: timeoutDialler(timeout * time.Second),
-        },
-    }
-    body := url.Values{
-        &quot;login_email&quot;:    {login_email},
-        &quot;login_password&quot;: {login_password},
-        &quot;format&quot;:         {format},
-        &quot;domain_id&quot;:      {domain_id},
-        &quot;record_id&quot;:      {record_id},
-        &quot;sub_domain&quot;:     {sub_domain},
-        &quot;record_line&quot;:    {record_line},
-        &quot;value&quot;:          {ip},
-    }
-
-    req, err := http.NewRequest(&quot;POST&quot;, &quot;https://dnsapi.cn/Record.Ddns&quot;, strings.NewReader(body.Encode()))
-    req.Header.Set(&quot;Accept&quot;, &quot;text/json&quot;)
-    req.Header.Set(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;)
-
-    resp, err := client.Do(req)
-
-    defer resp.Body.Close()
-
-    if err != nil {
-        return false
-    }
-    bytes, _ := ioutil.ReadAll(resp.Body)
-    log.Println(string(bytes))
-    return resp.StatusCode == 200
-}
-
-func init() {
-}
-
-func main() {
-    for {
-        ip, err := get_public_ip()
-        if ip != &quot;&quot; &amp;&amp; err == nil {
-            log.Println(&quot;got ip:&quot; + ip)
-            if ip != current_ip {
-                log.Println(&quot;update dnspod with new ip:&quot; + ip)
-                if update_dnspod(ip) {
-                    current_ip = ip
-                }
-            }
-        } else {
-            log.Println(&quot;error:&quot;, err)
-        }
-        time.Sleep(interval * time.Second)
-    }
-}
+done
 </code></pre>
 
     <hr>
@@ -249,14 +141,14 @@ func main() {
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/26/linux_perf_tools.html" title="系统调试和分析工具">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html" title="将Java的Properties文件转换成环境变量">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/09/setup-archliunx-on-raspberry-pi.html" title="在Raspberry Pi上安装ArchLinux">Next &rarr;</a></li>
           
           
         </ul>
@@ -317,7 +209,7 @@ func main() {
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-26</span></div>
+      <div class="date"><span>2013-03-13</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -332,11 +224,7 @@ func main() {
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Linux-ref">Linux <span>4</span></a>
-</li>
-      
-        <li>
-  <a href="/tags/#Network-ref">Network <span>2</span></a>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>3</span></a>
 </li>
       
       </ul>

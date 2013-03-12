@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://hugozhu.myalert.info</link>
-    <pubDate>2013-03-13 12:20:48 +0800</pubDate>
+    <pubDate>2013-03-13 01:33:14 +0800</pubDate>
+    <item>
+      <title>用发光二极管提示网站首页有访客到来</title>
+      <link>http://hugozhu.myalert.info/2013/03/13/vistor-on-homepage-led-indicator.html</link>
+      <pubDate>2013-03-13 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;本方法只适合小网站，主要是好玩。&lt;/p&gt;&#xA;&#xA;&lt;h1&gt;硬件安装&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;&lt;img src=&#34;http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg&#34;/&gt;&lt;/p&gt;&#xA;&#xA;&lt;h1&gt;软件准备&lt;/h1&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;pacman -S python2&#xA;pacman -S python2-distribute&#xA;    &#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h1&gt;&lt;a href=&#34;http://code.google.com/p/webiopi/&#34;&gt;Webiopi&lt;/a&gt;&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;这是一个使用RESTful API控制Pi的GPIO，使用起来非常简单&lt;/p&gt;&#xA;&#xA;&lt;p&gt;&lt;img src=&#34;http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png&#34;/&gt;&lt;/p&gt;&#xA;&#xA;&lt;h1&gt;代码脚本&lt;/h1&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;hugo@raspberrypi ~/bin $ cat traffic_led.sh &#xA;#!/bin/sh&#xA;&#xA;tail -f  /mnt/usb/logs/nginx/access.log  | grep --line-buffered &amp;quot;GET / HTTP&amp;quot; | while read LINE; do  {&#xA;   #echo $LINE&#xA;   curl -s --data &amp;quot;&amp;quot; &amp;quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/0&amp;quot;&#xA;   sleep 0.2&#xA;   curl -s --data &amp;quot;&amp;quot; &amp;quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/1&amp;quot;&#xA;   sleep 0.2&#xA;}&#xA;done&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
+    </item>
     <item>
       <title>在Raspberry Pi上安装ArchLinux</title>
       <link>http://hugozhu.myalert.info/2013/03/09/setup-archliunx-on-raspberry-pi.html</link>
