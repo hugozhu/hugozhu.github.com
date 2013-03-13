@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>OpenVPN使用多个端口 - When Go meets Raspberry Pi</title>
+    <title>Java的资源管理 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="使用iptables将多个端口转发到OpenVPN的端口，防止单一端口被封 树莓派">
+    <meta name="description" content="Introduction of best practices for Java resource management 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -106,26 +106,28 @@
   <div class="span12">
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/13/vistor-on-homepage-led-indicator.html">用发光二极管提示网站首页有访客到来</a> <span class="date">2013-03-13</span></h1>
+        <h1 class="title"><a href="/2013/03/13/vistor-on-homepage-led-indicator.html">如何使在Raspberry Pi上用LED闪烁提示网站首页新访客</a> <span class="date">2013-03-13</span></h1>
 
-        <p>本方法只适合小网站，主要是好玩。</p>
+        <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
 
 <h1>硬件安装</h1>
 
-<p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg"/></p>
+<p>需要以下硬件：</p>
 
-<h1>软件准备</h1>
+<ol>
+<li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">1P杜邦线2条</a></li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm9RKSkRargJCPYP6KVEIQUWKzMUFn1hvlcbkMSKk3m2pVJo%2BqQDYKVz%2Bt1%2FjL7Iywe7g%3D%3D">面包板</a>一个</li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">面包板跳线</a> 或 <a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">单排针</a> 两根</li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">发光二极管</a>一个</li>
+<li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
+</ol>
 
-<pre><code>pacman -S python2
-pacman -S python2-distribute
-    
-</code></pre>
+<h2>GPIO接口</h2>
 
-<h1><a href="http://code.google.com/p/webiopi/">Webiopi</a></h1>
+<p><img src="http://s4.sinaimg.cn/mw690/53ed87c1gd42b927f5b23&690"/></p>
 
-<p>这是一个使用RESTful API控制Pi的GPIO，使用起来非常简单</p>
-
-<p><img src="http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png"/></p>
+<p>用杜邦线将上图的3.3V输出和GPIO 23引出（板子正面朝上，GPIO引脚在左上角），将电阻和LED串联起来（电阻防止LED电流过大烧掉），注意二极管的两根脚不一样长，长脚的接正级，这样GPIO 23如果输出高电平，二极管就不发光了，输出低电平就亮啦！</p>
 
 
         <div class="more">
