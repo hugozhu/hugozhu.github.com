@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Java程序的日志 - When Go meets Raspberry Pi</title>
+    <title>如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Java日志最佳实践，给程序调试提供有用信息的日志 树莓派">
+    <meta name="description" content="后续利用OpenCV还可以合成多张照片成全景图，或者多角度连续视频录制 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,6 +104,35 @@
 
 <div class="row">
   <div class="span12">
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html">如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</a> <span class="date">2013-03-16</span></h1>
+
+        <h1>硬件准备</h1>
+
+<p>需要以下硬件：</p>
+
+<ol>
+<li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">母对母1P杜邦线</a>6根</li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLt%2BsmFEpvY8zQ4WXjoTHsLWTKD4gnL0sndE3qVPXd4UC6NUEZOQAryYUWhO7gt10i%2FUQ%3D%3D">DC 5V4相28YBJ-48步进电机</a>一个</li>
+<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLuXQmw2TUIlWTNRCvS2wo483pjZyXspPuvkTH5pg4vQUqrztOAoNz2Gfp8MmwKPg%2FbQb8%3D">UL2003芯片步进电机驱动板</a>一块</li>
+</ol>
+
+<h1>安装</h1>
+
+<p>按下图将步进电机接到驱动板上，也就是白色的接口。
+<img src="http://img02.taobaocdn.com/imgextra/i2/49873130/T2534HXoBXXXXXXXXX_!!49873130.jpg" width="600"/></p>
+
+<h2>步进电机电源</h2>
+
+<p>步进电机需要5V电压驱动，而树莓派的<a href="http://elinux.org/RPi_Low-level_peripherals">GPIO接口</a>中已有5V输出，将图中的Pin 2（最右上角那个）5V，接到驱动板的5V正极，Pin 6接到5V负级，电源部分则搞定。</p>
+
+
+        <div class="more">
+          <a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/03/13/vistor-on-homepage-led-indicator.html">如何在Raspberry Pi上用LED闪烁提示网站首页新访客</a> <span class="date">2013-03-13</span></h1>
@@ -368,46 +397,6 @@ done
 
         <div class="more">
           <a href="/2013/03/01/resource-management-in-java.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h1>
-
-        <h2>Overview</h2>
-
-<p><strong><em>（未完）</em></strong></p>
-
-<p>广告按业务划分有以下几类：</p>
-
-<ol>
-<li>展示广告（Banner广告）</li>
-<li>搜索广告（关键词广告）</li>
-</ol>
-
-<p>按计费模式有：</p>
-
-<ol>
-<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
-<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
-<li>CPC: 按有效点击次数计费；</li>
-<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
-</ol>
-
-<p>广告系统按结构可划分为以下子系统：</p>
-
-<ol>
-<li>广告投送服务器</li>
-<li>广告数据库及业务系统</li>
-<li>用户行为跟踪系统</li>
-<li>日志传输系统</li>
-<li>流式数据分析和计算平台</li>
-<li>离线数据分析和计算平台</li>
-</ol>
-
-
-        <div class="more">
-          <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
