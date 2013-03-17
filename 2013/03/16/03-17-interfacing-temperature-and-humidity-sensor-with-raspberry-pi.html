@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>如何在Raspberry Pi上用LED闪烁提示网站首页新访客 - When Go meets Raspberry Pi</title>
+    <title>如何使用Raspberry Pi测量室内温度和湿度并绘制曲线 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
+    <meta name="description" content="Interfacing Temperature and Humidity Sensor with Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -97,146 +97,206 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>如何在Raspberry Pi上用LED闪烁提示网站首页新访客 </h1>
+  <h1>如何使用Raspberry Pi测量室内温度和湿度并绘制曲线 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
+    
 
-<h1>硬件安装</h1>
+<p><nav>
+<ul>
+<li><a href="#toc_0">硬件准备</a></li>
+<li><a href="#toc_1">传感器电路及原理</a>
+<ul>
+<li><a href="#toc_2">DHT11传感器外观</a></li>
+<li><a href="#toc_3">参数</a></li>
+<li><a href="#toc_4">电路图</a></li>
+<li><a href="#toc_5">安装好的样子：</a></li>
+</ul></li>
+<li><a href="#toc_6">读取温度和湿度的代码</a></li>
+<li><a href="#toc_7">记录曲线图</a></li>
+<li><a href="#toc_8">参考</a></li>
+</ul>
+</nav></p>
+
+<h1 id="toc_0">硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
 <ol>
 <li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">1P杜邦线2条</a></li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm9RKSkRargJCPYP6KVEIQUWKzMUFn1hvlcbkMSKk3m2pVJo%2BqQDYKVz%2Bt1%2FjL7Iywe7g%3D%3D">面包板</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">面包板跳线</a> 或 <a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">单排针</a> 两根</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">发光二极管</a>一个</li>
-<li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
+<li>面包板和杜邦线</li>
+<li>10K 电位器一个</li>
+<li>[DHT11温度和湿度传感器]一个</li>
 </ol>
 
-<h2>GPIO接口</h2>
+<h1 id="toc_1">传感器电路及原理</h1>
 
-<p><img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/></p>
+<h2 id="toc_2">DHT11传感器外观</h2>
 
-<p>用杜邦线将上图的3.3V输出和GPIO 23引出（板子正面朝上，GPIO引脚在左上角），将电阻和LED串联起来（电阻防止LED电流过大烧掉），注意二极管的两根脚不一样长，长脚的接正级，这样GPIO 23如果输出高电平，二极管就不发光了，输出低电平就亮啦！</p>
+<p><img src="http://learn.adafruit.com/system/products/images/000/000/386/medium225/dht11_MED.jpg?1342023044"/></p>
 
-<p>都接好了后的样子如下：</p>
+<h2 id="toc_3">参数</h2>
 
-<p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg"/></p>
+<ol>
+<li>湿度测量范围：20％～90%RH(0－50℃温度补偿）；</li>
+<li>温度测量范围：0～+50℃；</li>
+<li>湿度测量精度：±5.0%RH</li>
+<li>温度测量精度：±2.0℃</li>
+<li>响应时间：&lt;5s；</li>
+</ol>
 
-<h1>GPIO接口编程</h1>
+<h2 id="toc_4">电路图</h2>
 
-<h2>WiringPi</h2>
+<p>DHT11一共4根引脚，左边第一根接电源5V (Pin 1)，第二根为数据接口，接 Pin 7，第三根不接，第四根接地；在Pin 1和Pin7 直接还需要并联10K的电阻，以保持读数稳定。</p>
 
-<p>An implementation of most of the Arduino Wiring functions for the Raspberry Pi。
-代码地址在： <a href="https://github.com/wiringPi">https://github.com/wiringPi</a></p>
+<p><img src="http://learn.adafruit.com/system/assets/assets/000/001/860/original/dht11wiring.gif?1345831788"/></p>
 
-<p>安装：</p>
+<h2 id="toc_5">安装好的样子：</h2>
 
-<pre><code>git clone https://github.com/WiringPi/WiringPi
-cd WiringPi/wiringPi
-sudo make install   
+<p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2rx17tlckj.jpg"/></p>
+
+<h1 id="toc_6">读取温度和湿度的代码</h1>
+
+<p>数据读取流图：</p>
+
+<p><img src="http://1.bp.blogspot.com/-_sMwYSZMGLw/UJpY2RYIA9I/AAAAAAAAAS0/rJ9ZQwZ3IfM/s640/DHT11+timing+diagram.jpg"/></p>
+
+<pre><code>#include &lt;wiringPi.h&gt;  
+#include &lt;stdio.h&gt;  
+#include &lt;stdlib.h&gt;  
+#include &lt;stdint.h&gt;  
+#define MAX_TIME 85  
+#define DHT11PIN 7  
+
+int dht11_val[5]={0,0,0,0,0};  
+int errors=0;
+
+  
+void dht11_read_val()  
+{  
+  uint8_t lststate=HIGH;  
+  uint8_t counter=0;  
+  uint8_t j=0,i;  
+  float farenheit;  
+  for(i=0;i&lt;5;i++)  
+     dht11_val[i]=0;  
+  pinMode(DHT11PIN,OUTPUT);  
+  digitalWrite(DHT11PIN,LOW);  
+  delay(18);  
+  digitalWrite(DHT11PIN,HIGH);  
+  delayMicroseconds(40);  
+  pinMode(DHT11PIN,INPUT);  
+  for(i=0;i&lt;MAX_TIME;i++)  
+  {  
+    counter=0;  
+    while(digitalRead(DHT11PIN)==lststate){  
+      counter++;  
+      delayMicroseconds(1);  
+      if(counter==255)  
+        break;  
+    }  
+    lststate=digitalRead(DHT11PIN);  
+    if(counter==255)  
+       break;  
+    // top 3 transistions are ignored  
+    if((i&gt;=4)&amp;&amp;(i%2==0)){  
+      dht11_val[j/8]&lt;&lt;=1;  
+      if(counter&gt;16)  
+        dht11_val[j/8]|=1;  
+      j++;  
+    }  
+  }  
+  // verify cheksum and print the verified data  
+  if((j&gt;=40)&amp;&amp;(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])&amp; 0xFF)))  
+  {  
+    //farenheit=dht11_val[2]*9./5.+32;  
+    printf(&quot;%d.%d\t%d.%d\n&quot;, dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);    
+    exit(1);
+  }  
+  else { 
+    errors = errors + 1;
+    if (errors &gt; 5) {
+      printf(&quot;0.0\t0.0&quot;);
+      exit(2);
+    }
+  }
+}  
+  
+int main(void)  
+{  
+  if(wiringPiSetup()==-1)  
+    exit(1);  
+  while(1)  
+  {  
+     dht11_read_val();  
+     delay(3000);  
+  }  
+  return 0;  
+}  
+
 </code></pre>
 
-<p>让二极管闪一下的示例代码：</p>
+<p>执行<code>gcc sensor.c -o sensor -lwiringPi</code> ，运行<code>sensor</code>后输出：</p>
 
-<pre><code>#include &lt;wiringPi.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
+<pre><code>root@raspberrypi2 /home/hugo/projects/dht11 # ./sensor 
+44.0    18.0
+</code></pre>
 
-int main (int argc, char* argv[])
-{
-    int pinNumber = 4;
-    if (-1 == wiringPiSetup()) {
-        printf(&quot;failed to setup wiringPi&quot;);
-        return 1;
-    }   
-    pinMode(pinNumber, OUTPUT);
-    digitalWrite(pinNumber, 1);
-    delay(200);
-    digitalWrite(pinNumber, 0);
-    delay(200);
-    return 0;   
-}
+<h1 id="toc_7">记录曲线图</h1>
+
+<p>这里我使用<a href="http://cosm.com/">cosm.com</a>的服务，注册申请好账号后，可以建立一个datafeed和两个data stream，分别是温度和湿度，相应的Tag ID为1，和2,利用下来的脚本就可以上传数据了</p>
+
+<pre><code>#!/bin/bash
+####################################################
+LOCATION=&lt;填你的程序路径&gt; #home/hugo/projects/dht11
+API_KEY='&lt;填你的api_key&gt;'
+FEED_ID='&lt;填你的feed_id&gt;'
+####################################################
+COSM_URL=http://api.cosm.com/v2/feeds/$FEED_ID?timezone=+8
+
+VAL=`$LOCATION/sensor`
+t=`echo $VAL|awk '{print $2}'`
+h=`echo $VAL|awk '{print $1}'`
+
+STR=`awk 'BEGIN{printf &quot;{\&quot;datastreams\&quot;:[ {\&quot;id\&quot;:\&quot;1\&quot;,\&quot;current_value\&quot;:\&quot;%.1f\&quot;}, {\&quot;id\&quot;:\&quot;2\&quot;,\&quot;current_value\&quot;:\&quot;%.1f\&quot;} ] } &quot;,'$t', '$h'}'`
+
+echo $STR
+echo $STR &gt; $LOCATION/cosm.json
+curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LOCATION/cosm.json $COSM_URL
+</code></pre>
+
+<p>然后可以使用如下格式的图片引用把曲线图嵌入任何网页：</p>
+
+<pre><code>&lt;img src=&quot;https://api.cosm.com/v2/feeds/119331/datastreams/2.png?width=340&amp;height=180&amp;colour=%23f15a24&amp;duration=2days&amp;title=室内湿度&amp;show_axis_labels=false&amp;detailed_grid=true&amp;scale=&amp;timezone=8&quot;/&gt;
 
 </code></pre>
 
-<p>WiringPi也有Python, Perl, PHP, Ruby的接口包装，按<a href="https://github.com/wiringPi">这里</a>，怎么没有Go的呢。。。</p>
+<p><img src="https://api.cosm.com/v2/feeds/119331/datastreams/2.png?width=340&height=180&colour=%23f15a24&duration=2days&title=室内湿度&show_axis_labels=false&detailed_grid=true&scale=&timezone=8"/></p>
 
-<h2>RPi.GPIO</h2>
+<p><img src="https://api.cosm.com/v2/feeds/119331/datastreams/1.png?width=340&height=180&colour=%23f15a24&duration=2days&title=室内温度&show_axis_labels=false&detailed_grid=true&scale=&timezone=8"/></p>
 
-<p>这是GPIO的Python库，地址在：<a href="https://pypi.python.org/pypi/RPi.GPIO">https://pypi.python.org/pypi/RPi.GPIO</a>
-这里建议用python2，原因是web.py还不支持python 3 &hellip;</p>
+<h1 id="toc_8">参考</h1>
 
-<pre><code>pacman -S python2
-pacman -S python2-distribute
-easy_install RPi.GPIO
-    
-</code></pre>
-
-<p>让二极管一直闪的示例代码：</p>
-
-<pre><code>import RPi.GPIO as GPIO
-import time
-
-PORT = 16
-
-GPIO.setwarnings(False) 
-GPIO.setmode(GPIO.BOARD)
-
-GPIO.setup(PORT,GPIO.OUT)
-
-while True:
-    GPIO.output(PORT,True)
-    time.sleep(0.2)
-    GPIO.output(PORT,False)
-    time.sleep(0.2)
-    
-</code></pre>
-
-<h1>Webiopi</h1>
-
-<p>项目地址： <a href="http://code.google.com/p/webiopi/">http://code.google.com/p/webiopi/</a> 这是一个使用RESTful API控制Pi的GPIO接口，文档丰富，使用起来非常简单。</p>
-
-<p>安装好后，用命令<code>python -m webiopi</code>启动，用浏览器打开 <a href="http://webiopi:raspberry@raspberrypi2:8000/webiopi/">http://webiopi:raspberry@raspberrypi2:8000/webiopi/</a> 可以看到控制界面，其中有GPIO 26个引脚的状态（输入输出，高电平或低电平），用鼠标点端口还可以修改数据：</p>
-
-<p><img src="http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png" width="630"/></p>
-
-<h1>完成的代码</h1>
-
-<p>最后用一小段代码来实现最初的想法，这段代码可以较实时的处理QPS&lt;=3的网站流量，如果流量较大则会滞后反应。。。</p>
-
-<pre><code>hugo@raspberrypi ~/bin $ cat traffic_led.sh 
-#!/bin/sh
-
-tail -F /mnt/usb/logs/nginx/access.log  | grep --line-buffered &quot;GET / HTTP&quot; | while read LINE; do  {
-   #echo $LINE
-   curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/0&quot;
-   sleep 0.2
-   curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/1&quot;
-   sleep 0.1
-}
-done
-</code></pre>
-
-<p>类似的还可以用这个方法来提醒：来自某某某的新邮件到了，Github有Pull Requests了。。。,或者网站挂了。。。</p>
+<ol>
+<li><a href="http://www.rpiblog.com/2012/11/interfacing-temperature-and-humidity.html">http://www.rpiblog.com/2012/11/interfacing-temperature-and-humidity.html</a></li>
+<li><a href="http://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/wiring">http://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/wiring</a></li>
+</ol>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/16/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html" title="如何使用Raspberry Pi测量室内温度和湿度并绘制曲线">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html" title="如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/09/setup-archliunx-on-raspberry-pi.html" title="在Raspberry Pi上安装ArchLinux">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/13/vistor-on-homepage-led-indicator.html" title="如何在Raspberry Pi上用LED闪烁提示网站首页新访客">Next &rarr;</a></li>
           
           
         </ul>
@@ -297,7 +357,7 @@ done
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-13</span></div>
+      <div class="date"><span>2013-03-16</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
