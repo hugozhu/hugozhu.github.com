@@ -149,18 +149,71 @@
 
 <h2 id="toc_3">步进电机驱动线路</h2>
 
-<p>驱动板上有IN1, IN2, IN3, IN4四个接口，根据资料得知这四个接口依次设置为低电平就可以驱动，我们分别用杜邦线将GPIO 17（Pin 11），GPIO 18（Pin 12）, GPIO 21（Pin 13）, GPIO 22（Pin 15）和IN1，IN2，IN3，IN4一一相连。 <strong>注意不同的GPIO驱动对端口的编号不一定一样。</strong></p>
+<p>驱动板上有IN1, IN2, IN3, IN4四个接口，根据资料得知这四个接口依次设置为低电平就可以驱动，我们分别用杜邦线将GPIO 17（Pin 11），GPIO 18（Pin 12）, GPIO 21（Pin 13）, GPIO 22（Pin 15）和IN1，IN2，IN3，IN4一一相连。 <strong>注意不同的GPIO驱动程序对端口的编号不一定一样（至少有三种叫法：Board，Broadcom，GPIO）</strong></p>
 
 <p>驱动原理：（每次将四个GPIO端口按下表依次设置好电平后，可以sleep几十毫秒来控制转速）</p>
 
-<p><strong>序列</strong>    | <strong>GPIO 17</strong> | <strong>GPIO 18</strong> | <strong>GPIO 21</strong>|<strong>GPIO 22</strong><br />
-&mdash;&mdash;&mdash;&mdash; | &mdash;&mdash;&mdash;&mdash;- | &mdash;&mdash;&mdash;&mdash; | &mdash;&mdash;&mdash;&mdash;
-0            | <strong>LOW</strong>       | HIGH      | HIGH | HIGH
-1            | HIGH          | <strong>LOW</strong>   | HIGH | HIGH
-2            | HIGH          | HIGH      | <strong>LOW</strong>  | HIGH
-3            | HIGH          | HIGH      | HIGH | <strong>LOW</strong>
-4            | <strong>LOW</strong>       | HIGH      | HIGH | HIGH
-5|…</p>
+<table>
+<thead>
+<tr>
+<td><strong>序列</strong></td>
+<td><strong>GPIO 17</strong></td>
+<td><strong>GPIO 18</strong></td>
+<td><strong>GPIO 21</strong></td>
+<td><strong>GPIO 22</strong></td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td><strong>LOW</strong></td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>HIGH</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>HIGH</td>
+<td><strong>LOW</strong></td>
+<td>HIGH</td>
+<td>HIGH</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td><strong>LOW</strong></td>
+<td>HIGH</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td><strong>LOW</strong></td>
+</tr>
+
+<tr>
+<td>4</td>
+<td><strong>LOW</strong></td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>HIGH</td>
+</tr>
+
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
 <h2 id="toc_4">安装摄像头</h2>
 

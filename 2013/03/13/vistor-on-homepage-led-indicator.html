@@ -212,7 +212,7 @@ while True:
 <pre><code>hugo@raspberrypi ~/bin $ cat traffic_led.sh 
 #!/bin/sh
 
-tail -f  /mnt/usb/logs/nginx/access.log  | grep --line-buffered &quot;GET / HTTP&quot; | while read LINE; do  {
+tail -F /mnt/usb/logs/nginx/access.log  | grep --line-buffered &quot;GET / HTTP&quot; | while read LINE; do  {
    #echo $LINE
    curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/0&quot;
    sleep 0.2
