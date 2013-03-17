@@ -246,7 +246,7 @@ int main(void)
 
 <h1 id="toc_7">记录曲线图</h1>
 
-<p>这里我使用<a href="http://cosm.com/">cosm.com</a>的服务，注册申请好账号后，可以建立一个datafeed和两个data stream，分别是温度和湿度，相应的Tag ID为1，和2,利用下来的脚本就可以上传数据了</p>
+<p>这里我使用<a href="http://cosm.com/">cosm.com</a>的服务，注册申请好账号后，可以建立一个data feed和两个data stream，分别是温度和湿度，相应的Tag ID为1，和2,利用下来的脚本就可以上传数据了</p>
 
 <pre><code>#!/bin/bash
 ####################################################
@@ -272,6 +272,8 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
 <pre><code>&lt;img src=&quot;https://api.cosm.com/v2/feeds/119331/datastreams/2.png?width=340&amp;height=180&amp;colour=%23f15a24&amp;duration=2days&amp;title=室内湿度&amp;show_axis_labels=false&amp;detailed_grid=true&amp;scale=&amp;timezone=8&quot;/&gt;
 
 </code></pre>
+
+<p>下面是我的曲线图：</p>
 
 <p><img src="https://api.cosm.com/v2/feeds/119331/datastreams/2.png?width=340&height=180&colour=%23f15a24&duration=2days&title=室内湿度&show_axis_labels=false&detailed_grid=true&scale=&timezone=8"/></p>
 
