@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Raspberry Pi GPIO 命名规则 - When Go meets Raspberry Pi</title>
+    <title>在Raspberry Pi上安装ArchLinux - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Raspberry Pi GPIO naming 树莓派">
+    <meta name="description" content="Setup ArchLinux On Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -115,7 +115,7 @@
 <ol>
 <li>Pin names：引脚号Pin 1 - 26等</li>
 <li>Raspberry Pi names: GPIO 0, 1, 2, 3, 4 , 5 , 6 , 7等</li>
-<li>Broadcom names: GPIO 17, 18, <sup>21</sup>&frasl;<sub>27</sub>,22,23,24,25等</li>
+<li>Broadcom names: GPIO 17, 18, 21(树莓派第二版)或27(树莓派第一版), 22, 23, 24, 25等</li>
 </ol>
 
 <p><img src="http://elinux.org/images/2/2a/GPIOs.png"/>
@@ -244,6 +244,34 @@
 
         <div class="more">
           <a href="/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/16/19-raspberry-pi-drive-1602-lcd.html">如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</a> <span class="date">2013-03-16</span></h1>
+
+        <h1>硬件准备</h1>
+
+<p>需要以下硬件：</p>
+
+<ol>
+<li>树莓派</li>
+<li><a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5&amp;type=p&amp;style=&amp;cat=all">面包板</a></li>
+<li><a href="http://s.taobao.com/search?spm=a230r.1.8.2.RvXL2p&amp;q=1602+%D2%BA%BE%A7&amp;commend=all&amp;source=haiwaigou&amp;ssid=s5-e&amp;pid=mm_14507416_2297358_8935934&amp;newpre=null&amp;tab=mall">1602液晶屏</a>一块</li>
+<li><a href="http://s.taobao.com/search?source=suggest&amp;haiwaifrom=1&amp;q=%B5%E7%CE%BB%C6%F7+10k&amp;initiative_id=staobaoz_20130323&amp;suggest_query=%B5%E7%CE%BB%C6%F7+10k&amp;sb_id=10&amp;suggest=0_2&amp;wq=%B5%E7%CE%BB%C6%F7&amp;tab=mall">10K电位器</a></li>
+<li><a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">杜邦线</a></li>
+<li><a href="http://s.taobao.com/search?source=haiwaigou&amp;haiwaifrom=1&amp;q=%C5%C5%D5%EB&amp;initiative_id=staobaoz_20130323&amp;tab=mall">排针</a></li>
+<li><a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5+%B5%E7%D4%B4&amp;type=p&amp;style=&amp;cat=all">面包板电源</a></li>
+</ol>
+
+<p>#
+ 1602 LCD液晶屏</p>
+
+<p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&ndash;请参考<a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则</a>：</p>
+
+
+        <div class="more">
+          <a href="/2013/03/16/19-raspberry-pi-drive-1602-lcd.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -476,36 +504,6 @@ done
 
         <div class="more">
           <a href="/2013/03/02/openvpn-multiple-ports.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a> <span class="date">2013-03-01</span></h1>
-
-        <h2>Overview</h2>
-
-<p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p>
-
-<p>先打开内核的IP转发，修改 /etc/sysctl.conf</p>
-
-<pre><code>net.ipv4.ip_forward=1
-</code></pre>
-
-<p>执行下面命令以生效</p>
-
-<pre><code>sudo sysctl -p
-</code></pre>
-
-<h2>PPTP</h2>
-
-<p>安装pptpd</p>
-
-<pre><code>apt-get install pptpd
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
