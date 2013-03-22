@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Raspberry Pi GPIO 命名规则 - When Go meets Raspberry Pi</title>
+    <title>Raspberry Pi GPIO的编号规则 - When Go meets Raspberry Pi</title>
   
     <meta name="description" content="Raspberry Pi GPIO naming 树莓派">
   
@@ -97,14 +97,155 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Raspberry Pi GPIO 命名规则 </h1>
+  <h1>Raspberry Pi GPIO的编号规则 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>树莓派和普通电脑不一样的地方在于它还带了<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的命名有些混乱，不同的SDK（如wiringPi，RPi.GPIO等）对GPIO的端口号取值也有两种规范（Raspberry Pi和Braodcom），下面则用图表标明了对应的叫法。</p>
+    <p>树莓派和普通电脑不一样的地方在于它还带了<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法。</p>
 
-<h1>命名方法</h1>
+<h1>wiringPi和RPi.GPIO中编号</h1>
+
+<ol>
+<li>第一列是wiringPi API中的编号</li>
+<li>第二列（Name）往往是转接板的编号</li>
+<li>树莓派板子上的编号是第三列，相当于调用了RPi.GPIO.setmode(GPIO.BOARD)</li>
+<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了RPi.GPIO.setmode(GPIO.BCM)</li>
+</ol>
+
+<table>
+<thead>
+<tr>
+<td>wiringPi</td>
+<td>Name</td>
+<td>GPIO.BOARD</td>
+<td>GPIO.BCM</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td>GPIO 0</td>
+<td>11</td>
+<td>17</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>GPIO 1</td>
+<td>12</td>
+<td>18</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>GPIO 2</td>
+<td>13</td>
+<td>21</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>GPIO 3</td>
+<td>15</td>
+<td>22</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>GPIO 4</td>
+<td>16</td>
+<td>23</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>GPIO 5</td>
+<td>18</td>
+<td>24</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>GPIO 6</td>
+<td>22</td>
+<td>25</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>GPIO 7</td>
+<td>7</td>
+<td>4</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>SDA</td>
+<td>3</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>SCL</td>
+<td>5</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>CE0</td>
+<td>24</td>
+<td>8</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>CE1</td>
+<td>26</td>
+<td>7</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>MOSI</td>
+<td>19</td>
+<td>10</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>MOSO</td>
+<td>21</td>
+<td>9</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>SCLK</td>
+<td>23</td>
+<td>11</td>
+</tr>
+
+<tr>
+<td>15</td>
+<td>TxD</td>
+<td>8</td>
+<td>14</td>
+</tr>
+
+<tr>
+<td>16</td>
+<td>RxD</td>
+<td>10</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+
+<h1>编号方法</h1>
 
 <ol>
 <li>Pin names：引脚号Pin 1 - 26等</li>
@@ -240,13 +381,13 @@
 <tr>
 <td>8</td>
 <td>TX</td>
-<td>UART TXD</td>
+<td>UART TxD</td>
 </tr>
 
 <tr>
 <td>10</td>
 <td>RX</td>
-<td>UART RXD</td>
+<td>UART RxD</td>
 </tr>
 
 <tr>
@@ -295,68 +436,6 @@
 <td>26</td>
 <td>SP10 CE1 N</td>
 <td>SP10 CE1 N</td>
-</tr>
-</tbody>
-</table>
-
-<h2>根据Raspberry Pi的GPIO 查表</h2>
-
-<table>
-<thead>
-<tr>
-<td><strong>Raspberry Pi GPIO</strong></td>
-<td><strong>Pin</strong></td>
-<td><strong>Broadcom GPIO</strong></td>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>0</td>
-<td>11</td>
-<td>17</td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>12</td>
-<td>18</td>
-</tr>
-
-<tr>
-<td>2</td>
-<td>13</td>
-<td>21 / 27</td>
-</tr>
-
-<tr>
-<td>3</td>
-<td>15</td>
-<td>22</td>
-</tr>
-
-<tr>
-<td>4</td>
-<td>16</td>
-<td>23</td>
-</tr>
-
-<tr>
-<td>5</td>
-<td>18</td>
-<td>24</td>
-</tr>
-
-<tr>
-<td>6</td>
-<td>22</td>
-<td>26</td>
-</tr>
-
-<tr>
-<td>7</td>
-<td>7</td>
-<td>4</td>
 </tr>
 </tbody>
 </table>
