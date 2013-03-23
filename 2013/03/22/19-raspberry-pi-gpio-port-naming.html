@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Raspberry Pi GPIO的编号规范 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Raspberry Pi GPIO naming 树莓派">
+    <meta name="description" content="Raspberry Pi GPIO numbering 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -102,9 +102,24 @@
 
 <div class="row">
   <div class="span8">
-    <p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p>
+    
 
-<h1>GPIO库</h1>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">GPIO库</a></li>
+<li><a href="#toc_1">编号规范</a>
+<ul>
+<li><a href="#toc_2">GPIO转接板</a></li>
+<li><a href="#toc_3">物理左排针脚说明</a></li>
+<li><a href="#toc_4">物理左排针脚说明</a></li>
+</ul></li>
+<li><a href="#toc_5">参考</a></li>
+</ul>
+</nav></p>
+
+<p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p>
+
+<h1 id="toc_0">GPIO库</h1>
 
 <ol>
 <li><a href="https://github.com/WiringPi/WiringPi">wiringPi</a> C，有Perl, PHP, Ruby, Node.JS和<strong><a href="http://github.com/hugozhu/rpi">Golang</a></strong>的扩展，支持wiringPi Pin和BCM GPIO两种编号</li>
@@ -113,7 +128,7 @@
 <li><a href="http://github.com/hugozhu/rpi">WiringPi-Go</a>, Go语言，支持以上三种编号</li>
 </ol>
 
-<h1>编号规范</h1>
+<h1 id="toc_1">编号规范</h1>
 
 <ol>
 <li>第一列是wiringPi API中的缺省编号，<code>wiringPiSetup()</code>采用这列编号</li>
@@ -299,13 +314,13 @@
 
 <p><img src="https://pbs.twimg.com/media/BGBhJ4LCAAA50eS.jpg:large"  width="600"/></p>
 
-<h2>GPIO转接板</h2>
+<h2 id="toc_2">GPIO转接板</h2>
 
 <p>GPIO转接板通过彩虹排线可将树莓派的GPIO引脚转接到面包板上，方便试验，下图是一个相应的产品，可以看到每个引脚标都已标注好了名称，查上表就知道代码里该用哪个编号做参数了。</p>
 
 <p><img src="http://img03.taobaocdn.com/imgextra/i3/21288305/T23BjrXfJaXXXXXXXX_!!21288305.jpg"/></p>
 
-<h2>物理左排针脚说明</h2>
+<h2 id="toc_3">物理左排针脚说明</h2>
 
 <table>
 <thead>
@@ -397,7 +412,7 @@
 </tbody>
 </table>
 
-<h2>物理左排针脚说明</h2>
+<h2 id="toc_4">物理左排针脚说明</h2>
 
 <table>
 <thead>
@@ -495,7 +510,7 @@
 <li>all the UART, SPI and I2C pins can be reconfigured as GPIO if needed.</li>
 </ul>
 
-<h1>参考</h1>
+<h1 id="toc_5">参考</h1>
 
 <ol>
 <li><a href="http://elinux.org/RPi_Low-level_peripherals">http://elinux.org/RPi_Low-level_peripherals</a></li>
