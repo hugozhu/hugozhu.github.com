@@ -170,26 +170,35 @@
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/22/19-raspberry-pi-gpio-port-naming.html">Raspberry Pi GPIO的编号规则</a> <span class="date">2013-03-22</span></h1>
+        <h1 class="title"><a href="/2013/03/22/19-raspberry-pi-gpio-port-naming.html">Raspberry Pi GPIO的编号规范</a> <span class="date">2013-03-22</span></h1>
 
-        <p>树莓派和普通电脑不一样的地方在于它还带了<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法。</p>
+        <p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p>
 
-<h1>wiringPi和RPi.GPIO中编号</h1>
+<h1>GPIO库</h1>
 
 <ol>
-<li>第一列是wiringPi API中的缺省编号，相当于调用了<code>wiringPiSetup()</code></li>
+<li><a href="https://github.com/WiringPi/WiringPi">wiringPi</a> C，有Perl, PHP, Ruby, Node.JS和<strong><a href="http://github.com/hugozhu/rpi">Golang</a></strong>的扩展，支持wiringPi Pin和BCM GPIO两种编号</li>
+<li><a href="https://pypi.python.org/pypi/RPi.GPIO">RPi.GPIO</a> Python，支持Board Pin和BCM GPIO两种编号</li>
+<li><a href="http://code.google.com/p/webiopi/">Webiopi</a>，Python, 使用BCM GPIO编号</li>
+<li><a href="http://github.com/hugozhu/rpi">WiringPi-Go</a>, Go语言，支持以上三种编号</li>
+</ol>
+
+<h1>编号规范</h1>
+
+<ol>
+<li>第一列是wiringPi API中的缺省编号，<code>wiringPiSetup()</code>采用这列编号</li>
 <li>第二列（Name）往往是转接板的编号</li>
-<li>树莓派板子上的编号是第三列，相当于调用了<code>RPi.GPIO.setmode(GPIO.BOARD)</code></li>
-<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了<code>WiringPiSetupGpio()</code>或<code>RPi.GPIO.setmode(GPIO.BCM)</code></li>
+<li>第三列是树莓派板子上的自然编号（左边引脚为1-15，右边引脚为2-26），<code>RPi.GPIO.setmode(GPIO.BOARD)</code>采用这列编号</li>
+<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了<code>WiringPiSetupGpio()</code>或<code>RPi.GPIO.setmode(GPIO.BCM)</code>采用这列编号</li>
 </ol>
 
 <table>
 <thead>
 <tr>
-<td>wiringPi</td>
+<td>wiringPi Pin</td>
 <td>Name</td>
-<td>Pin</td>
-<td>GPIO</td>
+<td>Board Pin</td>
+<td>BCM GPIO</td>
 </tr>
 </thead>
 
