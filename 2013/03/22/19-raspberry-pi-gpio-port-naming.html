@@ -107,10 +107,10 @@
 <h1>wiringPi和RPi.GPIO中编号</h1>
 
 <ol>
-<li>第一列是wiringPi API中的编号</li>
+<li>第一列是wiringPi API中的缺省编号，相当于调用了<code>wiringPiSetup()</code></li>
 <li>第二列（Name）往往是转接板的编号</li>
-<li>树莓派板子上的编号是第三列，相当于调用了RPi.GPIO.setmode(GPIO.BOARD)</li>
-<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了RPi.GPIO.setmode(GPIO.BCM)</li>
+<li>树莓派板子上的编号是第三列，相当于调用了<code>RPi.GPIO.setmode(GPIO.BOARD)</code></li>
+<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了<code>WiringPiSetupGpio()</code>或<code>RPi.GPIO.setmode(GPIO.BCM)</code></li>
 </ol>
 
 <table>
@@ -118,8 +118,8 @@
 <tr>
 <td>wiringPi</td>
 <td>Name</td>
-<td>GPIO.BOARD</td>
-<td>GPIO.BCM</td>
+<td>Pin</td>
+<td>GPIO</td>
 </tr>
 </thead>
 
@@ -241,6 +241,47 @@
 <td>RXD</td>
 <td>10</td>
 <td>15</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<td>wiringPi</td>
+<td>Name</td>
+<td>Pin</td>
+<td>GPIO</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>17</td>
+<td>GPIO 8</td>
+<td></td>
+<td>28</td>
+</tr>
+
+<tr>
+<td>18</td>
+<td>GPIO 9</td>
+<td></td>
+<td>29</td>
+</tr>
+
+<tr>
+<td>19</td>
+<td>GPIO10</td>
+<td></td>
+<td>30</td>
+</tr>
+
+<tr>
+<td>20</td>
+<td>GPIO11</td>
+<td></td>
+<td>31</td>
 </tr>
 </tbody>
 </table>

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Raspberry Pi做BT下载机+高清播放器 - When Go meets Raspberry Pi</title>
+    <title>如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Raspberry Pi with XMBC 树莓派">
+    <meta name="description" content="当然也可以用来显示温度，CPU Load等数据了 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -177,10 +177,10 @@
 <h1>wiringPi和RPi.GPIO中编号</h1>
 
 <ol>
-<li>第一列是wiringPi API中的编号</li>
+<li>第一列是wiringPi API中的缺省编号，相当于调用了<code>wiringPiSetup()</code></li>
 <li>第二列（Name）往往是转接板的编号</li>
-<li>树莓派板子上的编号是第三列，相当于调用了RPi.GPIO.setmode(GPIO.BOARD)</li>
-<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了RPi.GPIO.setmode(GPIO.BCM)</li>
+<li>树莓派板子上的编号是第三列，相当于调用了<code>RPi.GPIO.setmode(GPIO.BOARD)</code></li>
+<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了<code>WiringPiSetupGpio()</code>或<code>RPi.GPIO.setmode(GPIO.BCM)</code></li>
 </ol>
 
 <table>
@@ -188,8 +188,8 @@
 <tr>
 <td>wiringPi</td>
 <td>Name</td>
-<td>GPIO.BOARD</td>
-<td>GPIO.BCM</td>
+<td>Pin</td>
+<td>GPIO</td>
 </tr>
 </thead>
 
