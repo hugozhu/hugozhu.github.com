@@ -110,18 +110,21 @@
 <li><a href="#toc_1">电路</a></li>
 <li><a href="#toc_2">代码</a>
 <ul>
-<li><a href="#toc_3">显示 Hello RASPBERRY PI</a></li>
-<li><a href="#toc_4">显示树莓派Logo</a></li>
+<li><a href="#toc_3">显示字符</a></li>
+<li><a href="#toc_4">显示图形-树莓派Logo</a></li>
 </ul></li>
 <li><a href="#toc_5">安装效果</a></li>
 <li><a href="#toc_6">参考链接</a></li>
 </ul>
 </nav></p>
 
-<p>Nokia 5110屏比前面介绍过的<a href="http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">1602液晶屏</a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：
-1. 带蓝色背光
-2. 使用Philips PCD8544 LCD控制器（通过SPI接口）
-3. 84x84点阵，可显示100多个字符</p>
+<p>Nokia 5110屏比前面介绍过的<a href="http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">1602液晶屏</a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：</p>
+
+<ol>
+<li>带蓝色背光</li>
+<li>使用Philips PCD8544 LCD控制器（通过SPI接口）</li>
+<li>84x84点阵，可显示100多个字符</li>
+</ol>
 
 <h1 id="toc_0">硬件准备</h1>
 
@@ -154,7 +157,7 @@
 
 <h1 id="toc_2">代码</h1>
 
-<h2 id="toc_3">显示 Hello RASPBERRY PI</h2>
+<h2 id="toc_3">显示字符</h2>
 
 <p>需要安装<a href="https://pypi.python.org/pypi/RPi.GPIO">RPi.GPIO</a>库</p>
 
@@ -285,7 +288,7 @@ if __name__ == &quot;__main__&quot;:
   main()
 </code></pre>
 
-<h2 id="toc_4">显示树莓派Logo</h2>
+<h2 id="toc_4">显示图形-树莓派Logo</h2>
 
 <p>需要安装<a href="https://github.com/WiringPi/WiringPi">wiringPi</a>和<a href="https://github.com/binerry/RaspberryPi/tree/master/libraries/c/PCD8544">PCD8544</a>库</p>
 
