@@ -4,6 +4,11 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
+		<loc>http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html</loc>
+		<lastmod>2013-03-27</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://hugozhu.myalert.info/2013/03/24/20-raspberry-pi-drive-nokia-5110.html</loc>
 		<lastmod>2013-03-24</lastmod>
 		<changefreq>weekly</changefreq>
@@ -59,12 +64,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
