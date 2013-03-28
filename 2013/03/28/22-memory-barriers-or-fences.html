@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用Github合作开发项目 - When Go meets Raspberry Pi</title>
+    <title>并发编程之内存屏障 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="介绍Fork + Pull Request的合作开发方法 树莓派">
+    <meta name="description" content="Memory Barriers/Fences：一组处理器指令，用来实现内存数据对CPU的可见性。 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -97,78 +97,123 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>使用Github合作开发项目 </h1>
+  <h1>并发编程之内存屏障 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>本文大部分内容来自： <a href="https://help.github.com/categories/63/articles">https://help.github.com/categories/63/articles</a></p>
+    
 
-<p>Github上合作开发最好的方式是“<strong>Fork + Pull Request</strong>”。比如我最近需要一个静态Blog生成器，市面上有很多Ruby实现的，但我想要一个Go语言的实现，Github上找到了一个 <a href="https://github.com/wendal/gor">https://github.com/wendal/gor</a> ，测试了一下已有的功能基本能满足了，就用上了。</p>
+<p>原文地址：<code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code> 或 <code>http://ifeve.com/memory-barriersfences/</code></p>
 
-<p>但实际使用过程中发现了一个问题，如果在URL中有中文，生成的URL如下没有做URL安全编码：</p>
+<p>关键词：Load Barrier, Save Barrier, Full Barrier</p>
 
-<pre><code>http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">Store Barrier</a></li>
+<li><a href="#toc_1">Load Barrier</a></li>
+<li><a href="#toc_2">Full Barrier</a></li>
+<li><a href="#toc_3">Java内存模型</a></li>
+<li><a href="#toc_4">原子指令和Software Locks</a></li>
+<li><a href="#toc_5">内存屏障的性能影响</a></li>
+</ul>
+</nav></p>
+
+<p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
+
+<p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &ldquo;Write Combing - 合并写&rdquo;中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。</p>
+
+<p>当一个程序执行时指令是否被重排并不重要，只要最终的结果是一样的。例如，在一个循环里，如果循环体内没用到这个计数器，循环的计数器什么时候更新（在循环开始，中间还是最后）并不重要。编译器和CPU可以自由的重排指令以最佳的利用CPU，只要下一次循环前更新该计数器即可。并且在循环执行中，这个变量可能一直存在寄存器上，并没有被推到缓存或主存，这样这个变量对其他CPU来说一直都是不可见的。</p>
+
+<p>CPU核内部包含了多个执行单元。例如，现代Intel CPU包含了6个执行单元，可以组合进行算术运算，逻辑条件判断及内存操作。每个执行单元可以执行上述任务的某种组合。这些执行单元是并行执行的，这样指令也就是在并行执行。但如果站在另一个CPU角度看，这也就产生了程序顺序的另一种不确定性。</p>
+
+<p>最后，当一个缓存失效发生时，现代CPU可以先假设一个内存载入的值并根据这个假设值继续执行，直到内存载入返回确切的值。</p>
+
+<p><img src="http://ifeve.com/wp-content/uploads/2013/03/cpu.png"/></p>
+
+<pre><code>CPU核－&gt;寄存器-&gt;执行单元--&gt;Load/Store缓冲区-&gt;L1 Cache  ------+--&gt;L3 Cache--&gt;内存控制器--&gt;主存
+                     |                                   |
+                     +-&gt; Write Combine缓冲区-&gt;L2 Cache ---+
 </code></pre>
 
-<p>还有一种情况是如果URL中有空格，如：</p>
+<p>代码顺序并不是真正的执行顺序，CPU和编译器可以各种优化只要有空间提高性能。缓存和主存的读取会利用load, store和write-combining缓冲区来缓冲和重排。这些缓冲区是查找速度很快的关联队列，当一个后来发生的load需要读取上一个store的值，而该值还没有到达缓存，查找是必需的，上图描绘的是一个简化的现代多核CPU，从上图可以看出执行单元可以利用本地寄存器和缓冲区来管理和缓存子系统的交互。</p>
 
-<pre><code>http://hugozhu.myalert.info//2013//02/25/Java properties to enviorment variables.html
+<p>在多线程环境里需要使用技术来使得程序结果尽快可见。这篇文章里我不会涉及到 Cache Conherence 的概念。请先假定一个事实：一旦内存数据被推送到缓存，就会有消息协议来确保所有的缓存会对所有的共享数据同步并保持一致。这个使内存数据对CPU核可见的技术被称为内存屏障或内存栅栏。</p>
+
+<p>内存屏障提供了两个功能。首先，它们通过确保从另一个CPU来看屏障的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性；其次它们可以实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。</p>
+
+<p>大多数的内存屏障都是复杂的主题。在不同的CPU架构上实现非常不一样。在这一系列中Intel CPU的强内存模型比DEC Alpha的弱复杂内存模型（缓存不仅分层了，还分区了）更简单。因为x86处理器是在多线程编程中最常见的，厦门我尽量用x86的架构来阐述。</p>
+
+<h1 id="toc_0">Store Barrier</h1>
+
+<p>Store屏障，是x86的&rdquo;<strong>sfence</strong>&ldquo;指令，强制在屏障指令之前的指令在其之前（&rdquo;happen-before&rdquo;）被处理，并把store缓冲区的数据都刷到CPU缓存。这会使得程序状态对其它CPU可见，这样其它CPU可以根据需要介入。一个实际的好例子是Disruptor中的<a href="http://code.google.com/p/disruptor/source/browse/trunk/code/src/main/com/lmax/disruptor/BatchEventProcessor.java">BatchEventProcessor</a>。当序列Sequence被一个消费者更新时，其它消费者(Consumers)和生产者（Producers）知道该消费者的进度，因此可以采取合适的动作。所以屏障之前发生的内存更新都可见了。</p>
+
+<pre><code>private volatile long sequence = RingBuffer.INITIAL_CURSOR_VALUE;
+ 
+// from inside the run() method
+ 
+T event = null;
+long nextSequence = sequence.get() + 1L;
+while (running)
+{
+    try
+    {
+        final long availableSequence = barrier.waitFor(nextSequence);
+ 
+        while (nextSequence &lt;= availableSequence)
+        {
+            event = ringBuffer.get(nextSequence);
+            boolean endOfBatch = nextSequence == availableSequence;
+            eventHandler.onEvent(event, nextSequence, endOfBatch);
+            nextSequence++;
+        }
+ 
+        sequence.set(nextSequence - 1L); 
+        // store barrier inserted here !!!
+    }
+    catch (final Exception ex)
+    {
+        exceptionHandler.handle(ex, nextSequence, event);
+        sequence.set(nextSequence);
+        // store barrier inserted here !!!
+        nextSequence++;
+    }
+}
 </code></pre>
 
-<p>浏览器遇到这种URL时，会主动进行编码，但这里有两个问题：</p>
+<h1 id="toc_1">Load Barrier</h1>
 
-<ol>
-<li>遇到中文时，浏览器是用GBK还是UTF-8还是其它字符集编码后再发送给服务器呢？</li>
-<li>遇到空格时，编码成+还是%20呢？
-不同浏览器实现可能不一样，在不同操作系统上也可能不一样（可能和用户设置的缺省语言有关），这样有些用户可能会遭遇404错误了，实际上我在服务器的错误日志上的确看到这样的错误</li>
-</ol>
+<p>Load屏障，是x86上的&rdquo;<strong>ifence</strong>&ldquo;指令，强制所有在屏障指令之后的load指令都在屏障之后发生，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。这使得从其它CPU暴露出来的程序状态对该CPU可见，这之后CPU可以进行后续处理。一个好例子是上面的BatchEventProcessor的sequence对象是放在屏障后被生产者或消费者使用。</p>
 
-<p>日志：</p>
+<h1 id="toc_2">Full Barrier</h1>
 
-<pre><code>2013/02/27 20:41:33 [error] 7791#0: *3285 open() &quot;.../2013/02/25/Java+properties+to+enviorment+variables.html&quot; failed (2: No such file or directory), client: 221.179.193.78, server: hugozhu.myalert.info, request: &quot;GET /2013/02/25/Java+properties+to+enviorment+variables.html HTTP/1.1&quot;, host: &quot;hugozhu.myalert.info&quot;
-</code></pre>
+<p>Full屏障，是x86上的&rdquo;<strong>mfence</strong>&ldquo;指令，复合了load和save屏障的功能。</p>
 
-<p>于是我需要动手修改代码：</p>
+<h1 id="toc_3">Java内存模型</h1>
 
-<ol>
-<li>首先需要做的就是Fork一下原项目到自己的代码仓库： <a href="https://github.com/hugozhu/gor">https://github.com/hugozhu/gor</a></li>
-<li>修改好代码并提交到自己的仓库： <a href="https://github.com/hugozhu/gor/commit/db2784623d9df4d0652436efdbfbb9caccdc1e1d">https://github.com/hugozhu/gor/commit/db2784623d9df4d0652436efdbfbb9caccdc1e1d</a></li>
-<li>在你的代码仓库页面上点Pull Request:
-<img src="https://pbs.twimg.com/media/BEH7V0vCYAAMgcl.jpg:large"/></li>
-<li>选择好你刚提交好的Commits，然后点发送;</li>
-<li>原项目的维护者就会收到这个Pull Request: <a href="https://github.com/wendal/gor/pull/14">https://github.com/wendal/gor/pull/14</a></li>
-<li>如果你提交的代码足够好，维护者可以合并到项目主干上；</li>
-<li>记住下一次本地修改代码前要先Merge一下原作者新提交的改动;</li>
-</ol>
+<p><a href="http://en.wikipedia.org/wiki/Java_Memory_Model">Java内存模型</a>中<strong>volatile</strong>变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。类的<strong>final</strong>字段会在初始化后插入一个store屏障来确保final字段在构造函数完成可被使用时可见。</p>
 
-<p>如下：</p>
+<h1 id="toc_4">原子指令和Software Locks</h1>
 
-<pre><code>git remote add upstream https://github.com/wendal/gor
-git fetch upstream
-git checkout master
-git merge upstream/master 
-</code></pre>
+<p>原子指令，如x86上的&rdquo;lock &hellip;&rdquo; 指令是一个Full Barrier，执行时会锁住内存子系统来确保执行顺序，甚至跨多个CPU。Software Locks通常使用了内存屏障或原子指令来实现变量可见性和保持程序顺序。</p>
 
-<p>到此为止就完成了一次合作开发。</p>
+<h1 id="toc_5">内存屏障的性能影响</h1>
 
-<p>==</p>
-
-<h1>我们日常的项目开发中也可以采用这种思路，代码Review也可以增加Pull Request，对项目的迭代速度会有很大帮助。</h1>
+<p>内存屏障防止CPU采用优化技术来降低内存操作延迟，必须考虑因此带来的性能影响。为了达到最佳性能，最好是把要解决的问题模块化，这样处理器可以按单元执行任务，然后在任务单元的边界放上所有需要的内存屏障。采用这个方法可以让处理器不受限的执行一个任务单元。合理的内存屏障组合还有一个好处是：缓冲区在第一次被刷后开销会减少，因为再填充缓冲区不需要额外工作了。</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/28/logging-in-java.html" title="Java程序的日志">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" title="在Pi和Github上搭建自己的个人博客">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/27/21-realtime-online-user-counter.html" title="个人网站实时在线人数接口">Next &rarr;</a></li>
           
           
         </ul>
@@ -229,7 +274,7 @@ git merge upstream/master
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-27</span></div>
+      <div class="date"><span>2013-03-28</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -244,7 +289,15 @@ git merge upstream/master
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Github-ref">Github <span>2</span></a>
+  <a href="/tags/#Java-ref">Java <span>5</span></a>
+</li>
+      
+        <li>
+  <a href="/tags/#Concurrent-Programming-ref">Concurrent Programming <span>2</span></a>
+</li>
+      
+        <li>
+  <a href="/tags/#%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91-ref">文章翻译 <span>1</span></a>
 </li>
       
       </ul>
