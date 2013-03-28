@@ -104,7 +104,7 @@
   <div class="span8">
     
 
-<p>原文地址：<code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code> 或 <code>http://ifeve.com/memory-barriersfences/</code></p>
+<p>原文地址：<a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html"><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href="http://ifeve.com/memory-barriersfences/"><code>http://ifeve.com/memory-barriersfences/</code></a></p>
 
 <p>关键词：Load Barrier, Save Barrier, Full Barrier</p>
 
@@ -131,9 +131,15 @@
 
 <p><img src="http://ifeve.com/wp-content/uploads/2013/03/cpu.png"/></p>
 
-<pre><code>CPU核－&gt;寄存器-&gt;执行单元--&gt;Load/Store缓冲区-&gt;L1 Cache  ------+--&gt;L3 Cache--&gt;内存控制器--&gt;主存
-                     |                                   |
-                     +-&gt; Write Combine缓冲区-&gt;L2 Cache ---+
+<pre><code>CPU核
+  |
+  V
+寄存器
+  |
+  V
+执行单元 -&gt; Load/Store缓冲区-&gt;L1 Cache ---&gt;L3 Cache--&gt;内存控制器--&gt;主存
+       |                                   |
+       +-&gt; Write Combine缓冲区-&gt;L2 Cache ---+
 </code></pre>
 
 <p>代码顺序并不是真正的执行顺序，CPU和编译器可以各种优化只要有空间提高性能。缓存和主存的读取会利用load, store和write-combining缓冲区来缓冲和重排。这些缓冲区是查找速度很快的关联队列，当一个后来发生的load需要读取上一个store的值，而该值还没有到达缓存，查找是必需的，上图描绘的是一个简化的现代多核CPU，从上图可以看出执行单元可以利用本地寄存器和缓冲区来管理和缓存子系统的交互。</p>
