@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>在Ubuntu上配置L2TP，PPTP和OpenVPN服务 - When Go meets Raspberry Pi</title>
+    <title>如何封杀尝试Raspberry Pi SSH密码的来源IP - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="介绍各种VPN服务的配置方法 树莓派">
+    <meta name="description" content="Block failed ssh attempts with iptable 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -129,6 +129,57 @@
 
     
       <div class="post">
+        <h1 class="title"><a href="/2013/03/06/raspberry-pi-with-xmbc.html">Raspberry Pi做BT下载机+高清播放器</a> <span class="date">2013-03-06</span></h1>
+
+        <h2>介绍</h2>
+
+<p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个<a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;initiative_id=tbindexz_20130306">山寨的</a>的更简单。。。</p>
+
+<p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了<a href="http://xbmc.org">XBMC</a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如<a href="http://yisou.com">一搜</a>，优酷，搜狐视频，奇艺等。</p>
+
+<h2>外设</h2>
+
+<p>除了Pi单片机外，你还需要以下外设附件：</p>
+
+<ol>
+<li>5V-1A左右的电源，可以用iPhone或iPad的充电电源，或手机的充电器，电流最少要800毫安</li>
+<li>micro USB线一根，和Kindle以及大多数android手机充电USB线一样</li>
+<li>HDMI线一根，接电视机</li>
+<li>SD卡一张，最少2G</li>
+</ol>
+
+<h2>Raspbmc</h2>
+
+<p><a href="http://www.raspbmc.com/">Raspbmc</a> 是专为在Raspberry Pi上运行<a href="http://xbmc.org">XBMC</a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。</p>
+
+<h3>特点：</h3>
+
+<ol>
+<li>免费，开源</li>
+<li>支持多语言</li>
+<li>支持1080P回放</li>
+<li>支持直接播放NFS，SMB，FTP,HTTP或USB硬盘的有视频文件，支持大多数格式</li>
+<li>支持AirPlay或AirTune功能，可以把iPhone/iPad上的视频或音乐通过Pi投放到电视上，这点和Apple TV功能一样</li>
+<li>支持GPIO</li>
+<li>基于Debian，可以从Debian的软件源安装其它软件</li>
+<li>支持1080P DTS软解，这个不少播放器是不支持的，需要额外License</li>
+<li>内置了以下服务:
+
+<ol>
+<li>Samba</li>
+<li>TVHeadend Server</li>
+<li>FTP Server</li>
+<li>SSH Server</li>
+</ol></li>
+</ol>
+
+
+        <div class="more">
+          <a href="/2013/03/06/raspberry-pi-with-xmbc.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2013/03/05/java-SynchronousQueue-notes.html">Java并发包中的同步队列SynchronousQueue实现原理</a> <span class="date">2013-03-05</span></h1>
 
         <h2>介绍</h2>
@@ -176,6 +227,38 @@ done
       </div>
     
       <div class="post">
+        <h1 class="title"><a href="/2013/03/01/resource-management-in-java.html">Java的资源管理</a> <span class="date">2013-03-01</span></h1>
+
+        <h2>Overview</h2>
+
+<p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。</p>
+
+<h2>try-catch-finally</h2>
+
+<p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如<a href="http://findbugs.sourceforge.net"><strong>FindBugs</strong></a>可以帮助发现此类问题。</p>
+
+<p>首先我们来看一段文件操作代码：</p>
+
+<pre><code>private void copy(String from, String to) throws IOException {
+    FileInputStream in = null;  
+    FileOutputStream out = null;  
+    in = new FileInputStream(from);  
+    out = new FileOutputStream(to);  
+    int c;  
+    while ((c = in.read()) != -1)
+        out.write(c);  
+    in.close();
+    out.close();
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/03/01/resource-management-in-java.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a> <span class="date">2013-03-01</span></h1>
 
         <h2>Overview</h2>
@@ -206,34 +289,33 @@ done
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/01/resource-management-in-java.html">Java的资源管理</a> <span class="date">2013-03-01</span></h1>
+        <h1 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h1>
 
-        <h2>Overview</h2>
+        <h1>Overview</h1>
 
-<p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。</p>
+<p><strong><em>（未完）</em></strong></p>
 
-<h2>try-catch-finally</h2>
+<p>广告按业务划分有以下几类：</p>
 
-<p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如<a href="http://findbugs.sourceforge.net"><strong>FindBugs</strong></a>可以帮助发现此类问题。</p>
+<ol>
+<li>展示广告（Banner广告）</li>
+<li>搜索广告（关键词广告）</li>
+</ol>
 
-<p>首先我们来看一段文件操作代码：</p>
+<p>按计费模式有：</p>
 
-<pre><code>private void copy(String from, String to) throws IOException {
-    FileInputStream in = null;  
-    FileOutputStream out = null;  
-    in = new FileInputStream(from);  
-    out = new FileOutputStream(to);  
-    int c;  
-    while ((c = in.read()) != -1)
-        out.write(c);  
-    in.close();
-    out.close();
-}
-</code></pre>
+<ol>
+<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
+<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
+<li>CPC: 按有效点击次数计费；</li>
+<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
+</ol>
+
+<p>广告系统按结构可划分为以下子系统：</p>
 
 
         <div class="more">
-          <a href="/2013/03/01/resource-management-in-java.html" class="btn btn-small">阅读全文</a>
+          <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -320,37 +402,6 @@ done
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h1>
-
-        <h1>Overview</h1>
-
-<p><strong><em>（未完）</em></strong></p>
-
-<p>广告按业务划分有以下几类：</p>
-
-<ol>
-<li>展示广告（Banner广告）</li>
-<li>搜索广告（关键词广告）</li>
-</ol>
-
-<p>按计费模式有：</p>
-
-<ol>
-<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
-<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
-<li>CPC: 按有效点击次数计费；</li>
-<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
-</ol>
-
-<p>广告系统按结构可划分为以下子系统：</p>
-
-
-        <div class="more">
-          <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html">在Pi和Github上搭建自己的个人博客</a> <span class="date">2013-02-27</span></h1>
 
         <h1>方法如下：</h1>
@@ -413,46 +464,6 @@ done
 
         <div class="more">
           <a href="/2013/02/27/collaborating-development-with-github.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/02/26/dynamic-dns-script.html">动态DNS程序</a> <span class="date">2013-02-26</span></h1>
-
-        <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
-
-<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
-
-<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
-
-<p>获得domain_id可以用：</p>
-
-<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
-</code></pre>
-
-<p>获得record_id：</p>
-
-<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
-</code></pre>
-
-<hr />
-
-<pre><code>package main
-
-import (
-  &quot;io/ioutil&quot;
-  &quot;log&quot;
-  &quot;net&quot;
-  &quot;net/http&quot;
-  &quot;net/url&quot;
-  &quot;strings&quot;
-  &quot;time&quot;
-)
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/02/26/dynamic-dns-script.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
