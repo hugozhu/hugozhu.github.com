@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>如何在Raspberry Pi上用LED闪烁提示网站首页新访客 - When Go meets Raspberry Pi</title>
+    <title>Raspberry Pi GPIO的编号规范 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
+    <meta name="description" content="Raspberry Pi GPIO numbering 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -129,6 +129,37 @@
 
     
       <div class="post">
+        <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
+
+        <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
+
+<p>Arduino特点:
+1. 开源，硬件标准化，配套传感器等模块很多；
+2. 结构简单
+3. 实时系统，稳定，启动只要0.5秒</p>
+
+<h1>Arduino IDE</h1>
+
+<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
+
+<h1>上电测试</h1>
+
+<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
+<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
+
+<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
+
+<h1>上传代码</h1>
+
+<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
+
+
+        <div class="more">
+          <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2013/03/28/22-memory-barriers-or-fences.html">并发编程之内存屏障</a> <span class="date">2013-03-28</span></h1>
 
         <p>原文地址：<a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html"><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href="http://ifeve.com/memory-barriersfences/"><code>http://ifeve.com/memory-barriersfences/</code></a></p>
@@ -150,39 +181,6 @@
 
         <div class="more">
           <a href="/2013/03/28/22-memory-barriers-or-fences.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
-
-        <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
-
-<h1>Arduino IDE</h1>
-
-<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
-
-<h1>上电测试</h1>
-
-<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
-<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/>
-(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
-
-<h1>上传代码</h1>
-
-<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了。</p>
-
-<p>
-/*
-  Blink
-  Turns on an LED on for one second, then off for one second, repeatedly.</p>
-
-<p>This example code is in the public domain.
- */</p>
-
-
-        <div class="more">
-          <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

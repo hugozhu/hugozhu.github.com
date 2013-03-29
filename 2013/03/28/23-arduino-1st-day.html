@@ -104,6 +104,11 @@
   <div class="span8">
     <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
 
+<p>Arduino特点:
+1. 开源，硬件标准化，配套传感器等模块很多；
+2. 结构简单
+3. 实时系统，稳定，启动只要0.5秒</p>
+
 <h1>Arduino IDE</h1>
 
 <p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
@@ -111,12 +116,13 @@
 <h1>上电测试</h1>
 
 <p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
-<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/>
-(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
+<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
+
+<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
 
 <h1>上传代码</h1>
 
-<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了。</p>
+<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
 
 <pre><code>/*
   Blink
@@ -155,14 +161,14 @@ void loop() {
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/28/22-memory-barriers-or-fences.html" title="并发编程之内存屏障">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/27/21-realtime-online-user-counter.html" title="个人网站实时在线人数接口">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/28/22-memory-barriers-or-fences.html" title="并发编程之内存屏障">Next &rarr;</a></li>
           
           
         </ul>
