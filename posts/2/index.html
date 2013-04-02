@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Raspberry Pi做BT下载机+高清播放器 - When Go meets Raspberry Pi</title>
+    <title>如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Raspberry Pi with XMBC 树莓派">
+    <meta name="description" content="后续利用OpenCV还可以合成多张照片成全景图，或者多角度连续视频录制 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -269,6 +269,36 @@ done
       </div>
     
       <div class="post">
+        <h1 class="title"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a> <span class="date">2013-03-01</span></h1>
+
+        <h2>Overview</h2>
+
+<p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p>
+
+<p>先打开内核的IP转发，修改 /etc/sysctl.conf</p>
+
+<pre><code>net.ipv4.ip_forward=1
+</code></pre>
+
+<p>执行下面命令以生效</p>
+
+<pre><code>sudo sysctl -p
+</code></pre>
+
+<h2>PPTP</h2>
+
+<p>安装pptpd</p>
+
+<pre><code>apt-get install pptpd
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2013/03/01/resource-management-in-java.html">Java的资源管理</a> <span class="date">2013-03-01</span></h1>
 
         <h2>Overview</h2>
@@ -301,32 +331,33 @@ done
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a> <span class="date">2013-03-01</span></h1>
+        <h1 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h1>
 
-        <h2>Overview</h2>
+        <h1>Overview</h1>
 
-<p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p>
+<p><strong><em>（未完）</em></strong></p>
 
-<p>先打开内核的IP转发，修改 /etc/sysctl.conf</p>
+<p>广告按业务划分有以下几类：</p>
 
-<pre><code>net.ipv4.ip_forward=1
-</code></pre>
+<ol>
+<li>展示广告（Banner广告）</li>
+<li>搜索广告（关键词广告）</li>
+</ol>
 
-<p>执行下面命令以生效</p>
+<p>按计费模式有：</p>
 
-<pre><code>sudo sysctl -p
-</code></pre>
+<ol>
+<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
+<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
+<li>CPC: 按有效点击次数计费；</li>
+<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
+</ol>
 
-<h2>PPTP</h2>
-
-<p>安装pptpd</p>
-
-<pre><code>apt-get install pptpd
-</code></pre>
+<p>广告系统按结构可划分为以下子系统：</p>
 
 
         <div class="more">
-          <a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html" class="btn btn-small">阅读全文</a>
+          <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -409,37 +440,6 @@ done
 
         <div class="more">
           <a href="/2013/02/28/logging-in-java.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a> <span class="date">2013-02-28</span></h1>
-
-        <h1>Overview</h1>
-
-<p><strong><em>（未完）</em></strong></p>
-
-<p>广告按业务划分有以下几类：</p>
-
-<ol>
-<li>展示广告（Banner广告）</li>
-<li>搜索广告（关键词广告）</li>
-</ol>
-
-<p>按计费模式有：</p>
-
-<ol>
-<li>CPT: 按有效广告展示天数计费，可定价或竞价；</li>
-<li>CPM: 按有效广告展现次数计费，可定价或竞价；</li>
-<li>CPC: 按有效点击次数计费；</li>
-<li>CPS: 按效果计费，如，按成交订单额，按流量带来的有效下载或安装次数计费；</li>
-</ol>
-
-<p>广告系统按结构可划分为以下子系统：</p>
-
-
-        <div class="more">
-          <a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
