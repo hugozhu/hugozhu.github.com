@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Raspberry Pi做BT下载机+高清播放器 - When Go meets Raspberry Pi</title>
+    <title>在Raspberry Pi上使用Google Channel服务搭建实时应用 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Raspberry Pi with XMBC 树莓派">
+    <meta name="description" content="Setup realtime application with Google Channel Service 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -97,143 +97,217 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Raspberry Pi做BT下载机+高清播放器 </h1>
+  <h1>在Raspberry Pi上使用Google Channel服务搭建实时应用 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>介绍</h2>
+    <p>前面提到了有关个人网站的<a href="http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html">实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p>
 
-<p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个<a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;initiative_id=tbindexz_20130306">山寨的</a>的更简单。。。</p>
+<h1>Google Channel Service</h1>
 
-<p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了<a href="http://xbmc.org">XBMC</a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如<a href="http://yisou.com">一搜</a>，优酷，搜狐视频，奇艺等。</p>
+<p><a href="https://developers.google.com/appengine/docs/go/channel/overview">Google Channel Service</a>允许应用和<a href="http://appengine.google.com/">GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p>
 
-<h2>外设</h2>
-
-<p>除了Pi单片机外，你还需要以下外设附件：</p>
+<p>使用这个服务分两步：</p>
 
 <ol>
-<li>5V-1A左右的电源，可以用iPhone或iPad的充电电源，或手机的充电器，电流最少要800毫安</li>
-<li>micro USB线一根，和Kindle以及大多数android手机充电USB线一样</li>
-<li>HDMI线一根，接电视机</li>
-<li>SD卡一张，最少2G</li>
+<li><p>客户端请求服务器端（部署在GAE上）获取一个Channel的Token：
+<img src="https://developers.google.com/appengine/images/channel_overview01.png"/></p></li>
+
+<li><p>客户端根据Channel Token和服务器建立长连接，并开始接收消息，这时其它的客户端（或服务器端）可以想这个通道发送消息
+<img src="https://developers.google.com/appengine/images/channel_overview02.png"/></p></li>
 </ol>
 
-<h2>Raspbmc</h2>
+<h1>在线人数统计实现</h1>
 
-<p><a href="http://www.raspbmc.com/">Raspbmc</a> 是专为在Raspberry Pi上运行<a href="http://xbmc.org">XBMC</a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。</p>
+<h2>在页面上部署beacon</h2>
 
-<h3>特点：</h3>
+<p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p>
 
-<ol>
-<li>免费，开源</li>
-<li>支持多语言</li>
-<li>支持1080P回放</li>
-<li>支持直接播放NFS，SMB，FTP,HTTP或USB硬盘的有视频文件，支持大多数格式</li>
-<li>支持AirPlay或AirTune功能，可以把iPhone/iPad上的视频或音乐通过Pi投放到电视上，这点和Apple TV功能一样</li>
-<li>支持GPIO</li>
-<li>基于Debian，可以从Debian的软件源安装其它软件</li>
-<li>支持1080P DTS软解，这个不少播放器是不支持的，需要额外License</li>
-<li>内置了以下服务:
+<p>于是可以利用GAE实现一个简单的Beacon服务，这里采用Go语言来实现，用Java或Python也是可以的。</p>
 
-<ol>
-<li>Samba</li>
-<li>TVHeadend Server</li>
-<li>FTP Server</li>
-<li>SSH Server</li>
-</ol></li>
-</ol>
+<pre><code>package counter
 
-<h3>安装</h3>
+import (
+    &quot;encoding/base64&quot;
+    &quot;fmt&quot;
+    &quot;time&quot;
+    &quot;net/http&quot;
 
-<ol>
-<li><p>Windows下载<a href="http://download.raspbmc.com/downloads/bin/installers/raspbmc-win32.zip">安装程序</a>，运行即可。</p>
+    &quot;appengine&quot;
+    &quot;appengine/channel&quot;
+)
 
-<p><img src="http://www.raspbmc.com/wp-content/uploads/2012/06/ins-300x165.jpg" alt="image" />
-</p></li>
+var GIF []byte
 
-<li><p>Linux/Mac:</p>
+const (
+    TOPIC = &quot;counter&quot;
+)
 
-<pre><code>curl -O http://svn.stmlabs.com/svn/raspbmc/testing/installers/python/install.py
-chmod +x install.py
-sudo python install.py
+func init() {
+    GIF, _ = base64.StdEncoding.DecodeString(&quot;R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;)
+    
+    
+    http.HandleFunc(&quot;/beacon.gif&quot;, handler)
+    http.HandleFunc(&quot;/new_token&quot;, handler_new_token)    
+}
 
+func handler(w http.ResponseWriter, r *http.Request) {
+    context := appengine.NewContext(r)
 
+    now := time.Now()
+    expire := now.AddDate(30, 0, 0)
+    zcookie, _ := r.Cookie(&quot;z&quot;)
+    if zcookie == nil {
+        zcookie = &amp;http.Cookie{}
+        zcookie.Name = &quot;z&quot;
+        zcookie.Value = make_hash(&quot;&lt;your_salt&gt;&quot;, r.RemoteAddr, now.UnixNano())
+        zcookie.Expires = expire
+        zcookie.Path = &quot;/&quot;
+        http.SetCookie(w, zcookie)
+    }
+
+    w.Header().Set(&quot;Content-type&quot;, &quot;image/gif&quot;)
+    w.Header().Set(&quot;Cache-control&quot;, &quot;no-cache, must-revalidate&quot;)
+    w.Header().Set(&quot;Expires&quot;, &quot;Sat, 26 Jul 1997 05:00:00 GMT&quot;)
+
+    fmt.Fprintf(w, &quot;%s&quot;, GIF)
+
+    channel.Send(context, TOPIC, zcookie.Value+&quot;\n&quot;+r.RemoteAddr+&quot;\n&quot;+r.Referer()+&quot;\n&quot;+r.UserAgent())
+}
+
+func handler_new_token(w http.ResponseWriter, r *http.Request) {
+    c := appengine.NewContext(r)
+    tok, err := channel.Create(c, TOPIC)    
+    callback := r.FormValue(&quot;callback&quot;) 
+    if err != nil {
+        http.Error(w, &quot;Couldn't create Channel&quot;, http.StatusInternalServerError)
+        c.Errorf(&quot;channel.Create: %v&quot;, err)
+        return
+    }
+    if callback == &quot;&quot; {
+        w.Header().Set(&quot;Content-type&quot;, &quot;text/javascript&quot;)
+        fmt.Fprintf(w, &quot;%s&quot;, tok)
+    } else {
+        fmt.Fprintf(w, callback+&quot;('%s')&quot;, tok)
+    }
+}
 </code></pre>
 
-<p><img src="http://www.raspbmc.com/wp-content/uploads/2012/06/installPython.png" alt="image" />
-</p></li>
+<p>代码最后一行是将访问日志实时通过Channel发送出去，该通道有一个指定的主题，这样订阅该主题的客户端都可以收到相应的消息。</p>
 
-<li><p>或直接下载<a href="http://download.raspbmc.com/downloads/bin/ramdistribution/installer.img.gz">安装包</a>安装</p></li>
-</ol>
+<pre><code>application: &lt;your_app_name&gt;
+version: 1
+runtime: go
+api_version: go1
 
-<h3>下载</h3>
+handlers:
+- url: /(.*).html
+  static_files: html/\1.html
+  upload: html/(.*\.html)
 
-<p>你可以在Pi上外接一个USB移动硬盘，但要注意硬盘要有自己电源，也可以mount网络上的硬盘分区。然后运行transmission软件下载视频。</p>
-
-<h4>Transmission</h4>
-
-<ol>
-<li><p>安装</p>
-
-<pre><code>sudo apt-get install transmission-daemon
-sudo /etc/init.d/transmission-daemon stop
-sudo nano /etc/transmission-daemon/settings.json
-</code></pre></li>
-
-<li><p>配置</p></li>
-</ol>
-
-<pre><code>    “rpc-whitelist”: “127.0.0.1″, to “rpc-whitelist”: “*.*.*.*”,
-    “rpc-password”: “password”, to “rpc-password”: “替换成管理密码“,
-    “rpc-username”: “username”, to “rpc-username”: “替换成管理用户“,   
-    “download-dir”：“\/home\/xbmc\/Videos\/Downloads”,
+- url: (/.*)
+  script: _go_app
 </code></pre>
 
-<pre><code>    sudo chmod g+rw /home/xbmc/Videos/Downloads
-    sudo chgrp -R debian-transmission /home/xbmc/Videos/Downloads   
-    sudo /etc/init.d/transmission-daemon start
+<p>将该应用发布到GAE后，可以通过在页面底部放置<code>&lt;img src=&quot;http://&lt;your_app_name&gt;.appspot.com/beacon.gif/&gt;&quot;</code>标签来将网站的流量引到GAE，并通过Channel发布出去。</p>
+
+<h2>接收实时消息</h2>
+
+<p>毕竟遗憾的是Google只提供了Javascript库来供浏览器接收实时消息，相应的使用代码如下。</p>
+
+<pre><code>&lt;html&gt;
+    &lt;body&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;/_ah/channel/jsapi&quot;&gt;&lt;/script&gt;
+
+        &lt;script&gt;
+            function onOpened() {
+                alert(&quot;onOpened&quot;)
+            }
+
+            function onMessage(obj) {
+                console.log(obj)
+                alert(&quot;onMessage: &quot; + obj.data)
+            }
+
+            function onError(x) {
+                alert(&quot;onError:&quot;+x)
+            }
+
+            function onClose(x) {
+                alert(&quot;onClose:&quot;+x)
+            }
+
+            function init(token) {            
+                channel = new goog.appengine.Channel(token);
+                socket = channel.open();
+                socket.onopen = onOpened;
+                socket.onmessage = onMessage;
+                socket.onerror = onError;
+                socket.onclose = onClose;
+            }
+        &lt;/script&gt;
+
+        &lt;script type=&quot;text/javascript&quot; src=&quot;/new_token?callback=init&quot;&gt;&lt;/script&gt;     
+       
+    &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
-<ol>
-<li>24x7开始下载，耗电量很低的，这是下载界面：
-<img src="https://pbs.twimg.com/media/BErnJ-6CcAEVYsV.jpg:large" alt="image" /></li>
-</ol>
+<p>显然Javascript是不能满足统计网站实时流量的需求，我们需要一个服务器端能接收消息的方法，经过对Javascript的逻辑分析，我实现了一个同样能接收消息的<a href="https://github.com/hugozhu/gae-rpi-webapp/tree/master/src/google/appengine/channel">Go语言客户端</a>, 再完善一下后可以发布出来用<code>go get github.com/hugo/gae-channel</code>安装。</p>
 
-<h3>遥控和播放</h3>
+<pre><code>package main
 
-<p>遥控方案有两种：</p>
+import (
+    . &quot;google/appengine/channel&quot;
+    &quot;log&quot;
+)
 
-<ol>
-<li><p>红外接收器 + 电视/DVD/VCD/EVD等已有遥控器，<a href="http://forum.stmlabs.com/showthread.php?tid=5549">这里</a>有一个实现方案</p></li>
+func main() {
+    log.Println(&quot;started&quot;)
+    stop_chan := make(chan bool)
+    channel := NewChannel(&quot;http://&lt;your_app_name&gt;.appspot.com/new_token&quot;)
+    socket := channel.Open()
+    socket.OnOpened = func() {
+        log.Println(&quot;socket opened!&quot;)
+    }
 
-<li><p>通过网络用手机来遥控，其实就是用任何一个xmbc的客户端</p>
+    socket.OnClose = func() {
+        log.Println(&quot;socket closed!&quot;)
+        stop_chan &lt;- true
+    }
 
-<ol>
-<li>iPhone: <a href="https://itunes.apple.com/us/app/unofficial-official-xbmc-remote/id520480364?ls=1&amp;mt=8">Offical XBMC Remote</a> 免费的</li>
-<li>Android: <a href="http://code.google.com/p/android-xbmcremote/">Android XBMC Remote</a> 免费的</li>
-</ol></li>
-</ol>
+    socket.OnMessage = func(msg *Element) {
+        log.Println(msg.ToString())
+    }
 
-<h3>参考文章:</h3>
+    socket.OnError = func(err error) {
+        log.Println(&quot;error:&quot;, err)
+    }
 
-<ol>
-<li><a href="http://www.raspbmc.com/about/">http://www.raspbmc.com/about/</a></li>
-</ol>
+    &lt;-stop_chan
+}
+</code></pre>
+
+<h2>实时分析日志</h2>
+
+<p>在Pi上利用Channel客户端库，脚本可以实时获取访问日志，可以通过最近15分钟内的日志计算出每分钟独立访客数和PV数，最后可以在Pi的液晶屏幕用柱状图显示出来。</p>
+
+<p>（实现部分待续。。。）</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/08/block_failed_ssh_attempts_with_iptable.html" title="如何封杀尝试Raspberry Pi SSH密码的来源IP">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/05/java-SynchronousQueue-notes.html" title="Java并发包中的同步队列SynchronousQueue实现原理">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/28/23-arduino-1st-day.html" title="Arduino初试">Next &rarr;</a></li>
           
           
         </ul>
@@ -282,7 +356,7 @@ sudo nano /etc/transmission-daemon/settings.json
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-06</span></div>
+      <div class="date"><span>2013-04-03</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -297,7 +371,7 @@ sudo nano /etc/transmission-daemon/settings.json
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>8</span></a>
+  <a href="/tags/#Golang-ref">Golang <span>1</span></a>
 </li>
       
       </ul>
