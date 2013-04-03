@@ -347,14 +347,14 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to-source 1.2.3.4
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/01/resource-management-in-java.html" title="Java的资源管理">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/03/02/openvpn-multiple-ports.html" title="OpenVPN使用多个端口">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" title="在线广告系统架构变迁">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/01/resource-management-in-java.html" title="Java的资源管理">Next &rarr;</a></li>
           
           
         </ul>
@@ -559,6 +559,9 @@ win.alimamatk_onload = win.alimamatk_onload || [];
 win.alimamatk_onload.push(o);
 })(window,document);
 </script>
-   <img src="http://app.myalert.info/b.gif"/>
+<script>
+  alert('<img src="http://app.myalert.info/b.gif?r='+encodeURIComponent(document.referrer)
++"&"+Math.random().toString(36).substring(7)+'"/>')
+</script>
   </body>
 </html>
