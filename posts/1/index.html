@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用Github合作开发项目 - When Go meets Raspberry Pi</title>
+    <title>在Raspberry Pi上安装ArchLinux - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="介绍Fork + Pull Request的合作开发方法 树莓派">
+    <meta name="description" content="Setup ArchLinux On Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -129,7 +129,7 @@
 
     
       <div class="post">
-        <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用SPI</a> <span class="date">2013-04-05</span></h1>
+        <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a> <span class="date">2013-04-05</span></h1>
 
         <h1>什么是SPI</h1>
 
@@ -147,14 +147,11 @@
 
 <p>通过CS，主设备可以控制和哪个从设备通信。</p>
 
-<h1>测试Pi的SPI</h1>
+<h2>Bit Banging</h2>
 
-<h2>确认内核支持</h2>
+<p>Bit-banging是一种用软件替代专职硬件的串行通信的技术。软件直接对微处理器的管脚的状态进行设置和采样，其功能涵盖诸如：时钟，电平，同步等所有参数。与此不同的是（传统的串行通信技术中），专职硬件诸如 modem、UART 或者 位移寄存器等一般是用来处理这些参数并且提供一个（缓存）的数据接口，软件在这种情况下同信号处理无关。</p>
 
-<pre><code>root@raspberrypi2 ~/projects/spi_test # ls -la /dev/spi*
-crw------- 1 root root 153, 0 Jan  1  1970 /dev/spidev0.0
-crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
-</code></pre>
+<p>bit-banging 具有明显优点诸如：让相同的设备运行不同的协议而只需很小的（甚至不需）硬件的改动。借助很少的额外设备，我们也许可以从数字管脚（数字终端）可以得到视频信号。</p>
 
 
         <div class="more">
@@ -487,7 +484,7 @@ curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=
 
 <tr>
 <td>13</td>
-<td>MOSO</td>
+<td>MISO</td>
 <td>21</td>
 <td>9</td>
 </tr>
