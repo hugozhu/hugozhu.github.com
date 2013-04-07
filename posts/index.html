@@ -111,6 +111,38 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2013/04/08/26-backup-raspberry-pi.html">备份Raspberry Pi</a> <span class="date">2013-04-08</span></h1>
+
+  <p>树莓派的操作系统安装在SD卡，使用一段时间后还是很有必要备份一下，以防哪天SD卡就坏了。</p>
+
+<p>备份的目的地最方便的还是使用网络存储，我使用的是西部数据的<a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.1.Cz5Mlq&amp;id=13865367896&amp;is_b=1&amp;cat_id=50099232&amp;q=mybooklive&amp;rn=638aa11bdda81f8d589bb0e052c57187">MyBooklive</a>3T网络硬盘。挺不错的一个产品，功能基本满足我的需求。</p>
+
+<p>准备好备份目标盘，将Nas的备份目录mount到树莓派:</p>
+
+<pre><code>mkdir /mnt/backup
+mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest
+</code></pre>
+
+<h1>完整备份</h1>
+
+<p>确定相应的SD卡设备ID</p>
+
+<p>
+root@raspberrypi2 ~/bin # fdisk -l</p>
+
+<p>Disk /dev/mmcblk0: 1973 MB, 1973420032 bytes, 3854336 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0004f23a</p>
+
+
+  <div class="more">
+    <a href="/2013/04/08/26-backup-raspberry-pi.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a> <span class="date">2013-04-05</span></h1>
 
   <h1>什么是SPI</h1>
@@ -270,7 +302,7 @@ curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=
 <ol>
 <li>带蓝色背光</li>
 <li>使用Philips PCD8544 LCD控制器（通过SPI接口）</li>
-<li>84x84点阵，可显示100多个字符</li>
+<li>84x48点阵，可显示100多个字符</li>
 </ol>
 
 <h1>硬件准备</h1>
@@ -525,34 +557,6 @@ curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=
 
   <div class="more">
     <a href="/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html">如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</a> <span class="date">2013-03-16</span></h1>
-
-  <h1>硬件准备</h1>
-
-<p>需要以下硬件：</p>
-
-<ol>
-<li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">母对母1P杜邦线</a>6根</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLt%2BsmFEpvY8zQ4WXjoTHsLWTKD4gnL0sndE3qVPXd4UC6NUEZOQAryYUWhO7gt10i%2FUQ%3D%3D">DC 5V4相28YBJ-48步进电机</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLuXQmw2TUIlWTNRCvS2wo483pjZyXspPuvkTH5pg4vQUqrztOAoNz2Gfp8MmwKPg%2FbQb8%3D">UL2003芯片步进电机驱动板</a>一块</li>
-</ol>
-
-<h1>安装</h1>
-
-<p>按下图将步进电机接到驱动板上，也就是白色的接口</p>
-
-<p><img src="http://img04.taobaocdn.com/bao/uploaded/i4/T10lS4XnXfXXaZhKrX_115008.jpg_310x310.jpg"/></p>
-
-<p><img src="http://img02.taobaocdn.com/imgextra/i2/49873130/T2534HXoBXXXXXXXXX_!!49873130.jpg" width="600"/></p>
-
-
-  <div class="more">
-    <a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
