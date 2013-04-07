@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Categories - When Go meets Raspberry Pi</title>
+    <title>Tools - When Go meets Raspberry Pi</title>
+  
+    <meta name="description" content="Very helpful tools for development 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -60,9 +62,9 @@
 
             
               
-  <li class="active"><a href="/categories" class="active">Categories</a></li>
 
 
+  <li><a href="/categories">Categories</a></li>
 
 
             
@@ -74,9 +76,9 @@
 
             
               
+  <li class="active"><a href="/tools" class="active">Tools</a></li>
 
 
-  <li><a href="/tools">Tools</a></li>
 
 
             
@@ -103,13 +105,11 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>Categories </h1>
+  <h1>Tools </h1>
 </div>
 
 <div class="row">
   <div class="span12">
-    
-
     <div style="float:right">
 <br/>
 
@@ -172,72 +172,30 @@ alimama_height=250;
 
 </div>
 
+<h1>URL Encode/Decode</h1>
 
-<ul class="tag_box inline">
+<script type="text/javascript">
+function encode() {
+    var obj = document.getElementById('dencoder');
+    var unencoded = obj.value;
+    obj.value = encodeURIComponent(unencoded);
+}
+function decode() {
+    var obj = document.getElementById('dencoder');
+    var encoded = obj.value;
+    obj.value = decodeURIComponent(encoded.replace(/\+/g,  " "));
+}
+</script>
 
-  <li>
-  <a href="/categories/#Blog-ref">Blog <span>26</span></a>
-</li>
+<form onsubmit="return false;">
+<textarea cols="200" rows="5" id="dencoder" style="width:500px;height:50px"></textarea>    
+<div>
+<input type="button" onclick="decode()" value="Decode">
+<input type="button" onclick="encode()" value="Encode">
+</div>
+</form>
 
-</ul>
-
-
-  <h2>Blog (26)</h2>
-  <ul>
-    
-      <li><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a></li>
-    
-      <li><a href="/2013/04/03/24-google-channel-service.html">在Raspberry Pi上使用Google Channel服务搭建实时应用</a></li>
-    
-      <li><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a></li>
-    
-      <li><a href="/2013/03/28/22-memory-barriers-or-fences.html">并发编程之内存屏障</a></li>
-    
-      <li><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a></li>
-    
-      <li><a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html">升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</a></li>
-    
-      <li><a href="/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</a></li>
-    
-      <li><a href="/2013/03/22/19-raspberry-pi-gpio-port-naming.html">Raspberry Pi GPIO的编号规范</a></li>
-    
-      <li><a href="/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html">如何使用Raspberry Pi测量室内温度和湿度并绘制曲线</a></li>
-    
-      <li><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html">如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</a></li>
-    
-      <li><a href="/2013/03/13/vistor-on-homepage-led-indicator.html">如何在Raspberry Pi上用LED闪烁提示网站首页新访客</a></li>
-    
-      <li><a href="/2013/03/09/setup-archliunx-on-raspberry-pi.html">在Raspberry Pi上安装ArchLinux</a></li>
-    
-      <li><a href="/2013/03/08/block_failed_ssh_attempts_with_iptable.html">如何封杀尝试Raspberry Pi SSH密码的来源IP</a></li>
-    
-      <li><a href="/2013/03/06/raspberry-pi-with-xmbc.html">Raspberry Pi做BT下载机+高清播放器</a></li>
-    
-      <li><a href="/2013/03/05/java-SynchronousQueue-notes.html">Java并发包中的同步队列SynchronousQueue实现原理</a></li>
-    
-      <li><a href="/2013/03/02/openvpn-multiple-ports.html">OpenVPN使用多个端口</a></li>
-    
-      <li><a href="/2013/03/01/resource-management-in-java.html">Java的资源管理</a></li>
-    
-      <li><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a></li>
-    
-      <li><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html">在线广告系统架构变迁</a></li>
-    
-      <li><a href="/2013/02/28/logging-in-java.html">Java程序的日志</a></li>
-    
-      <li><a href="/2013/02/27/collaborating-development-with-github.html">使用Github合作开发项目</a></li>
-    
-      <li><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html">在Pi和Github上搭建自己的个人博客</a></li>
-    
-      <li><a href="/2013/02/26/dynamic-dns-script.html">动态DNS程序</a></li>
-    
-      <li><a href="/2013/02/26/linux_perf_tools.html">系统调试和分析工具</a></li>
-    
-      <li><a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html">将Java的Properties文件转换成环境变量</a></li>
-    
-      <li><a href="/2012/new-born.html">我的第一篇博客</a></li>
-    
-  </ul>
+<h1>JSON Pretty Print</h1>
 
   </div>
 </div>
