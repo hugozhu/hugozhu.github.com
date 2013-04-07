@@ -119,11 +119,11 @@
   <h4><a href="/2013/04/03/24-google-channel-service.html">在Raspberry Pi上使用Google Channel服务搭建实时应用</a></h4>
   <p>Setup realtime application with Google Channel Service</p>
   
-  <h4><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a></h4>
-  <p>Arduino first day</p>
-  
   <h4><a href="/2013/03/28/22-memory-barriers-or-fences.html">并发编程之内存屏障</a></h4>
   <p>Memory Barriers/Fences：一组处理器指令，用来实现内存数据对CPU的可见性。</p>
+  
+  <h4><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a></h4>
+  <p>Arduino first day</p>
   
   <h4><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a></h4>
   <p>把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩</p>
@@ -186,9 +186,8 @@
       </div>
 
 <hr/>
-<div style="float:right;padding-right:80px">
-<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB04MQzdgG3VSuWRI1IF3n%2FzhW5Gze6lARW%2F6wppaeuAahpi92q7zwCUfaJaaRSsqaln1AWSo6Ao%2BYc%3D"><img width="270" height="270" src="http://img03.taobaocdn.com/bao/uploaded/i3/14364033184428336/T13oBtXwRbXXXXXXXX_!!0-item_pic.jpg_270x270.jpg"/></a>
-</div>
+
+<div style="float:right;padding-right:80px"><a onclick="clk_track('home_pi')" href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB04MQzdgG3VSuWRI1IF3n%2FzhW5HbKnj4dMMnZV62W6Vrr4aYHB0LrtzeEqVzfF8UMo0UFO03%2Faad4M%3D"><img style="border:1px solid #ccc" width="270" height="270" src="http://img03.taobaocdn.com/bao/uploaded/i3/14364033184428336/T13oBtXwRbXXXXXXXX_!!0-item_pic.jpg_270x270.jpg"/></a><div style="text-align:right">淘宝推广</div></div>
 
 <ul><h5>常用链接</h5>
 <li><a href="https://gist.github.com/4440996">在Raspberry Pi上听豆瓣电台</a></li>
@@ -299,8 +298,10 @@ win.alimamatk_onload.push(o);
 })(window,document);
 </script>
 <script>
-  document.write('<img src="http://app.myalert.info/b.gif?r='+encodeURIComponent(document.referrer)
-+"&"+Math.random().toString(36).substring(7)+'"/>')
+  var _h=Math.random().toString(36).substring(7)
+  document.write('<iframe frameborder=0 height=0 width=0 name="frm_clk"></iframe><img src="http://app.myalert.info/b.gif?r='+encodeURIComponent(document.referrer)
++"&pv="+_h+'"/>')
+  function clk_track(nurl){frames["frm_clk"].location.replace("http://app.myalert.info/b.gif?r="+encodeURIComponent(nurl)+"&clk="+_h);}
 </script>
-  </body>
+</body>
 </html>
