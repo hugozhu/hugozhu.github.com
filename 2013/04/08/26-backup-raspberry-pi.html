@@ -143,8 +143,10 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
 <p>执行备份</p>
 
-<pre><code>cd /mnt/backup
-dd if=/dev/mmcblk0 of=raspberrypi2.img bs=2M
+<pre><code>root@raspberrypi2 /mnt/backup # dd if=/dev/mmcblk0 of=raspberrypi2.img bs=2M
+941+0 records in
+941+0 records out
+1973420032 bytes (2.0 GB) copied, 786.555 s, 2.5 MB/s
 </code></pre>
 
 <h1>增量备份</h1>
@@ -170,8 +172,8 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
       <ul>
         <ul>
           
+            <li class="prev"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html" title="Raspberry Pi的GPIO中断编程">&larr; Previous</a></li>
           
-            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
@@ -232,7 +234,7 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
       <ul class="tag_box">
       
         <li>
-  <a href="/categories/#Blog-ref">Blog <span>27</span></a>
+  <a href="/categories/#Blog-ref">Blog <span>28</span></a>
 </li>
       
       </ul>

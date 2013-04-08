@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Java的资源管理 - When Go meets Raspberry Pi</title>
+    <title>Raspberry Pi的GPIO中断编程 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Introduction of best practices for Java resource management 树莓派">
+    <meta name="description" content="Interrupts with Raspberry Pi GPIO Pins 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,170 +104,183 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Java的资源管理 </h1>
+  <h1>Raspberry Pi的GPIO中断编程 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>Overview</h2>
+    
 
-<p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。</p>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">背景介绍</a></li>
+<li><a href="#toc_1">应用</a></li>
+<li><a href="#toc_2">wiringPi</a></li>
+<li><a href="#toc_3">示例代码</a></li>
+<li><a href="#toc_4">RPi.GPIO</a></li>
+<li><a href="#toc_5">参考链接</a></li>
+</ul>
+</nav></p>
 
-<h2>try-catch-finally</h2>
+<h1 id="toc_0">背景介绍</h1>
 
-<p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如<a href="http://findbugs.sourceforge.net"><strong>FindBugs</strong></a>可以帮助发现此类问题。</p>
+<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），如，当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
 
-<p>首先我们来看一段文件操作代码：</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
 
-<pre><code>private void copy(String from, String to) throws IOException {
-    FileInputStream in = null;  
-    FileOutputStream out = null;  
-    in = new FileInputStream(from);  
-    out = new FileOutputStream(to);  
-    int c;  
-    while ((c = in.read()) != -1)
-        out.write(c);  
-    in.close();
-    out.close();
+<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
+
+<h1 id="toc_1">应用</h1>
+
+<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
+
+<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。常见的树莓派的Linux发行版内核对此已有支持。</p>
+
+<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下一切都是文件的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
+
+<pre><code>root@raspberrypi2 ~/projects/interrupt_test # ls -l /sys/class/gpio/gpio25/
+total 0
+-rw-r--r-- 1 root root 4096 Apr  8 23:56 active_low
+-rw-r--r-- 1 root root 4096 Apr  8 22:29 direction
+-rw-r--r-- 1 root root 4096 Apr  8 22:29 edge
+drwxr-xr-x 2 root root    0 Apr  8 23:56 power
+lrwxrwxrwx 1 root root    0 Apr  8 23:56 subsystem -&gt; ../../../../class/gpio
+-rw-r--r-- 1 root root 4096 Apr  8 22:08 uevent
+-rw-r--r-- 1 root root 4096 Apr  8 22:29 value
+root@raspberrypi2 ~/projects/interrupt_test # 
+</code></pre>
+
+<h1 id="toc_2">wiringPi</h1>
+
+<p><a href="https://projects.drogon.net/raspberry-pi/wiringpi/functions/">wiringPi</a>库封装了一个简单的接口，传入一个回调函数，当事件发生时传入的函数将被调用。</p>
+
+<pre><code>int wiringPiISR (int pin, int edgeType,  void (*function)(void)) ;
+</code></pre>
+
+<p>其最主要的部分的代码是：</p>
+
+<pre><code>int waitForInterruptSys (int pin, int mS)
+{
+  int fd, x ;
+  uint8_t c ;
+  struct pollfd polls ;
+
+  if ((fd = sysFds [pin &amp; 63]) == -1)
+    return -2 ;
+
+// Setup poll structure
+
+  polls.fd     = fd ;
+  polls.events = POLLPRI ;      // Urgent data!
+
+// Wait for it ...
+
+  x = poll (&amp;polls, 1, mS) ;
+
+// Do a dummy read to clear the interrupt
+//      A one character read appars to be enough.
+
+  (void)read (fd, &amp;c, 1) ;
+
+  return x ;
 }
 </code></pre>
 
-<p>一眼看上去，代码挺整齐的，逻辑也容易理解。但其中有一个很大的问题是，如果out.write调用失败（比如磁盘空间满了）方法异常退出，in.close()和out.close()就不会被调用，而in和out对象内部都引用了系统资源-<a href="http://zh.wikipedia.org/wiki/文件描述符">文件描述符</a>，这样会导致文件描述符没有关闭，不能被重新使用而直到整个Java进程退出。</p>
+<h1 id="toc_3">示例代码</h1>
 
-<h4><a href="http://en.wikipedia.org/wiki/File_descriptor">File descriptor</a></h4>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;wiringPi.h&gt;
 
-<p>Linux的每个进程（如：Java进程）都有一个文件描述符表管理当前进程访问的所有的文件，文件描述符关联了系统文件表中的file entry，系统能容纳多少file entry是有限制的，如果超过限制系统会拒绝访问，抛出Too many opened files错误。</p>
 
-<p><img src="https://pbs.twimg.com/media/BEUt3v3CEAAeP-m.jpg:large"/></p>
+// What GPIO input are we using?
+//      This is a wiringPi pin number
 
-<p>较为正确的代码应该是：</p>
+#define BUTTON_PIN      6
 
-<pre><code>private void copy(String src, String dest) throws IOException {
-    FileInputStream in = null;  
-    FileOutputStream out = null;  
-    try {
-        in = new FileInputStream(src);  
-        out = new FileOutputStream(dest);  
-        int c;  
-        while ((c = in.read()) != -1)
-            out.write(c);
-    } finally {
-         try {
-             if (in!=null) {
-                in.close();
-             }
-         } finally {
-             if (out!=null) {
-                out.close();
-             }
-         }
-    }
+static volatile int globalCounter = 0 ;
+
+
+void myInterrupt (void)
+{
+  ++globalCounter ;
+}
+
+
+int main (void)
+{
+  int myCounter = 0 ;
+
+  if (wiringPiSetup () &lt; 0)
+  {
+    fprintf (stderr, &quot;Unable to setup wiringPi: %s\n&quot;, strerror (errno)) ;
+    return 1 ;
+  }
+
+  if (wiringPiISR (BUTTON_PIN, INT_EDGE_FALLING, &amp;myInterrupt) &lt; 0)
+  {
+    fprintf (stderr, &quot;Unable to setup ISR: %s\n&quot;, strerror (errno)) ;
+    return 1 ;
+  }
+
+
+  for (;;)
+  {
+    printf (&quot;Waiting ... &quot;) ; fflush (stdout) ;
+
+    while (myCounter == globalCounter)
+      delay (100) ;
+
+    printf (&quot; Done. counter: %5d\n&quot;, globalCounter) ;
+    myCounter = globalCounter ;
+  }
+
+  return 0 ;
 }
 </code></pre>
 
-<p>但是这样的代码写起来是不是让人有点沮丧？这样写代码犯错的可能性确实比较大。
-改良过后的代码阅读性好一些：</p>
+<h1 id="toc_4">RPi.GPIO</h1>
 
-<pre><code>private void copy(String src, String dest) throws IOException {
-    FileInputStream in = null;  
-    FileOutputStream out = null;  
-    try {
-        in = new FileInputStream(src);  
-        out = new FileOutputStream(dest);  
-        int c;  
-        while ((c = in.read()) != -1)
-            out.write(c);  
-    } finally {
-        FileUtils.close(in);
-        FileUtils.close(out);
-    }
-}
+<p>Python的PRI.GPIO库也对中断进行了封装，以下是使用例子，差别在于wiringPi支持多线程，允许在等待中断的时候干点别的。</p>
+
+<pre><code>#!/usr/bin/env python2.7  
+# script by Alex Eames http://RasPi.tv/  
+# http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio  
+import RPi.GPIO as GPIO  
+GPIO.setmode(GPIO.BCM)  
+  
+# GPIO 25 set up as input. It is pulled up to stop false signals  
+GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
+  
+print &quot;Make sure you have a button connected so that when pressed&quot;  
+print &quot;it will connect GPIO port 23 (pin 16) to GND (pin 6)\n&quot;  
+raw_input(&quot;Press Enter when ready\n&gt;&quot;)  
+  
+print &quot;Waiting for falling edge on port 23&quot;  
+# now the program will do nothing until the signal on port 23   
+# starts to fall towards zero. This is why we used the pullup  
+# to keep the signal high and prevent a false interrupt  
+  
+print &quot;During this waiting time, your computer is not&quot;   
+print &quot;wasting resources by polling for a button press.\n&quot;  
+print &quot;Press your button when ready to initiate a falling edge interrupt.&quot;  
+while 1:
+    try:  
+        GPIO.wait_for_edge(25, GPIO.FALLING)  
+        print &quot;\nFalling edge detected. Now your program can continue with&quot;  
+        print &quot;whatever was waiting for a button press.&quot;  
+    except KeyboardInterrupt:  
+        GPIO.cleanup()       # clean up GPIO on CTRL+C exit  
+GPIO.cleanup()           # clean up GPIO on normal exit  
 </code></pre>
 
-<p>让我们也看看在其他语言里是怎么实现的：</p>
-
-<h3>Ruby：</h3>
-
-<pre><code>def copy(src, dest)
-    File.open(dest, 'w') do |f|  
-        f.write(File.read(src))
-    end  
-end
-</code></pre>
-
-<p>Ruby的File.open 方法接受一个函数作为参数，执行该函数后，会保证打开的文件被关闭，即使在执行函数过程中有异常。相比之下这种代码优美多了有没有？</p>
-
-<h3>Golang：</h3>
-
-<pre><code>func copy(src string, dest string) {
-    src_file, err := os.Open(src)
-    if err != nil { panic(err) }
-    defer src_file.Close()
-
-    dest_file, err := os.Open(dest)
-    if err != nil { panic(err) }
-    defer dest_file.Close() 
-
-    buf := make([]byte,1024)
-
-    for {
-        n, err := src_file.Read(buf)
-        if err != nil &amp;&amp; err != io.EOF { panic(err) }
-        if n == 0 {break}
-
-        if _, err:= dest_file.Write(buf[:n]); err != nil {
-           panic(err)
-        } 
-    }       
-}
-</code></pre>
-
-<p>Go语言通过defer关键词来保证程序结束时相应的方法会被调用，嗯，你还是要显示的写Close()方法，但有一点改进就是你可以在打开后立刻写关闭语句，只要加上defer关键词。</p>
-
-<h3>Clojure：</h3>
-
-<pre><code>defn copy[src dest] ( 
-   (with-open [rdr (reader src)
-               wrtr (writer dest)]
-      (doseq [line (line-seq rdr)]
-          (.write wrtr line))))
-</code></pre>
-
-<p>Clojure通过with-open函数来保证打开的文件在异常情况下也会被关闭</p>
-
-<h3>Java 7：</h3>
-
-<pre><code>private void copy(String src, String dest) throws IOException {
-    FileInputStream in = null;  
-    FileOutputStream out = null;  
-    try (FileInputStream in = new FileInputStream(src);  
-         FileOutputStream out = new FileOutputStream(dest)) {            
-        int c;  
-        while ((c = in.read()) != -1)
-            out.write(c);  
-}
-</code></pre>
-
-<p>终于Java 7通过自动资源管理较好的解决了这个问题，try()代码块内的变量在离开时候会自动调用AutoCloseable接口必须实现的close()方法。java.lang.AutoCloseable接口是在Java 7内新增的。</p>
-
-<h2>独占资源和并发访问</h2>
-
-<h3>锁</h3>
-
-<h4>读写锁</h4>
-
-<h3>信号量</h3>
-
-<h3>连接池</h3>
-
-<h2>作业</h2>
-
-<p>TODO：</p>
-
-<h2>参考链接</h2>
+<h1 id="toc_5">参考链接</h1>
 
 <ol>
-<li><a href="http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html">Better Resource Management with Java SE 7: Beyond Syntactic Sugar</a></li>
+<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/functions/">https://projects.drogon.net/raspberry-pi/wiringpi/functions/</a></li>
+<li><a href="http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio">http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio</a></li>
 </ol>
 
     <hr>
@@ -275,14 +288,14 @@ end
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/02/openvpn-multiple-ports.html" title="OpenVPN使用多个端口">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html" title="在Ubuntu上配置L2TP，PPTP和OpenVPN服务">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/04/08/26-backup-raspberry-pi.html" title="备份Raspberry Pi">Next &rarr;</a></li>
           
           
         </ul>
@@ -331,7 +344,7 @@ end
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-01</span></div>
+      <div class="date"><span>2013-04-08</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -346,11 +359,7 @@ end
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Java-ref">Java <span>5</span></a>
-</li>
-      
-        <li>
-  <a href="/tags/#%E4%BB%A3%E7%A0%81%E4%B9%8B%E7%BE%8E-ref">代码之美 <span>2</span></a>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>9</span></a>
 </li>
       
       </ul>
