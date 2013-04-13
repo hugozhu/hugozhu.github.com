@@ -111,29 +111,29 @@
 <div class="row">
   <div class="span12">
     <div class="post">
-  <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
+  <h1 class="title"><a href="/2013/04/13/28-use-tsar-to-monitor-raspberry-pi.html">使用tsar记录和监控树莓派CPU温度</a> <span class="date">2013-04-13</span></h1>
 
-  <h1>背景介绍</h1>
+  <p>夏天到了，树莓派的CPU温度也开始节节攀升，虽然我们也可以用云服务<a href="http://hugozhu.myalert.info/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html">Coms</a>来监控，但每5分钟采样一次精度不够高，每分钟采样一次则上传次数又太多了点。最好的方法还是使用<a href="http://github.com/alibaba/tsar">tsar</a>这样的工具本地高频（如每1分钟）采样，然后再定时将5分钟的均值上传到Coms绘图。</p>
 
-<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
+<p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。</p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
+<p>首先按照安装说明，见<a href="https://github.com/alibaba/tsar">https://github.com/alibaba/tsar</a>将tsar和tsardevel安装好。</p>
 
-<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
+<p>首先运行下面的命令生成mod_rpi模块：</p>
 
-<h1>应用</h1>
+<pre><code>hugo@raspberrypi2 ~/projects/tsardevel $ tsardevel rpi 
+build:make
+install:make install
+uninstall:make uninstall
+hugo@raspberrypi2 ~/projects/tsardevel $ ls rpi
+Makefile  mod_rpi.c  mod_rpi.conf
+</code></pre>
 
-<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
-
-<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
-
-<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
-
-<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
+<p>然后修改mod_rpi.c，增加读取CPU温度的逻辑：</p>
 
 
   <div class="more">
-    <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
+    <a href="/2013/04/13/28-use-tsar-to-monitor-raspberry-pi.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
@@ -166,6 +166,33 @@ Disk identifier: 0x0004f23a</p>
 
   <div class="more">
     <a href="/2013/04/08/26-backup-raspberry-pi.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
+
+  <h1>背景介绍</h1>
+
+<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
+
+<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
+
+<h1>应用</h1>
+
+<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
+
+<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
+
+<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
+
+<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
+
+
+  <div class="more">
+    <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
@@ -395,167 +422,6 @@ curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=
 
   <div class="more">
     <a href="/2013/03/23/19-raspberry-pi-drive-1602-lcd.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/03/22/19-raspberry-pi-gpio-port-naming.html">Raspberry Pi GPIO的编号规范</a> <span class="date">2013-03-22</span></h1>
-
-  <p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p>
-
-<h1>GPIO库</h1>
-
-<ol>
-<li><a href="https://github.com/WiringPi/WiringPi">wiringPi</a> C，有Perl, PHP, Ruby, Node.JS和<strong><a href="http://github.com/hugozhu/rpi">Golang</a></strong>的扩展，支持wiringPi Pin和BCM GPIO两种编号</li>
-<li><a href="https://pypi.python.org/pypi/RPi.GPIO">RPi.GPIO</a> Python，支持Board Pin和BCM GPIO两种编号</li>
-<li><a href="http://code.google.com/p/webiopi/">Webiopi</a>，Python, 使用BCM GPIO编号</li>
-<li><a href="http://github.com/hugozhu/rpi">WiringPi-Go</a>, Go语言，支持以上三种编号</li>
-</ol>
-
-<h1>编号规范</h1>
-
-<ol>
-<li>第一列是wiringPi API中的缺省编号，<code>wiringPiSetup()</code>采用这列编号</li>
-<li>第二列（Name）往往是转接板的编号</li>
-<li>第三列是树莓派板子上的自然编号（左边引脚为1-15，右边引脚为2-26），<code>RPi.GPIO.setmode(GPIO.BOARD)</code>采用这列编号</li>
-<li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了<code>WiringPiSetupGpio()</code>或<code>RPi.GPIO.setmode(GPIO.BCM)</code>采用这列编号</li>
-</ol>
-
-<table>
-<thead>
-<tr>
-<td>wiringPi Pin</td>
-<td>Name</td>
-<td>Board Pin</td>
-<td>BCM GPIO</td>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>0</td>
-<td>GPIO 0</td>
-<td>11</td>
-<td>17</td>
-</tr>
-
-<tr>
-<td>1</td>
-<td>GPIO 1</td>
-<td>12</td>
-<td>18</td>
-</tr>
-
-<tr>
-<td>2</td>
-<td>GPIO 2</td>
-<td>13</td>
-<td>21</td>
-</tr>
-
-<tr>
-<td>3</td>
-<td>GPIO 3</td>
-<td>15</td>
-<td>22</td>
-</tr>
-
-<tr>
-<td>4</td>
-<td>GPIO 4</td>
-<td>16</td>
-<td>23</td>
-</tr>
-
-<tr>
-<td>5</td>
-<td>GPIO 5</td>
-<td>18</td>
-<td>24</td>
-</tr>
-
-<tr>
-<td>6</td>
-<td>GPIO 6</td>
-<td>22</td>
-<td>25</td>
-</tr>
-
-<tr>
-<td>7</td>
-<td>GPIO 7</td>
-<td>7</td>
-<td>4</td>
-</tr>
-
-<tr>
-<td>8</td>
-<td>SDA</td>
-<td>3</td>
-<td>0</td>
-</tr>
-
-<tr>
-<td>9</td>
-<td>SCL</td>
-<td>5</td>
-<td>1</td>
-</tr>
-
-<tr>
-<td>10</td>
-<td>CE0</td>
-<td>24</td>
-<td>8</td>
-</tr>
-
-<tr>
-<td>11</td>
-<td>CE1</td>
-<td>26</td>
-<td>7</td>
-</tr>
-
-<tr>
-<td>12</td>
-<td>MOSI</td>
-<td>19</td>
-<td>10</td>
-</tr>
-
-<tr>
-<td>13</td>
-<td>MISO</td>
-<td>21</td>
-<td>9</td>
-</tr>
-
-<tr>
-<td>14</td>
-<td>SCLK</td>
-<td>23</td>
-<td>11</td>
-</tr>
-
-<tr>
-<td>15</td>
-<td>TXD</td>
-<td>8</td>
-<td>14</td>
-</tr>
-
-<tr>
-<td>16</td>
-<td>RXD</td>
-<td>10</td>
-<td>15</td>
-</tr>
-</tbody>
-</table>
-
-
-  <div class="more">
-    <a href="/2013/03/22/19-raspberry-pi-gpio-port-naming.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 

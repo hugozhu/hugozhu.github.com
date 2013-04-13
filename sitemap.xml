@@ -4,12 +4,17 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</loc>
-		<lastmod>2013-04-08</lastmod>
+		<loc>http://hugozhu.myalert.info/2013/04/13/28-use-tsar-to-monitor-raspberry-pi.html</loc>
+		<lastmod>2013-04-13</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://hugozhu.myalert.info/2013/04/08/26-backup-raspberry-pi.html</loc>
+		<lastmod>2013-04-08</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</loc>
 		<lastmod>2013-04-08</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -94,12 +99,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
