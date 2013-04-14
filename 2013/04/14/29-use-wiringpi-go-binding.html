@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>系统调试和分析工具 - When Go meets Raspberry Pi</title>
+    <title>使用Go语言在树莓派上编程 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Linux Toolkits for man! 树莓派">
+    <meta name="description" content="Programming Raspberry Pi with golang 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,30 +104,163 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>系统调试和分析工具 </h1>
+  <h1>使用Go语言在树莓派上编程 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>Linux下的调试和分析工具集</p>
+    <p><a href="https://projects.drogon.net/raspberry-pi/wiringpi/">WiringPi</a>是树莓派上比较好的一个开发库，是用C语言写的。使用cgo，我们可以在Go语言里方便的调用WiringPI的函数，于是我包装了一个<a href="https://github.com/hugozhu/rpi">WiringPi-Go</a>，目前支持wiringPi的基本功能，硬件SPI协议驱动Nokia 5110屏幕，以及中断，未来还会增加PWM和I2C协议的支持。</p>
 
-<hr />
+<p>下面是一个完整的使用例子，结合了之前的两个电路：<a href="http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html">链接1</a>，<a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">链接2</a></p>
 
-<p><img src="/assets/media/tools.jpg" width="600"/></p>
+<p>通过push button可以切换液晶屏显示不同脚本的输出内容。</p>
+
+<p>lcd_switch.go</p>
+
+<pre><code>package main
+
+import (
+    . &quot;github.com/hugozhu/rpi&quot;
+    &quot;github.com/hugozhu/rpi/pcd8544&quot;
+    &quot;log&quot;
+    &quot;os/exec&quot;
+    &quot;time&quot;
+)
+
+const (
+    DIN        = PIN_MOSI
+    SCLK       = PIN_SCLK
+    DC         = PIN_GPIO_2
+    RST        = PIN_GPIO_0
+    CS         = PIN_CE0
+    PUSHBUTTON = PIN_GPIO_6
+    CONTRAST   = 40 //may need tweak for each Nokia 5110 screen
+)
+
+var screen_chan chan int
+var TOTAL_MODES = 3
+
+func init() {
+    WiringPiSetup()
+    pcd8544.LCDInit(SCLK, DIN, DC, CS, RST, CONTRAST)
+    screen_chan = make(chan int, 1)
+}
+
+func main() {
+    //a goroutine to check button push event
+    go func() {
+        last_time := time.Now().UnixNano() / 1000000
+        btn_pushed := 0
+        for pin := range WiringPiISR(PUSHBUTTON, INT_EDGE_FALLING) {
+            if pin &gt; -1 {
+                n := time.Now().UnixNano() / 1000000
+                delta := n - last_time
+                if delta &gt; 300 { //software debouncing
+                    log.Println(&quot;btn pushed&quot;)
+                    last_time = n
+                    btn_pushed++
+                    screen_chan &lt;- btn_pushed % TOTAL_MODES //switch the screen display
+                }
+            }
+        }
+    }()
+
+    //a groutine to update display every 5 seconds
+    go loop_update_display()
+
+    //set screen 0 to be default display
+    screen_chan &lt;- 0
+
+    ticker := time.NewTicker(5 * time.Second)
+
+    for {
+        &lt;-ticker.C
+        screen_chan &lt;- -1 //refresh current screen every 5 seconds
+    }
+}
+
+func loop_update_display() {
+    current_screen := 0
+    for screen := range screen_chan {
+        if screen &gt;= 0 {
+            if screen != current_screen {
+                //btn pushed
+                current_screen = screen
+                display_loading()
+            }
+        }
+        switch current_screen {
+        case 0:
+            display_screen0()
+        case 1:
+            display_screen1()
+        case 2:
+            display_screen2()
+        }
+    }
+}
+
+func display_loading() {
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 20, &quot;Loading ...&quot;)
+    pcd8544.LCDdisplay()
+}
+
+func display_screen0() {
+    out, err := exec.Command(&quot;/bin/screen_0.sh&quot;).CombinedOutput()
+    if err != nil {
+        out = []byte(err.Error())
+    }
+
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 0, string(out))
+    pcd8544.LCDdisplay()
+}
+
+func display_screen1() {
+    out, err := exec.Command(&quot;/bin/screen_1.sh&quot;).CombinedOutput()
+    if err != nil {
+        out = []byte(err.Error())
+    }
+
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 0, string(out))
+    pcd8544.LCDdisplay()
+}
+
+func display_screen2() {
+    out, err := exec.Command(&quot;/bin/screen_2.sh&quot;).CombinedOutput()
+    if err != nil {
+        out = []byte(err.Error())
+    }
+
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 0, string(out))
+    pcd8544.LCDdisplay()
+}
+</code></pre>
+
+<p>/bin/screen_2.sh</p>
+
+<pre><code>#!/bin/bash
+
+echo &quot;Current IP:&quot; 
+ifconfig  | grep &quot;inet &quot; | awk '{print $2}'
+</code></pre>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" title="在Pi和Github上搭建自己的个人博客">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/26/dynamic-dns-script.html" title="动态DNS程序">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/04/13/28-use-tsar-to-monitor-raspberry-pi.html" title="使用tsar记录和监控树莓派CPU温度">Next &rarr;</a></li>
           
           
         </ul>
@@ -176,7 +309,7 @@
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-26</span></div>
+      <div class="date"><span>2013-04-14</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -191,7 +324,7 @@
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Linux-ref">Linux <span>4</span></a>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>11</span></a>
 </li>
       
       </ul>
