@@ -113,7 +113,7 @@
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li><a href="#toc_0">名称定义</a></li>
+<li><a href="#toc_0">名词定义</a></li>
 <li><a href="#toc_1">背景介绍</a></li>
 <li><a href="#toc_2">Happens Before</a>
 <ul>
@@ -122,8 +122,8 @@
 <li><a href="#toc_4">同步方法</a>
 <ul>
 <li><a href="#toc_5">初始化</a></li>
-<li><a href="#toc_6">Goroutine创建</a></li>
-<li><a href="#toc_7">Goroutine销毁</a></li>
+<li><a href="#toc_6">创建Goroutine</a></li>
+<li><a href="#toc_7">销毁Goroutine</a></li>
 <li><a href="#toc_8">Channel通信</a></li>
 </ul></li>
 <li><a href="#toc_9">锁</a></li>
@@ -132,7 +132,7 @@
 </ul>
 </nav></p>
 
-<h1 id="toc_0">名称定义</h1>
+<h1 id="toc_0">名词定义</h1>
 
 <p>执行体 - Go里的Goroutine或Java中的Thread</p>
 
@@ -221,7 +221,7 @@ func main() {
 <li>main.main()方法 happens-after所有package的init()方法结束。</li>
 </ol>
 
-<h2 id="toc_6">Goroutine创建</h2>
+<h2 id="toc_6">创建Goroutine</h2>
 
 <ol>
 <li><strong>go语句创建新的goroutine happens-before 该goroutine执行</strong>（这个应该很容易理解）</li>
@@ -260,7 +260,7 @@ func main() {
 }
 </code></pre>
 
-<h2 id="toc_7">Goroutine销毁</h2>
+<h2 id="toc_7">销毁Goroutine</h2>
 
 <ol>
 <li><strong>Goroutine的退出并不保证happens-before任何事件</strong>。</li>
