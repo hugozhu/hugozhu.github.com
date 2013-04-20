@@ -217,8 +217,8 @@ func main() {
 <h2 id="toc_5">初始化</h2>
 
 <ol>
-<li>如果package p 引用了package q，q的init()方法 happens-before p （Java工程师可以对比一下<a href="http://www.infoq.com/cn/articles/java-memory-model-6?utm_source=infoq&amp;utm_medium=related_content_link&amp;utm_campaign=relatedContent_articles_clk">final变量的happens-before规则</a>）</li>
-<li>main.main()方法 happens-after所有package的init()方法结束。</li>
+<li><strong>如果package p 引用了package q，q的init()方法 happens-before p</strong> （Java工程师可以对比一下<a href="http://www.infoq.com/cn/articles/java-memory-model-6?utm_source=infoq&amp;utm_medium=related_content_link&amp;utm_campaign=relatedContent_articles_clk">final变量的happens-before规则</a>）</li>
+<li><strong>main.main()方法 happens-after所有package的init()方法结束。</strong></li>
 </ol>
 
 <h2 id="toc_6">创建Goroutine</h2>
