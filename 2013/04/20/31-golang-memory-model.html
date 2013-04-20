@@ -210,7 +210,7 @@ func main() {
 
 <p><strong>要保证并行执行体对共享变量的顺序访问方法就是用锁</strong>。Java和Go在这点上是一致的。</p>
 
-<p>以下是具体的可被利用的Go语言的happens-before规则，从本质上来讲，happens-before规则确定了CPU缓冲和主存的同步时间点（通过<a href="http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html">内存屏障</a>），从而使得对变量的读写可被确定完成。</p>
+<p>以下是具体的可被利用的Go语言的happens-before规则，从本质上来讲，happens-before规则确定了CPU缓冲和主存的同步时间点（通过<a href="http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html">内存屏障</a>等指令），从而使得对变量的读写可确定顺序&ndash;同步。</p>
 
 <h1 id="toc_4">同步方法</h1>
 
