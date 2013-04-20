@@ -125,9 +125,9 @@
 <li><a href="#toc_6">创建Goroutine</a></li>
 <li><a href="#toc_7">销毁Goroutine</a></li>
 <li><a href="#toc_8">Channel通信</a></li>
-</ul></li>
 <li><a href="#toc_9">锁</a></li>
 <li><a href="#toc_10">Once</a></li>
+</ul></li>
 <li><a href="#toc_11">参考链接</a></li>
 </ul>
 </nav></p>
@@ -322,7 +322,7 @@ func main() {
 
 <p>根据规则3），因为c是不带缓冲的Channel，<code>a = &quot;hello, world&quot;</code> happens-before <code>&lt;-c</code> happens-before <code>c &lt;- 0</code> happens-before <code>print(a)</code>， 但如果c是缓冲队列，那结果就不确定了。</p>
 
-<h1 id="toc_9">锁</h1>
+<h2 id="toc_9">锁</h2>
 
 <p><code>sync</code> 包实现了两种锁数据结构:</p>
 
@@ -355,7 +355,7 @@ func main() {
 
 <p><code>a = &quot;hello, world&quot;</code> happens-before <code>l.Unlock()</code> happens-before 第二个 <code>l.Lock()</code> happens-before <code>print(a)</code></p>
 
-<h1 id="toc_10">Once</h1>
+<h2 id="toc_10">Once</h2>
 
 <p><code>sync</code>包还提供了一个安全的初始化工具Once。还记得Java的Singleton设计模式，double-check，甚至triple-check的各种单例初始化方法吗？Go则提供了一个标准的方法。</p>
 
