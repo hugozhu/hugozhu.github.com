@@ -381,7 +381,7 @@ func twoprint() {
 }
 </code></pre>
 
-<p>上面的代码虽然调用两次<code>doprint()</code>，但实际上setup只会执行一次，并且并发的<code>once.Do(setup)</code>都会等待setup返回后再继续执行。</p>
+<p>上面的代码虽然调用两次<code>doprint()</code>，但实际上<code>setup</code>只会执行一次，并且并发的<code>once.Do(setup)</code>都会等待<code>setup</code>返回后再继续执行。</p>
 
 <h1 id="toc_11">参考链接</h1>
 
