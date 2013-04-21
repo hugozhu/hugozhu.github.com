@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>OpenVPN使用多个端口 - When Go meets Raspberry Pi</title>
+    <title>Java程序的日志 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="使用iptables将多个端口转发到OpenVPN的端口，防止单一端口被封 树莓派">
+    <meta name="description" content="Java日志最佳实践，给程序调试提供有用信息的日志 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -139,6 +139,87 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/06/raspberry-pi-with-xmbc.html">Raspberry Pi做BT下载机+高清播放器</a> <span class="date">2013-03-06</span></h1>
+
+        <h2>介绍</h2>
+
+<p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个<a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;initiative_id=tbindexz_20130306">山寨的</a>的更简单。。。</p>
+
+<p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了<a href="http://xbmc.org">XBMC</a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如<a href="http://yisou.com">一搜</a>，优酷，搜狐视频，奇艺等。</p>
+
+<h2>外设</h2>
+
+<p>除了Pi单片机外，你还需要以下外设附件：</p>
+
+<ol>
+<li>5V-1A左右的电源，可以用iPhone或iPad的充电电源，或手机的充电器，电流最少要800毫安</li>
+<li>micro USB线一根，和Kindle以及大多数android手机充电USB线一样</li>
+<li>HDMI线一根，接电视机</li>
+<li>SD卡一张，最少2G</li>
+</ol>
+
+<h2>Raspbmc</h2>
+
+<p><a href="http://www.raspbmc.com/">Raspbmc</a> 是专为在Raspberry Pi上运行<a href="http://xbmc.org">XBMC</a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。</p>
+
+<h3>特点：</h3>
+
+<ol>
+<li>免费，开源</li>
+<li>支持多语言</li>
+<li>支持1080P回放</li>
+<li>支持直接播放NFS，SMB，FTP,HTTP或USB硬盘的有视频文件，支持大多数格式</li>
+<li>支持AirPlay或AirTune功能，可以把iPhone/iPad上的视频或音乐通过Pi投放到电视上，这点和Apple TV功能一样</li>
+<li>支持GPIO</li>
+<li>基于Debian，可以从Debian的软件源安装其它软件</li>
+<li>支持1080P DTS软解，这个不少播放器是不支持的，需要额外License</li>
+<li>内置了以下服务:
+
+<ol>
+<li>Samba</li>
+<li>TVHeadend Server</li>
+<li>FTP Server</li>
+<li>SSH Server</li>
+</ol></li>
+</ol>
+
+
+        <div class="more">
+          <a href="/2013/03/06/raspberry-pi-with-xmbc.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/05/java-SynchronousQueue-notes.html">Java并发包中的同步队列SynchronousQueue实现原理</a> <span class="date">2013-03-05</span></h1>
+
+        <h2>介绍</h2>
+
+<p>Java 6的并发编程包中的<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/SynchronousQueue.html">SynchronousQueue</a>是一个没有数据缓冲的<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html">BlockingQueue</a>，生产者线程对其的插入操作put必须等待消费者的移除操作take，反过来也一样。</p>
+
+<p>不像ArrayBlockingQueue或LinkedListBlockingQueue，SynchronousQueue内部并没有数据缓存空间，你不能调用peek()方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。队列头元素是第一个排队要插入数据的<strong>线程</strong>，而不是要交换的数据。数据是在配对的生产者和消费者线程之间直接传递的，并不会将数据缓冲数据到队列中。可以这样来理解：生产者和消费者互相等待对方，握手，然后<strong>一起</strong>离开。</p>
+
+<p>SynchronousQueue的一个使用场景是在线程池里。Executors.newCachedThreadPool()就使用了SynchronousQueue，这个线程池根据需要（新任务到来时）创建新的线程，如果有空闲线程则会重复使用，线程空闲了60秒后会被回收。</p>
+
+<h2>实现原理</h2>
+
+<p>同步队列的实现方法有许多：</p>
+
+<h3>阻塞算法实现</h3>
+
+<p>阻塞算法实现通常在内部采用一个锁来保证多个线程中的put()和take()方法是串行执行的。采用锁的开销是比较大的，还会存在一种情况是线程A持有线程B需要的锁，B必须一直等待A释放锁，即使A可能一段时间内因为B的优先级比较高而得不到时间片运行。所以在高性能的应用中我们常常希望规避锁的使用。</p>
+
+<p>
+public class NativeSynchronousQueue<E> {
+    boolean putting = false;
+    E item = null;</p>
+
+
+        <div class="more">
+          <a href="/2013/03/05/java-SynchronousQueue-notes.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/03/02/openvpn-multiple-ports.html">OpenVPN使用多个端口</a> <span class="date">2013-03-02</span></h1>
@@ -399,46 +480,6 @@ done
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/02/26/dynamic-dns-script.html">动态DNS程序</a> <span class="date">2013-02-26</span></h1>
-
-        <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
-
-<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
-
-<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
-
-<p>获得domain_id可以用：</p>
-
-<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
-</code></pre>
-
-<p>获得record_id：</p>
-
-<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
-</code></pre>
-
-<hr />
-
-<pre><code>package main
-
-import (
-  &quot;io/ioutil&quot;
-  &quot;log&quot;
-  &quot;net&quot;
-  &quot;net/http&quot;
-  &quot;net/url&quot;
-  &quot;strings&quot;
-  &quot;time&quot;
-)
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/02/26/dynamic-dns-script.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/02/26/linux_perf_tools.html">系统调试和分析工具</a> <span class="date">2013-02-26</span></h1>
 
         <p>Linux下的调试和分析工具集</p>
@@ -450,38 +491,6 @@ import (
 
         <div class="more">
           <a href="/2013/02/26/linux_perf_tools.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html">将Java的Properties文件转换成环境变量</a> <span class="date">2013-02-25</span></h1>
-
-        <h2>Overview</h2>
-
-<p>在Java程序中使用properties文件很方便，但有时候需要和脚本配合使用时，需要把properties文件内的多个变量转换成环境变量，本文提供一个转换脚本示范：</p>
-
-<p>比如env.properties如下（=附近可以有空格，也可以有空行）</p>
-
-<pre><code>MYSQL_URL = jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk
-MYSQL_USER = root
-MYSQL_PASS = 
-</code></pre>
-
-<p>执行下面的脚本后就相当于</p>
-
-<pre><code>export MYSQL_URL=&quot;//localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk&quot;
-export MYSQL_USER=&quot;root&quot;
-export MYSQL_PASS=&quot;&quot; 
-</code></pre>
-
-<p>env.sh脚本代码</p>
-
-<pre><code>#!/bin/bash
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

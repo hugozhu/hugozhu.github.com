@@ -111,6 +111,51 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html">使用Goroutine和Channel实现按键超时交互</a> <span class="date">2013-04-21</span></h1>
+
+  <h1>背景介绍</h1>
+
+<p>前面的文章（见<a href="#参考链接">参考链接</a>）已经介绍了如何使用单触发按键作为树莓派的输入。在实际应用中可以通过按按键循环显示预先设定的脚本输出到显示屏幕，需求如下：</p>
+
+<ol>
+<li>如果按键不被触动，则定时5秒执行脚本获取最新内容显示；</li>
+<li>因为不同的脚本获取内容速度会不一样，我们要求如果超过500ms脚本还未返回，需要在屏幕上显示“loading…”这样的过度内容，如果脚本在500ms内返回，则不显示。</li>
+</ol>
+
+<p>使用Goroutine和Channel可以很方便的实现这个需求。</p>
+
+<h1>代码</h1>
+
+<p>
+var screen_chan chan int
+var switch_chan = make(chan bool)</p>
+
+<p>func main() {
+    //a goroutine： 检查按键是否被按
+    go func() {
+        last_time := time.Now().UnixNano() / 1000000
+        btn_pushed := 0
+        total_mode := 3
+        for msg := range WiringPiISR(PIN_GPIO_6, INT_EDGE_FALLING) {
+            if msg &gt; -1 {
+                n := time.Now().UnixNano() / 1000000
+                delta := n - last_time
+                if delta &gt; 300 { //如果两次按键变化的间隔时间&lt;300ms，是因为接触信号不稳定可以忽略掉
+                    last_time = n
+                    btn_pushed++
+                    screen_chan &lt;- btn_pushed % total_mode
+                }
+            }
+        }
+    }()</p>
+
+
+  <div class="more">
+    <a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2013/04/20/31-golang-memory-model.html">Go语言内存模型</a> <span class="date">2013-04-20</span></h1>
 
   <h1>名词定义</h1>
@@ -135,6 +180,32 @@ package main</p>
 
   <div class="more">
     <a href="/2013/04/20/31-golang-memory-model.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/2013/04/18/30-raspberrypi-i2c-programming.html">树莓派I2C编程</a> <span class="date">2013-04-18</span></h1>
+
+  <p>(！未完！)</p>
+
+<p>除了<a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">SPI</a>协议外，树莓派还支持<a href="http://zh.wikipedia.org/wiki/I²C">I2C</a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。</p>
+
+<h1>I2C</h1>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png"/></p>
+
+<p>上图是一个主控使用I2C驱动3个设备的示意图</p>
+
+<h1>参考链接</h1>
+
+<ol>
+<li><a href="http://zh.wikipedia.org/wiki/I²C">http://zh.wikipedia.org/wiki/I²C</a></li>
+<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/">https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</a></li>
+</ol>
+
+
+  <div class="more">
+    <a href="/2013/04/18/30-raspberrypi-i2c-programming.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
@@ -338,69 +409,6 @@ Disk identifier: 0x0004f23a</p>
 
   <div class="more">
     <a href="/2013/03/28/22-memory-barriers-or-fences.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
-
-  <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
-
-<p>Arduino特点:</p>
-
-<ol>
-<li>开源，硬件标准化，配套传感器等模块很多；</li>
-<li>结构简单</li>
-<li>实时系统，稳定，启动只要0.5秒</li>
-</ol>
-
-<h1>Arduino IDE</h1>
-
-<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
-
-<h1>上电测试</h1>
-
-<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
-<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
-
-<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
-
-<h1>上传代码</h1>
-
-<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
-
-
-  <div class="more">
-    <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a> <span class="date">2013-03-27</span></h1>
-
-  <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
-
-<h1>实现方法</h1>
-
-<h2>Google Analytics</h2>
-
-<p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
-
-<h2>日志分析</h2>
-
-<p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
-但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
-
-<h2>CNZZ</h2>
-
-<p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
-
-<p>
-curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=[your_cnzz_server_id].cnzz.com&amp;on=1&amp;s=line&rdquo; | sed -e &rsquo;s/.<em>当前在线[([0-9]).</em>/\1/g&rsquo;</p>
-
-
-  <div class="more">
-    <a href="/2013/03/27/21-realtime-online-user-counter.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
