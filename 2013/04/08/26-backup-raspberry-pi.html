@@ -119,7 +119,7 @@
 mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest
 </code></pre>
 
-<h1>完整备份</h1>
+<h1><a style="display: block;" name="完整备份" href="#完整备份"></a>完整备份</h1>
 
 <p>确定相应的SD卡设备ID</p>
 
@@ -149,7 +149,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 1973420032 bytes (2.0 GB) copied, 786.555 s, 2.5 MB/s
 </code></pre>
 
-<h1>增量备份</h1>
+<h1><a style="display: block;" name="增量备份" href="#增量备份"></a>增量备份</h1>
 
 <p>增量备份最简单的方法是用rsync，每天定时将指定目录下变化的文件保存到备份目录，方法如下：</p>
 
@@ -172,14 +172,14 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html" title="Raspberry Pi的GPIO中断编程">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/04/13/28-use-tsar-to-monitor-raspberry-pi.html" title="使用tsar记录和监控树莓派CPU温度">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html" title="在Raspberry Pi上使用硬件SPI">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html" title="Raspberry Pi的GPIO中断编程">Next &rarr;</a></li>
           
           
         </ul>

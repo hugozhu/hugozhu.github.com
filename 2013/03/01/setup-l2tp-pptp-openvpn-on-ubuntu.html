@@ -109,7 +109,7 @@
 
 <div class="row">
   <div class="span8">
-    <h2>Overview</h2>
+    <h2><a style="display: block;" name="overview" href="#overview"></a>Overview</h2>
 
 <p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p>
 
@@ -123,7 +123,7 @@
 <pre><code>sudo sysctl -p
 </code></pre>
 
-<h2>PPTP</h2>
+<h2><a style="display: block;" name="pptp" href="#pptp"></a>PPTP</h2>
 
 <p>安装pptpd</p>
 
@@ -188,7 +188,7 @@ iptables -A FORWARD -i tun+ -j ACCEPT
 iptables -P FORWARD ACCEPT    
 </code></pre>
 
-<h2>L2TP Over IPSec</h2>
+<h2><a style="display: block;" name="l2tp-over-ipsec" href="#l2tp-over-ipsec"></a>L2TP Over IPSec</h2>
 
 <p>假设你的服务器IP是：<strong>1.2.3.4</strong></p>
 
@@ -283,7 +283,7 @@ iptables -A INPUT -p udp -d 1.2.3.4 --dport 500 -j ACCEPT
 iptables -A INPUT -p udp -d 1.2.3.4 --dport 4500 -j ACCEPT
 </code></pre>
 
-<h2>OpenVPN</h2>
+<h2><a style="display: block;" name="openvpn" href="#openvpn"></a>OpenVPN</h2>
 
 <p>安装Openvpn</p>
 
@@ -361,7 +361,7 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to-source 1.2.3.4
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" title="在线广告系统架构变迁">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/28/logging-in-java.html" title="Java程序的日志">Next &rarr;</a></li>
           
           
         </ul>
