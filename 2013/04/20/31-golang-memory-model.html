@@ -284,7 +284,7 @@ func hello() {
 
 <ol>
 <li><strong>对一个Channel的发送操作(send) happens-before 相应Channel的接收操作完成</strong></li>
-<li><strong>关闭一个Channel happens-before 从该Channel接收返回0</strong></li>
+<li><strong>关闭一个Channel happens-before 从该Channel接收到最后的返回值0</strong></li>
 <li><strong>不带缓冲的Channel的接收操作（receive） happens-before 相应Channel的发送操作完成</strong></li>
 </ol>
 
@@ -304,6 +304,8 @@ func main() {
 </code></pre>
 
 <p>上述代码可以确保输出<code>hello, world</code>，因为<code>a = &quot;hello, world&quot;</code> happens-before <code>c &lt;- 0</code>，<code>print(a)</code> happens-after <code>&lt;-c</code>， 根据上面的规则1）以及happens-before的可传递性，<code>a = &quot;hello, world&quot;</code> happens-before<code>print(a)</code>。</p>
+
+<p>根据规则2）把<code>c&lt;-0</code>替换成<code>close(c)</code>也能保证输出<code>hello,world</code>，因为关闭操作在<code>&lt;-c</code>接收到0之前发送。</p>
 
 <pre><code>var c = make(chan int)
 var a string
