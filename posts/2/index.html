@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Java程序的日志 - When Go meets Raspberry Pi</title>
+    <title>Go语言内存模型 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Java日志最佳实践，给程序调试提供有用信息的日志 树莓派">
+    <meta name="description" content="Go memory model 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -194,8 +194,7 @@
 
 <p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
 
-<p>
-curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=[your_cnzz_server_id].cnzz.com&amp;on=1&amp;s=line&rdquo; | sed -e &rsquo;s/.<em>当前在线[([0-9]).</em>/\1/g&rsquo;</p>
+<p></p>
 
 
         <div class="more">
@@ -547,13 +546,14 @@ curl -s &ldquo;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=
 
 <h1>增加sudo用户</h1>
 
-<p>
-   useradd hugo
+<pre><code>   useradd hugo
    passwd hugo
    mkdir /home/hugo
-   chown hugo:hugo /home/hugo<br />
+   chown hugo:hugo /home/hugo   
    pacman -S sudo
-   visudo</p>
+   visudo   
+   
+</code></pre>
 
 
         <div class="more">

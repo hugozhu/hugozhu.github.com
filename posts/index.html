@@ -126,11 +126,10 @@
 
 <h1>代码</h1>
 
-<p>
-var screen_chan chan int
-var switch_chan = make(chan bool)</p>
+<pre><code>var screen_chan chan int
+var switch_chan = make(chan bool)
 
-<p>func main() {
+func main() {
     //a goroutine： 检查按键是否被按
     go func() {
         last_time := time.Now().UnixNano() / 1000000
@@ -147,7 +146,60 @@ var switch_chan = make(chan bool)</p>
                 }
             }
         }
-    }()</p>
+    }()
+
+    //a goroutine： 根据管道消息刷新屏幕
+    go loop_update_display()
+
+    //选择确实的屏幕内容脚本编号
+    screen_chan &lt;- 0
+
+    //a goroutine: 定时5s向管道发送更新屏幕内容的信号
+    ticker := time.NewTicker(5 * time.Second)
+    go func() {
+        for {
+            &lt;-ticker.C
+            screen_chan &lt;- -1
+        }
+    }()
+    
+    ... 
+}
+
+func loop_update_display() {
+    current_screen := 0
+    for msg := range screen_chan {
+        switch_screen := false
+        if msg &gt;= 0 {
+           //说明是按钮触发的消息，而不是定时器触发的(-1)
+            if msg != current_screen {
+                //btn pushed
+                current_screen = msg
+                switch_screen = true
+                go func() {
+                    select {
+                    case &lt;-time.After(500 * time.Millisecond):
+                        display_loading()
+                        &lt;-switch_chan
+                    case &lt;-switch_chan:
+                    }
+                }()
+            }
+        }
+        switch current_screen {
+        case 0:
+            display_screen0()
+        case 1:
+            display_screen1()
+        case 2:
+            display_screen2()
+        }
+        if switch_screen {
+            switch_chan &lt;- true
+        }
+    }
+}
+</code></pre>
 
 
   <div class="more">
@@ -174,8 +226,21 @@ var switch_chan = make(chan bool)</p>
 
 <p>在一个单独的Goroutine里，对变量的读写和代码的书写顺序一致。比如以下的代码:</p>
 
-<p>
-package main</p>
+<pre><code>package main
+
+import (
+    &quot;log&quot;
+)
+
+var a, b, c int
+
+func main() {
+    a = 1
+    b = 2
+    c = a + 2
+    log.Println(a, b, c)
+}
+</code></pre>
 
 
   <div class="more">
@@ -220,16 +285,128 @@ package main</p>
 
 <p>lcd_switch.go</p>
 
-<p>
-package main</p>
+<pre><code>package main
 
-<p>import (
-    . &ldquo;github.com/hugozhu/rpi&rdquo;
-    &ldquo;github.com/hugozhu/rpi/pcd8544&rdquo;
-    &ldquo;log&rdquo;
-    &ldquo;os/exec&rdquo;
-    &ldquo;time&rdquo;
-)</p>
+import (
+    . &quot;github.com/hugozhu/rpi&quot;
+    &quot;github.com/hugozhu/rpi/pcd8544&quot;
+    &quot;log&quot;
+    &quot;os/exec&quot;
+    &quot;time&quot;
+)
+
+const (
+    DIN        = PIN_MOSI
+    SCLK       = PIN_SCLK
+    DC         = PIN_GPIO_2
+    RST        = PIN_GPIO_0
+    CS         = PIN_CE0
+    PUSHBUTTON = PIN_GPIO_6
+    CONTRAST   = 40 //may need tweak for each Nokia 5110 screen
+)
+
+var screen_chan chan int
+var TOTAL_MODES = 3
+
+func init() {
+    WiringPiSetup()
+    pcd8544.LCDInit(SCLK, DIN, DC, CS, RST, CONTRAST)
+    screen_chan = make(chan int, 1)
+}
+
+func main() {
+    //a goroutine to check button push event
+    go func() {
+        last_time := time.Now().UnixNano() / 1000000
+        btn_pushed := 0
+        for pin := range WiringPiISR(PUSHBUTTON, INT_EDGE_FALLING) {
+            if pin &gt; -1 {
+                n := time.Now().UnixNano() / 1000000
+                delta := n - last_time
+                if delta &gt; 300 { //software debouncing
+                    log.Println(&quot;btn pushed&quot;)
+                    last_time = n
+                    btn_pushed++
+                    screen_chan &lt;- btn_pushed % TOTAL_MODES //switch the screen display
+                }
+            }
+        }
+    }()
+
+    //a groutine to update display every 5 seconds
+    go loop_update_display()
+
+    //set screen 0 to be default display
+    screen_chan &lt;- 0
+
+    ticker := time.NewTicker(5 * time.Second)
+
+    for {
+        &lt;-ticker.C
+        screen_chan &lt;- -1 //refresh current screen every 5 seconds
+    }
+}
+
+func loop_update_display() {
+    current_screen := 0
+    for screen := range screen_chan {
+        if screen &gt;= 0 {
+            if screen != current_screen {
+                //btn pushed
+                current_screen = screen
+                display_loading()
+            }
+        }
+        switch current_screen {
+        case 0:
+            display_screen0()
+        case 1:
+            display_screen1()
+        case 2:
+            display_screen2()
+        }
+    }
+}
+
+func display_loading() {
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 20, &quot;Loading ...&quot;)
+    pcd8544.LCDdisplay()
+}
+
+func display_screen0() {
+    out, err := exec.Command(&quot;/bin/screen_0.sh&quot;).CombinedOutput()
+    if err != nil {
+        out = []byte(err.Error())
+    }
+
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 0, string(out))
+    pcd8544.LCDdisplay()
+}
+
+func display_screen1() {
+    out, err := exec.Command(&quot;/bin/screen_1.sh&quot;).CombinedOutput()
+    if err != nil {
+        out = []byte(err.Error())
+    }
+
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 0, string(out))
+    pcd8544.LCDdisplay()
+}
+
+func display_screen2() {
+    out, err := exec.Command(&quot;/bin/screen_2.sh&quot;).CombinedOutput()
+    if err != nil {
+        out = []byte(err.Error())
+    }
+
+    pcd8544.LCDclear()
+    pcd8544.LCDdrawstring(0, 0, string(out))
+    pcd8544.LCDdisplay()
+}
+</code></pre>
 
 
   <div class="more">
@@ -308,14 +485,23 @@ mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest
 
 <p>确定相应的SD卡设备ID</p>
 
-<p>
-root@raspberrypi2 ~/bin # fdisk -l</p>
+<pre><code>root@raspberrypi2 ~/bin # fdisk -l
 
-<p>Disk /dev/mmcblk0: 1973 MB, 1973420032 bytes, 3854336 sectors
+Disk /dev/mmcblk0: 1973 MB, 1973420032 bytes, 3854336 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x0004f23a</p>
+Disk identifier: 0x0004f23a
+
+        Device Boot      Start         End      Blocks   Id  System
+/dev/mmcblk0p1   *        2048      186367       92160    c  W95 FAT32 (LBA)
+/dev/mmcblk0p2          186368     3667967     1740800   83  Linux
+
+Disk /dev/sda: 2107 MB, 2107637760 bytes, 4116480 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+</code></pre>
 
 
   <div class="more">
