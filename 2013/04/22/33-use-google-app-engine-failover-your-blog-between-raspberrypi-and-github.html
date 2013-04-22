@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Raspberry Pi的GPIO中断编程 - When Go meets Raspberry Pi</title>
+    <title>树莓派个人网站容灾：DNSPod，利用Google App Engine和Github - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Interrupts with Raspberry Pi GPIO Pins 树莓派">
+    <meta name="description" content="Use Google App Engine to failover your blog between Raspberry Pi and Github 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,185 +104,153 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Raspberry Pi的GPIO中断编程 </h1>
+  <h1>树莓派个人网站容灾：DNSPod，利用Google App Engine和Github </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    
+    <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
 
-<p><h1>目录：</h1><nav>
-<ul>
-<li><a href="#toc_0">背景介绍</a></li>
-<li><a href="#toc_1">应用</a></li>
-<li><a href="#toc_2">wiringPi</a></li>
-<li><a href="#toc_3">示例代码</a></li>
-<li><a href="#toc_4">RPi.GPIO</a></li>
-<li><a href="#toc_5">参考链接</a></li>
-</ul>
-</nav></p>
+<p><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">把网站托管在树莓派上</a>后如果家里停电或是宽带故障，会造成网站中断。本文提供一个免费的解决方案（前提是你需要有自己的一个域名，并由DNSPod解析）</p>
 
-<h1 id="toc_0">背景介绍</h1>
+<h1><a style="display: block;" name="dnspod" href="#dnspod"></a>DNSPod</h1>
 
-<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
+<p>首先需要在DNSPod里设置好需要failover的域名CNAME：比如<code>hugozhu.myalert.info</code>
+<img src="https://www.evernote.com/shard/s26/sh/70d9eb43-ff76-4d7f-b6a3-34411eca53cd/a89cccd32eeccae3b6ca3627693f2c9a/res/951499da-eeec-472c-91d9-a156a5500945/skitch.png?resizeSmall&width=832"/>
+其中｀默认｀指向<code>pi.myalert.info</code>,这是一个域名的A Record，会由运行在树莓派上的<a href="http://hugozhu.myalert.info/2013/02/26/dynamic-dns-script.html">脚本</a>来更新动态IP，｀国外｀则指向github。当停电时我们需要自动把｀默认｀这条纪录修改成github。</p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
+<p>使用下面命令获得相应CNAME的domain_id：
+<code>
+curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
+</code></p>
 
-<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
+<p>使用下面命令获得相应CNAME的record_id：
+<code>
+curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
+</code></p>
 
-<h1 id="toc_1">应用</h1>
+<h1><a style="display: block;" name="google-app-engine" href="#google-app-engine"></a>Google App Engine</h1>
 
-<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
+<h2><a style="display: block;" name="切换dns脚本" href="#切换dns脚本"></a>切换DNS脚本</h2>
 
-<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
+<pre><code>package dnspod
 
-<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
+import (
+    &quot;io/ioutil&quot;
+    &quot;net/http&quot;
+    &quot;net/url&quot;
+    &quot;strings&quot;
+)
 
-<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
+const (
+    login_email    = &quot;&lt;your_login_email&gt;&quot;
+    login_password = &quot;&lt;your_login_password&gt;&quot;
+    format         = &quot;json&quot;
+    domain_id      = &quot;&lt;domain_id&gt;&quot;
+    record_id      = &quot;&lt;record_id&gt;&quot;
+    sub_domain     = &quot;&lt;your_subdomain&gt;&quot;
+    record_type    = &quot;CNAME&quot;
+    record_line    = &quot;默认&quot;
+    ttl            = &quot;600&quot;
+)
 
-<pre><code>root@raspberrypi2 ~/projects/interrupt_test # ls -l /sys/class/gpio/gpio25/
-total 0
--rw-r--r-- 1 root root 4096 Apr  8 23:56 active_low
--rw-r--r-- 1 root root 4096 Apr  8 22:29 direction
--rw-r--r-- 1 root root 4096 Apr  8 22:29 edge
-drwxr-xr-x 2 root root    0 Apr  8 23:56 power
-lrwxrwxrwx 1 root root    0 Apr  8 23:56 subsystem -&gt; ../../../../class/gpio
--rw-r--r-- 1 root root 4096 Apr  8 22:08 uevent
--rw-r--r-- 1 root root 4096 Apr  8 22:29 value
-root@raspberrypi2 ~/projects/interrupt_test # 
-</code></pre>
-
-<h1 id="toc_2">wiringPi</h1>
-
-<p><a href="https://projects.drogon.net/raspberry-pi/wiringpi/functions/">wiringPi</a>库封装了一个简单的接口，传入一个回调函数，当事件发生时传入的函数将被调用。</p>
-
-<pre><code>int wiringPiISR (int pin, int edgeType,  void (*function)(void)) ;
-</code></pre>
-
-<p>其最主要的部分的实现代码是：</p>
-
-<pre><code>int waitForInterruptSys (int pin, int mS)
-{
-  int fd, x ;
-  uint8_t c ;
-  struct pollfd polls ;
-
-  if ((fd = sysFds [pin &amp; 63]) == -1)
-    return -2 ;
-
-// Setup poll structure
-
-  polls.fd     = fd ;
-  polls.events = POLLPRI ;      // Urgent data!
-
-// Wait for it ...
-
-  x = poll (&amp;polls, 1, mS) ;
-
-// Do a dummy read to clear the interrupt
-//      A one character read appars to be enough.
-
-  (void)read (fd, &amp;c, 1) ;
-
-  return x ;
+func Update(client *http.Client, cname string) string {
+    body := url.Values{
+        &quot;login_email&quot;:    {login_email},
+        &quot;login_password&quot;: {login_password},
+        &quot;format&quot;:         {format},
+        &quot;domain_id&quot;:      {domain_id},
+        &quot;record_id&quot;:      {record_id},
+        &quot;sub_domain&quot;:     {sub_domain},
+        &quot;record_type&quot;:    {record_type},
+        &quot;record_line&quot;:    {record_line},
+        &quot;value&quot;:          {cname},
+        &quot;ttl&quot;:            {ttl},
+    }
+    req, err := http.NewRequest(&quot;POST&quot;, &quot;https://dnsapi.cn/Record.Modify&quot;, strings.NewReader(body.Encode()))
+    req.Header.Set(&quot;Accept&quot;, &quot;text/json&quot;)
+    req.Header.Set(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;)
+    resp, err := client.Do(req)
+    if err != nil {
+        return err.Error()
+    }
+    defer resp.Body.Close()
+    bytes, _ := ioutil.ReadAll(resp.Body)
+    return string(bytes)
 }
 </code></pre>
 
-<h1 id="toc_3">示例代码</h1>
+<h2><a style="display: block;" name="检测接口" href="#检测接口"></a>检测接口</h2>
 
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;errno.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;wiringPi.h&gt;
+<p>部署一个web应用到Google App Engine上，该应用接受树莓派上的一个URL（注意这里不应该用需failver的域名），并请求该域名以检查网站是否正常。这里也可以使用监控宝来监控，但只有付费专业版才支持出错后回调URL。</p>
 
+<pre><code>func ping(w http.ResponseWriter, r *http.Request) {
+    url := r.FormValue(&quot;url&quot;)
+    c := appengine.NewContext(r)
+    client := urlfetch.Client(c)
+    ok, body := url_ok(client, url)
 
-// What GPIO input are we using?
-//      This is a wiringPi pin number
+    item, _ := memcache.Get(c, &quot;site_fails&quot;)
 
-#define BUTTON_PIN      6
+    if ok {
+        if item != nil {
+            //switch back to pi
+            dnspod.Update(client, &quot;pi.myalert.info.&quot;)
+            memcache.Delete(c, &quot;site_fails&quot;)
+        }
+    } else {
+        if item != nil {
+            //previously failed, switch to github
+            dnspod.Update(client, &quot;hugozhu.github.com.&quot;)
+            value, _ := strconv.Atoi(string(item.Value))
+            value++
+            item.Value = []byte(strconv.Itoa(value))
+            memcache.Set(c, item)
+        } else {
+            //first time failed
+            item = &amp;memcache.Item{
+                Key:   &quot;site_fails&quot;,
+                Value: []byte(&quot;0&quot;),
+            }
+            memcache.Set(c, item)
+        }
+    }
 
-static volatile int globalCounter = 0 ;
-
-
-void myInterrupt (void)
-{
-  ++globalCounter ;
+    w.Header().Set(&quot;Content-type&quot;, &quot;text/plain&quot;)
+    fmt.Fprintf(w, &quot;%s&quot;, body)
 }
 
-
-int main (void)
-{
-  int myCounter = 0 ;
-
-  if (wiringPiSetup () &lt; 0)
-  {
-    fprintf (stderr, &quot;Unable to setup wiringPi: %s\n&quot;, strerror (errno)) ;
-    return 1 ;
-  }
-
-  if (wiringPiISR (BUTTON_PIN, INT_EDGE_FALLING, &amp;myInterrupt) &lt; 0)
-  {
-    fprintf (stderr, &quot;Unable to setup ISR: %s\n&quot;, strerror (errno)) ;
-    return 1 ;
-  }
-
-
-  for (;;)
-  {
-    printf (&quot;Waiting ... &quot;) ; fflush (stdout) ;
-
-    while (myCounter == globalCounter)
-      delay (100) ;
-
-    printf (&quot; Done. counter: %5d\n&quot;, globalCounter) ;
-    myCounter = globalCounter ;
-  }
-
-  return 0 ;
+func url_ok(client *http.Client, url string) (bool, string) {
+    resp, err := client.Get(url)
+    ok := false
+    body := &quot;&quot;
+    if err != nil {
+        body = err.Error()
+    } else {
+        bytes, _ := ioutil.ReadAll(resp.Body)
+        body = string(bytes)
+        resp.Body.Close()
+        ok = resp.StatusCode == 200
+    }
+    return ok, body
 }
 </code></pre>
 
-<h1 id="toc_4">RPi.GPIO</h1>
+<h2><a style="display: block;" name="定时任务" href="#定时任务"></a>定时任务</h2>
 
-<p>Python的PRI.GPIO库也对中断进行了封装，以下是使用例子，差别在于wiringPi支持多线程，允许在等待中断的时候干点别的。</p>
+<p>在gae项目里增加一个文件：<a href="https://github.com/hugozhu/gae-rpi-webapp/blob/master/cron.yaml">cron.yaml</a>，内容如下，这样gae会自动每隔15分钟检查一次，如果连续发现两次不可用，就会切换到Github，恢复后则会切换回来。</p>
 
-<pre><code>#!/usr/bin/env python2.7  
-# script by Alex Eames http://RasPi.tv/  
-# http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio  
-import RPi.GPIO as GPIO  
-GPIO.setmode(GPIO.BCM)  
-  
-# GPIO 25 set up as input. It is pulled up to stop false signals  
-GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
-  
-print &quot;Make sure you have a button connected so that when pressed&quot;  
-print &quot;it will connect GPIO port 23 (pin 16) to GND (pin 6)\n&quot;  
-raw_input(&quot;Press Enter when ready\n&gt;&quot;)  
-  
-print &quot;Waiting for falling edge on port 23&quot;  
-# now the program will do nothing until the signal on port 23   
-# starts to fall towards zero. This is why we used the pullup  
-# to keep the signal high and prevent a false interrupt  
-  
-print &quot;During this waiting time, your computer is not&quot;   
-print &quot;wasting resources by polling for a button press.\n&quot;  
-print &quot;Press your button when ready to initiate a falling edge interrupt.&quot;  
-while 1:
-    try:  
-        GPIO.wait_for_edge(25, GPIO.FALLING)  
-        print &quot;\nFalling edge detected. Now your program can continue with&quot;  
-        print &quot;whatever was waiting for a button press.&quot;  
-    except KeyboardInterrupt:  
-        GPIO.cleanup()       # clean up GPIO on CTRL+C exit  
-GPIO.cleanup()           # clean up GPIO on normal exit  
+<pre><code>cron:
+- description: check pi if it's still alive
+  url: /ping
+  schedule: every 15 minutes
 </code></pre>
 
-<h1 id="toc_5">参考链接</h1>
+<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
 
 <ol>
-<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/functions/">https://projects.drogon.net/raspberry-pi/wiringpi/functions/</a></li>
-<li><a href="http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio">http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio</a></li>
+<li><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html</a></li>
+<li><a href="https://github.com/hugozhu/gae-rpi-webapp">https://github.com/hugozhu/gae-rpi-webapp</a></li>
 </ol>
 
     <hr>
@@ -290,14 +258,14 @@ GPIO.cleanup()           # clean up GPIO on normal exit
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/04/08/26-backup-raspberry-pi.html" title="备份Raspberry Pi">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html" title="在Raspberry Pi上使用硬件SPI">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html" title="使用Goroutine和Channel实现按键超时交互">Next &rarr;</a></li>
           
           
         </ul>
@@ -346,7 +314,7 @@ GPIO.cleanup()           # clean up GPIO on normal exit
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-04-08</span></div>
+      <div class="date"><span>2013-04-22</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -361,7 +329,11 @@ GPIO.cleanup()           # clean up GPIO on normal exit
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>12</span></a>
+  <a href="/tags/#Golang-ref">Golang <span>4</span></a>
+</li>
+      
+        <li>
+  <a href="/tags/#Google-App-Engine-ref">Google App Engine <span>1</span></a>
 </li>
       
       </ul>
