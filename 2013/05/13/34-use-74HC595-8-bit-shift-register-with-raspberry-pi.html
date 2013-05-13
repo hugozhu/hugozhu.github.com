@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用tsar记录和监控树莓派CPU温度 - When Go meets Raspberry Pi</title>
+    <title>使用8位移位寄存器74HC595扩展树莓派的IO端口 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Use tsar to monitor Raspberry Pi CPU Temperature 树莓派">
+    <meta name="description" content="Use 74HC595 8bit shift register with Rapsberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,180 +104,216 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>使用tsar记录和监控树莓派CPU温度 </h1>
+  <h1>使用8位移位寄存器74HC595扩展树莓派的IO端口 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>夏天到了，树莓派的CPU温度也开始节节攀升，虽然我们也可以用云服务<a href="https://cosm.com">cosm</a>来监控，但每5分钟采样一次精度不够高，每分钟采样一次则上传次数又太多了点。最好的方法还是使用<a href="http://github.com/alibaba/tsar">tsar</a>这样的工具本地高频（如每1分钟）采样，然后再定时将5分钟的均值上传到cosm绘图。</p>
+    <p>树莓派的GPIO接口数目有限，驱动一个步进电机需要占用4个， 一个Nokia 5110液晶也要占4个， 传感器输入至少需要一个，多玩几个外设后接口就不够用了。如果接口可以复用就可以让树莓派驱动更多的外设了，本文讨论如何使用74HC595集成电路芯片来扩展树莓派的I/O接口。</p>
 
-<p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。</p>
+<h1><a style="display: block;" name="芯片介绍" href="#芯片介绍"></a>芯片介绍</h1>
 
-<h1><a style="display: block;" name="**更新**" href="#**更新**"></a><strong>更新</strong></h1>
+<p>SN74HC595N是德州仪器公司生产的集成电路芯片，是一个8位串行输入变串行输出或并行输出移位寄存器，具有高阻关断，高电平和低电平三态输出。在IO扩充上，可以最多串联15片，也就是高达120个IO扩充。</p>
 
-<p>[2013-04-14] mod_rpi已经被合并到了主干代码：<a href="https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c">https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c</a>  只需要增加文件：<code>/etc/tsar/conf.d/rpi.conf</code>，内容为以下即可开始使用mod_rpi模块：</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/b90034cc-cdf8-426d-a79d-16bbbcbb49b2/0ba3371f3039afa71a17bad845eede7a/deep/0/Screenshot%205/12/13%2010:42%20PM.png"/></p>
 
-<pre><code>mod_rpi on
+<p>（注意到芯片上的小凹槽了吗，拿芯片的时候以这个为参考物就不会搞反了）</p>
 
-####add it to tsar default output
-output_stdio_mod mod_rpi
-</code></pre>
+<p>接口的常用命名方式有以下两种：</p>
 
-<h1><a style="display: block;" name="mod_rpi模块开发方法" href="#mod_rpi模块开发方法"></a>mod_rpi模块开发方法</h1>
+<table>
+<thead>
+<tr>
+<td>接口代号(编号)</td>
+<td>说明</td>
+<td>接口代号(编号)</td>
+<td>说明</td>
+</tr>
+</thead>
 
-<p>首先按照安装说明，见<a href="https://github.com/alibaba/tsar">https://github.com/alibaba/tsar</a>将tsar和tsardevel安装好。</p>
+<tbody>
+<tr>
+<td>Q7&rsquo;(9)</td>
+<td>serial data output</td>
+<td>QH&rsquo;  (9)</td>
+<td>serial data output</td>
+</tr>
 
-<p>首先运行下面的命令生成mod_rpi模块：</p>
+<tr>
+<td>MR (10)</td>
+<td>Master Reset (Active Low)</td>
+<td>SRCLR  (10)</td>
+<td>Shift register CLeaR</td>
+</tr>
 
-<pre><code>hugo@raspberrypi2 ~/projects/tsardevel $ tsardevel rpi 
-build:make
-install:make install
-uninstall:make uninstall
-hugo@raspberrypi2 ~/projects/tsardevel $ ls rpi
-Makefile  mod_rpi.c  mod_rpi.conf
-</code></pre>
+<tr>
+<td>SH_CP (11)</td>
+<td>shift register clock input</td>
+<td>SRCLK  (11)</td>
+<td>Shift Register CLocK input</td>
+</tr>
 
-<p>然后修改mod_rpi.c，增加读取CPU温度的逻辑：</p>
+<tr>
+<td>ST_CP (12)</td>
+<td>storage register clock input</td>
+<td>RCLK  (12)</td>
+<td>storage Register CLocK input</td>
+</tr>
 
-<pre><code>/*
- * (C) 2010-2011 Alibaba Group Holding Limited
- *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+<tr>
+<td>OE (13)</td>
+<td>output enable input (Active Low)</td>
+<td>OE  (13)</td>
+<td>Output Enable</td>
+</tr>
 
-#include &quot;tsar.h&quot;
+<tr>
+<td>DS (14)</td>
+<td>serial data input</td>
+<td>SER (14)</td>
+<td>SERial data input</td>
+</tr>
 
-/*
- * Structure for rpi infomation.
- */
-struct stats_rpi {
-    unsigned int cpu_temp;
-};
+<tr>
+<td>Qx (15，1-7)</td>
+<td>data output</td>
+<td>Qx (15，1-7)</td>
+<td>data output</td>
+</tr>
+</tbody>
+</table>
 
-#define STATS_TEST_SIZE (sizeof(struct stats_rpi))
+<h1><a style="display: block;" name="控制流程" href="#控制流程"></a>控制流程</h1>
 
-static char *rpi_usage = &quot;    --rpi               Rapsberry Pi information (CPU temprature ...)&quot;;
+<p>如果要在8个引脚输出01010101</p>
 
+<ol>
+<li>将Pin 14（DS, SER）置为高电平（1）；</li>
+<li>将Pin 11 (SH_CP, SRCLK))做高低电平切换，形成一个脉冲信号，这个信号会将数据从移位寄存器C1移动到下一个移位寄存器C2，。。。</li>
+<li>接着将Pin 14设为低电平（0），再将Pin 11做1-&gt;0的脉冲变化，将数据继续往下移，依次类推直到8位都输入完成；</li>
+<li>将Pin 12（ST_CP, RCLK）做1-&gt;0的脉冲，将8位数据一次并行输出。</li>
+</ol>
 
-static void read_rpi_stats(struct module *mod, char *parameter)
+<p>如果要串联多片，由上一片的Pin 9接到下一片的Pin 14即可，这样输入16 bit后，再向Pin 12输入一个1-&gt;0的脉冲，16 bit会并行输出。</p>
+
+<p>如果要一次清除所有数据，将Pin 10设为低电平后，再向Pin 12输入一个1-&gt;0的脉冲即可；</p>
+
+<p>Pin 13还有高阻关断的第三态输出功能。</p>
+
+<p>下面我们使用一片74HC595来同时控制8个发光二极管的状态，只需要占用树莓派的3个GPIO；否则的话，则需要占用8个。如果需要同时控制16个发光二极管，则可以通过串联两个74HC595来实现。</p>
+
+<h1><a style="display: block;" name="材料" href="#材料"></a>材料</h1>
+
+<ol>
+<li><a href="http://item.taobao.com/item.htm?spm=a1z0d.1.1000638.45.bTo9PZ&amp;id=3136071980">74HC595</a> 因为价格便宜，建议一次买3~10片</li>
+<li><a href="http://list.tmall.com/search_product.htm?q=%C3%E6%B0%FC%B0%E5&amp;type=p&amp;style=&amp;cat=all">面包板</a></li>
+<li><a href="http://re.taobao.com/eauction?e=WZUyNh6fV9rghojqVNxKsQRl3vWzxAV13G1s8WRbfpWLltG5xFicOSFINJCCZ52POOqhJP6qr9i9NE9AQxtQk3S1BzvCCF6OuLrQdcbQlR6B3ujUJI0OeA%3D%3D&amp;ptype=100011&amp;clk1=ebe7f36b49064c26364fbf2d12bbd3da&amp;upsid=ebe7f36b49064c26364fbf2d12bbd3da">面包板跳线</a> 14根</li>
+<li><a href="http://re.taobao.com/eauction?e=NW2xGTCNV2%2FghojqVNxKsRoUGnN%2F%2FLrYlWsbAjdmP56LltG5xFicOSFINJCCZ52POOqhJP6qr9i9NE9AQxtQk3S1BzvCCF6OuLrQdcbQlR6B3ujUJI0OeA%3D%3D&amp;ptype=100011&amp;clk1=231682cf5123eea41a361c2c62bbf6d8&amp;upsid=231682cf5123eea41a361c2c62bbf6d8">发光二极管</a> 8个</li>
+<li><a href="http://re.taobao.com/search?e=NW2xGTCNV2%252FghojqVNxKsRoUGnN%252F%252FLrYlWsbAjdmP56LltG5xFicOSFINJCCZ52POOqhJP6qr9i9NE9AQxtQk3S1BzvCCF6OuLrQdcbQlR6B3ujUJI0OeA%253D%253D&amp;keyword=%B5%E7%D7%E8%B0%FC&amp;type=taoke&amp;refpid=mm_12926928_3484851_11423971&amp;refpos=&amp;unid=0&amp;clk1=231682cf5123eea41a361c2c62bbf6d8&amp;ismall=&amp;catid=&amp;frcatid=">300欧姆电阻</a> 8个</li>
+</ol>
+
+<h1><a style="display: block;" name="电路图" href="#电路图"></a>电路图</h1>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/392c6eda-a41a-49ee-b2ec-db61a8dbd94d/353eaa84ddc75fda7b92cdce1a48f293/deep/0/Screenshot%205/12/13%2010:14%20PM.png" width="540"/></p>
+
+<p><a href="http://photo.weibo.com/1808008002/wbphotos/large/photo_id/3577295178801052?refer=weibofeedv5"><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e4lzscegezj20vk0noqai.jpg"/></a></p>
+
+<p>引脚连接</p>
+
+<ol>
+<li>596 Pin 14 -&gt; Raspberry Pi GPIO4</li>
+<li>596 Pin 12 -&gt; Raspberry Pi GPIO5</li>
+<li>596 Pin 11 -&gt; Raspberry Pi GPIO6</li>
+</ol>
+
+<h1><a style="display: block;" name="代码" href="#代码"></a>代码</h1>
+
+<pre><code>#include &lt;wiringPi.h&gt;
+#include &lt;stdio.h&gt;
+
+int SER   = 4;
+int RCLK  = 5;
+int SRCLK = 6;
+
+unsigned char LED[8]={0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+
+void SIPO(unsigned char byte);
+void pulse(int pin);
+
+void init() {
+    pinMode(SER, OUTPUT);
+    pinMode(RCLK, OUTPUT);
+    pinMode(SRCLK, OUTPUT);
+
+    digitalWrite(SER, 0);
+    digitalWrite(SRCLK, 0);
+    digitalWrite(RCLK, 0);    
+}
+
+void delayMS(int x) {
+  usleep(x * 1000);
+}
+
+int main (void)
 {
-    FILE *fp;
-    char buf[64];
-    memset(buf, 0, sizeof(buf));
-    struct stats_rpi st_rpi;
-    memset(&amp;st_rpi, 0, sizeof(struct stats_rpi));
+    if (-1 == wiringPiSetup()) {
+        printf(&quot;Setup wiringPi failed!&quot;);
+        return 1;
+    }    
 
-    if ((fp = fopen(&quot;/sys/class/thermal/thermal_zone0/temp&quot;, &quot;r&quot;)) == NULL) {
-        return;
+    init();
+    int i;
+    while(1) {  
+      for(i = 0; i &lt; 8; i++)
+      {
+       SIPO(LED[i]);
+       pulse(RCLK);
+       delayMS(50);
+       printf(&quot; i = %d&quot;, i);
+      }
+      printf(&quot;\n&quot;);
+      delayMS(500); // 500 ms
+      
+      for(i = 7; i &gt;= 0; i--)
+      {
+       SIPO(LED[i]);
+       pulse(RCLK);
+       delayMS(50);
+       printf(&quot; i = %d&quot;, i);
+      }
+      delayMS(500); // 500 ms
     }
 
-    int cpu_temp;
-
-    fscanf(fp, &quot;%d&quot;, &amp;cpu_temp);
-
-    st_rpi.cpu_temp = cpu_temp;
-
-    int pos = sprintf(buf, &quot;%u&quot;,
-            /* the store order is not same as read procedure */
-            st_rpi.cpu_temp);
-    buf[pos] = '\0';
-    set_mod_record(mod, buf);
-    fclose(fp);
-    return;
+    usleep(1000);
+    digitalWrite(RCLK, 1);
 }
 
-static struct mod_info rpi_info[] = {
-    {&quot;  temp&quot;, SUMMARY_BIT,  0,  STATS_NULL}
-};
-
-static void set_rpi_record(struct module *mod, double st_array[],
-        U_64 pre_array[], U_64 cur_array[], int inter)
+void SIPO(unsigned char byte) 
 {
-    st_array[0] = cur_array[0]/1000.0;
+    int i;
+    for (i=0;i&lt;8;i++) 
+    {
+        digitalWrite(SER,((byte &amp; (0x80 &gt;&gt; i)) &gt; 0));
+        pulse(SRCLK);
+    }
 }
 
-void mod_register(struct module *mod)
-{   
-    register_mod_fileds(mod, &quot;--rpi&quot;, rpi_usage, rpi_info, 1, read_rpi_stats, set_rpi_record);
+void pulse(int pin) 
+{
+    digitalWrite(pin, 1);
+    digitalWrite(pin, 0);
 }
 
 </code></pre>
 
-<p>最后<code>make &amp;&amp; sudo make install</code>将mod_rpi自定义tsar模块安装好。</p>
-
-<p>执行<code>tsar --rpi -l -i 1</code>可以看到每秒一次输出的实时CPU温度</p>
-
-<pre><code>hugo@raspberrypi2 ~/projects/tsardevel/rpi $ tsar --rpi -l -i 1
-Time              ---rpi-- 
-Time                temp   
-13/04/13-12:57:36  47.08   
-13/04/13-12:57:37  47.08   
-13/04/13-12:57:38  47.08   
-13/04/13-12:57:39  46.54   
-13/04/13-12:57:40  47.08   
-13/04/13-12:57:41  47.08   
-13/04/13-12:57:42  47.62   
-13/04/13-12:57:43  47.08   
-</code></pre>
-
-<p>执行<code>tsar</code>则可以看到间隔为5分钟的历史值</p>
-
-<pre><code>Time           ---cpu-- ---mem-- ---tcp-- -----traffic---- mmcblk0- mmcblk0p mmcblk0p --sda---  ---load- ---rpi-- 
-Time             util     util   retran    pktin  pktout     util     util     util     util     load1     temp   
-13/04/13-12:30   7.77    10.08     5.78     0.00    0.00     8.09     0.00     8.09     1.21      0.28    47.08   
-13/04/13-12:35   6.39    10.11     2.53     0.00    0.00     7.70     0.00     7.70     0.23      0.20    47.62   
-13/04/13-12:40   5.01    10.11     3.88     0.00    0.00     8.49     0.00     8.49     0.29      0.25    47.62   
-13/04/13-12:45   6.24    10.10     3.62     0.00    0.00     6.72     0.00     6.72     0.20      0.09    47.62   
-13/04/13-12:50   2.77    10.11     3.99     0.00    0.00     5.20     0.00     5.20     0.16      0.02    47.08   
-13/04/13-12:55   2.34    10.09     3.94     0.00    0.00     3.93     0.00     3.93     0.00      0.04    47.62   
-
-MAX             14.68    10.27   100.00     0.00    0.00    18.43     0.00    18.43     1.21      0.56    47.62   
-MEAN             2.51     9.08     3.06     0.00    0.00     4.59     0.00     4.59     0.05      0.14     6.15   
-MIN              1.67     7.82     0.00     0.00    0.00     3.14     0.00     3.14     0.10      0.08     0.04   
-</code></pre>
-
-<p>tsar很方便吧？ 室温，湿度，网站在线人数等也可以用同样的方法记录。</p>
-
-<p>利用下面的脚本我们还可以把tsar的数据上传到cosm:</p>
-
-<pre><code>#!/bin/bash
-####################################################
-# Please customize these values appropriately:
-LOCATION=/home/hugo/projects/dht11
-API_KEY='&lt;your_api_key&gt;'
-FEED_ID='&lt;your_feed_id&gt;'
-####################################################
-COSM_URL=http://api.cosm.com/v2/feeds/$FEED_ID?timezone=+8
-
-eval `tsar --cpu --rpi --load --check | awk '{print $8,$10,$14}' | sed -e 's/:/_/g' | sed -e 's/ /\n/g'`
-
-STR=`awk 'BEGIN {printf &quot;{\&quot;datastreams\&quot;:[\
-{\&quot;id\&quot;:\&quot;1\&quot;,\&quot;current_value\&quot;:\&quot;%.2f\&quot;},\
-{\&quot;id\&quot;:\&quot;2\&quot;,\&quot;current_value\&quot;:\&quot;%.2f\&quot;},\
-{\&quot;id\&quot;:\&quot;3\&quot;,\&quot;current_value\&quot;:\&quot;%.2f\&quot;}]}&quot;,\
-'$load_load5','$rpi_temp','$cpu_util'}'`
-
-echo $STR
-echo $STR &gt; $LOCATION/cosm.json
-curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LOCATION/cosm.json $COSM_URL
-
-</code></pre>
+<p>编译执行上面的代码后可以看到LED从左到有一次依次点亮后灭掉，再反向点亮一遍，循环执行，有点像钟摆的效果。</p>
 
 <h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
 
 <ol>
-<li><a href="http://hugozhu.myalert.info/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html">http://hugozhu.myalert.info/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html</a></li>
+<li><a href="http://baike.baidu.com/view/1309513.htm">http://baike.baidu.com/view/1309513.htm</a></li>
+<li><a href="http://ruten-proteus.blogspot.com/2012/11/io-74hc595-ic.html">http://ruten-proteus.blogspot.com/2012/11/io-74hc595-ic.html</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Charlieplexing">http://en.wikipedia.org/wiki/Charlieplexing</a></li>
 </ol>
 
     <hr>
@@ -285,14 +321,14 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/04/14/29-use-wiringpi-go-binding.html" title="使用Go语言在树莓派上编程">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/04/08/26-backup-raspberry-pi.html" title="备份Raspberry Pi">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/04/22/33-use-google-app-engine-failover-your-blog-between-raspberrypi-and-github.html" title="树莓派网站容灾：利用DNSPod，Google App Engine和Github">Next &rarr;</a></li>
           
           
         </ul>
@@ -341,7 +377,7 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-04-13</span></div>
+      <div class="date"><span>2013-05-13</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
