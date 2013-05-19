@@ -44,12 +44,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/04/08/26-backup-raspberry-pi.html</loc>
 		<lastmod>2013-04-08</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/04/08/26-backup-raspberry-pi.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</loc>
 		<lastmod>2013-04-08</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -144,18 +144,13 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/02/28/the-evolution-of-online-advertsing-system.html</loc>
-		<lastmod>2013-02-28</lastmod>
-		<changefreq>weekly</changefreq>
-	</url>
-	<url>
 		<loc>http://hugozhu.myalert.info/2013/02/28/logging-in-java.html</loc>
 		<lastmod>2013-02-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/02/27/collaborating-development-with-github.html</loc>
-		<lastmod>2013-02-27</lastmod>
+		<loc>http://hugozhu.myalert.info/2013/02/28/the-evolution-of-online-advertsing-system.html</loc>
+		<lastmod>2013-02-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
@@ -164,12 +159,17 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/02/26/linux_perf_tools.html</loc>
-		<lastmod>2013-02-26</lastmod>
+		<loc>http://hugozhu.myalert.info/2013/02/27/collaborating-development-with-github.html</loc>
+		<lastmod>2013-02-27</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://hugozhu.myalert.info/2013/02/26/dynamic-dns-script.html</loc>
+		<lastmod>2013-02-26</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://hugozhu.myalert.info/2013/02/26/linux_perf_tools.html</loc>
 		<lastmod>2013-02-26</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
