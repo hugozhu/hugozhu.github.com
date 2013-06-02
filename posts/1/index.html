@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Arduino初试 - When Go meets Raspberry Pi</title>
+    <title>升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Arduino first day 树莓派">
+    <meta name="description" content="Nokia 5110比前面介绍过的1602液晶屏功能好很多 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -155,7 +155,7 @@ export PATH=/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 ping_count() {
   count=0
-  `timeout 5 ping 192.168.1.3 | while read LINE; do
+  `timeout 5 ping 192.168.1.1 | while read LINE; do
   {
         if [[ &quot;${LINE}&quot; =~ &quot;64 bytes from&quot; ]]; then
                 let &quot;count = $count + 1&quot;
