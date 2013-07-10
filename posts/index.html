@@ -111,6 +111,36 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html">替换树莓派的U盘</a> <span class="date">2013-07-11</span></h1>
+
+  <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
+
+<ol>
+<li>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</li>
+</ol>
+
+<pre><code>20:51:19 hugozhu-mac-mini ~ $ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.1 GB   disk0
+   1:                        EFI                         209.7 MB   disk0s1
+   2:                  Apple_HFS Macintosh HD            499.2 GB   disk0s2
+   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+/dev/disk2
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:     FDisk_partition_scheme                        *2.1 GB     disk2
+</code></pre>
+
+<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code>
+</p>
+
+
+  <div class="more">
+    <a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2013/06/30/38-java-volatile-variable.html">Java并发中正确使用volatile</a> <span class="date">2013-06-30</span></h1>
 
   <p>前几天并发编程群里有同学对volatile的用法提出了疑问，刚好我记得Twitter有关实时搜索的这个<a href="http://2011.lucene-eurocon.org/attachments/0002/8787/Busch_twitter_realtime_search_eurocon_11.pdf">PPT</a>对这个问题解释的很清晰并有一个实际的应用场景，于是周末把这个问题摘录了一些和并发相关的内容如下：</p>
@@ -523,146 +553,6 @@ func main() {
 
   <div class="more">
     <a href="/2013/04/18/30-raspberrypi-i2c-programming.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/04/14/29-use-wiringpi-go-binding.html">使用Go语言在树莓派上编程</a> <span class="date">2013-04-14</span></h1>
-
-  <p><a href="https://projects.drogon.net/raspberry-pi/wiringpi/">WiringPi</a>是树莓派上比较好的一个开发库，是用C语言写的。使用cgo，我们可以在Go语言里方便的调用WiringPI的函数，于是我包装了一个<a href="https://github.com/hugozhu/rpi">WiringPi-Go</a>，目前支持wiringPi的基本功能，硬件SPI协议驱动Nokia 5110屏幕，以及中断，未来还会增加PWM和I2C协议的支持。</p>
-
-<p>下面是一个完整的使用例子，结合了之前的两个电路：<a href="http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html">链接1</a>，<a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">链接2</a></p>
-
-<p>通过push button可以切换液晶屏显示不同脚本的输出内容。</p>
-
-<p>lcd_switch.go</p>
-
-<pre><code>package main
-
-import (
-    . &quot;github.com/hugozhu/rpi&quot;
-    &quot;github.com/hugozhu/rpi/pcd8544&quot;
-    &quot;log&quot;
-    &quot;os/exec&quot;
-    &quot;time&quot;
-)
-
-const (
-    DIN        = PIN_MOSI
-    SCLK       = PIN_SCLK
-    DC         = PIN_GPIO_2
-    RST        = PIN_GPIO_0
-    CS         = PIN_CE0
-    PUSHBUTTON = PIN_GPIO_6
-    CONTRAST   = 40 //may need tweak for each Nokia 5110 screen
-)
-
-var screen_chan chan int
-var TOTAL_MODES = 3
-
-func init() {
-    WiringPiSetup()
-    pcd8544.LCDInit(SCLK, DIN, DC, CS, RST, CONTRAST)
-    screen_chan = make(chan int, 1)
-}
-
-func main() {
-    //a goroutine to check button push event
-    go func() {
-        last_time := time.Now().UnixNano() / 1000000
-        btn_pushed := 0
-        for pin := range WiringPiISR(PUSHBUTTON, INT_EDGE_FALLING) {
-            if pin &gt; -1 {
-                n := time.Now().UnixNano() / 1000000
-                delta := n - last_time
-                if delta &gt; 300 { //software debouncing
-                    log.Println(&quot;btn pushed&quot;)
-                    last_time = n
-                    btn_pushed++
-                    screen_chan &lt;- btn_pushed % TOTAL_MODES //switch the screen display
-                }
-            }
-        }
-    }()
-
-    //a groutine to update display every 5 seconds
-    go loop_update_display()
-
-    //set screen 0 to be default display
-    screen_chan &lt;- 0
-
-    ticker := time.NewTicker(5 * time.Second)
-
-    for {
-        &lt;-ticker.C
-        screen_chan &lt;- -1 //refresh current screen every 5 seconds
-    }
-}
-
-func loop_update_display() {
-    current_screen := 0
-    for screen := range screen_chan {
-        if screen &gt;= 0 {
-            if screen != current_screen {
-                //btn pushed
-                current_screen = screen
-                display_loading()
-            }
-        }
-        switch current_screen {
-        case 0:
-            display_screen0()
-        case 1:
-            display_screen1()
-        case 2:
-            display_screen2()
-        }
-    }
-}
-
-func display_loading() {
-    pcd8544.LCDclear()
-    pcd8544.LCDdrawstring(0, 20, &quot;Loading ...&quot;)
-    pcd8544.LCDdisplay()
-}
-
-func display_screen0() {
-    out, err := exec.Command(&quot;/bin/screen_0.sh&quot;).CombinedOutput()
-    if err != nil {
-        out = []byte(err.Error())
-    }
-
-    pcd8544.LCDclear()
-    pcd8544.LCDdrawstring(0, 0, string(out))
-    pcd8544.LCDdisplay()
-}
-
-func display_screen1() {
-    out, err := exec.Command(&quot;/bin/screen_1.sh&quot;).CombinedOutput()
-    if err != nil {
-        out = []byte(err.Error())
-    }
-
-    pcd8544.LCDclear()
-    pcd8544.LCDdrawstring(0, 0, string(out))
-    pcd8544.LCDdisplay()
-}
-
-func display_screen2() {
-    out, err := exec.Command(&quot;/bin/screen_2.sh&quot;).CombinedOutput()
-    if err != nil {
-        out = []byte(err.Error())
-    }
-
-    pcd8544.LCDclear()
-    pcd8544.LCDdrawstring(0, 0, string(out))
-    pcd8544.LCDdisplay()
-}
-</code></pre>
-
-
-  <div class="more">
-    <a href="/2013/04/14/29-use-wiringpi-go-binding.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 

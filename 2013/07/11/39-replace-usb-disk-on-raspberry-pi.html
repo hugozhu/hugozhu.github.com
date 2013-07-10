@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>如何在Raspberry Pi上用LED闪烁提示网站首页新访客 - When Go meets Raspberry Pi</title>
+    <title>替换树莓派的U盘 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
+    <meta name="description" content="Replace USB sticker on Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,146 +104,61 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>如何在Raspberry Pi上用LED闪烁提示网站首页新访客 </h1>
+  <h1>替换树莓派的U盘 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
-
-<h1><a style="display: block;" name="硬件安装" href="#硬件安装"></a>硬件安装</h1>
-
-<p>需要以下硬件：</p>
+    <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
 
 <ol>
-<li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">1P杜邦线2条</a></li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm9RKSkRargJCPYP6KVEIQUWKzMUFn1hvlcbkMSKk3m2pVJo%2BqQDYKVz%2Bt1%2FjL7Iywe7g%3D%3D">面包板</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">面包板跳线</a> 或 <a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.166.XlEzyw&amp;id=15208013820&amp;_u=nqa35596&amp;is_b=1&amp;cat_id=2&amp;q=%C5%C5%D5%EB&amp;rn=bb53adf333ca7517208da34346ac3ffb">单排针</a> 两根</li>
-<li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.30.wnPTNf&amp;id=14576731464&amp;_u=nqa35af3&amp;is_b=1&amp;cat_id=2&amp;q=%B7%A2%B9%E2%B6%FE%BC%AB%B9%DC&amp;rn=b12ffd48699547ed9cb982a88014a0aa">发光二极管</a>一个</li>
-<li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
+<li>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</li>
 </ol>
 
-<h2><a style="display: block;" name="gpio接口" href="#gpio接口"></a>GPIO接口</h2>
-
-<p><img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/></p>
-
-<p>用杜邦线将上图的3.3V输出和GPIO 23引出（板子正面朝上，GPIO引脚在左上角），将电阻和LED串联起来（电阻防止LED电流过大烧掉），注意二极管的两根脚不一样长，长脚的接正级，这样GPIO 23如果输出高电平，二极管就不发光了，输出低电平就亮啦！</p>
-
-<p>都接好了后的样子如下：</p>
-
-<p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg"/></p>
-
-<h1><a style="display: block;" name="gpio接口编程" href="#gpio接口编程"></a>GPIO接口编程</h1>
-
-<h2><a style="display: block;" name="wiringpi" href="#wiringpi"></a>WiringPi</h2>
-
-<p>An implementation of most of the Arduino Wiring functions for the Raspberry Pi。
-代码地址在： <a href="https://github.com/wiringPi">https://github.com/wiringPi</a></p>
-
-<p>安装：</p>
-
-<pre><code>git clone https://github.com/WiringPi/WiringPi
-cd WiringPi/wiringPi
-sudo make install   
+<pre><code>20:51:19 hugozhu-mac-mini ~ $ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.1 GB   disk0
+   1:                        EFI                         209.7 MB   disk0s1
+   2:                  Apple_HFS Macintosh HD            499.2 GB   disk0s2
+   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+/dev/disk2
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:     FDisk_partition_scheme                        *2.1 GB     disk2
 </code></pre>
 
-<p>让二极管闪一下的示例代码：</p>
+<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code>
+<code>
+sudo dd if=/dev/disk2 of=raspberrypi.img conv=notrunc
+</code></p>
 
-<pre><code>#include &lt;wiringPi.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
+<ol>
+<li>从Mac上取下旧U盘，把新的U盘插入同一个USB口，注意新U盘容量要大于旧的</li>
+</ol>
 
-int main (int argc, char* argv[])
-{
-    int pinNumber = 4;
-    if (-1 == wiringPiSetup()) {
-        printf(&quot;failed to setup wiringPi&quot;);
-        return 1;
-    }   
-    pinMode(pinNumber, OUTPUT);
-    digitalWrite(pinNumber, 1);
-    delay(200);
-    digitalWrite(pinNumber, 0);
-    delay(200);
-    return 0;   
-}
-
+<pre><code>sudo dd of=/dev/disk2 if=raspberrypi.img conv=notrunc
 </code></pre>
 
-<p>WiringPi也有Python, Perl, PHP, Ruby的接口包装，按<a href="https://github.com/wiringPi">这里</a>，怎么没有Go的呢。。。</p>
+<ol>
+<li>把新U盘插入树莓派，并mount上，用以下命令把U盘的多余空间用起来</li>
+</ol>
 
-<h2><a style="display: block;" name="rpi.gpio" href="#rpi.gpio"></a>RPi.GPIO</h2>
-
-<p>这是GPIO的Python库，地址在：<a href="https://pypi.python.org/pypi/RPi.GPIO">https://pypi.python.org/pypi/RPi.GPIO</a>
-这里建议用python2，原因是web.py还不支持python 3 &hellip;</p>
-
-<pre><code>pacman -S python2
-pacman -S python2-distribute
-easy_install RPi.GPIO
-    
+<pre><code>resize2fs /dev/sda
 </code></pre>
-
-<p>让二极管一直闪的示例代码：</p>
-
-<pre><code>import RPi.GPIO as GPIO
-import time
-
-PORT = 16
-
-GPIO.setwarnings(False) 
-GPIO.setmode(GPIO.BOARD)
-
-GPIO.setup(PORT,GPIO.OUT)
-
-while True:
-    GPIO.output(PORT,True)
-    time.sleep(0.2)
-    GPIO.output(PORT,False)
-    time.sleep(0.2)
-    
-</code></pre>
-
-<h1><a style="display: block;" name="webiopi" href="#webiopi"></a>Webiopi</h1>
-
-<p>项目地址： <a href="http://code.google.com/p/webiopi/">http://code.google.com/p/webiopi/</a> 这是一个使用RESTful API控制Pi的GPIO接口，文档丰富，使用起来非常简单。</p>
-
-<p>安装好后，用命令<code>python -m webiopi</code>启动，用浏览器打开 <a href="http://webiopi:raspberry@raspberrypi2:8000/webiopi/">http://webiopi:raspberry@raspberrypi2:8000/webiopi/</a> 可以看到控制界面，其中有GPIO 26个引脚的状态（输入输出，高电平或低电平），用鼠标点端口还可以修改数据：</p>
-
-<p><img src="http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png" width="630"/></p>
-
-<h1><a style="display: block;" name="完成的代码" href="#完成的代码"></a>完成的代码</h1>
-
-<p>最后用一小段代码来实现最初的想法，这段代码可以较实时的处理QPS&lt;=3的网站流量，如果流量较大则会滞后反应。。。</p>
-
-<pre><code>hugo@raspberrypi ~/bin $ cat traffic_led.sh 
-#!/bin/sh
-
-tail -F /mnt/usb/logs/nginx/access.log  | grep --line-buffered &quot;GET / HTTP&quot; | while read LINE; do  {
-   #echo $LINE
-   curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/0&quot;
-   sleep 0.2
-   curl -s --data &quot;&quot; &quot;http://webiopi:raspberry@raspberrypi2:8000/GPIO/23/value/1&quot;
-   sleep 0.1
-}
-done
-</code></pre>
-
-<p>类似的还可以用这个方法来提醒：来自某某某的新邮件到了，Github有Pull Requests了。。。,或者网站挂了。。。</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html" title="如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/09/setup-archliunx-on-raspberry-pi.html" title="在Raspberry Pi上安装ArchLinux">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/06/30/38-java-volatile-variable.html" title="Java并发中正确使用volatile">Next &rarr;</a></li>
           
           
         </ul>
@@ -292,7 +207,7 @@ done
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-13</span></div>
+      <div class="date"><span>2013-07-11</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -307,7 +222,7 @@ done
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>14</span></a>
+  <a href="/tags/#Linux-ref">Linux <span>5</span></a>
 </li>
       
       </ul>
