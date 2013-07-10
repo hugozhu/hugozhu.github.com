@@ -112,10 +112,9 @@
     <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
 
 <ol>
-<li>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</li>
-</ol>
-
-<pre><code>20:51:19 hugozhu-mac-mini ~ $ diskutil list
+<li><p>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）
+<code>
+20:51:19 hugozhu-mac-mini ~ $ diskutil list
 /dev/disk0
    #:                       TYPE NAME                    SIZE       IDENTIFIER
    0:      GUID_partition_scheme                        *500.1 GB   disk0
@@ -125,26 +124,23 @@
 /dev/disk2
    #:                       TYPE NAME                    SIZE       IDENTIFIER
    0:     FDisk_partition_scheme                        *2.1 GB     disk2
-</code></pre>
-
-<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code>
-<code>
-sudo dd if=/dev/disk2 of=raspberrypi.img conv=notrunc
 </code></p>
 
-<ol>
-<li>从Mac上取下旧U盘，把新的U盘插入同一个USB口，注意新U盘容量要大于旧的</li>
-</ol>
+<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code></p>
+
+<pre><code>sudo dd if=/dev/disk2 of=raspberrypi.img conv=notrunc
+</code></pre></li>
+
+<li><p>从Mac上取下旧U盘，把新的U盘插入同一个USB口，注意新U盘容量要大于旧的</p>
 
 <pre><code>sudo dd of=/dev/disk2 if=raspberrypi.img conv=notrunc
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>把新U盘插入树莓派，并mount上，用以下命令把U盘的多余空间用起来</li>
-</ol>
+<li><p>把新U盘插入树莓派，并mount上，用以下命令把U盘的多余空间用起来</p>
 
 <pre><code>resize2fs /dev/sda
-</code></pre>
+</code></pre></li>
+</ol>
 
     <hr>
     <div class="pagination">
