@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>动态DNS程序 - When Go meets Raspberry Pi</title>
+    <title>Java并发包中的同步队列SynchronousQueue实现原理 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="动态根据宽带外网IP更新dnspod登记的域名, Go语言实现 树莓派">
+    <meta name="description" content="Notes about non-blocking SynchronousQueue implementation 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -146,9 +146,9 @@
         <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
 
 <ol>
-<li><p>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）
-<code>
-20:51:19 hugozhu-mac-mini ~ $ diskutil list
+<li><p>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</p>
+
+<pre><code>20:51:19 hugozhu-mac-mini ~ $ diskutil list
 /dev/disk0
    #:                       TYPE NAME                    SIZE       IDENTIFIER
    0:      GUID_partition_scheme                        *500.1 GB   disk0
@@ -158,11 +158,9 @@
 /dev/disk2
    #:                       TYPE NAME                    SIZE       IDENTIFIER
    0:     FDisk_partition_scheme                        *2.1 GB     disk2
-</code></p>
+</code></pre>
 
-<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code></p>
-
-<p></p></li>
+<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code></p></li>
 </ol>
 
 
