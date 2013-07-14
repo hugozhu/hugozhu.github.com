@@ -244,7 +244,7 @@
 
 <ol>
 <li>根据代码顺序规则，线程1的<code>x=5;</code> happens-before <code>b=1;</code>; 线程2的<code>int dummy = b;</code>  happens-before <code>while(x!=5);</code></li>
-<li>根据volatile变量规则，线程2的<code>int dummy=b;</code> happens-before <code>b=1;</code></li>
+<li>根据volatile变量规则，线程2的<code>b=1;</code> happens-before <code>int dummy=b;</code></li>
 <li>根据传递性，<code>x=5;</code> happens-before <code>while(x!=5);</code></li>
 </ol>
 
@@ -270,7 +270,7 @@
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" title="在Mac上使用Sublime 3写Go代码">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html" title="替换树莓派的U盘">&larr; Previous</a></li>
           
           
 
