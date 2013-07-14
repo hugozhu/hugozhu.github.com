@@ -243,7 +243,7 @@
 <p>x并不需要定义为<code>volatile</code>, 程序里可以有需要类似x的变量，我们只需要一个volatile变量b来确保线程a能看到线程1对x的修改：</p>
 
 <ol>
-<li>根据代码顺序规则，线程1的<code>b=1;</code> happens-before <code>x=5;</code>; 线程2的<code>while(x!=5);</code> happens-before <code>int dummy = b;</code></li>
+<li>根据代码顺序规则，线程1的<code>x=5;</code> happens-before <code>b=1;</code>; 线程2的<code>while(x!=5);</code> happens-before <code>int dummy = b;</code></li>
 <li>根据volatile变量规则，线程2的<code>int dummy=b;</code> happens-before <code>b=1;</code></li>
 <li>根据传递性，<code>while(x!=5);</code> happens-before <code>x=5;</code></li>
 </ol>
