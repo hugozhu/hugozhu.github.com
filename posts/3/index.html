@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>我的第一篇博客 - When Go meets Raspberry Pi</title>
+    <title>树莓派的GPIO接口输出电流限制 - When Go meets Raspberry Pi</title>
+  
+    <meta name="description" content="Understanding output 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -142,6 +144,34 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a> <span class="date">2013-03-27</span></h1>
+
+        <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
+
+<h1><a style="display: block;" name="实现方法" href="#实现方法"></a>实现方法</h1>
+
+<h2><a style="display: block;" name="google-analytics" href="#google-analytics"></a>Google Analytics</h2>
+
+<p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
+
+<h2><a style="display: block;" name="日志分析" href="#日志分析"></a>日志分析</h2>
+
+<p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
+但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
+
+<h2><a style="display: block;" name="cnzz" href="#cnzz"></a>CNZZ</h2>
+
+<p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
+
+<p></p>
+
+
+        <div class="more">
+          <a href="/2013/03/27/21-realtime-online-user-counter.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html">升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</a> <span class="date">2013-03-24</span></h1>
@@ -592,59 +622,6 @@ done
 
         <div class="more">
           <a href="/2013/03/06/raspberry-pi-with-xmbc.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/05/java-SynchronousQueue-notes.html">Java并发包中的同步队列SynchronousQueue实现原理</a> <span class="date">2013-03-05</span></h1>
-
-        <h2><a style="display: block;" name="介绍" href="#介绍"></a>介绍</h2>
-
-<p>Java 6的并发编程包中的<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/SynchronousQueue.html">SynchronousQueue</a>是一个没有数据缓冲的<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html">BlockingQueue</a>，生产者线程对其的插入操作put必须等待消费者的移除操作take，反过来也一样。</p>
-
-<p>不像ArrayBlockingQueue或LinkedListBlockingQueue，SynchronousQueue内部并没有数据缓存空间，你不能调用peek()方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。队列头元素是第一个排队要插入数据的<strong>线程</strong>，而不是要交换的数据。数据是在配对的生产者和消费者线程之间直接传递的，并不会将数据缓冲数据到队列中。可以这样来理解：生产者和消费者互相等待对方，握手，然后<strong>一起</strong>离开。</p>
-
-<p>SynchronousQueue的一个使用场景是在线程池里。Executors.newCachedThreadPool()就使用了SynchronousQueue，这个线程池根据需要（新任务到来时）创建新的线程，如果有空闲线程则会重复使用，线程空闲了60秒后会被回收。</p>
-
-<h2><a style="display: block;" name="实现原理" href="#实现原理"></a>实现原理</h2>
-
-<p>同步队列的实现方法有许多：</p>
-
-<h3>阻塞算法实现</h3>
-
-<p>阻塞算法实现通常在内部采用一个锁来保证多个线程中的put()和take()方法是串行执行的。采用锁的开销是比较大的，还会存在一种情况是线程A持有线程B需要的锁，B必须一直等待A释放锁，即使A可能一段时间内因为B的优先级比较高而得不到时间片运行。所以在高性能的应用中我们常常希望规避锁的使用。</p>
-
-<pre><code>public class NativeSynchronousQueue&lt;E&gt; {
-    boolean putting = false;
-    E item = null;
-
-    public synchronized E take() throws InterruptedException {
-        while (item == null)
-            wait();
-        E e = item;
-        item = null;
-        notifyAll();
-        return e;
-    }
-
-    public synchronized void put(E e) throws InterruptedException {
-        if (e==null) return;
-        while (putting)
-            wait();
-        putting = true;
-        item = e;
-        notifyAll();
-        while (item!=null)
-            wait();
-        putting = false;
-        notifyAll();
-    }
-}
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/03/05/java-SynchronousQueue-notes.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

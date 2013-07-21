@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>OpenVPN使用多个端口 - When Go meets Raspberry Pi</title>
+    <title>在树莓派上使用Phantomjs自动登录微博 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="使用iptables将多个端口转发到OpenVPN的端口，防止单一端口被封 树莓派">
+    <meta name="description" content="Use phantomjs on Raspberry Pi to login weibo automatically 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,32 +104,119 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>OpenVPN使用多个端口 </h1>
+  <h1>在树莓派上使用Phantomjs自动登录微博 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>Openvpn本身不能设置多个端口，使用iptables可以解决这个问题 （假设openvpn本来56788端口）：</p>
+    
 
-<pre><code>for port in {56780..56787}
-do 
-    iptables -t nat -A PREROUTING -p tcp -d &lt;your_external_ip&gt; --dport $port -j REDIRECT --to-port 56788
-done
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">Phantomjs</a></li>
+<li><a href="#toc_1">代码</a></li>
+</ul>
+</nav></p>
+
+<p>使用过新浪开放平台的朋友都知道用户对小应用（用户数较少的）的授权Token很容易[过期]（http://open.weibo.com/wiki/授权机制说明#.E6.8E.88.E6.9D.83.E6.9C.89.E6.95.88.E6.9C.9F），自动续期要求授权过的用户在过期前重新打开授权页。如果你想实现一个自动备份自己微博的App，就不得每天（周）自己去访问授权页（想死的心都有了吧？）。这里介绍一种通过脚本自动登录微博获取最新oAuth token的方法（需要微博登录名和密码），合适自己玩。将脚本部署在树莓派上，我再也不用每周都去登录一次授权页了，只是收到报警消息后（经常是帐号被冻结了）需要手动处理一下。</p>
+
+<h1 id="toc_0">Phantomjs</h1>
+
+<p><a href="http://phantomjs.org/">Phantomjs</a> 是一个开源的，没有界面可运行在命令行，跨平台，基于WebKit的全功能浏览器，可以用来做网站自动化测试。从<a href="http://phantomjs.org/build.html">代码编译</a>比较费时间，可以直接下载<a href="http://phantomjs.org/download.html">二进制版本</a>，树莓派的版本在<a href="https://github.com/aeberhardo/phantomjs-linux-armv6l">这里</a>可下载。Phantomjs下载好了后就一个可执行文件，依赖非常少，我很喜欢这种方式。</p>
+
+<h1 id="toc_1">代码</h1>
+
+<p>以下代码使用提供的微博用户名和密码登录，获得Token后还会打开微博首页看帐号是否被冻结了。</p>
+
+<pre><code>var page = require('webpage').create(),
+    system = require('system'),
+    fs = require('fs'),
+    address;
+
+var weibo_userid = system.args[1]
+var weibo_passwd = system.args[2]
+
+var startUrl = &quot;https://api.weibo.com/oauth2/authorize?client_id=&lt;your_app_key&gt;&amp;redirect_uri=http://hugozhu.myalert.info/&amp;response_type=token&quot;;
+
+var verify_weibo_freeze = false;
+
+page.onResourceReceived = function (res,network) {
+    if (res.stage == &quot;end&quot;) {
+        // console.log(&quot;\t&lt;-&quot; + res.url);
+        if (res.url.indexOf(&quot;authorize?client_id&quot;)&gt;0) {
+            startUrl = res.url
+        } 
+        if (res.url.indexOf(&quot;?access_token&quot;)&gt;0) {
+            var pos1 = res.url.indexOf(&quot;access_token=&quot;)
+            var pos2 = res.url.indexOf(&quot;&amp;&quot;)
+            var access_token = res.url.substring(pos1+&quot;access_token=&quot;.length, pos2)
+            console.log(weibo_userid + &quot; login OK, access_token is: &quot; + access_token)
+            verify_weibo_freeze = true
+        }
+        if (verify_weibo_freeze &amp;&amp; res.url != &quot;http://weibo.com/&quot; &amp;&amp; res.url.indexOf(&quot;http://weibo.com/&quot;)&gt;-1) {
+            var pos1 = res.url.indexOf(&quot;/&quot;,8)
+            var pos2 = res.url.indexOf(&quot;?&quot;)
+            var weibo_name = res.url.substring(pos1+1,pos2)
+            console.log(weibo_name+&quot; status verified OK&quot;)
+            phantom.exit();
+        }
+    }
+};
+
+page.onLoadFinished = function() {
+    if (verify_weibo_freeze) {
+        page.open(&quot;http://weibo.com/&quot;, function() {
+            phantom.exit();
+        })
+    }
+};
+
+page.onConsoleMessage = function(msg) {
+    console.log(msg);
+};
+
+page.open(startUrl, function(status) {
+    if ( status === &quot;success&quot; ) {
+        page.includeJs(&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js&quot;, function() {
+            var offset = page.evaluate(function(a,b) {
+                $(&quot;#userId&quot;).val(a)
+                $(&quot;#passwd&quot;).val(b)
+                if ($('.WB_btn_login').hasClass(&quot;formbtn_01&quot;)) {
+                    // console.log(&quot;Found button!&quot;)
+                    return $('.WB_btn_login').offset()
+                }
+                return undefined
+            }, weibo_userid, weibo_passwd);
+            page.sendEvent('click', offset.left + 1, offset.top + 1);
+        });
+    }
+})
+
 </code></pre>
+
+<p>＃ 执行方法</p>
+
+<p><code>timeout 120 phantomjs weibo_login.js &lt;your_weibo_login_id&gt; &lt;your_weibo_login_password&gt;</code></p>
+
+<pre><code>&lt;your_weibo_login_id&gt; login OK, access_token is: &lt;your_access_token&gt;
+&lt;your_weibo_login_name&gt; status verified OK
+</code></pre>
+
+<p>使用<code>timeout</code>要求命令在120秒内完成，防止phantomjs进程遇到问题时一直不退出，实际使用可以用Crontab定时每天执行一次，执行输出可以pipe到另一个脚本，如果不OK则发短信或邮件提示。</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/05/java-SynchronousQueue-notes.html" title="Java并发包中的同步队列SynchronousQueue实现原理">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html" title="在Ubuntu上配置L2TP，PPTP和OpenVPN服务">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" title="在Mac上使用Sublime 3写Go代码">Next &rarr;</a></li>
           
           
         </ul>
@@ -178,7 +265,7 @@ done
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-02</span></div>
+      <div class="date"><span>2013-07-21</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -193,11 +280,7 @@ done
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Linux-ref">Linux <span>5</span></a>
-</li>
-      
-        <li>
-  <a href="/tags/#VPN-ref">VPN <span>2</span></a>
+  <a href="/tags/#Javascript-ref">Javascript <span>1</span></a>
 </li>
       
       </ul>
