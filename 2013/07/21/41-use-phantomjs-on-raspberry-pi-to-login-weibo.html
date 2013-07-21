@@ -137,7 +137,7 @@
 var weibo_userid = system.args[1]
 var weibo_passwd = system.args[2]
 
-var startUrl = &quot;https://api.weibo.com/oauth2/authorize?client_id=&lt;your_app_key&gt;&amp;redirect_uri=http://hugozhu.myalert.info/&amp;response_type=token&quot;;
+var startUrl = &quot;https://api.weibo.com/oauth2/authorize?client_id=&lt;your_app_key&gt;&amp;redirect_uri=&lt;your_return_url&gt;/&amp;response_type=token&quot;;
 
 var verify_weibo_freeze = false;
 
@@ -217,7 +217,7 @@ page.open(startUrl, function(status) {
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" title="在Mac上使用Sublime 3写Go代码">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html" title="替换树莓派的U盘">Next &rarr;</a></li>
           
           
         </ul>
