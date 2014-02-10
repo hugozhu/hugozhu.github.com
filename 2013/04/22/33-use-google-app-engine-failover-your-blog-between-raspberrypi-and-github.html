@@ -109,11 +109,11 @@
 
 <div class="row">
   <div class="span8">
-    <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
+    <h1>背景介绍</h1>
 
 <p><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">把网站托管在树莓派上</a>后如果家里停电或是宽带故障，会造成网站中断。本文提供一个免费的解决方案（前提是你需要有自己的一个域名，并由DNSPod解析）</p>
 
-<h1><a style="display: block;" name="dnspod" href="#dnspod"></a>DNSPod</h1>
+<h1>DNSPod</h1>
 
 <p>首先需要在DNSPod里设置好需要failover的域名CNAME：比如<code>hugozhu.myalert.info</code></p>
 
@@ -131,9 +131,9 @@
 <pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
 </code></pre>
 
-<h1><a style="display: block;" name="google-app-engine" href="#google-app-engine"></a>Google App Engine</h1>
+<h1>Google App Engine</h1>
 
-<h2><a style="display: block;" name="切换dns脚本" href="#切换dns脚本"></a>切换DNS脚本</h2>
+<h2>切换DNS脚本</h2>
 
 <pre><code>package dnspod
 
@@ -182,7 +182,7 @@ func Update(client *http.Client, cname string) string {
 }
 </code></pre>
 
-<h2><a style="display: block;" name="检测接口" href="#检测接口"></a>检测接口</h2>
+<h2>检测接口</h2>
 
 <p>部署一个web应用到Google App Engine上，该应用接受树莓派上的一个URL（注意这里不应该用需failver的域名），并请求该域名以检查网站是否正常。这里也可以使用监控宝来监控，但只有付费专业版才支持出错后回调URL。</p>
 
@@ -238,7 +238,7 @@ func url_ok(client *http.Client, url string) (bool, string) {
 }
 </code></pre>
 
-<h2><a style="display: block;" name="定时任务" href="#定时任务"></a>定时任务</h2>
+<h2>定时任务</h2>
 
 <p>在gae项目里增加一个文件：<a href="https://github.com/hugozhu/gae-rpi-webapp/blob/master/cron.yaml">cron.yaml</a>，内容如下，这样gae会自动每隔15分钟检查一次，如果连续发现两次不可用，就会切换到Github，恢复后则会切换回来。</p>
 
@@ -248,7 +248,7 @@ func url_ok(client *http.Client, url string) (bool, string) {
   schedule: every 15 minutes
 </code></pre>
 
-<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
+<h1>参考链接</h1>
 
 <ol>
 <li><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html</a></li>
@@ -322,7 +322,7 @@ func url_ok(client *http.Client, url string) (bool, string) {
       <ul class="tag_box">
       
         <li>
-  <a href="/categories/#Blog-ref">Blog <span>44</span></a>
+  <a href="/categories/#Blog-ref">Blog <span>45</span></a>
 </li>
       
       </ul>

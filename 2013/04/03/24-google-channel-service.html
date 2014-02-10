@@ -111,7 +111,7 @@
   <div class="span8">
     <p>前面提到了有关个人网站的<a href="http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html">实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p>
 
-<h1><a style="display: block;" name="google-channel-service" href="#google-channel-service"></a>Google Channel Service</h1>
+<h1>Google Channel Service</h1>
 
 <p><a href="https://developers.google.com/appengine/docs/go/channel/overview">Google Channel Service</a>允许应用和<a href="http://appengine.google.com/">GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p>
 
@@ -125,9 +125,9 @@
 <img src="https://developers.google.com/appengine/images/channel_overview02.png"/></p></li>
 </ol>
 
-<h1><a style="display: block;" name="在线人数统计实现" href="#在线人数统计实现"></a>在线人数统计实现</h1>
+<h1>在线人数统计实现</h1>
 
-<h2><a style="display: block;" name="在页面上部署beacon" href="#在页面上部署beacon"></a>在页面上部署beacon</h2>
+<h2>在页面上部署beacon</h2>
 
 <p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p>
 
@@ -221,7 +221,7 @@ handlers:
 
 <p>将该应用发布到GAE后，可以通过在页面底部放置<code>&lt;img src=&quot;http://&lt;your_app_name&gt;.appspot.com/beacon.gif/&gt;&quot;</code>标签来将网站的流量引到GAE，并通过Channel发布出去。</p>
 
-<h2><a style="display: block;" name="接收实时消息" href="#接收实时消息"></a>接收实时消息</h2>
+<h2>接收实时消息</h2>
 
 <p>比较遗憾的是Google只提供了Javascript库来供浏览器接收实时消息，相应的使用代码如下。</p>
 
@@ -301,7 +301,7 @@ func main() {
 }
 </code></pre>
 
-<h2><a style="display: block;" name="实时分析日志" href="#实时分析日志"></a>实时分析日志</h2>
+<h2>实时分析日志</h2>
 
 <p>在Pi上利用Channel客户端库，脚本可以实时获取访问日志，可以通过最近15分钟内的日志计算出每分钟独立访客数和PV数，最后可以在Pi的液晶屏幕用柱状图显示出来。</p>
 
@@ -397,7 +397,7 @@ func main() {
 
 </code></pre>
 
-<h2><a style="display: block;" name="实际效果" href="#实际效果"></a>实际效果</h2>
+<h2>实际效果</h2>
 
 <p><img src="http://ww4.sinaimg.cn/bmiddle/6bc40342jw1e3dzagtsl6j.jpg"/></p>
 
@@ -413,7 +413,7 @@ func main() {
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/28/23-arduino-1st-day.html" title="Arduino初试">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/03/28/22-memory-barriers-or-fences.html" title="并发编程之内存屏障">Next &rarr;</a></li>
           
           
         </ul>
@@ -468,7 +468,7 @@ func main() {
       <ul class="tag_box">
       
         <li>
-  <a href="/categories/#Blog-ref">Blog <span>44</span></a>
+  <a href="/categories/#Blog-ref">Blog <span>45</span></a>
 </li>
       
       </ul>

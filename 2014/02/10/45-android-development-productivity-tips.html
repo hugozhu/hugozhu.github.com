@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>树莓派I2C编程 - When Go meets Raspberry Pi</title>
+    <title>提高Android开发效率的小贴士 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="I2C Programming on Raspberry Pi 树莓派">
+    <meta name="description" content="Android development productivity tips 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,41 +104,52 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>树莓派I2C编程 </h1>
+  <h1>提高Android开发效率的小贴士 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>(！未完！)</p>
+    <h1>查看日志 adb logcat</h1>
 
-<p>除了<a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">SPI</a>协议外，树莓派还支持<a href="http://zh.wikipedia.org/wiki/I²C">I2C</a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。</p>
+<p>下面命令将只显示错误日志，和所有Tag＝mytag的调试日志，-C 会用不同颜色区分不同级别的日志，但只有Android 4.3以后才支持。</p>
 
-<h1>I2C</h1>
+<pre><code>adb logcat [-C] *:E &lt;mytag&gt;:D
+</code></pre>
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png"/></p>
+<h1>远程调试 adb over TCP</h1>
 
-<p>上图是一个主控使用I2C驱动3个设备的示意图</p>
+<p>首先在手机或Pad上执行以下命令（要求root）</p>
 
-<h1>参考链接</h1>
+<pre><code>su
+setprop service.adb.tcp.port 5555
+stop adbd
+start adbd
+</code></pre>
 
-<ol>
-<li><a href="http://zh.wikipedia.org/wiki/I²C">http://zh.wikipedia.org/wiki/I²C</a></li>
-<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/">https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</a></li>
-</ol>
+<p>再执行下面命令则可以看到手机的网络地址
+<code>
+netcfg | grep wlan
+</code></p>
+
+<p>在电脑上则执行</p>
+
+<pre><code>adb connect &lt;mobile_phone_ip&gt; 5555
+adb shell
+</code></pre>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/04/20/31-golang-memory-model.html" title="Go语言内存模型">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/04/14/29-use-wiringpi-go-binding.html" title="使用Go语言在树莓派上编程">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/11/27/44-copy-android-app-data.html" title="拷贝Android应用的数据">Next &rarr;</a></li>
           
           
         </ul>
@@ -187,7 +198,7 @@
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-04-18</span></div>
+      <div class="date"><span>2014-02-10</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -202,7 +213,7 @@
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>14</span></a>
+  <a href="/tags/#Android-ref">Android <span>3</span></a>
 </li>
       
       </ul>
