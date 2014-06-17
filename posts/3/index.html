@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>我的第一篇博客 - When Go meets Raspberry Pi</title>
+    <title>在Mac上使用Sublime 3写Go代码 - When Go meets Raspberry Pi</title>
+  
+    <meta name="description" content="Use Sublime 3 on Mac for Go programming 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -148,7 +150,7 @@
 
         <p>前面提到了有关个人网站的<a href="http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html">实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p>
 
-<h1>Google Channel Service</h1>
+<h1><a style="display: block;" name="google-channel-service" href="#google-channel-service"></a>Google Channel Service</h1>
 
 <p><a href="https://developers.google.com/appengine/docs/go/channel/overview">Google Channel Service</a>允许应用和<a href="http://appengine.google.com/">GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p>
 
@@ -162,9 +164,9 @@
 <img src="https://developers.google.com/appengine/images/channel_overview02.png"/></p></li>
 </ol>
 
-<h1>在线人数统计实现</h1>
+<h1><a style="display: block;" name="在线人数统计实现" href="#在线人数统计实现"></a>在线人数统计实现</h1>
 
-<h2>在页面上部署beacon</h2>
+<h2><a style="display: block;" name="在页面上部署beacon" href="#在页面上部署beacon"></a>在页面上部署beacon</h2>
 
 <p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p>
 
@@ -173,6 +175,40 @@
 
         <div class="more">
           <a href="/2013/04/03/24-google-channel-service.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
+
+        <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
+
+<p>Arduino特点:</p>
+
+<ol>
+<li>开源，硬件标准化，配套传感器等模块很多；</li>
+<li>结构简单</li>
+<li>实时系统，稳定，启动只要0.5秒</li>
+</ol>
+
+<h1><a style="display: block;" name="arduino-ide" href="#arduino-ide"></a>Arduino IDE</h1>
+
+<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
+
+<h1><a style="display: block;" name="上电测试" href="#上电测试"></a>上电测试</h1>
+
+<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
+<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
+
+<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
+
+<h1><a style="display: block;" name="上传代码" href="#上传代码"></a>上传代码</h1>
+
+<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
+
+
+        <div class="more">
+          <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -202,56 +238,22 @@
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
-
-        <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
-
-<p>Arduino特点:</p>
-
-<ol>
-<li>开源，硬件标准化，配套传感器等模块很多；</li>
-<li>结构简单</li>
-<li>实时系统，稳定，启动只要0.5秒</li>
-</ol>
-
-<h1>Arduino IDE</h1>
-
-<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
-
-<h1>上电测试</h1>
-
-<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
-<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
-
-<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
-
-<h1>上传代码</h1>
-
-<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
-
-
-        <div class="more">
-          <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a> <span class="date">2013-03-27</span></h1>
 
         <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
 
-<h1>实现方法</h1>
+<h1><a style="display: block;" name="实现方法" href="#实现方法"></a>实现方法</h1>
 
-<h2>Google Analytics</h2>
+<h2><a style="display: block;" name="google-analytics" href="#google-analytics"></a>Google Analytics</h2>
 
 <p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
 
-<h2>日志分析</h2>
+<h2><a style="display: block;" name="日志分析" href="#日志分析"></a>日志分析</h2>
 
 <p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
 但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
 
-<h2>CNZZ</h2>
+<h2><a style="display: block;" name="cnzz" href="#cnzz"></a>CNZZ</h2>
 
 <p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
 
@@ -274,7 +276,7 @@
 <li>84x48点阵，可显示100多个字符</li>
 </ol>
 
-<h1>硬件准备</h1>
+<h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
 
 <ol>
 <li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li>
@@ -284,7 +286,7 @@
 <li><a href="http://detail.tmall.com/item.htm?id=22096296909&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁</a></li>
 </ol>
 
-<h1>电路</h1>
+<h1><a style="display: block;" name="电路" href="#电路"></a>电路</h1>
 
 <p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。</p>
 
@@ -297,7 +299,7 @@
       <div class="post">
         <h1 class="title"><a href="/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</a> <span class="date">2013-03-23</span></h1>
 
-        <h1>硬件准备</h1>
+        <h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
@@ -311,7 +313,7 @@
 <li><a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5+%B5%E7%D4%B4&amp;type=p&amp;style=&amp;cat=all">面包板电源</a></li>
 </ol>
 
-<h1>1602 LCD液晶屏</h1>
+<h1><a style="display: block;" name="1602-lcd液晶屏" href="#1602-lcd液晶屏"></a>1602 LCD液晶屏</h1>
 
 <p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&ndash;请参考<a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则</a>：</p>
 
@@ -345,7 +347,7 @@
 
         <p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p>
 
-<h1>GPIO库</h1>
+<h1><a style="display: block;" name="gpio库" href="#gpio库"></a>GPIO库</h1>
 
 <ol>
 <li><a href="https://github.com/WiringPi/WiringPi">wiringPi</a> C，有Perl, PHP, Ruby, Node.JS和<strong><a href="http://github.com/hugozhu/rpi">Golang</a></strong>的扩展，支持wiringPi Pin和BCM GPIO两种编号</li>
@@ -354,7 +356,7 @@
 <li><a href="http://github.com/hugozhu/rpi">WiringPi-Go</a>, Go语言，支持以上三种编号</li>
 </ol>
 
-<h1>编号规范</h1>
+<h1><a style="display: block;" name="编号规范" href="#编号规范"></a>编号规范</h1>
 
 <ol>
 <li>第一列是wiringPi API中的缺省编号，<code>wiringPiSetup()</code>采用这列编号</li>
@@ -504,7 +506,7 @@
       <div class="post">
         <h1 class="title"><a href="/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html">如何使用Raspberry Pi测量室内温度和湿度并绘制曲线</a> <span class="date">2013-03-17</span></h1>
 
-        <h1>硬件准备</h1>
+        <h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
@@ -515,13 +517,13 @@
 <li><a href="http://list.tmall.com//search_product.htm?q=DHT11&amp;type=p&amp;style=&amp;cat=all">DHT11</a>温度和湿度传感器一个或<a href="http://s.taobao.com/search?q=DHT22&amp;keyword=&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;atype=&amp;tracelog=&amp;sourceId=tb.index&amp;rt=1364041904459&amp;source=haiwaigou&amp;pid=mm_14507416_2297358_8935934&amp;unid=">DHT22</a></li>
 </ol>
 
-<h1>传感器电路及原理</h1>
+<h1><a style="display: block;" name="传感器电路及原理" href="#传感器电路及原理"></a>传感器电路及原理</h1>
 
-<h2>DHT11传感器外观</h2>
+<h2><a style="display: block;" name="dht11传感器外观" href="#dht11传感器外观"></a>DHT11传感器外观</h2>
 
 <p><img src="http://learn.adafruit.com/system/products/images/000/000/386/medium225/dht11_MED.jpg?1342023044"/></p>
 
-<h2>参数</h2>
+<h2><a style="display: block;" name="参数" href="#参数"></a>参数</h2>
 
 
         <div class="more">
@@ -532,7 +534,7 @@
       <div class="post">
         <h1 class="title"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html">如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</a> <span class="date">2013-03-16</span></h1>
 
-        <h1>硬件准备</h1>
+        <h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
@@ -543,7 +545,7 @@
 <li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLuXQmw2TUIlWTNRCvS2wo483pjZyXspPuvkTH5pg4vQUqrztOAoNz2Gfp8MmwKPg%2FbQb8%3D">UL2003芯片步进电机驱动板</a>一块</li>
 </ol>
 
-<h1>安装</h1>
+<h1><a style="display: block;" name="安装" href="#安装"></a>安装</h1>
 
 <p>按下图将步进电机接到驱动板上，也就是白色的接口</p>
 
@@ -562,7 +564,7 @@
 
         <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
 
-<h1>硬件安装</h1>
+<h1><a style="display: block;" name="硬件安装" href="#硬件安装"></a>硬件安装</h1>
 
 <p>需要以下硬件：</p>
 
@@ -575,7 +577,7 @@
 <li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
 </ol>
 
-<h2>GPIO接口</h2>
+<h2><a style="display: block;" name="gpio接口" href="#gpio接口"></a>GPIO接口</h2>
 
 <p><img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/></p>
 
@@ -625,20 +627,16 @@
         <hr/>
 
         <center>
-        <script type="text/javascript"> 
-        alimama_pid="mm_12926928_3484851_11458495"; 
-        alimama_width=950; 
-        alimama_height=90; 
-        </script> 
-        <script src="http://a.alimama.cn/inf.js" type="text/javascript"> 
-        </script>
+
+<a href="http://s.click.taobao.com/t?e=m%3D2%26s%3DIvgifoFnYOEcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAprpiL7eedLBGAcW%2BgUaNBItyCA8kPsK20DQUmvVyfKQaZdJdwyDgalbY%2Bzpq8pT0%2Bdn1BbglxZYxUhy8exlzcq9AmARIwX9K2Zg%2BdzdQFOwfMRvoxSVDSdLyrb2g0H2G5JcxXijM%2BwneEHpPTskRHnPKdU%2FdTrgjbw4MC6y5nKlXF%2B87KN7TKeiZ%2BQMlGz6FQ%3D%3D" target="_blank"><img src="http://gtms01.alicdn.com/tps/i1/T1S.KAFMNbXXcp9.bi-950-90.jpg" /></a>
+
         </center>
 
       </div>
 
       <footer>
         <p>&copy; <a href="http://weibo.com/hugozhu">Hugo Zhu</a> 2013
-          Powered by <a href="http://www.raspberrypi.org" target="_blank"><img src="http://a0.twimg.com/profile_images/1590336143/Raspi-PGB001_normal.png"/> Raspberry Pi</a>
+          Powered by <a href="http://www.raspberrypi.org" target="_blank"><img src="http://retroburngames.com/bytrix/media/images/28_icon.jpg"/> Raspberry Pi</a>
           with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
           and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
 		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
