@@ -111,6 +111,32 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2014/06/29/46-async-android.html">Android异步编程</a> <span class="date">2014-06-29</span></h1>
+
+  <h1><a style="display: block;" name="asynctask" href="#asynctask"></a>AsyncTask</h1>
+
+<p>AsyncTask是最常用的异步方法，功能结构设计的也很丰富，给使用者足够的控制，使用上主要是将异步执行的任务放在下面方法里。</p>
+
+<pre><code>protected Result doInBackground(Params... params)
+
+</code></pre>
+
+<p>然后调用<code>.execute(params)</code>方法即可。</p>
+
+<p>AsyncTask的执行逻辑在API Level 3只能串行执行， 在API Level 4改成了最多128个线程的线程池执行，API Level 11则改成了缺省所有的AsyncTask是在一个线程中顺序执行的，这样可以保证执行和提交的次序一致，如果希望能并发的执行，可以用下面的方法在线程池内执行：</p>
+
+<pre><code>task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+</code></pre>
+
+<p><code>AsyncTask.THREAD_POOL_EXECUTOR</code>是<code>ThreadPoolExecutor</code>的一个实例，配置是最少5个线程，最多128个。如果需要自己来配置线程池大小，你可以传递自己配置的一个实例到上述方法。</p>
+
+
+  <div class="more">
+    <a href="/2014/06/29/46-async-android.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2014/02/10/45-android-development-productivity-tips.html">提高Android开发效率的小贴士</a> <span class="date">2014-02-10</span></h1>
 
   <h1><a style="display: block;" name="查看日志-adb-logcat" href="#查看日志-adb-logcat"></a>查看日志 adb logcat</h1>
@@ -164,6 +190,31 @@ dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zl
 
   <div class="more">
     <a href="/2013/11/27/44-copy-android-app-data.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
+  <h1 class="title"><a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html">使用夏普GP2Y1010AU0F灰尘传感器检测空气质量</a> <span class="date">2013-07-21</span></h1>
+
+  <p>夏普<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.1.X4yMiN&amp;id=25584528001&amp;_u=oqa3375a">GP2Y1010AU0F</a>灰尘传感器价格较便宜，能检测出室内空气中的灰尘和烟尘含量。另外还有韩国SYHITECH生产的<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.9.NNhRMO&amp;id=15543884159">DSM501A</a>粉尘传感器也有类似功能。</p>
+
+<h1><a style="display: block;" name="检测原理" href="#检测原理"></a>检测原理</h1>
+
+<p>其原理如下图，传感器中心有个洞可以让空气自由流过，定向发射LED光，通过检测经过空气中灰尘折射过后的光线来判断灰尘的含量。</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/50d1faab-e7fc-45c6-9a0f-2b5f6743ce7f/4422cbee4a324b25d1ebaabba3eb350f/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
+
+<h1><a style="display: block;" name="电路图" href="#电路图"></a>电路图</h1>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/d34f08d5-0a93-44cc-b360-0b0686efa11d/e8548764c41977130e79b645e8b82cc3/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
+
+<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e6x61e41ykj218g0xcamc.jpg" width="500"/></p>
+
+<p>因为数据是通过pin 5的电压模拟信号输出的，而树莓派的引脚不支持模拟信号直接读取（需要增加数模转换芯片），所以先用Arduino来实验。</p>
+
+
+  <div class="more">
+    <a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
@@ -255,27 +306,31 @@ page.open(startUrl, function(status) {
 </div>
 
 <div class="post">
-  <h1 class="title"><a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html">使用夏普GP2Y1010AU0F灰尘传感器检测空气质量</a> <span class="date">2013-07-21</span></h1>
+  <h1 class="title"><a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html">替换树莓派的U盘</a> <span class="date">2013-07-11</span></h1>
 
-  <p>夏普<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.1.X4yMiN&amp;id=25584528001&amp;_u=oqa3375a">GP2Y1010AU0F</a>灰尘传感器价格较便宜，能检测出室内空气中的灰尘和烟尘含量。另外还有韩国SYHITECH生产的<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.9.NNhRMO&amp;id=15543884159">DSM501A</a>粉尘传感器也有类似功能。</p>
+  <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
 
-<h1><a style="display: block;" name="检测原理" href="#检测原理"></a>检测原理</h1>
+<ol>
+<li><p>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</p>
 
-<p>其原理如下图，传感器中心有个洞可以让空气自由流过，定向发射LED光，通过检测经过空气中灰尘折射过后的光线来判断灰尘的含量。</p>
+<pre><code>20:51:19 hugozhu-mac-mini ~ $ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.1 GB   disk0
+   1:                        EFI                         209.7 MB   disk0s1
+   2:                  Apple_HFS Macintosh HD            499.2 GB   disk0s2
+   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+/dev/disk2
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:     FDisk_partition_scheme                        *2.1 GB     disk2
+</code></pre>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/50d1faab-e7fc-45c6-9a0f-2b5f6743ce7f/4422cbee4a324b25d1ebaabba3eb350f/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
-
-<h1><a style="display: block;" name="电路图" href="#电路图"></a>电路图</h1>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/d34f08d5-0a93-44cc-b360-0b0686efa11d/e8548764c41977130e79b645e8b82cc3/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
-
-<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e6x61e41ykj218g0xcamc.jpg" width="500"/></p>
-
-<p>因为数据是通过pin 5的电压模拟信号输出的，而树莓派的引脚不支持模拟信号直接读取（需要增加数模转换芯片），所以先用Arduino来实验。</p>
+<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code></p></li>
+</ol>
 
 
   <div class="more">
-    <a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html" class="btn btn-small">阅读全文</a>
+    <a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
@@ -304,35 +359,6 @@ git checkout python3
 
   <div class="more">
     <a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html">替换树莓派的U盘</a> <span class="date">2013-07-11</span></h1>
-
-  <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
-
-<ol>
-<li><p>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</p>
-
-<pre><code>20:51:19 hugozhu-mac-mini ~ $ diskutil list
-/dev/disk0
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:      GUID_partition_scheme                        *500.1 GB   disk0
-   1:                        EFI                         209.7 MB   disk0s1
-   2:                  Apple_HFS Macintosh HD            499.2 GB   disk0s2
-   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
-/dev/disk2
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:     FDisk_partition_scheme                        *2.1 GB     disk2
-</code></pre>
-
-<p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code></p></li>
-</ol>
-
-
-  <div class="more">
-    <a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
@@ -447,33 +473,6 @@ fi
 
   <div class="more">
     <a href="/2013/06/01/36-use-ping-to-check-network-connectivity.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/05/14/35-understanding-output.html">树莓派的GPIO接口输出电流限制</a> <span class="date">2013-05-14</span></h1>
-
-  <p>树莓派提供了一个连接头让我们访问CPU的17个GPIO接口，如下图</p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/92d52938-5bd9-46a7-9b05-478e9f30f5d7/b29dcc510983784a07472c8282330b30/deep/0/Screenshot%205/14/13%208:51%20PM.png"/></p>
-
-<p>这些接口可配置成输入或输出。本文主要讨论GPIO引脚作为输出时电流的限制。</p>
-
-<h1><a style="display: block;" name="阻抗-(impendance)" href="#阻抗-(impendance)"></a>阻抗 (impendance)</h1>
-
-<p>阻抗和和电阻的区别（resistance）在于电阻的阻值是固定的，不会随着电流变化，阻抗则不然，可能随着外部变化，如电流或频率变化。从另一个角度来说，电阻是线性的，但阻抗不是。比如放大器的阻抗会随着输出的信号频率变化。</p>
-
-<p>树莓派的的每个GPIO引脚都有一个寄存器可以设置引脚的驱动强度，也就是在保持输出电压为逻辑0和1的情况下，可以改变阻抗的大小从而改变GPIO引脚的输出电流大小。</p>
-
-<p>通过如下电路测量相同电流下不同阻抗对应的GPIO电压输出（其中用到了一个电位器调节电流保持恒定）：</p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/11008332-acac-4625-9b6a-963c97ec7498/1e6d153774b7e95214fe0c2bba9121d8/deep/0/Screenshot%205/14/13%2010:22%20PM.png"/></p>
-
-<p>通过计算后，下表是当输出电流为2，4 … 16mA时，对应的阻抗大小以及如果发生短路时的短路电流大小。</p>
-
-
-  <div class="more">
-    <a href="/2013/05/14/35-understanding-output.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 

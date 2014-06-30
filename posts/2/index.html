@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用Go语言在树莓派上编程 - When Go meets Raspberry Pi</title>
+    <title>在Raspberry Pi上使用Google Channel服务搭建实时应用 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Programming Raspberry Pi with golang 树莓派">
+    <meta name="description" content="Setup realtime application with Google Channel Service 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -144,6 +144,33 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/05/14/35-understanding-output.html">树莓派的GPIO接口输出电流限制</a> <span class="date">2013-05-14</span></h1>
+
+        <p>树莓派提供了一个连接头让我们访问CPU的17个GPIO接口，如下图</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/92d52938-5bd9-46a7-9b05-478e9f30f5d7/b29dcc510983784a07472c8282330b30/deep/0/Screenshot%205/14/13%208:51%20PM.png"/></p>
+
+<p>这些接口可配置成输入或输出。本文主要讨论GPIO引脚作为输出时电流的限制。</p>
+
+<h1><a style="display: block;" name="阻抗-(impendance)" href="#阻抗-(impendance)"></a>阻抗 (impendance)</h1>
+
+<p>阻抗和和电阻的区别（resistance）在于电阻的阻值是固定的，不会随着电流变化，阻抗则不然，可能随着外部变化，如电流或频率变化。从另一个角度来说，电阻是线性的，但阻抗不是。比如放大器的阻抗会随着输出的信号频率变化。</p>
+
+<p>树莓派的的每个GPIO引脚都有一个寄存器可以设置引脚的驱动强度，也就是在保持输出电压为逻辑0和1的情况下，可以改变阻抗的大小从而改变GPIO引脚的输出电流大小。</p>
+
+<p>通过如下电路测量相同电流下不同阻抗对应的GPIO电压输出（其中用到了一个电位器调节电流保持恒定）：</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/11008332-acac-4625-9b6a-963c97ec7498/1e6d153774b7e95214fe0c2bba9121d8/deep/0/Screenshot%205/14/13%2010:22%20PM.png"/></p>
+
+<p>通过计算后，下表是当输出电流为2，4 … 16mA时，对应的阻抗大小以及如果发生短路时的短路电流大小。</p>
+
+
+        <div class="more">
+          <a href="/2013/05/14/35-understanding-output.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/05/13/34-use-74HC595-8-bit-shift-register-with-raspberry-pi.html">使用8位移位寄存器74HC595扩展树莓派的IO端口</a> <span class="date">2013-05-13</span></h1>
@@ -652,37 +679,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a> <span class="date">2013-04-05</span></h1>
-
-        <h1><a style="display: block;" name="什么是spi" href="#什么是spi"></a>什么是SPI</h1>
-
-<p>SPI (Serial Peripheral Interface)，是一种高速，全双工，同步的通信总线协议，基于SPI的设备需要4根线：</p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/61dba789-b17b-4570-b124-03925a97a4bf/4e64405c3b1a486f7aa4b9451e142b32/deep/0/Screenshot%204/5/13%204:27%20PM.jpg
-"/></p>
-
-<ol>
-<li>SDO / MOSI - 主设备数据输出，从设备数据输入</li>
-<li>SDI / MISO - 主设备数据输入，从设备数据输出</li>
-<li>SCLK / CLK - 时钟信号，由主设备产生</li>
-<li>CS / SS - 从设备使能信号，由主设备控制</li>
-</ol>
-
-<p>通过CS，主设备可以控制和哪个从设备通信。</p>
-
-<h2><a style="display: block;" name="bit-banging" href="#bit-banging"></a>Bit Banging</h2>
-
-<p>Bit-banging是一种用软件替代专职硬件的串行通信的技术。软件直接对微处理器的管脚的状态进行设置和采样，其功能涵盖诸如：时钟，电平，同步等所有参数。与此不同的是（传统的串行通信技术中），专职硬件诸如 modem、UART 或者 位移寄存器等一般是用来处理这些参数并且提供一个（缓存）的数据接口，软件在这种情况下同信号处理无关。</p>
-
-<p>bit-banging 具有明显优点诸如：让相同的设备运行不同的协议而只需很小的（甚至不需）硬件的改动。借助很少的额外设备，我们也许可以从数字管脚（数字终端）可以得到视频信号。</p>
-
-
-        <div class="more">
-          <a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

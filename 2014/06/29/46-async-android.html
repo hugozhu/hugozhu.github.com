@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>如何使用Raspberry Pi测量室内温度和湿度并绘制曲线 - When Go meets Raspberry Pi</title>
+    <title>Android异步编程 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Interfacing Temperature and Humidity Sensor with Raspberry Pi 树莓派">
+    <meta name="description" content="Asynchronous Android 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,7 +104,7 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>如何使用Raspberry Pi测量室内温度和湿度并绘制曲线 </h1>
+  <h1>Android异步编程 </h1>
 </div>
 
 <div class="row">
@@ -113,184 +113,136 @@
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li><a href="#toc_0">硬件准备</a></li>
-<li><a href="#toc_1">传感器电路及原理</a>
+<li><a href="#toc_0">AsyncTask</a>
 <ul>
-<li><a href="#toc_2">DHT11传感器外观</a></li>
-<li><a href="#toc_3">参数</a></li>
-<li><a href="#toc_4">电路图</a></li>
-<li><a href="#toc_5">安装好的样子：</a></li>
+<li><a href="#toc_1">碎片化问题</a></li>
+<li><a href="#toc_2">Activity生命周期问题</a></li>
 </ul></li>
-<li><a href="#toc_6">读取温度和湿度的代码</a></li>
-<li><a href="#toc_7">记录曲线图</a></li>
-<li><a href="#toc_8">参考</a></li>
+<li><a href="#toc_3">Handler &amp; HandlerThread</a>
+<ul>
+<li><a href="#toc_4">Looper</a></li>
+</ul></li>
+<li><a href="#toc_5">Loader</a>
+<ul>
+<li><a href="#toc_6">AsyncTaskLoader</a></li>
+<li><a href="#toc_7">CursorLoader</a></li>
+</ul></li>
+<li><a href="#toc_8">IntentService</a></li>
+<li><a href="#toc_9">Service</a></li>
+<li><a href="#toc_10">AlarmManager</a></li>
+<li><a href="#toc_11">参考链接</a></li>
 </ul>
 </nav></p>
 
-<h1 id="toc_0">硬件准备</h1>
+<h1 id="toc_0">AsyncTask</h1>
 
-<p>需要以下硬件：</p>
+<p>AsyncTask是最常用的异步方法，功能结构设计的也很丰富，给使用者足够的控制，使用上主要是将异步执行的任务放在下面方法里。</p>
+
+<pre><code>protected Result doInBackground(Params... params)
+
+</code></pre>
+
+<p>然后调用<code>.execute(params)</code>方法即可。</p>
+
+<p>AsyncTask的执行逻辑在API Level 3只能串行执行， 在API Level 4改成了最多128个线程的线程池执行，API Level 11则改成了缺省所有的AsyncTask是在一个线程中顺序执行的，这样可以保证执行和提交的次序一致，如果希望能并发的执行，可以用下面的方法在线程池内执行：</p>
+
+<pre><code>task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+</code></pre>
+
+<p><code>AsyncTask.THREAD_POOL_EXECUTOR</code>是<code>ThreadPoolExecutor</code>的一个实例，配置是最少5个线程，最多128个。如果需要自己来配置线程池大小，你可以传递自己配置的一个实例到上述方法。</p>
+
+<p>使用AsyncTask需要注意的几个问题</p>
+
+<h2 id="toc_1">碎片化问题</h2>
+
+<p>因为不同版本的Android AsyncTask缺省执行逻辑并不一样，可能在不同机型上表现不一致。如果要自己控制AsyncTask的并发度，解决这个问题的建议是复制Android SDK的AsyncTask源码自己实现一个AsyncTask。</p>
+
+<h2 id="toc_2">Activity生命周期问题</h2>
+
+<p>Activity可能早于AsyncTask执行完被销毁，如果AsyncTask还继续执行，有可能会浪费资源，并且如果AsyncTask里引用了Activity或部分的View Hierarchy，还会造成引用的对象不会被垃圾回收而引起内存泄漏。通常AsyncTask会定义为Activity的一个匿名inner class，这会建立一个隐式的引用到Activity。</p>
+
+<p>解决的方法是：</p>
 
 <ol>
-<li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
-<li><a href="http://list.tmall.com/search_product.htm?q=%C3%E6%B0%FC%B0%E5&amp;type=p&amp;style=&amp;cat=all&amp;ali_trackid=2:mm_12926928_3484851_11423971:1364041941_4k1_1171281511&amp;upsid=8daf4a561f161cd669d949c6bf367733&amp;clk1=8daf4a561f161cd669d949c6bf367733">面包板</a>和<a href="http://list.tmall.com//search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;type=p&amp;style=&amp;cat=all">公对母杜邦线</a></li>
-<li><a href="http://list.tmall.com/search_product.htm?q=10K+%B5%E7%CE%BB%C6%F7&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">10K 电位器</a>一个</li>
-<li><a href="http://list.tmall.com//search_product.htm?q=DHT11&amp;type=p&amp;style=&amp;cat=all">DHT11</a>温度和湿度传感器一个或<a href="http://s.taobao.com/search?q=DHT22&amp;keyword=&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;atype=&amp;tracelog=&amp;sourceId=tb.index&amp;rt=1364041904459&amp;source=haiwaigou&amp;pid=mm_14507416_2297358_8935934&amp;unid=">DHT22</a></li>
+<li>在Activity里的<code>onPause</code>方法里及时取消不需要再执行的AsyncTask（这种方法在切换到横屏时会重启异步任务，有点浪费）</li>
+<li>更好的是使用retained headless fragment来解决生命周期问题，具体演示代码见参考链接</li>
 </ol>
 
-<h1 id="toc_1">传感器电路及原理</h1>
+<p>Async比较合适的是较短的（1，2秒），CPU密集计算或读写文件等阻塞IO操作。耗时较长的网络调用用Async不是最合适的。</p>
 
-<h2 id="toc_2">DHT11传感器外观</h2>
+<h1 id="toc_3">Handler &amp; HandlerThread</h1>
 
-<p><img src="http://learn.adafruit.com/system/products/images/000/000/386/medium225/dht11_MED.jpg?1342023044"/></p>
+<p>Handler的异步编程是基于消息队列模型的。执行任务的线程称之为Looper线程，其他线程则将需要异步执行的任务发送给Looper线程&ndash;插入其消息队列，方法有：post（较方便使用，但每次需要创建新对象）或sendMessage（较高效，复用消息实例，适合执行大量类似的异步任务）</p>
 
-<h2 id="toc_3">参数</h2>
+<h2 id="toc_4">Looper</h2>
+
+<p>Looper和它的名字意思一样就是Looper线程会永远循环，当没有消息的时候，Looper线程（消费者）会使用(<code>Object.wait</code>)方法等待其他线程（生产者）插入新的任务消息，这时候其他线程(<code>Object.notify</code>)</p>
+
+<p>Android的主线程其实就是一个Looper线程。</p>
+
+<p>需要注意的是，使用Handler和AsyncTask一样，要注意匿名inner class对Activity的隐式引用而造成内存泄漏，所以使用的时候要记得清理；</p>
+
+<p>解决方法是使用对使用的Activity中的View对象用Weak Reference，并处理当View对象为null的情况。</p>
+
+<p>Handler适合更长一点的（&gt;2秒）的异步任务处理。</p>
+
+<h1 id="toc_5">Loader</h1>
+
+<p>Loader在Android编程框架中被广泛用于后台加载数据（从文件，数据库甚至网络）。</p>
+
+<h2 id="toc_6">AsyncTaskLoader</h2>
+
+<p>具体的Loader实现。</p>
+
+<h2 id="toc_7">CursorLoader</h2>
+
+<p>用户数据库数据后台加载。</p>
+
+<p>Loader在使用上比较大的优势是和Activity的部分解耦，更见到的生命周期管理。</p>
+
+<h1 id="toc_8">IntentService</h1>
+
+<p>IntentService是Service的一个实现类。其内部实现包含了一个HandlerThread，当任务提交给IntentService时，会被加到队列并顺序处理。</p>
+
+<pre><code>public class MyIntentService extends IntentService {
+     public MyIntentService() {
+       super(&quot;thread-name&quot;);
+     }
+     protected void onHandleIntent(Intent intent) {
+       // executes on the background HandlerThread.
+     } 
+}
+
+Intent intent = new Intent(context, MyIntentService.class);
+intent.setData(uri); intent.putExtra(&quot;param&quot;, &quot;some value&quot;); 
+
+startService(intent);
+
+</code></pre>
+
+<p>IntentService返回任务结果给Activity可以有下面几种方法（Service和Activity的通信方法）：</p>
 
 <ol>
-<li>湿度测量范围：20％～90%RH(0－50℃温度补偿）；</li>
-<li>温度测量范围：0～+50℃；</li>
-<li>湿度测量精度：±5.0%RH</li>
-<li>温度测量精度：±2.0℃</li>
-<li>响应时间：&lt;5s；</li>
+<li>Activity启动IntentService时候，传递一个PendingIntent对象给IntentService，IntentService在处理完任何后调用｀PendingIntent.send()｀通知Activity，Activity在｀onActivityResult｀方法内处理收到的消息。</li>
+<li>提交一个系统通知，这样App不在前台，用户也可以知道任务完成，比如下载地图数据。</li>
+<li>使用Messenger发送一个消息给Activity里的Handler。</li>
+<li>使用广播方式把结果封装在Intent中广播出去， 这样Fragment或Activity都可以通过监听广播获得处理结果。</li>
 </ol>
 
-<h2 id="toc_4">电路图</h2>
+<p>IntentService可以完全和Activity解耦。适合即使App主界面退出情况下也必须完成的任务，比如后台上传日志，图片之类的任务。</p>
 
-<p>DHT11一共4根引脚，左边第一根接电源5V (Pin 1)，第二根为数据接口，接 Pin 7，第三根不接，第四根接地；在Pin 1和Pin7 之间还需要并联10K的电阻，以保持读数稳定。</p>
+<h1 id="toc_9">Service</h1>
 
-<p><img src="http://learn.adafruit.com/system/assets/assets/000/001/860/original/dht11wiring.gif?1345831788"/></p>
+<p>Service合适执行独立于任何Activity或Fragment的任务，即使App主界面退出情况下也必须完成的任务；或者需要比IntentService更高或更细致的并发控制。</p>
 
-<h2 id="toc_5">安装好的样子：</h2>
+<h1 id="toc_10">AlarmManager</h1>
 
-<p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2rx17tlckj.jpg"/></p>
+<p>AlarmManager可以不在人工干预下定时执行任务，比如定时检查邮件，下载更新，或同步内容到云端。</p>
 
-<h1 id="toc_6">读取温度和湿度的代码</h1>
-
-<p>数据读取流图：</p>
-
-<p><img src="http://1.bp.blogspot.com/-_sMwYSZMGLw/UJpY2RYIA9I/AAAAAAAAAS0/rJ9ZQwZ3IfM/s640/DHT11+timing+diagram.jpg"/></p>
-
-<pre><code>#include &lt;wiringPi.h&gt;  
-#include &lt;stdio.h&gt;  
-#include &lt;stdlib.h&gt;  
-#include &lt;stdint.h&gt;  
-#define MAX_TIME 85  
-#define DHT11PIN 7  
-
-int dht11_val[5]={0,0,0,0,0};  
-int errors=0;
-
-  
-void dht11_read_val()  
-{  
-  uint8_t lststate=HIGH;  
-  uint8_t counter=0;  
-  uint8_t j=0,i;  
-  float farenheit;  
-  for(i=0;i&lt;5;i++)  
-     dht11_val[i]=0;  
-  pinMode(DHT11PIN,OUTPUT);  
-  digitalWrite(DHT11PIN,LOW);  
-  delay(18);  
-  digitalWrite(DHT11PIN,HIGH);  
-  delayMicroseconds(40);  
-  pinMode(DHT11PIN,INPUT);  
-  for(i=0;i&lt;MAX_TIME;i++)  
-  {  
-    counter=0;  
-    while(digitalRead(DHT11PIN)==lststate){  
-      counter++;  
-      delayMicroseconds(1);  
-      if(counter==255)  
-        break;  
-    }  
-    lststate=digitalRead(DHT11PIN);  
-    if(counter==255)  
-       break;  
-    // top 3 transistions are ignored  
-    if((i&gt;=4)&amp;&amp;(i%2==0)){  
-      dht11_val[j/8]&lt;&lt;=1;  
-      if(counter&gt;16)  
-        dht11_val[j/8]|=1;  
-      j++;  
-    }  
-  }  
-  // verify cheksum and print the verified data  
-  if((j&gt;=40)&amp;&amp;(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])&amp; 0xFF)))  
-  {  
-    //farenheit=dht11_val[2]*9./5.+32;  
-    printf(&quot;%d.%d\t%d.%d\n&quot;, dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);    
-    exit(1);
-  }  
-  else { 
-    errors = errors + 1;
-    if (errors &gt; 5) {
-      printf(&quot;0.0\t0.0&quot;);
-      exit(2);
-    }
-  }
-}  
-  
-int main(void)  
-{  
-  if(wiringPiSetup()==-1)  
-    exit(1);  
-  while(1)  
-  {  
-     dht11_read_val();  
-     delay(3000);  
-  }  
-  return 0;  
-}  
-
-</code></pre>
-
-<p>执行<code>gcc sensor.c -o sensor -lwiringPi</code> ，运行<code>sensor</code>后输出：</p>
-
-<pre><code>root@raspberrypi2 /home/hugo/projects/dht11 # ./sensor 
-44.0    18.0
-</code></pre>
-
-<h1 id="toc_7">记录曲线图</h1>
-
-<p>这里我使用<a href="http://cosm.com/">cosm.com</a>的服务，注册申请好账号后，可以建立一个data feed和两个data stream，分别是温度和湿度，相应的Tag ID为1，和2,利用下来的脚本就可以上传数据了</p>
-
-<pre><code>#!/bin/bash
-####################################################
-LOCATION=&lt;填你的程序路径&gt; #home/hugo/projects/dht11
-API_KEY='&lt;填你的api_key&gt;'
-FEED_ID='&lt;填你的feed_id&gt;'
-####################################################
-COSM_URL=http://api.cosm.com/v2/feeds/$FEED_ID?timezone=+8
-
-VAL=`$LOCATION/sensor`
-t=`echo $VAL|awk '{print $2}'`
-h=`echo $VAL|awk '{print $1}'`
-
-STR=`awk 'BEGIN{printf &quot;{\&quot;datastreams\&quot;:[ {\&quot;id\&quot;:\&quot;1\&quot;,\&quot;current_value\&quot;:\&quot;%.1f\&quot;}, {\&quot;id\&quot;:\&quot;2\&quot;,\&quot;current_value\&quot;:\&quot;%.1f\&quot;} ] } &quot;,'$t', '$h'}'`
-
-echo $STR
-echo $STR &gt; $LOCATION/cosm.json
-curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LOCATION/cosm.json $COSM_URL
-</code></pre>
-
-<p>然后可以使用如下格式的图片引用把曲线图嵌入任何网页：</p>
-
-<pre><code>&lt;img src=&quot;https://api.cosm.com/v2/feeds/119331/datastreams/2.png?width=340&amp;height=180&amp;colour=%23f15a24&amp;duration=2days&amp;title=室内湿度&amp;show_axis_labels=false&amp;detailed_grid=true&amp;scale=&amp;timezone=8&quot;/&gt;
-
-</code></pre>
-
-<p>下面是我的曲线图：</p>
-
-<p><img src="https://api.cosm.com/v2/feeds/119331/datastreams/2.png?width=340&height=180&colour=%23f15a24&duration=2days&title=室内湿度&show_axis_labels=false&detailed_grid=true&scale=&timezone=8"/></p>
-
-<p><img src="https://api.cosm.com/v2/feeds/119331/datastreams/1.png?width=340&height=180&colour=%23f15a24&duration=2days&title=室内温度&show_axis_labels=false&detailed_grid=true&scale=&timezone=8"/></p>
-
-<h1 id="toc_8">参考</h1>
+<h1 id="toc_11">参考链接</h1>
 
 <ol>
-<li><a href="http://www.rpiblog.com/2012/11/interfacing-temperature-and-humidity.html">http://www.rpiblog.com/2012/11/interfacing-temperature-and-humidity.html</a></li>
-<li><a href="http://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/wiring">http://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/wiring</a></li>
+<li><a href="http://www.packtpub.com/concurrent-programming-on-android/book">http://www.packtpub.com/concurrent-programming-on-android/book</a></li>
 </ol>
 
     <hr>
@@ -298,14 +250,14 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/22/19-raspberry-pi-gpio-port-naming.html" title="Raspberry Pi GPIO的编号规范">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html" title="如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照">Next &rarr;</a></li>
+            <li class="next"><a href="/2014/02/10/45-android-development-productivity-tips.html" title="提高Android开发效率的小贴士">Next &rarr;</a></li>
           
           
         </ul>
@@ -354,7 +306,7 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-17</span></div>
+      <div class="date"><span>2014-06-29</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -369,7 +321,7 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>14</span></a>
+  <a href="/tags/#Android-ref">Android <span>4</span></a>
 </li>
       
       </ul>
