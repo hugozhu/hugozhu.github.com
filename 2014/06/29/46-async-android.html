@@ -227,15 +227,13 @@
 
 Intent intent = new Intent(context, MyIntentService.class);
 intent.setData(uri); intent.putExtra(&quot;param&quot;, &quot;some value&quot;); 
-
 startService(intent);
-
 </code></pre>
 
 <p>IntentService返回任务结果给Activity可以有下面几种方法（Service和Activity的通信方法）：</p>
 
 <ol>
-<li>Activity启动IntentService时候，传递一个PendingIntent对象给IntentService，IntentService在处理完任何后调用｀PendingIntent.send()｀通知Activity，Activity在｀onActivityResult｀方法内处理收到的消息。</li>
+<li>Activity启动IntentService时候，传递一个PendingIntent对象给IntentService，IntentService在处理完任何后调用<code>PendingIntent.send()</code>通知Activity，Activity在<code>onActivityResult</code>方法内处理收到的消息。</li>
 <li>提交一个系统通知，这样App不在前台，用户也可以知道任务完成，比如下载地图数据。</li>
 <li>使用Messenger发送一个消息给Activity里的Handler。</li>
 <li>使用广播方式把结果封装在Intent中广播出去， 这样Fragment或Activity都可以通过监听广播获得处理结果。</li>
