@@ -170,13 +170,7 @@ android {
 <li><p><em>Project Properties：</em></p>
 
 <ol>
-<li>可通过gradle.properties文件，环境变量或命令行-P参数设置，优先级是:
-
-<ol>
-<li>gradle.properties located in project build dir.</li>
-<li>gradle.properties located in gradle user home.</li>
-<li></li>
-</ol></li>
+<li>可通过gradle.properties文件，环境变量或命令行-P参数设置，优先级是:</li>
 <li>可在build.gradle中动态修改，但引用不存在的project properties会立即抛错</li>
 <li>动态修改过的project properties在buildscript block中不可见</li>
 </ol></li>
@@ -195,6 +189,8 @@ android {
 <li>from gradle.properties located in project build dir.</li>
 <li>from gradle.properties located in gradle user home.</li>
 <li>from system properties, e.g. when -Dsome.property is used in the command line.</li>
+<li>setting.gradle</li>
+<li>build.gradle</li>
 </ol>
 
 <p>根据其特点，这里给出一个使用System Properties来解决问题的方案。</p>
@@ -252,7 +248,7 @@ systemProp.androidGradlePluginVersion=0.12.+
 
 <h2 id="toc_5">命令行使用</h2>
 
-<p>./gradlew build -x -D lint</p>
+<p>./gradlew build -x -DbuildToolsVersion=19.1.0 -DandroidGradlePluginVersion=0.12.+ lint</p>
 
 <h1 id="toc_6">参考链接</h1>
 
