@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>树莓派I2C编程 - When Go meets Raspberry Pi</title>
+    <title>安装第三方App到电视盒子 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="I2C Programming on Raspberry Pi 树莓派">
+    <meta name="description" content="Install 3rd party apps on Android based TV Box 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,26 +104,33 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>树莓派I2C编程 </h1>
+  <h1>安装第三方App到电视盒子 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>(！未完！)</p>
-
-<p>除了<a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">SPI</a>协议外，树莓派还支持<a href="http://zh.wikipedia.org/wiki/I²C">I2C</a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。</p>
-
-<h1><a style="display: block;" name="i2c" href="#i2c"></a>I2C</h1>
-
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png"/></p>
-
-<p>上图是一个主控使用I2C驱动3个设备的示意图</p>
-
-<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
+    <h1><a style="display: block;" name="安装第三方app方法1" href="#安装第三方app方法1"></a>安装第三方App方法1</h1>
 
 <ol>
-<li><a href="http://zh.wikipedia.org/wiki/I²C">http://zh.wikipedia.org/wiki/I²C</a></li>
-<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/">https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</a></li>
+<li>准备一个U盘，注意用FAT格式格式化（Windows能读写就OK）</li>
+<li>将需要安装的App下载到U盘，文件后缀名必须是.apk</li>
+<li>将U盘插入电视盒子，然后通过盒子自身带的文件管理App安装：如Magic Box：应用－&gt; 本地播放</li>
+</ol>
+
+<h1><a style="display: block;" name="安装第三方app方法2" href="#安装第三方app方法2"></a>安装第三方App方法2</h1>
+
+<ol>
+<li>如果盒子不带USB盘，还可以用adb远程安装</li>
+<li>adb connect <your_magic_box_ip></li>
+<li>adb install <you_app_to_install>.apk</li>
+</ol>
+
+<h1><a style="display: block;" name="直播和回放app" href="#直播和回放app"></a>直播和回放App</h1>
+
+<ol>
+<li>在电脑上用浏览器下载：http://app.shafa.com/shafa.apk 到U盘</li>
+<li>按方法1安装好后，在“应用“中找到“沙发管家”</li>
+<li>启动“沙发管家”，安装直播App：如“龙龙直播”，也有支持回放的App，如“泰捷视频TV”等。</li>
 </ol>
 
     <hr>
@@ -131,14 +138,14 @@
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/04/20/31-golang-memory-model.html" title="Go语言内存模型">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/04/14/29-use-wiringpi-go-binding.html" title="使用Go语言在树莓派上编程">Next &rarr;</a></li>
+            <li class="next"><a href="/2014/07/23/47-use-gradle-properties-to-set-alternative-android-build-tools.html" title="Gradle的Properties">Next &rarr;</a></li>
           
           
         </ul>
@@ -187,7 +194,7 @@
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-04-18</span></div>
+      <div class="date"><span>2014-07-26</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -202,7 +209,7 @@
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>14</span></a>
+  <a href="/tags/#Android-ref">Android <span>6</span></a>
 </li>
       
       </ul>
