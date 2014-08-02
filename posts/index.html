@@ -113,17 +113,17 @@
     <div class="post">
   <h1 class="title"><a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html">使用Gradle生成一个App的不同版本，且可以同时安装在一个手机上</a> <span class="date">2014-08-03</span></h1>
 
-  <h2><a style="display: block;" name="背景" href="#背景"></a>背景</h2>
+  <h1><a style="display: block;" name="背景" href="#背景"></a>背景</h1>
 
 <p>开发一个App一般会生成内测版和正式版，甚至还会有不同渠道的版本，不同版本的配置可能会不一样，比如内测版会需要记录完整的日志。</p>
 
 <p>Android手机对于同样的Application Id的App只能安装一个版本，如果我们需要同时安装内测版和正式版，就必须修改其中一个版本的Application Id。</p>
 
-<h2><a style="display: block;" name="解决方案" href="#解决方案"></a>解决方案</h2>
+<h1><a style="display: block;" name="解决方案" href="#解决方案"></a>解决方案</h1>
 
 <p>Gradle支持buildTypes和productFlavors两种定制方法，这里只介绍通过buildType的解决方案。通过productFlavors则可有效解决渠道包，arm，x86等分平台以及付费版和广告版的打包问题。</p>
 
-<h3>修改debug版的包名</h3>
+<h2><a style="display: block;" name="修改debug版的包名" href="#修改debug版的包名"></a>修改debug版的包名</h2>
 
 <p>配置如下：</p>
 

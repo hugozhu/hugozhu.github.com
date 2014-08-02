@@ -113,8 +113,6 @@
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li>
-<ul>
 <li><a href="#toc_0">背景</a></li>
 <li><a href="#toc_1">解决方案</a>
 <ul>
@@ -123,22 +121,21 @@
 <li><a href="#toc_4">定制APK的应用名称</a></li>
 <li><a href="#toc_5">修改ContentProvider Authority</a></li>
 </ul></li>
-</ul></li>
 <li><a href="#toc_6">参考链接</a></li>
 </ul>
 </nav></p>
 
-<h2 id="toc_0">背景</h2>
+<h1 id="toc_0">背景</h1>
 
 <p>开发一个App一般会生成内测版和正式版，甚至还会有不同渠道的版本，不同版本的配置可能会不一样，比如内测版会需要记录完整的日志。</p>
 
 <p>Android手机对于同样的Application Id的App只能安装一个版本，如果我们需要同时安装内测版和正式版，就必须修改其中一个版本的Application Id。</p>
 
-<h2 id="toc_1">解决方案</h2>
+<h1 id="toc_1">解决方案</h1>
 
 <p>Gradle支持buildTypes和productFlavors两种定制方法，这里只介绍通过buildType的解决方案。通过productFlavors则可有效解决渠道包，arm，x86等分平台以及付费版和广告版的打包问题。</p>
 
-<h3 id="toc_2">修改debug版的包名</h3>
+<h2 id="toc_2">修改debug版的包名</h2>
 
 <p>配置如下：</p>
 
@@ -156,7 +153,7 @@
 }
 </code></pre>
 
-<h3 id="toc_3">修正资源文件里的包名</h3>
+<h2 id="toc_3">修正资源文件里的包名</h2>
 
 <p>如果你的项目里使用了自定义的View，且有自定义的属性时，会需要修正一下xml命名空间里的包名。</p>
 
@@ -177,7 +174,7 @@
 }
 </code></pre>
 
-<h3 id="toc_4">定制APK的应用名称</h3>
+<h2 id="toc_4">定制APK的应用名称</h2>
 
 <p>如果同时安装两个版本，那么最好能从应用名称上来区别一下，一般我们在<code>AndroidManifest.xml</code>中使用String resource来命名，如下：</p>
 
@@ -203,7 +200,7 @@
 }
 </code></pre>
 
-<h3 id="toc_5">修改ContentProvider Authority</h3>
+<h2 id="toc_5">修改ContentProvider Authority</h2>
 
 <p>如果你的应用里还提供ContentProvider的话，如下：</p>
 
