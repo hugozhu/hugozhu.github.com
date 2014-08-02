@@ -111,6 +111,43 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html">使用Gradle生成一个App的不同版本，且可以同时安装在一个手机上</a> <span class="date">2014-08-03</span></h1>
+
+  <h2><a style="display: block;" name="背景" href="#背景"></a>背景</h2>
+
+<p>开发一个App一般会生成内测版和正式版，甚至还会有不同渠道的版本，不同版本的配置可能会不一样，比如内测版会需要记录完整的日志。</p>
+
+<p>Android手机对于同样的Application Id的App只能安装一个版本，如果我们需要同时安装内测版和正式版，就必须修改其中一个版本的Application Id。</p>
+
+<h2><a style="display: block;" name="解决方案" href="#解决方案"></a>解决方案</h2>
+
+<p>Gradle支持buildTypes和productFlavors两种定制方法，这里只介绍通过buildType的解决方案。通过productFlavors则可有效解决渠道包，arm，x86等分平台以及付费版和广告版的打包问题。</p>
+
+<h3>修改debug版的包名</h3>
+
+<p>配置如下：</p>
+
+<pre><code>android {
+    buildTypes {
+        release {
+            ...
+        }
+
+        debug {
+            applicationIdSuffix '.debug'
+            ...
+        }
+    }
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html">安装第三方App到电视盒子</a> <span class="date">2014-07-26</span></h1>
 
   <h1><a style="display: block;" name="安装第三方app方法1" href="#安装第三方app方法1"></a>安装第三方App方法1</h1>
@@ -427,39 +464,6 @@ git checkout python3
 
   <div class="more">
     <a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2013/06/30/38-java-volatile-variable.html">Java并发中正确使用volatile</a> <span class="date">2013-06-30</span></h1>
-
-  <p>前几天并发编程群里有同学对volatile的用法提出了疑问，刚好我记得Twitter有关实时搜索的这个<a href="http://2011.lucene-eurocon.org/attachments/0002/8787/Busch_twitter_realtime_search_eurocon_11.pdf">PPT</a>对这个问题解释的很清晰并有一个实际的应用场景，于是周末把这个问题摘录了一些和并发相关的内容如下：</p>
-
-<h1><a style="display: block;" name="并发---定义" href="#并发---定义"></a>并发 - 定义</h1>
-
-<h2><a style="display: block;" name="悲观锁---pressimistic-locking" href="#悲观锁---pressimistic-locking"></a>悲观锁 - Pressimistic locking</h2>
-
-<ol>
-<li>一个线性在执行一个操作时持有对一个资源的独占锁。（互斥）</li>
-<li>一般用在冲突比较可能发生的场景下</li>
-</ol>
-
-<h2><a style="display: block;" name="乐观锁---optimistic-locking" href="#乐观锁---optimistic-locking"></a>乐观锁 - Optimistic locking</h2>
-
-<ol>
-<li>尝试采用原子操作，而不需要持有锁；冲突可被检测，如果发生冲突，具有相应的重试逻辑</li>
-<li>通常用在冲突较少发生的场景下</li>
-</ol>
-
-<h2><a style="display: block;" name="非阻塞算法---non-blocking-algorithm" href="#非阻塞算法---non-blocking-algorithm"></a>非阻塞算法 - Non-blocking algorithm</h2>
-
-<ol>
-<li>算法确保对线程间竞争共享资源时候，不会因为互斥而使任一线程的执行无限延迟；</li>
-</ol>
-
-
-  <div class="more">
-    <a href="/2013/06/30/38-java-volatile-variable.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
