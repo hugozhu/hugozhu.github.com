@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Java的资源管理 - When Go meets Raspberry Pi</title>
+    <title>使用Github合作开发项目 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Introduction of best practices for Java resource management 树莓派">
+    <meta name="description" content="介绍Fork + Pull Request的合作开发方法 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -179,6 +179,44 @@
 
         <div class="more">
           <a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2014/07/27/49-fast-sync-between-mobile-phone-and-server.html">简单手机应用同步协议设计和实现</a> <span class="date">2014-07-27</span></h1>
+
+        <p>在手机上我们需要持久化应用的一些数据(典型的如本地的设置信息)，同时又希望能重装应用或换一台手机登录后能把这些数据再同步回来。业界有<code>syncml</code>标准，覆盖的功能很完善，正因为要保证兼容性，开源的实现都较重。如何借鉴这个标准自己来实现一个多端双向同步可扩展的功能呢？</p>
+
+<p>我们假设一些前提：</p>
+
+<ol>
+<li>同一时刻只有一端（iPhone，iPad或其他移动设备）能和服务器同步；</li>
+<li>客户端和服务端的时间一致或误差较小；</li>
+</ol>
+
+<h2><a style="display: block;" name="应用场景" href="#应用场景"></a>应用场景</h2>
+
+<ol>
+<li>通讯录同步</li>
+<li>最近联系人</li>
+<li>App客户端设置</li>
+<li>最近会话列表</li>
+<li>黑名单</li>
+<li>群设置</li>
+<li>用户的一些设置和开关</li>
+</ol>
+
+<h2><a style="display: block;" name="名词解释" href="#名词解释"></a>名词解释</h2>
+
+<ol>
+<li>LCID （Local Unique Identifiers）客户端生成的ID</li>
+<li>GUID （Global Unique Identifiers）服务端生成</li>
+<li>Anchor 锚点</li>
+</ol>
+
+
+        <div class="more">
+          <a href="/2014/07/27/49-fast-sync-between-mobile-phone-and-server.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -442,34 +480,6 @@ page.open(startUrl, function(status) {
 
         <div class="more">
           <a href="/2013/07/21/41-use-phantomjs-on-raspberry-pi-to-login-weibo.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html">在Mac上使用Sublime 3写Go代码</a> <span class="date">2013-07-11</span></h1>
-
-        <p><img src="http://www.sublimetext.com/anim/rename2_packed.png" width="540"/></p>
-
-<p><a href="http://www.sublimetext.com">Sublime</a> 是一个相当好用的文本编辑器，界面简洁，功能强大。最近<a href="http://www.sublimetext.com/3">Sublime 3 Beta</a> 出来了, 体验了一下，发现启动速度比之前快了很多。</p>
-
-<h1><a style="display: block;" name="下载安装" href="#下载安装"></a>下载安装</h1>
-
-<p>下载地址： <a href="http://www.sublimetext.com/3">http://www.sublimetext.com/3</a></p>
-
-<h1><a style="display: block;" name="安装package-control" href="#安装package-control"></a>安装Package Control</h1>
-
-<p>Sublime 支持插件来丰富其功能，<a href="http://wbond.net/sublime_packages/package_control">package control</a> 本身也是一个插件，可以用来管理其他插件，所以我们要先安装Package Control，Sublime 3需要安装Pacakge Control Alpha.</p>
-
-<pre><code>cd &quot;Library/Application Support/Sublime Text 3&quot;
-cd Packages/
-git clone https://github.com/wbond/sublime_package_control.git &quot;Package Control&quot;
-cd &quot;Package Control&quot;
-git checkout python3
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
