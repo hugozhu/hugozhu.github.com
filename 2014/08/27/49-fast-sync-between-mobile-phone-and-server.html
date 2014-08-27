@@ -113,8 +113,6 @@
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li>
-<ul>
 <li><a href="#toc_0">应用场景</a></li>
 <li><a href="#toc_1">名词解释</a></li>
 <li><a href="#toc_2">客户端表设计</a></li>
@@ -131,11 +129,16 @@
 <li><a href="#toc_12">8. Client 删除记录</a></li>
 <li><a href="#toc_13">9. 服务端 删除记录</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#toc_14">冲突解决</a>
+<li><a href="#toc_14">冲突解决方案</a>
 <ul>
 <li><a href="#toc_15">1. 服务端解决客户端Anchor和记录Modified不一致的情况</a></li>
 </ul></li>
+<li><a href="#toc_16">数据量较多如何同步？</a>
+<ul>
+<li><a href="#toc_17">基于Session事务实现</a></li>
+<li><a href="#toc_18">ChangeLog表实现</a></li>
+</ul></li>
+<li><a href="#toc_19">参考文档</a></li>
 </ul>
 </nav></p>
 
@@ -147,11 +150,11 @@
 
 <ol>
 <li>同一时刻只有一端（iPhone，iPad或其他移动设备）能和服务器同步；</li>
-<li><del>客户端和服务端的时间一致或误差较小；可在长连建立时通过协议计算时间差</del></li>
-<li>客户端保存全量数据，对于客户端只需要部分数据的方案需要修改；</li>
+<li><del>客户端和服务端的时间一致或误差较小；可在长连建立时通过协议记录时间差</del></li>
+<li>客户端保存全量数据（对于客户端只保存部分数据的情况后面再做讨论）；</li>
 </ol>
 
-<h2 id="toc_0">应用场景</h2>
+<h1 id="toc_0">应用场景</h1>
 
 <ol>
 <li>通讯录同步</li>
@@ -164,15 +167,16 @@
 <li>用户的一些设置和开关</li>
 </ol>
 
-<h2 id="toc_1">名词解释</h2>
+<h1 id="toc_1">名词解释</h1>
 
 <ol>
 <li>LCID - Local Unique Identifiers，  客户端生成的记录ID，客户端唯一；</li>
 <li>GUID - Global Unique Identifiers， 服务端生成的记录ID，全局唯一；</li>
-<li>Anchor - 同步锚点。可以使用递增的序列号或时间戳来表示，用来发现两端数据变化的部分。</li>
+<li>Anchor - 同步锚点，可以使用递增的序列号或时间戳来表示，用来发现两端数据变化的部分；</li>
+<li>Session - 同步会话，由客户端发起，Session Id唯一。</li>
 </ol>
 
-<h2 id="toc_2">客户端表设计</h2>
+<h1 id="toc_2">客户端表设计</h1>
 
 <p>每条记录包含两个同步用的字段：</p>
 
@@ -211,13 +215,13 @@
 
 <p><em>anchor</em> － 用来记录服务端同步过来的时间戳。</p>
 
-<h2 id="toc_3">服务端表设计</h2>
+<h1 id="toc_3">服务端表设计</h1>
 
 <p><em>modified</em> － 记录在服务端的修改时间</p>
 
-<h2 id="toc_4">双向同步流程示例</h2>
+<h1 id="toc_4">双向同步流程示例</h1>
 
-<h3 id="toc_5">1. Client 增加2条记录</h3>
+<h2 id="toc_5">1. Client 增加2条记录</h2>
 
 <table>
 <thead>
@@ -252,7 +256,7 @@
 </tbody>
 </table>
 
-<h3 id="toc_6">2. Client 修改1条记录</h3>
+<h2 id="toc_6">2. Client 修改1条记录</h2>
 
 <table>
 <thead>
@@ -287,11 +291,11 @@
 </tbody>
 </table>
 
-<h3 id="toc_7">3. Client 发送本地更新</h3>
+<h2 id="toc_7">3. Client 发送本地更新</h2>
 
 <p>执行SQL <code>SELECT * FROM table WHERE status &lt; 9 ORDER BY modified ASC</code> 找出客户端本地需要同步到服务端的记录，通过网络分批串行发送给服务端，一个请求可能包含多条记录，只有上一个请求得到响应后才能发起下一个请求。</p>
 
-<p>发送的同步消息需包含ANCHOR：</p>
+<p>发送的同步消息需包含<code>anchor</code>：</p>
 
 <table>
 <thead>
@@ -326,7 +330,7 @@
 </tbody>
 </table>
 
-<h3 id="toc_8">4. Server 处理同步消息</h3>
+<h2 id="toc_8">4. Server 处理同步消息</h2>
 
 <p>服务端收到请求后先比较客户端的<code>anchor</code>（其实就是上一次同步服务端的<code>modified</code>）和服务端的记录MODIFIED，只有服务端<code>modified</code>=客户端<code>anchor</code>的才能继续同步，否则说明客户端在上一次同步后服务端又更行了，需要解决冲突后再继续(见:<code>冲突解决1</code>)；继续同步的记录则根据记录状态做ADD，UPDATE或DELETE操作。</p>
 
@@ -387,7 +391,7 @@
 </tbody>
 </table>
 
-<h3 id="toc_9">5. Client 根据响应更新本地记录</h3>
+<h2 id="toc_9">5. Client 根据响应更新本地记录</h2>
 
 <p>得到服务端的同步消息响应后，客户端应判断发出同步请求时的<code>modified</code>和此时本地记录的<code>modified</code>是否一致，防止在同步期间本地数据被用户再次更新。</p>
 
@@ -427,7 +431,7 @@
 </tbody>
 </table>
 
-<h3 id="toc_10">6. Client 请求 Server 增量同步</h3>
+<h2 id="toc_10">6. Client 请求 Server 增量同步</h2>
 
 <p>因为服务端的<code>modified</code>是随着时间递增的。客户端本地保存的记录中最大的anchor：<code>Max(anchor)</code>可以认为是上一次同步的时间。如果服务端有比<code>Max(anchor)</code>更大的<code>modified</code>的记录, 则需要向客户端同步。</p>
 
@@ -493,7 +497,7 @@
 </tbody>
 </table>
 
-<h3 id="toc_11">7. Client 处理同步消息</h3>
+<h2 id="toc_11">7. Client 处理同步消息</h2>
 
 <p>客户端根据增量消息更新本地表。处理消息时，只能更新状态为已同步或不存在的记录（也就是<code>status=9</code>），防止在增量同步过程中，客户端本地记录被用户修改。</p>
 
@@ -515,7 +519,7 @@
 <td>Foo</td>
 <td>Bar2</td>
 <td>9</td>
-<td>1-12</td>
+<td>1-&gt;12</td>
 <td>9</td>
 </tr>
 
@@ -539,7 +543,7 @@
 </tbody>
 </table>
 
-<h3 id="toc_12">8. Client 删除记录</h3>
+<h2 id="toc_12">8. Client 删除记录</h2>
 
 <p>客户端需要做逻辑删除，将status设成-1</p>
 
@@ -561,7 +565,7 @@
 <td>Foo</td>
 <td>Bar2</td>
 <td>9</td>
-<td>1-12</td>
+<td>1-&gt;12</td>
 <td>9</td>
 </tr>
 
@@ -587,15 +591,63 @@
 
 <p>客户端同步引擎将则根据<code>status&lt;9</code>将这条消息发送给服务端（注：如果anchor=0可以不发送），服务端按第四步同样的处理方法将服务端记录标记为删除，并给客户端同步成功的响应；客户端在得到响应后可以将本地记录物理删除。</p>
 
-<h3 id="toc_13">9. 服务端 删除记录</h3>
+<h2 id="toc_13">9. 服务端 删除记录</h2>
 
 <p>如果增量下行到客户端的消息中包含了删除记录的消息，客户端可以直接物理删除。</p>
 
-<h1 id="toc_14">冲突解决</h1>
+<h1 id="toc_14">冲突解决方案</h1>
 
 <h2 id="toc_15">1. 服务端解决客户端Anchor和记录Modified不一致的情况</h2>
 
 <p>有可能是手机A在上一次同步成功后更新了一条记录后断线造成更新未同步；过段时间后换了另一只手机B对同一条记录做了修改并同步成功；再切换回手机A时，继续同步时，服务端会发现A发送过来的ANCHOR较服务端MODIFIED小而拒绝这条记录的同步，并在响应内将服务端的记录返回给客户端。(以服务端记录为准)</p>
+
+<h1 id="toc_16">数据量较多如何同步？</h1>
+
+<p>从服务端同步到客户端的数据量可能比较多，考虑到网络传输开销和客户端的处理能力，服务端可以按anchor时序每次只发送有限数量的记录（比如一次发送20条），待客户端处理完成后再由客户端主动发起下一次请求。</p>
+
+<h2 id="toc_17">基于Session事务实现</h2>
+
+<p>客户端采用临时表或文件缓存服务端分批发送的响应，在最后一批数据到达后，启用事务批量将变更保存到本地数据库。如果服务端部分响应超时，则放弃本次同步。这个方案的缺点是在弱网下会浪费手机流量。</p>
+
+<h2 id="toc_18">ChangeLog表实现</h2>
+
+<p>服务端如果使用database时间戳做anchor, 在同一时刻如有大量记录发生变更，在增量同步到客户端时可能只成功同步了部分数据，按<code>Max(anchor)</code>方法再次发起增量同步时候可能会丢失部分数据，因此在可能批量修改大量数据的业务场景下，我们可以使用ChangeLog表来实现anchor，mysql的auto_increment可以使得ChangeLog表中的anchor字段严格递增并唯一。这样客户端即使只同步了部分增量消息也能从断点恢复。</p>
+
+<table>
+<thead>
+<tr>
+<td>guid</td>
+<td>status</td>
+<td>anchor</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="toc_19">参考文档</h1>
+
+<ol>
+<li><a href="http://en.wikipedia.org/wiki/SyncML">http://en.wikipedia.org/wiki/SyncML</a></li>
+</ol>
 
     <hr>
     <div class="pagination">
