@@ -142,7 +142,7 @@
 
 <p>每条记录包含两个同步用的字段：</p>
 
-<p><em>status</em> － 用来标识记录的状态：0－未同步（本地新增或更新）1 - 已同步</p>
+<p><em>status</em> － 用来标识记录的状态：0－未同步（本地新增或更新）1 - 已同步，2 － 标记删除</p>
 
 <p><em>anchor</em> － 用来记录服务端同步过来的时间戳。</p>
 
@@ -230,8 +230,11 @@
 
 <h3>4. Server 处理同步消息</h3>
 
-<p>服务端收到请求后根据记录是ADD，UPDATE或DELETE后在服务端数据库中做响应处理
-服务端数据表如下：</p>
+<p>服务端收到请求后根据记录是ADD，UPDATE或DELETE后在服务端数据库中做响应处理，处理时候需要比较客户端的ANCHOR和服务端的记录MODIFIED，只有MODIFIED&lt;ANCHOR的才能被更新，防止服务端更新的记录被覆盖。</p>
+
+<p><code>UPDATE table SET KEY = ?, VALUE = ? WHERE ID=? AND MODIFIED&lt;=ANCHOR</code></p>
+
+<p>更新后服务端数据表如下：</p>
 
 <table>
 <thead>
@@ -291,6 +294,8 @@
 
 <h3>5. Client 根据响应更新本地记录</h3>
 
+<p><code>UPDATE table SET ANCHOR=X WHERE ID=? AND MODIFIED=?</code> 限制只有本地MODIFIED没修改过的记录才会更新ANCHOR，防止在同步期间更新过的本地数据被标记已同步。</p>
+
 <table>
 <thead>
 <tr>
@@ -327,7 +332,7 @@
 </tbody>
 </table>
 
-<h3>6. Client 根据最大的ANCHOR发起增量同步</h3>
+<h3>6. Client 根据最大的ANCHOR请求 SERVER 增量同步</h3>
 
 <p>假设另一个客户端在服务器上增加了一条新的纪录并更新了一条记录：</p>
 
