@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>系统调试和分析工具 - When Go meets Raspberry Pi</title>
+    <title>使用Gradle生成包含所有依赖的aar包 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Linux Toolkits for man! 树莓派">
+    <meta name="description" content="Assemble aar package with all dependencies using Gradle 2.1 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -104,30 +104,104 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>系统调试和分析工具 </h1>
+  <h1>使用Gradle生成包含所有依赖的aar包 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>Linux下的调试和分析工具集</p>
+    <p>Android Library项目中如果使用Android Gradle plugin打aar包，通过maven依赖的库，或者是local依赖的aar都不会包含在生成的aar包里，如果项目是发布一个SDK，为了方便开发者使用，我们倾向于生成一个包含所有依赖库以及.so等文件的aar包。</p>
 
-<hr />
+<p>通过反复研究和测试，以下Gradle脚本能满足需求，如果需要对代码运行ProGuard混淆，则需要使用Gradle 2.1</p>
 
-<p><img src="/assets/media/tools.jpg" width="600"/></p>
+<p>方法是为项目增加一个sub project（如<code>pkg_project</code>）专门用于打包，该项目中<code>build.gradle</code>内容如下：</p>
+
+<pre><code>apply plugin: 'java'
+version = 1.0
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:19.1.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':&lt;your_library_project&gt;') //此处填写需要打包的Android Library Project name
+}
+
+task sync_jars() &lt;&lt; {
+     //把所有依赖的.jar库都拷贝到build/aar/libs下
+    copy {
+        into buildDir.getPath() +&quot;/aar/libs&quot;
+        from configurations.compile.findAll {
+            it.getName().endsWith(&quot;.jar&quot;)
+        }
+    }
+}
+
+task sync_aars(dependsOn:':sdk:assembleRelease') &lt;&lt; {
+     //把所有依赖的.aar库里包含的classes.jar都拷贝到build/aar/libs下，并重命名以不被覆盖
+    def jar_name
+    def aar_path
+    def dest_dir = buildDir.getPath()+&quot;/aar&quot;
+    configurations.compile.findAll {
+        it.getName().endsWith(&quot;.aar&quot;)
+    }.collect {
+        aar_path = it.getPath()
+        jar_name = &quot;libs/&quot;+it.getName().replace(&quot;.aar&quot;,&quot;.jar&quot;)
+        copy {
+            from zipTree(aar_path)
+            into dest_dir
+            include &quot;**/*&quot;
+            rename 'classes.jar', jar_name
+        }
+    }
+}
+
+task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
+    task (obfuse_classes_jar, type: proguard.gradle.ProGuardTask) {
+        //把build/aar/libs/*.jar混淆后生成build/aar/classes.jar
+        configuration &quot;proguard.cfg&quot;
+        injars buildDir.getPath()+&quot;/aar/libs&quot;
+        outjars buildDir.getPath()+&quot;/aar/classes.jar&quot;
+        libraryjars &quot;${System.getProperty('java.home')}/lib/rt.jar&quot;
+        libraryjars &quot;${System.getProperty('java.home')}/Contents/Classes/classes.jar&quot;
+        libraryjars System.getenv(&quot;ANDROID_HOME&quot;)+&quot;/platforms/android-19/android.jar&quot;
+    }.execute()
+
+    task (gen_aar, type: Zip) {
+        //把生成最终的aar包，注意libs目录需要被排除
+        def dest_dir = buildDir.getPath()+&quot;/aar/&quot;
+        baseName = &quot;mysdk-all&quot;
+        extension = &quot;aar&quot;
+        destinationDir = file(buildDir.getPath())
+        from dest_dir
+        exclude &quot;libs&quot;
+    }.execute()
+}
+</code></pre>
+
+<p>最后就可以使用<code>gradlew pkg_project:fataar</code>来打包了</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/27/%E5%9C%A8Pi%E5%92%8CGithub%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" title="在Pi和Github上搭建自己的个人博客">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/26/dynamic-dns-script.html" title="动态DNS程序">Next &rarr;</a></li>
+            <li class="next"><a href="/2014/09/04/51-useful-linux-command.html" title="常用Linux命令">Next &rarr;</a></li>
           
           
         </ul>
@@ -176,7 +250,7 @@
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-26</span></div>
+      <div class="date"><span>2014-11-05</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -191,7 +265,7 @@
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Linux-ref">Linux <span>6</span></a>
+  <a href="/tags/#Android-ref">Android <span>9</span></a>
 </li>
       
       </ul>
