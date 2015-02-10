@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用Goroutine和Channel实现按键超时交互 - When Go meets Raspberry Pi</title>
+    <title>如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Use Goroutine and Channel to implement interaction with timeout 树莓派">
+    <meta name="description" content="后续利用OpenCV还可以合成多张照片成全景图，或者多角度连续视频录制 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -150,6 +150,103 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html">使用Goroutine和Channel实现按键超时交互</a> <span class="date">2013-04-21</span></h1>
+
+        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
+
+<p>前面的文章（见<a href="#参考链接">参考链接</a>）已经介绍了如何使用按键作为树莓派的输入。在实际应用中可以通过按下按键循环显示预先设定的脚本输出到显示屏幕，需求如下：</p>
+
+<ol>
+<li>如果按键不被触动，则定时5秒执行脚本获取最新内容显示；</li>
+<li>因为不同的脚本获取内容速度会不一样，我们要求如果超过500ms脚本还未返回，需要在屏幕上显示“loading…”这样的过渡内容，如果脚本在500ms内返回，则不显示。</li>
+</ol>
+
+<p>使用Goroutine和Channel可以很方便的实现这个需求。</p>
+
+<h1><a style="display: block;" name="代码" href="#代码"></a>代码</h1>
+
+<pre><code>var screen_chan chan int
+var switch_chan = make(chan bool)
+
+func main() {
+    //a goroutine： 检查按键是否被按
+    go func() {
+        last_time := time.Now().UnixNano() / 1000000
+        btn_pushed := 0
+        total_mode := 3
+        for msg := range WiringPiISR(PIN_GPIO_6, INT_EDGE_FALLING) {
+            if msg &gt; -1 {
+                n := time.Now().UnixNano() / 1000000
+                delta := n - last_time
+                if delta &gt; 300 { //如果两次按键变化的间隔时间&lt;300ms，是因为接触信号不稳定可以忽略掉
+                    last_time = n
+                    btn_pushed++
+                    screen_chan &lt;- btn_pushed % total_mode
+                }
+            }
+        }
+    }()
+
+    //a goroutine： 根据管道消息刷新屏幕
+    go loop_update_display()
+
+    //选择确实的屏幕内容脚本编号
+    screen_chan &lt;- 0
+
+    //a goroutine: 定时5s向管道发送更新屏幕内容的信号
+    ticker := time.NewTicker(5 * time.Second)
+    go func() {
+        for {
+            &lt;-ticker.C
+            screen_chan &lt;- -1
+        }
+    }()
+    
+    ... 
+}
+
+func loop_update_display() {
+    current_screen := 0
+    for msg := range screen_chan {
+        switch_screen := false
+        if msg &gt;= 0 {
+           //说明是按钮触发的消息，而不是定时器触发的(-1)
+            if msg != current_screen {
+                //btn pushed
+                current_screen = msg
+                switch_screen = true
+                go func() {
+                    select {
+                    case &lt;-time.After(500 * time.Millisecond):
+                        display_loading()
+                        &lt;-switch_chan
+                    case &lt;-switch_chan:
+                    }
+                }()
+            }
+        }
+        switch current_screen {
+        case 0:
+            display_screen0()
+        case 1:
+            display_screen1()
+        case 2:
+            display_screen2()
+        }
+        if switch_screen {
+            switch_chan &lt;- true
+        }
+    }
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/04/20/31-golang-memory-model.html">Go语言内存模型</a> <span class="date">2013-04-20</span></h1>
@@ -386,33 +483,6 @@ output_stdio_mod mod_rpi
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
-
-        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
-
-<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
-
-<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
-
-<h1><a style="display: block;" name="应用" href="#应用"></a>应用</h1>
-
-<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
-
-<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
-
-<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
-
-<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
-
-
-        <div class="more">
-          <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/04/08/26-backup-raspberry-pi.html">备份Raspberry Pi</a> <span class="date">2013-04-08</span></h1>
 
         <p>树莓派的操作系统安装在SD卡，使用一段时间后还是很有必要备份一下，以防哪天SD卡就坏了。</p>
@@ -450,6 +520,33 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/04/08/26-backup-raspberry-pi.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
+
+        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
+
+<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
+
+<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
+
+<h1><a style="display: block;" name="应用" href="#应用"></a>应用</h1>
+
+<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
+
+<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
+
+<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
+
+<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
+
+
+        <div class="more">
+          <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -514,31 +611,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/04/03/24-google-channel-service.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/28/22-memory-barriers-or-fences.html">并发编程之内存屏障</a> <span class="date">2013-03-28</span></h1>
-
-        <p>原文地址：<a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html"><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href="http://ifeve.com/memory-barriersfences/"><code>http://ifeve.com/memory-barriersfences/</code></a></p>
-
-<p>关键词：Load Barrier, Store Barrier, Full Barrier</p>
-
-<p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
-
-<p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &ldquo;Write Combing - 合并写&rdquo;中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。</p>
-
-<p>当一个程序执行时指令是否被重排并不重要，只要最终的结果是一样的。例如，在一个循环里，如果循环体内没用到这个计数器，循环的计数器什么时候更新（在循环开始，中间还是最后）并不重要。编译器和CPU可以自由的重排指令以最佳的利用CPU，只要下一次循环前更新该计数器即可。并且在循环执行中，这个变量可能一直存在寄存器上，并没有被推到缓存或主存，这样这个变量对其他CPU来说一直都是不可见的。</p>
-
-<p>CPU核内部包含了多个执行单元。例如，现代Intel CPU包含了6个执行单元，可以组合进行算术运算，逻辑条件判断及内存操作。每个执行单元可以执行上述任务的某种组合。这些执行单元是并行执行的，这样指令也就是在并行执行。但如果站在另一个CPU角度看，这也就产生了程序顺序的另一种不确定性。</p>
-
-<p>最后，当一个缓存失效发生时，现代CPU可以先假设一个内存载入的值并根据这个假设值继续执行，直到内存载入返回确切的值。</p>
-
-<p><img src="http://ifeve.com/wp-content/uploads/2013/03/cpu.png"/></p>
-
-
-        <div class="more">
-          <a href="/2013/03/28/22-memory-barriers-or-fences.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
