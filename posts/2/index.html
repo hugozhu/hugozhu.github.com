@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>备份Raspberry Pi - When Go meets Raspberry Pi</title>
+    <title>替换树莓派的U盘 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Backup Raspberry Pi 树莓派">
+    <meta name="description" content="Replace USB sticker on Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -150,6 +150,35 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/11/27/44-copy-android-app-data.html">拷贝Android应用的数据</a> <span class="date">2013-11-27</span></h1>
+
+        <h1><a style="display: block;" name="有root权限" href="#有root权限"></a>有root权限</h1>
+
+<pre><code>adb shell su -c cat /data/data/app.package.name/databases/application.sqlite | sed 's/\r$//' &gt; application.sqlite
+</code></pre>
+
+<h1><a style="display: block;" name="应用可调试的话" href="#应用可调试的话"></a>应用可调试的话</h1>
+
+<pre><code>adb shell
+run-as app.package.name \
+cp /data/data/package.name/databases/application.sqlite /sdcard/
+exit
+adb pull /sdcard/application.sqlite ~/
+</code></pre>
+
+<h1><a style="display: block;" name="使用备份方法" href="#使用备份方法"></a>使用备份方法</h1>
+
+<pre><code>adb backup -f ~/data.ab -noapk app.package.name
+dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zlib.decompress(sys.stdin.read()))&quot; | tar -xvf -
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/11/27/44-copy-android-app-data.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/07/21/41-use-phantomjs-on-raspberry-pi-to-login-weibo.html">在树莓派上使用Phantomjs自动登录微博</a> <span class="date">2013-07-21</span></h1>
@@ -541,34 +570,6 @@ fi
 
         <div class="more">
           <a href="/2013/05/13/34-use-74HC595-8-bit-shift-register-with-raspberry-pi.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/04/22/33-use-google-app-engine-failover-your-blog-between-raspberrypi-and-github.html">树莓派网站容灾：利用DNSPod，Google App Engine和Github</a> <span class="date">2013-04-22</span></h1>
-
-        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
-
-<p><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">把网站托管在树莓派上</a>后如果家里停电或是宽带故障，会造成网站中断。本文提供一个免费的解决方案（前提是你需要有自己的一个域名，并由DNSPod解析）</p>
-
-<h1><a style="display: block;" name="dnspod" href="#dnspod"></a>DNSPod</h1>
-
-<p>首先需要在DNSPod里设置好需要failover的域名CNAME：比如<code>hugozhu.myalert.info</code></p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/95d90628-5c74-4773-aaff-c2110e1863a6/6b592609ef02c42e46664d1fa1493e1c/deep/0/Screenshot%204/22/13%204:57%20PM.png" width="528"/></p>
-
-<p>其中<code>默认</code>指向<code>pi.myalert.info</code>, 这是一个域名的A Record，会由运行在树莓派上的<a href="http://hugozhu.myalert.info/2013/02/26/dynamic-dns-script.html">脚本</a>来更新动态IP，<code>国外</code>则指向github。当停电时我们需要自动把｀默认｀这条纪录修改成github。</p>
-
-<p>使用下面命令获得相应CNAME的domain_id：</p>
-
-<pre><code>curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
-</code></pre>
-
-<p>使用下面命令获得相应CNAME的record_id：</p>
-
-
-        <div class="more">
-          <a href="/2013/04/22/33-use-google-app-engine-failover-your-blog-between-raspberrypi-and-github.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

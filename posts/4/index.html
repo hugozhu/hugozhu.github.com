@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>备份Raspberry Pi - When Go meets Raspberry Pi</title>
+    <title>替换树莓派的U盘 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Backup Raspberry Pi 树莓派">
+    <meta name="description" content="Replace USB sticker on Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -182,6 +182,31 @@
 
         <div class="more">
           <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/28/22-memory-barriers-or-fences.html">并发编程之内存屏障</a> <span class="date">2013-03-28</span></h1>
+
+        <p>原文地址：<a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html"><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href="http://ifeve.com/memory-barriersfences/"><code>http://ifeve.com/memory-barriersfences/</code></a></p>
+
+<p>关键词：Load Barrier, Store Barrier, Full Barrier</p>
+
+<p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
+
+<p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &ldquo;Write Combing - 合并写&rdquo;中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。</p>
+
+<p>当一个程序执行时指令是否被重排并不重要，只要最终的结果是一样的。例如，在一个循环里，如果循环体内没用到这个计数器，循环的计数器什么时候更新（在循环开始，中间还是最后）并不重要。编译器和CPU可以自由的重排指令以最佳的利用CPU，只要下一次循环前更新该计数器即可。并且在循环执行中，这个变量可能一直存在寄存器上，并没有被推到缓存或主存，这样这个变量对其他CPU来说一直都是不可见的。</p>
+
+<p>CPU核内部包含了多个执行单元。例如，现代Intel CPU包含了6个执行单元，可以组合进行算术运算，逻辑条件判断及内存操作。每个执行单元可以执行上述任务的某种组合。这些执行单元是并行执行的，这样指令也就是在并行执行。但如果站在另一个CPU角度看，这也就产生了程序顺序的另一种不确定性。</p>
+
+<p>最后，当一个缓存失效发生时，现代CPU可以先假设一个内存载入的值并根据这个假设值继续执行，直到内存载入返回确切的值。</p>
+
+<p><img src="http://ifeve.com/wp-content/uploads/2013/03/cpu.png"/></p>
+
+
+        <div class="more">
+          <a href="/2013/03/28/22-memory-barriers-or-fences.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -569,48 +594,6 @@
 
         <div class="more">
           <a href="/2013/03/09/setup-archliunx-on-raspberry-pi.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/08/block_failed_ssh_attempts_with_iptable.html">如何封杀尝试Raspberry Pi SSH密码的来源IP</a> <span class="date">2013-03-08</span></h1>
-
-        <p>Raspberry Pi整天开着，如果用缺省SSH端口对外开放，就会经常遇到扫描SSH密码的肉鸡。虽然密码不是很简单，但还是感觉很不安全的。</p>
-
-<p>系统的ssh登录日志文件在：/var/log/auth.log，登录失败时会记录以下格式的日志：</p>
-
-<pre><code>Mar  7 10:31:51 raspberrypi sshd[24510]: Failed password for root from 221.8.19.129 port 4066 ssh2
-Mar  7 10:31:55 raspberrypi sshd[24514]: Failed password for root from 221.8.19.129 port 4079 ssh2
-Mar  7 10:31:56 raspberrypi sshd[24518]: Failed password for sshd from 221.8.19.129 port 4080 ssh2
-Mar  7 10:32:26 raspberrypi sshd[24522]: Failed password for sshd from 221.8.19.129 port 4149 ssh2
-</code></pre>
-
-<p>用最简单的Shell脚本来解决这个问题：</p>
-
-<h3>guard.sh</h3>
-
-<pre><code>#!/bin/bash
-
-last_ip=&quot;&quot;
-tail -f /var/log/auth | while read LINE; do
-{
-    if [[ &quot;${LINE}&quot; =~ &quot;Failed&quot; ]]; then            
-        ip=&quot;$(echo ${LINE} | awk '{print $(NF-3)}')&quot;
-        if [[ &quot;$last_ip&quot; == &quot;$ip&quot; ]]; then
-             echo &quot;block $ip&quot;
-             #curl -s --data-ascii &quot;uuid=&lt;my iphone's uuid&gt;&quot; --data &quot;body=${LINE}&quot; http://raspberrypi/pushme                 
-             iptables -A INPUT -s &quot;$ip&quot; -j DROP
-        fi
-        last_ip=$ip
-        echo $LINE
-    fi
-}
-done
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/03/08/block_failed_ssh_attempts_with_iptable.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
