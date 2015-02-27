@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>提高Android开发效率的小贴士 - When Go meets Raspberry Pi</title>
+    <title>备份Raspberry Pi - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Android development productivity tips 树莓派">
+    <meta name="description" content="Backup Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -150,6 +150,89 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/05/13/34-use-74HC595-8-bit-shift-register-with-raspberry-pi.html">使用8位移位寄存器74HC595扩展树莓派的IO端口</a> <span class="date">2013-05-13</span></h1>
+
+        <p>树莓派的GPIO接口数目有限，驱动一个步进电机需要占用4个， 一个Nokia 5110液晶也要占4个， 传感器输入至少需要一个，多玩几个外设后接口就不够用了。如果接口可以复用就可以让树莓派驱动更多的外设了，本文讨论如何使用74HC595集成电路芯片来扩展树莓派的I/O接口。</p>
+
+<h1><a style="display: block;" name="芯片介绍" href="#芯片介绍"></a>芯片介绍</h1>
+
+<p>SN74HC595N是德州仪器公司生产的集成电路芯片，是一个8位串行输入变串行输出或并行输出移位寄存器，具有高阻关断，高电平和低电平三态输出。在IO扩充上，可以最多串联15片，也就是高达120个IO扩充。</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/b90034cc-cdf8-426d-a79d-16bbbcbb49b2/0ba3371f3039afa71a17bad845eede7a/deep/0/Screenshot%205/12/13%2010:42%20PM.png"/></p>
+
+<p>（注意到芯片上的小凹槽了吗，拿芯片的时候以这个为参考物就不会搞反了）</p>
+
+<p>接口的常用命名方式有以下两种：</p>
+
+<table>
+<thead>
+<tr>
+<td>接口代号(编号)</td>
+<td>说明</td>
+<td>接口代号(编号)</td>
+<td>说明</td>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Q7&rsquo;(9)</td>
+<td>serial data output</td>
+<td>QH&rsquo;  (9)</td>
+<td>serial data output</td>
+</tr>
+
+<tr>
+<td>MR (10)</td>
+<td>Master Reset (Active Low)</td>
+<td>SRCLR  (10)</td>
+<td>Shift register CLeaR</td>
+</tr>
+
+<tr>
+<td>SH_CP (11)</td>
+<td>shift register clock input</td>
+<td>SRCLK  (11)</td>
+<td>Shift Register CLocK input</td>
+</tr>
+
+<tr>
+<td>ST_CP (12)</td>
+<td>storage register clock input</td>
+<td>RCLK  (12)</td>
+<td>storage Register CLocK input</td>
+</tr>
+
+<tr>
+<td>OE (13)</td>
+<td>output enable input (Active Low)</td>
+<td>OE  (13)</td>
+<td>Output Enable</td>
+</tr>
+
+<tr>
+<td>DS (14)</td>
+<td>serial data input</td>
+<td>SER (14)</td>
+<td>SERial data input</td>
+</tr>
+
+<tr>
+<td>Qx (15，1-7)</td>
+<td>data output</td>
+<td>Qx (15，1-7)</td>
+<td>data output</td>
+</tr>
+</tbody>
+</table>
+
+
+        <div class="more">
+          <a href="/2013/05/13/34-use-74HC595-8-bit-shift-register-with-raspberry-pi.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/04/22/33-use-google-app-engine-failover-your-blog-between-raspberrypi-and-github.html">树莓派网站容灾：利用DNSPod，Google App Engine和Github</a> <span class="date">2013-04-22</span></h1>
@@ -511,33 +594,6 @@ output_stdio_mod mod_rpi
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
-
-        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
-
-<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
-
-<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
-
-<h1><a style="display: block;" name="应用" href="#应用"></a>应用</h1>
-
-<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
-
-<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
-
-<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
-
-<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
-
-
-        <div class="more">
-          <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/04/08/26-backup-raspberry-pi.html">备份Raspberry Pi</a> <span class="date">2013-04-08</span></h1>
 
         <p>树莓派的操作系统安装在SD卡，使用一段时间后还是很有必要备份一下，以防哪天SD卡就坏了。</p>
@@ -579,6 +635,33 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
       </div>
     
       <div class="post">
+        <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
+
+        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
+
+<p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/></p>
+
+<p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
+
+<h1><a style="display: block;" name="应用" href="#应用"></a>应用</h1>
+
+<p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
+
+<p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href="http://zh.wikipedia.org/wiki/中断">中断</a>来实现。</p>
+
+<p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p>
+
+<p>首先可以通过命令<code>echo 25 &gt; /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p>
+
+
+        <div class="more">
+          <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a> <span class="date">2013-04-05</span></h1>
 
         <h1><a style="display: block;" name="什么是spi" href="#什么是spi"></a>什么是SPI</h1>
@@ -606,39 +689,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/04/03/24-google-channel-service.html">在Raspberry Pi上使用Google Channel服务搭建实时应用</a> <span class="date">2013-04-03</span></h1>
-
-        <p>前面提到了有关个人网站的<a href="http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html">实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p>
-
-<h1><a style="display: block;" name="google-channel-service" href="#google-channel-service"></a>Google Channel Service</h1>
-
-<p><a href="https://developers.google.com/appengine/docs/go/channel/overview">Google Channel Service</a>允许应用和<a href="http://appengine.google.com/">GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p>
-
-<p>使用这个服务分两步：</p>
-
-<ol>
-<li><p>客户端请求服务器端（部署在GAE上）获取一个Channel的Token：
-<img src="https://developers.google.com/appengine/images/channel_overview01.png"/></p></li>
-
-<li><p>客户端根据Channel Token和服务器建立长连接，并开始接收消息，这时其它的客户端（或服务器端）可以想这个通道发送消息
-<img src="https://developers.google.com/appengine/images/channel_overview02.png"/></p></li>
-</ol>
-
-<h1><a style="display: block;" name="在线人数统计实现" href="#在线人数统计实现"></a>在线人数统计实现</h1>
-
-<h2><a style="display: block;" name="在页面上部署beacon" href="#在页面上部署beacon"></a>在页面上部署beacon</h2>
-
-<p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p>
-
-<p>于是可以利用GAE实现一个简单的Beacon服务，这里采用Go语言来实现，用Java或Python也是可以的。</p>
-
-
-        <div class="more">
-          <a href="/2013/04/03/24-google-channel-service.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
