@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>在Pi和Github上搭建自己的个人博客 - When Go meets Raspberry Pi</title>
+    <title>用16M的SD卡启动树莓派，在U盘上安装和运行Linux - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="How to host your personal blog on raspberry pi和github 树莓派">
+    <meta name="description" content="Boot Raspberry Pi from 16M SDCard 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -105,109 +105,68 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>在Pi和Github上搭建自己的个人博客 </h1>
+  <h1>用16M的SD卡启动树莓派，在U盘上安装和运行Linux </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h1>方法如下：</h1>
+    
 
-<p>本站同时托管在家里的<a href="http://www.raspberrypi.org">Raspberry Pi</a>和<a href="http://pages.github.com/">Github Pages</a>上，并同步保持更新，海外用户会访问Github，国内用户则会访问Pi，不同线路解析域名<strong>hugozhu.myalert.info</strong>到不同的服务器是通过<a href="http://dnspod.cn">DnsPod</a>的服务实现的，这么好的服务还是免费的，这里推荐一下。</p>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">制作引导SD卡</a></li>
+<li><a href="#toc_1">安装操作系统Raspbian到U盘</a></li>
+<li><a href="#toc_2">扩展分区</a></li>
+<li><a href="#toc_3">参考文章</a></li>
+</ul>
+</nav></p>
 
-<p>因为Github Pages只能支持静态网页，你需要一个能生成静态网页的博客生成引擎。我使用的是<a href="http://github.com/wendal/gor">gor</a> ， 也可以使用<a href="http://ruhoh.com">ruhoh</a>，<a href="https://www.google.com/search?q=static+blog+generator&amp;hl=en&amp;newwindow=1&amp;client=safari&amp;rls=en&amp;biw=1238&amp;bih=868&amp;ei=msAuUY-vDMKO2AWQ7IHoBQ&amp;sqi=2&amp;start=10&amp;sa=N">Google一下还有很多</a>。</p>
+<p>树莓派官方的操作系统Raspbian最少需要4G的SDCard，如果你恰好有比较小的SD卡怎么办呢？设计上树莓派只能从SD卡引导启动，但我们可以在SD卡上装一个最小的引导系统，然后把树莓派引导到U盘上启动。SD卡连续运行，读写比较频繁也容易损坏（我已经坏掉3张了。。。），相比之下U盘价格便宜些，读写速度可以比SD卡还高。</p>
 
-<h2>静态页面博客的好处：</h2>
+<h1 id="toc_0">制作引导SD卡</h1>
+
+<p>这个引导系统只需要16M容量的SD卡，先把SD卡格式化成FAT（windows），然后拷贝下面的文件到根目录。</p>
+
+<pre><code>git clone https://github.com/hugozhu/mini_raspbian_boot
+</code></pre>
+
+<p>修改 <code>cmdline.txt</code> 中的 <code>root=/dev/mmcblk0p2</code> 为 <code>root=/dev/sda2</code> 以指定用U盘启动</p>
+
+<pre><code>dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait cgroup_enable=memory
+</code></pre>
+
+<h1 id="toc_1">安装操作系统Raspbian到U盘</h1>
+
+<p>方法和安装到SD卡一样，在Mac上使用 <code>dd</code> 命令安装，在Windows上可以用win32diskimager：</p>
+
+<pre><code>sudo dd bs=1m if=2015-01-31-raspbian.img of=/dev/disk4 #/dev/disk4
+</code></pre>
+
+<h1 id="toc_2">扩展分区</h1>
+
+<p>如果你的U盘容量大于4G，那么上一步安装完后，你的U盘只能看到4G空间，大容量的SD卡的这个问题可以通过自带的<code>raspi-config</code>命令来解决。
+Linux下可以用<code>fdisk</code>来解决，我的方法是把该U盘插到已经正常启动的树莓派的USB口上，正常识别后，执行<code>sudo fdisk /dev/sda</code></p>
 
 <ol>
-<li>性能是最好的，很合适用Raspberry Pi来做服务器，节省资源；</li>
-<li>文章可以用Markdown格式来编写，采用Github来做版本控制，我的Blog仓库在 <a href="http://github.com/hugozhu/blog">http://github.com/hugozhu/blog</a> ，数据安全很好，误删除也不担心了；</li>
-<li>很容易找到托管环境，方便迁移；</li>
-<li>用Gor在Pi上生成速度很快；再用Nginx提供Web服务，可以直接在Pi上写Blog；</li>
-<li>大繁至简</li>
+<li>按<code>p</code>后打印出分区表：</li>
 </ol>
 
-<h2>Github设置</h2>
+<pre><code>/dev/sda1            8192      122879       57344    c  W95 FAT32 (LBA)
+/dev/sda2          122880     6399999     3138560   83  Linux
+</code></pre>
 
 <ol>
-<li>在你的仓库里增加一个your_github_id.github.com，比如我的github ID是hugozhu，相应的仓库名就是<a href="https://github.com/hugozhu/hugozhu.github.com">hugozhu.github.com</a>，这个仓库也就是网站的根目录了，在这里放生成好的静态文件</li>
-<li>如果你需要用自己的域名，而不是Github提供的，可以在根目录下增加一个<a href="https://github.com/hugozhu/hugozhu.github.com/blob/master/CNAME">CNAME</a>文件,文件内容则是你的域名，在DnsPod上需要建一个CNAME记录，将你的域名指向your_github_id.github.com. 也就是github原来分配给你的，完成这个设置后，访问your_github_id.github.com会跳转到你的域名；</li>
-<li>每次更新后，Github会在10分钟内生效。</li>
+<li><p>记住/dev/sda2的起始点<code>122880'，然后按</code>d<code>，删除掉二个分区，接着按</code>n<code>重新创建一个分区，起始点就设置为</code>122880，结束点可以设置为最大</p></li>
+
+<li><p>最后按<code>w</code>保存新的分区表</p></li>
 </ol>
 
-<h2>更新博客</h2>
+<p>插上引导SD卡和系统U盘后树莓派就可以愉快的运行起来了，如果U盘的速度足够快，你会发现系统还变快了。</p>
+
+<h1 id="toc_3">参考文章</h1>
 
 <ol>
-<li>Gor的使用详细说明可见 <a href="https://github.com/wendal/gor">https://github.com/wendal/gor</a></li>
-<li>我的整个网站的内容也通过Github开源了: <a href="https://github.com/hugozhu/blog">https://github.com/hugozhu/blog</a></li>
-</ol>
-
-<p>以我的网站为例：</p>
-
-<pre><code>git clone https://github.com/hugozhu/blog
-    Cloning into 'blog'...
-    remote: Counting objects: 190, done.
-    remote: Compressing objects: 100% (146/146), done.
-    remote: Total 190 (delta 81), reused 132 (delta 23)
-    Receiving objects: 100% (190/190), 155.48 KiB | 171 KiB/s, done.
-    Resolving deltas: 100% (81/81), done.
-cd blog
-gor compile
-    2013/02/27 13:17:19 gor.go:21: gor ver 2.1
-    2013/02/27 13:17:19 payload.go:572: Load Layout : default
-    2013/02/27 13:17:19 payload.go:572: Load Layout : page
-    2013/02/27 13:17:19 payload.go:572: Load Layout : post
-    2013/02/27 13:17:19 config.go:61: Look lile a Json, try it
-    2013/02/27 13:17:19 config.go:64: It is Json Map
-    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/analytics/config.yml
-    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/comments/config.yml
-    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/google_prettify/config.yml
-    2013/02/27 13:17:19 compile.go:125: Done
-cd compiled
-git init
-git add -A 
-git commit -m &quot;update website&quot; .
-git remote add origin hugozhu@github.com:hugozhu/hugozhu.github.com
-git push -u origin master
-</code></pre>
-
-<p>最后等待10分钟，再打开 <a href="http://hugozhu.github.com">http://hugozhu.github.com</a> 就好了。。。</p>
-
-<h2>Raspberry Pi设置</h2>
-
-<p>安装nginx</p>
-
-<pre><code>sudo apt-get install nginx
-</code></pre>
-
-<p>修改文件：/etc/nginx/sites-enabled/default，增加下面内容</p>
-
-<pre><code>server {
-    server_name hugozhu.myalert.info;
-
-    root /home/pi/blog/compiled;
-
-    location / {
-        ssi on;
-    }     
-}
-</code></pre>
-
-<p>重新启动nginx，这样在Pi上也有一个你的个人博客了，方便自己访问，这里有个小小的技巧是可以通过server side include给静态页面增加动态内容，上面的配置在首页上打开了此功能，这样我可以在页底加上如下代码来显示访问者的IP</p>
-
-<pre><code>&lt;!--# echo var=&quot;remote_addr&quot; default=&quot;no&quot; --&gt;
-</code></pre>
-
-<p>最后重启Nginx生效</p>
-
-<pre><code>sudo /etc/init.d/nginx restart
-</code></pre>
-
-<h1>TODO:</h1>
-
-<ol>
-<li>实现一个简单的Web界面，可以通个Web界面来保存Blog，并重现编译和更新到Github；
-&gt; 已部分实现：在Github的博客仓库里可以直接创建或修改文件，用Go写了一个HTTP接口，curl一下后可更新，</li>
-<li>微博到博客的快速发布；</li>
+<li><a href="http://www.raspberrypi.org/boot-from-a-16mb-sd-card/">http://www.raspberrypi.org/boot-from-a-16mb-sd-card/</a></li>
 </ol>
 
     <hr>
@@ -215,14 +174,14 @@ git push -u origin master
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/27/collaborating-development-with-github.html" title="使用Github合作开发项目">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/26/linux_perf_tools.html" title="系统调试和分析工具">Next &rarr;</a></li>
+            <li class="next"><a href="/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html" title="用Telegram和树莓派交互">Next &rarr;</a></li>
           
           
         </ul>
@@ -271,7 +230,7 @@ git push -u origin master
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-27</span></div>
+      <div class="date"><span>2015-03-05</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -286,7 +245,7 @@ git push -u origin master
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Github-ref">Github <span>2</span></a>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>17</span></a>
 </li>
       
       </ul>

@@ -4,6 +4,11 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
+		<loc>http://hugozhu.myalert.info/2015/03/05/56-boot-raspberrypi-from-16m-sdcard-and-install-raspbian-on-usb-sticker.html</loc>
+		<lastmod>2015-03-05</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://hugozhu.myalert.info/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html</loc>
 		<lastmod>2015-02-27</lastmod>
 		<changefreq>weekly</changefreq>
@@ -74,12 +79,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/07/11/40-try-out-sublime-3-beta-on-mac.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html</loc>
 		<lastmod>2013-07-11</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/07/11/40-try-out-sublime-3-beta-on-mac.html</loc>
 		<lastmod>2013-07-11</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -159,12 +164,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/28/23-arduino-1st-day.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html</loc>
 		<lastmod>2013-03-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/28/23-arduino-1st-day.html</loc>
 		<lastmod>2013-03-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
