@@ -197,48 +197,47 @@ var phantom = require(&lsquo;phantom&rsquo;);</p>
 
 <h1 id="toc_3">通知手机</h1>
 
-<p>参考前面<a href="http://hugozhu.myalert.info/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html">一篇文章</a> 可以将变化通知到手机上的Telegram App。</p>
+<p>参考前面的<a href="http://hugozhu.myalert.info/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html">用Telegram和树莓派交互</a> 可以将变化通知到手机上的Telegram App。</p>
 
-<p>
-&lt;?php</p>
+<pre><code>&lt;?php
 
-<p>exec(&lsquo;node wacai.js&rsquo;, $output);</p>
+exec('node wacai.js', $output);
 
-<p>$file = &ldquo;wacai_last&rdquo;;</p>
+$file = &quot;wacai_last&quot;;
 
-<p>$last = @file_get_contents($file);</p>
+$last = @file_get_contents($file);
 
-<p>$funds = array();
+$funds = array();
 foreach ($output as $i=&gt;$line) {
     if (empty($line)) {
         continue;
     }
-    if (strpos($line, &ldquo;立即申购 本息保障&rdquo;) !== false) {
-        $arr = explode(&rdquo; &ldquo;, $line);
-        if ($arr[2] == &ldquo;新手专享&rdquo;) {
+    if (strpos($line, &quot;立即申购 本息保障&quot;) !== false) {
+        $arr = explode(&quot; &quot;, $line);
+        if ($arr[2] == &quot;新手专享&quot;) {
             continue;
         }
         $fund = array(
-            &lsquo;index&rsquo;=&gt;$i,
-            &lsquo;name&rsquo;=&gt;$arr[2],
-            &lsquo;ratio&rsquo;=&gt;$arr[4],
-            &lsquo;days&rsquo;=&gt;$arr[8],
+            'index'=&gt;$i,
+            'name'=&gt;$arr[2],
+            'ratio'=&gt;$arr[4],
+            'days'=&gt;$arr[8],
         );
         $funds[] = $fund;
     } else {
     }
-}</p>
+}
 
-<p>$all = json_encode($funds,JSON_UNESCAPED_UNICODE);</p>
+$all = json_encode($funds,JSON_UNESCAPED_UNICODE);
 
-<p>if ($last != $all) {
+if ($last != $all) {
     foreach ($funds as $fund) {
-        $msg =  $output[$fund[&lsquo;index&rsquo;]];
-        exec(&ldquo;echo &lsquo;msg 树莓派通知 $msg&rsquo; | nc localhost 17777&rdquo;);
+        $msg =  $output[$fund['index']];
+        exec(&quot;echo 'msg 树莓派通知 $msg' | nc localhost 17777&quot;);
     }
     file_put_contents($file, $all);
 }
-···</p>
+</code></pre>
 
     <hr>
     <div class="pagination">
