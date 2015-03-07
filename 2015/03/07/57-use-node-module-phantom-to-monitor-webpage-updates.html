@@ -127,38 +127,36 @@
 
 <h1 id="toc_0">安装phantomjs</h1>
 
-<p>从 <code>https://github.com/piksel/phantomjs-raspberrypi</code> 下载已经编译好的phatomjs，并复制到<code>$PATH</code>下</p>
+<p>从 <a href="https://github.com/piksel/phantomjs-raspberrypi">https://github.com/piksel/phantomjs-raspberrypi</a> 下载已经编译好的phatomjs，并复制到<code>$PATH</code>下</p>
 
 <h1 id="toc_1">安装Node.js</h1>
 
 <p>在树莓派上编译Node.js非常非常耗时。。。你也可以下载已经编译好的node和npm</p>
 
-<p>···
-wget <a href="https://s3-eu-west-1.amazonaws.com/conoroneill.net/wp-content/uploads/2015/02/node-v0.12.0-linux-arm-pi.tar.gz">https://s3-eu-west-1.amazonaws.com/conoroneill.net/wp-content/uploads/2015/02/node-v0.12.0-linux-arm-pi.tar.gz</a>
+<pre><code>wget https://s3-eu-west-1.amazonaws.com/conoroneill.net/wp-content/uploads/2015/02/node-v0.12.0-linux-arm-pi.tar.gz
 tar -zxvf node-v0.12.0-linux-arm-pi.tar.gz
 cd node-v0.12.0-linux-arm-pi
 sudo cp -R * /usr/local/
-···</p>
+</code></pre>
 
 <p>执行<code>npm install phantom</code>安装phantom模块，这个模块要求phantomjs被安装在$PATH下。</p>
 
 <h1 id="toc_2">编写监视网页的脚本</h1>
 
-<p>···
-var phantom = require(&lsquo;phantom&rsquo;);</p>
+<pre><code>var phantom = require('phantom');
 
-<p>phantom.create(function (ph) {
+phantom.create(function (ph) {
     ph.createPage(function (page) {
-        page.open(&lsquo;http://8.wacai.com/list/fund&rsquo;, function(status) {
-            if (status!=&lsquo;success&rsquo;) {
-                console.log(&lsquo;network error&rsquo;);
+        page.open('http://8.wacai.com/list/fund', function(status) {
+            if (status!='success') {
+                console.log('network error');
             } else {
-                // page.includeJs(&ldquo;http://code.jquery.com/jquery-1.11.2.min.js&rdquo;, function() {
+                // page.includeJs(&quot;http://code.jquery.com/jquery-1.11.2.min.js&quot;, function() {
                     var data = page.evaluate(function(){
-                        var str = &ldquo;&rdquo;;
-                        $(&ldquo;.fundItem&rdquo;).each(function(index) {
-                            txt = $(this).text().trim().replace(/\s+/g,&rdquo; &ldquo;);
-                            str = str + &ldquo;\n&rdquo;+ index + &ldquo; : &ldquo; + txt;
+                        var str = &quot;&quot;;
+                        $(&quot;.fundItem&quot;).each(function(index) {
+                            txt = $(this).text().trim().replace(/\s+/g,&quot; &quot;);
+                            str = str + &quot;\n&quot;+ index + &quot; : &quot; + txt;
                         })
                         return str;
                     }, function(result) {
@@ -167,10 +165,10 @@ var phantom = require(&lsquo;phantom&rsquo;);</p>
                     });
                 // });
             }
-        });<br />
+        });     
     });
 });
-</p>
+</code></pre>
 
 <p>执行后的结果</p>
 
