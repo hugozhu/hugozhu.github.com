@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>在Raspberry Pi上使用Google Channel服务搭建实时应用 - When Go meets Raspberry Pi</title>
+    <title>使用8位移位寄存器74HC595扩展树莓派的IO端口 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Setup realtime application with Google Channel Service 树莓派">
+    <meta name="description" content="Use 74HC595 8bit shift register with Rapsberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -171,11 +171,14 @@
 <h1><a style="display: block;" name="音频芯片" href="#音频芯片"></a>音频芯片</h1>
 
 <p>好的音质需要好的音源，无损音乐加好的前端输出是必不可少的。
-pcDuino Acadia集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。
-<img src="http://i2.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/onboard.png?resize=300%2C180" alt="raspberry pi audio" />
+pcDuino Acadia集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。</p>
+
+<p><img src="http://i2.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/onboard.png?resize=300%2C180" alt="raspberry pi audio" />
 </p>
 
-<p><img src="http://i1.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/thd_onboard.png?resize=300%2C213" alt="raspberry pi audio2" />
+<p><br/>
+下面是树莓派音频口播放1kHz正弦信号的输出波形，可以看出来波形并不好。
+<img src="http://i1.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/thd_onboard.png?resize=300%2C213" alt="raspberry pi audio2" />
 </p>
 
 

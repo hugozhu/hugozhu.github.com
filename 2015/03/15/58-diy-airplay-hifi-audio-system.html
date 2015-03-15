@@ -123,7 +123,7 @@
 <li><a href="#toc_5">音量调节</a></li>
 <li><a href="#toc_6">Airplay设置</a></li>
 <li><a href="#toc_7">安装依赖库</a></li>
-<li><a href="#toc_8">下载<code>Shairport</code>代码，编译安装</a></li>
+<li><a href="#toc_8">下载代码，编译安装</a></li>
 <li><a href="#toc_9">运行Shairport</a></li>
 </ul></li>
 <li><a href="#toc_10">参考文章</a></li>
@@ -147,14 +147,17 @@
 <h1 id="toc_1">音频芯片</h1>
 
 <p>好的音质需要好的音源，无损音乐加好的前端输出是必不可少的。
-pcDuino Acadia集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。
-<img src="http://i2.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/onboard.png?resize=300%2C180" alt="raspberry pi audio" />
+pcDuino Acadia集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。</p>
+
+<p><img src="http://i2.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/onboard.png?resize=300%2C180" alt="raspberry pi audio" />
 </p>
 
-<p><img src="http://i1.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/thd_onboard.png?resize=300%2C213" alt="raspberry pi audio2" />
+<p><br/>
+下面是树莓派音频口播放1kHz正弦信号的输出波形，可以看出来波形并不好。
+<img src="http://i1.wp.com/www.crazy-audio.com/wp-content/uploads/2013/11/thd_onboard.png?resize=300%2C213" alt="raspberry pi audio2" />
 </p>
 
-<p>Wolfson也专为树莓派设计了基于<a href="http://www.cirrus.com/en/products/wm5102.html">WM5102</a> codec芯片的<a href="http://www.adafruit.com/product/1761">Wolfson Audio Card</a> （售价高达$34.95，性价比不高，这块芯片也用在了魅族MX3上）。
+<p>正是因为板载音频质量差强人意，Wolfson也专为树莓派设计了基于<a href="http://www.cirrus.com/en/products/wm5102.html">WM5102</a> codec芯片的<a href="http://www.adafruit.com/product/1761">Wolfson Audio Card</a> （售价高达$34.95，性价比不高，这块芯片也用在了魅族MX3上）。
 <img src="http://www.adafruit.com/images/230x173/1761-02.jpg" alt="Wolfson Audio Card" />
 </p>
 
@@ -272,7 +275,7 @@ options snd-usb-audio nrpacks=
 <pre><code>sudo apt-get install git libao-dev libssl-dev libcrypt-openssl-rsa-perl libio-socket-inet6-perl libwww-perl avahi-utils libmodule-build-perl libasound2-dev libpulse-dev
 </code></pre>
 
-<h2 id="toc_8">下载<code>Shairport</code>代码，编译安装</h2>
+<h2 id="toc_8">下载代码，编译安装</h2>
 
 <pre><code>root@Acadia ~ $ git clone https://github.com/abrasive/shairport.git  
 root@Acadia ~ $ cd shairport  
@@ -290,16 +293,16 @@ Configure successful. You may now build with 'make'
 root@Acadia ~/shairport $ make  
 </code></pre>
 
-<p>pcDunio上还需要执行这一步：
-<code>
-root@Acadia ~ $ git clone https://github.com/njh/perl-net-sdp.git perl-net-sdp  
+<p>pcDunio Acadia上还需要执行这一步：</p>
+
+<pre><code>root@Acadia ~ $ git clone https://github.com/njh/perl-net-sdp.git perl-net-sdp  
 root@Acadia  ~ $ cd perl-net-sdp  
 root@Acadia  ~/perl-net-sdp $ perl Build.PL  
 root@Acadia  ~/perl-net-sdp $ sudo ./Build  
 root@Acadia  ~/perl-net-sdp $ sudo ./Build test  
 root@Acadia  ~/perl-net-sdp $ sudo ./Build install  
 root@Acadia  ~/perl-net-sdp $ cd ..
-</code></p>
+</code></pre>
 
 <h2 id="toc_9">运行Shairport</h2>
 
