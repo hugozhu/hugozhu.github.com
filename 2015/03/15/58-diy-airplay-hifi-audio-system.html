@@ -201,9 +201,9 @@ Time per period = 2.899088
 
 如果听不到声音，可以检查一下连接和系统设置：</p>
 
-<p>树莓派的命令输出：
-<code>
-hugo@raspberrypi2 ~ $ sudo aplay -l
+<p>树莓派的命令输出：</p>
+
+<pre><code>hugo@raspberrypi2 ~ $ sudo aplay -l
 **** List of PLAYBACK Hardware Devices ****
 card 0: ALSA [bcm2835 ALSA], device 0: bcm2835 ALSA [bcm2835 ALSA]
   Subdevices: 8/8
@@ -218,11 +218,11 @@ card 0: ALSA [bcm2835 ALSA], device 0: bcm2835 ALSA [bcm2835 ALSA]
 card 0: ALSA [bcm2835 ALSA], device 1: bcm2835 ALSA [bcm2835 IEC958/HDMI]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
-</code></p>
+</code></pre>
 
-<p>pcDunio Acadia的命令输出：
-<code>
-    Hardware device with all software conversions
+<p>pcDunio Acadia的命令输出：</p>
+
+<pre><code>    Hardware device with all software conversions
 hugo@Acadia ~ $ sudo aplay -l
 **** List of PLAYBACK Hardware Devices ****
 card 0: wm8962audio [wm8962-audio], device 0: HiFi wm8962-0 []
@@ -231,20 +231,25 @@ card 0: wm8962audio [wm8962-audio], device 0: HiFi wm8962-0 []
 card 1: imxhdmisoc [imx-hdmi-soc], device 0: IMX HDMI TX mxc-hdmi-soc-0 []
   Subdevices: 1/1
   Subdevice #0: subdevice #0
-</code></p>
+</code></pre>
 
-<p>如果你安装了USB声卡，还需要设置系统把USB声卡设置成缺省声卡。
-<code>sudo vi /etc/modprobe.d/alsa-base.conf</code>
-修改
-<code>options snd-usb-audio index=-2</code>
-为
-<code>
-#options snd-usb-audio index=-2  
+<p>如果你安装了USB声卡，还需要设置系统把USB声卡设置成缺省声卡。</p>
+
+<p><code>sudo vi /etc/modprobe.d/alsa-base.conf</code></p>
+
+<p>修改</p>
+
+<p><code>options snd-usb-audio index=-2</code></p>
+
+<p>为</p>
+
+<pre><code>#options snd-usb-audio index=-2  
 options snd-usb-audio nrpacks=
-</code></p>
+</code></pre>
 
-<p>有些系统可能还需执行下一步（注：树莓派2不需要）
-<code>sudo vi /usr/share/alsa/alsa.conf</code>
+<p>有些系统可能还需执行下一步（注：树莓派2不需要）</p>
+
+<p><code>sudo vi /usr/share/alsa/alsa.conf</code>
 把<code>pcm.front cards.pcm.front</code> 替换成<code>pcm.front cards.pcm.default</code></p>
 
 <h2 id="toc_4">测试音乐播放</h2>
