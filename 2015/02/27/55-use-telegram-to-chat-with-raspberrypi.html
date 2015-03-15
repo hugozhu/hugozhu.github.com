@@ -170,7 +170,7 @@ function on_msg_receive (msg)
         if cmd == &quot;ping&quot; then
             send_msg (chat, 'pong', ok_cb, false)
         elseif safe_commands[cmd] ~= nil then
-            send_msg (chat, exec(cmd), ok_cb, false)
+            send_msg (chat, exec(safe_commands[cmd]), ok_cb, false)
         end
     end
 end
@@ -348,7 +348,7 @@ print(exec(&quot;uptime&quot;))
       <ul class="tag_box">
       
         <li>
-  <a href="/categories/#Blog-ref">Blog <span>57</span></a>
+  <a href="/categories/#Blog-ref">Blog <span>58</span></a>
 </li>
       
       </ul>
@@ -357,7 +357,7 @@ print(exec(&quot;uptime&quot;))
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>18</span></a>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>19</span></a>
 </li>
       
       </ul>

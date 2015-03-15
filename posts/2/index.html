@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Android异步编程 - When Go meets Raspberry Pi</title>
+    <title>在Raspberry Pi上使用Google Channel服务搭建实时应用 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Asynchronous Android 树莓派">
+    <meta name="description" content="Setup realtime application with Google Channel Service 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -150,6 +150,39 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html">安装第三方App到电视盒子</a> <span class="date">2014-07-26</span></h1>
+
+        <h1><a style="display: block;" name="安装第三方app方法1" href="#安装第三方app方法1"></a>安装第三方App方法1</h1>
+
+<ol>
+<li>准备一个U盘，注意用FAT格式（Windows能读写就OK）</li>
+<li>将需要安装的App下载到U盘，文件后缀名必须是.apk</li>
+<li>将U盘插入电视盒子，然后通过盒子自身带的文件管理App安装：如Magic Box：应用－－&gt; 本地播放，进入后选中U盘上的.apk文件即可安装</li>
+</ol>
+
+<h1><a style="display: block;" name="安装第三方app方法2" href="#安装第三方app方法2"></a>安装第三方App方法2</h1>
+
+<ol>
+<li>如果盒子不带USB盘，还可以用adb远程安装</li>
+<li>adb connect &lt;your_magic_box_ip&gt;</li>
+<li>adb install &lt;you_app_to_install&gt;.apk</li>
+</ol>
+
+<h1><a style="display: block;" name="直播和回放app" href="#直播和回放app"></a>直播和回放App</h1>
+
+<ol>
+<li>在电脑上用浏览器下载：http://app.shafa.com/shafa.apk 到U盘</li>
+<li>按方法1安装好后，在“应用“中找到“沙发管家”</li>
+<li>启动“沙发管家”，安装直播App：如“龙龙直播”，也有支持回放的App，如“电视猫视频”等。</li>
+</ol>
+
+
+        <div class="more">
+          <a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2014/07/23/47-use-gradle-properties-to-set-alternative-android-build-tools.html">Gradle的Properties</a> <span class="date">2014-07-23</span></h1>
@@ -382,6 +415,34 @@ page.open(startUrl, function(status) {
       </div>
     
       <div class="post">
+        <h1 class="title"><a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html">在Mac上使用Sublime 3写Go代码</a> <span class="date">2013-07-11</span></h1>
+
+        <p><img src="http://www.sublimetext.com/anim/rename2_packed.png" width="540"/></p>
+
+<p><a href="http://www.sublimetext.com">Sublime</a> 是一个相当好用的文本编辑器，界面简洁，功能强大。最近<a href="http://www.sublimetext.com/3">Sublime 3 Beta</a> 出来了, 体验了一下，发现启动速度比之前快了很多。</p>
+
+<h1><a style="display: block;" name="下载安装" href="#下载安装"></a>下载安装</h1>
+
+<p>下载地址： <a href="http://www.sublimetext.com/3">http://www.sublimetext.com/3</a></p>
+
+<h1><a style="display: block;" name="安装package-control" href="#安装package-control"></a>安装Package Control</h1>
+
+<p>Sublime 支持插件来丰富其功能，<a href="http://wbond.net/sublime_packages/package_control">package control</a> 本身也是一个插件，可以用来管理其他插件，所以我们要先安装Package Control，Sublime 3需要安装Pacakge Control Alpha.</p>
+
+<pre><code>cd &quot;Library/Application Support/Sublime Text 3&quot;
+cd Packages/
+git clone https://github.com/wbond/sublime_package_control.git &quot;Package Control&quot;
+cd &quot;Package Control&quot;
+git checkout python3
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html">替换树莓派的U盘</a> <span class="date">2013-07-11</span></h1>
 
         <p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p>
@@ -407,34 +468,6 @@ page.open(startUrl, function(status) {
 
         <div class="more">
           <a href="/2013/07/11/39-replace-usb-disk-on-raspberry-pi.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html">在Mac上使用Sublime 3写Go代码</a> <span class="date">2013-07-11</span></h1>
-
-        <p><img src="http://www.sublimetext.com/anim/rename2_packed.png" width="540"/></p>
-
-<p><a href="http://www.sublimetext.com">Sublime</a> 是一个相当好用的文本编辑器，界面简洁，功能强大。最近<a href="http://www.sublimetext.com/3">Sublime 3 Beta</a> 出来了, 体验了一下，发现启动速度比之前快了很多。</p>
-
-<h1><a style="display: block;" name="下载安装" href="#下载安装"></a>下载安装</h1>
-
-<p>下载地址： <a href="http://www.sublimetext.com/3">http://www.sublimetext.com/3</a></p>
-
-<h1><a style="display: block;" name="安装package-control" href="#安装package-control"></a>安装Package Control</h1>
-
-<p>Sublime 支持插件来丰富其功能，<a href="http://wbond.net/sublime_packages/package_control">package control</a> 本身也是一个插件，可以用来管理其他插件，所以我们要先安装Package Control，Sublime 3需要安装Pacakge Control Alpha.</p>
-
-<pre><code>cd &quot;Library/Application Support/Sublime Text 3&quot;
-cd Packages/
-git clone https://github.com/wbond/sublime_package_control.git &quot;Package Control&quot;
-cd &quot;Package Control&quot;
-git checkout python3
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/07/11/40-try-out-sublime-3-beta-on-mac.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -468,39 +501,6 @@ git checkout python3
 
         <div class="more">
           <a href="/2013/06/30/38-java-volatile-variable.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/06/24/37-tcpdump_on_android.html">在Android上使用tcpdump</a> <span class="date">2013-06-24</span></h1>
-
-        <p>tcpdump工具是分析网络协议和数据包的利器，也可以在Android上使用（需要root）。</p>
-
-<p>首先在android上安装tcpdump</p>
-
-<pre><code>wget http://www.strazzere.com/android/tcpdump
-adb push tcpdump /data/local/tmp/tcpdump
-adb chmod 755 /data/local/tmp/tcpdump
-</code></pre>
-
-<p>然后使用root用户启动tcpdump，在android上进行相应的操作后，按ctrl+c中断</p>
-
-<pre><code>adb shell
-shell@android:/ $ su
-root@android:/ # /data/local/tmp/tcpdump -h                                    
-tcpdump version 3.9.8
-libpcap version 0.9.8
-Usage: tcpdump [-aAdDeflLnNOpqRStuUvxX] [-c count] [ -C file_size ]
-        [ -E algo:secret ] [ -F file ] [ -i interface ] [ -M secret ]
-        [ -r file ] [ -s snaplen ] [ -T type ] [ -w file ]
-        [ -W filecount ] [ -y datalinktype ] [ -Z user ]
-        [ expression ]
-root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/06/24/37-tcpdump_on_android.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
