@@ -130,10 +130,12 @@
 </ul>
 </nav></p>
 
-<p>苹果的<a href="http://en.wikipedia.org/wiki/AirPlay">Airplay</a>协议是通过基于<a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RSTP</a>（Real Time Streaming Protocol）协议通过UDP传输的无损编码音频流(<a href="http://en.wikipedia.org/wiki/Apple_Lossless">Apple Lossless codec</a>，音频流本身经过了AES加密，私钥是不公开的，这样只有苹果和其合作伙伴才能使用这个协议。但是2004年有人通过逆向工程获得了私钥并将其公开，这样我们也可以自己搭建低成本高音质的基于Airplay的音乐系统。在iPhone成为街机的时代，每个人的手机里有很多喜欢的音乐，如果在家里可以通过无线网络在音响系统里播放会方便很多。</p>
+<p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：</p>
 
 <p><img src="https://www.evernote.com/shard/s26/sh/5d6ddb93-220e-4c1d-a042-87a8835199dc/5e8345944ca4f948ee84636dacc77358/deep/0/77fa703f-71bc-40ac-8f65-861689fc2085-720-1,280-pixels.png" alt="Airplay" />
 </p>
+
+<p>苹果的<a href="http://en.wikipedia.org/wiki/AirPlay">Airplay</a>协议是通过基于<a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RSTP</a>（Real Time Streaming Protocol）协议通过UDP传输的无损编码音频流(<a href="http://en.wikipedia.org/wiki/Apple_Lossless">Apple Lossless codec</a>，音频流本身经过了AES加密，私钥是不公开的，这样只有苹果和其合作伙伴才能使用这个协议。但是2004年有人通过逆向工程获得了私钥并将其公开，这样我们也可以自己搭建低成本高音质的基于Airplay的音乐系统。在iPhone成为街机的时代，每个人的手机里有很多喜欢的音乐，如果在家里可以通过无线网络在音响系统里播放会方便很多。</p>
 
 <h1 id="toc_0">硬件</h1>
 
@@ -158,7 +160,7 @@ pcDuino Acadia集成的音频芯片是业界领先的英国<a href="http://en.wi
 </p>
 
 <p>正是因为板载音频质量差强人意，Wolfson也专为树莓派设计了基于<a href="http://www.cirrus.com/en/products/wm5102.html">WM5102</a> codec芯片的<a href="http://www.adafruit.com/product/1761">Wolfson Audio Card</a> （售价高达$34.95，性价比不高，这块芯片也用在了魅族MX3上）。
-<img src="http://www.adafruit.com/images/230x173/1761-02.jpg" alt="Wolfson Audio Card" />
+<img src="https://www.evernote.com/shard/s26/sh/7321c82f-96ad-42aa-9171-f10d0da456c0/c65f41888045af7bf1d879320ee3e171/deep/0/1761-00.jpg-970-728-pixels.png" alt="Wolfson Audio Card" />
 </p>
 
 <p>更好的方案是使用USB声卡，如淘宝上可以购买的基于德州仪器的<a href="http://www.ti.com/product/pcm2704">PCM2704</a>的<a href="http://s.taobao.com/search?q=PCM2704&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;spm=1.7274553.1997520841.1&amp;initiative_id=tbindexz_20150315">USB声卡</a>，40多人民币。</p>
