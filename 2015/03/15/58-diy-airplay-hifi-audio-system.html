@@ -184,12 +184,12 @@
 
 <p>注：普通用户不一定有权限使用系统音频设备，所以以下测试需要root或audio group里的用户。</p>
 
-<p>首先可以用<code>speaker-test</code>命令测试是否能出声。
+<p>首先可以用<code>speaker-test</code>命令测试是否能出声。</p>
 
-hugo@raspberrypi2 ~ $ sudo speaker-test
-speaker-test 1.0.25</p>
+<pre><code>hugo@raspberrypi2 ~ $ sudo speaker-test 
+speaker-test 1.0.25
 
-<p>Playback device is default
+Playback device is default
 Stream parameters are 48000Hz, S16_LE, 1 channels
 Using 16 octaves of pink noise
 Rate set to 48000Hz (requested 48000Hz)
@@ -204,8 +204,9 @@ Time per period = 2.234240
  0 - Front Left
 Time per period = 2.899088
  0 - Front Left
+</code></pre>
 
-如果听不到声音，可以检查一下连接和系统设置：</p>
+<p>如果听不到声音，可以检查一下连接和系统设置：</p>
 
 <p>树莓派的命令输出：</p>
 
@@ -256,7 +257,7 @@ options snd-usb-audio nrpacks=
 <p>有些系统可能还需执行下一步（注：树莓派2不需要）</p>
 
 <p><code>sudo vi /usr/share/alsa/alsa.conf</code>
-把<code>pcm.front cards.pcm.front</code> 替换成<code>pcm.front cards.pcm.default</code></p>
+把 <code>pcm.front cards.pcm.front</code> 替换成<code>pcm.front cards.pcm.default</code></p>
 
 <h2 id="toc_4">测试音乐播放</h2>
 
