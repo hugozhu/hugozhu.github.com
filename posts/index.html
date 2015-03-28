@@ -112,6 +112,34 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2015/03/28/59-use-raspberrypi-to-build-an-augmented-traffic-control-system.html">使用树莓派搭建低成本，便携，多用户的弱网模拟器：高效测试手机App在弱网下的可用性</a> <span class="date">2015-03-28</span></h1>
+
+  <h1><a style="display: block;" name="背景" href="#背景"></a>背景</h1>
+
+<p>我们的手机经常会处于弱网情况下，电梯里，高铁上，在地铁站，电影院里。。。如果手机应用不针对弱网做优化，就会出现：白屏页面刷不出来，界面卡死，错误提示一堆，菊花转不停，用户抓狂。。。</p>
+
+<p>移动应用开发团队应该将App在弱网下的可用性作为一个重要的性能指标，在设计和开发阶段考虑在弱网下的体验。</p>
+
+<p>Linux可以使用<a href="http://www.linuxfoundation.org/collaborate/workgroups/networking/netem"><code>netem</code></a>或<code>iptables</code>来实现以下网络模拟：</p>
+
+<ol>
+<li>packet delay 网络包延迟</li>
+<li>packet loss  网络包丢失</li>
+<li>packet corruption 错误的网络包</li>
+<li>packet duplication 重复发送网络包</li>
+<li>packet re-ordering 网络包传输顺序</li>
+<li>bandwidth 带宽控制</li>
+</ol>
+
+<p>Facebook最近也开源了他们的<code>augmented traffic control</code>: <a href="https://github.com/facebook/augmented-traffic-control">https://github.com/facebook/augmented-traffic-control</a> 主要使用<code>iptables</code>和<code>python</code>实现，架构合理容易扩展，其控制方法允许多台手机同时使用，并应用不同的网络控制策略；因为提供了RPC接口，在其基础上二次开发也可以较方便的实现自动化弱网测试。</p>
+
+
+  <div class="more">
+    <a href="/2015/03/28/59-use-raspberrypi-to-build-an-augmented-traffic-control-system.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2015/03/15/58-diy-airplay-hifi-audio-system.html">自己搭建Airplay高清音乐播放系统</a> <span class="date">2015-03-15</span></h1>
 
   <p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：</p>
@@ -413,43 +441,6 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
 
   <div class="more">
     <a href="/2014/08/27/49-fast-sync-between-mobile-phone-and-server.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html">使用Gradle生成一个App的不同版本，且可以同时安装在一个手机上</a> <span class="date">2014-08-03</span></h1>
-
-  <h1><a style="display: block;" name="背景" href="#背景"></a>背景</h1>
-
-<p>开发一个App一般会生成内测版和正式版，甚至还会有不同渠道的版本，不同版本的配置可能会不一样，比如内测版会需要记录完整的日志。</p>
-
-<p>Android手机对于同样的Application Id的App只能安装一个版本，如果我们需要同时安装内测版和正式版，就必须修改其中一个版本的Application Id。</p>
-
-<h1><a style="display: block;" name="解决方案" href="#解决方案"></a>解决方案</h1>
-
-<p>Gradle支持buildTypes和productFlavors两种定制方法，这里只介绍通过buildType的解决方案。通过productFlavors则可有效解决渠道包，arm，x86等分平台以及付费版和广告版的打包问题。</p>
-
-<h2><a style="display: block;" name="修改debug版的包名" href="#修改debug版的包名"></a>修改debug版的包名</h2>
-
-<p>配置如下：</p>
-
-<pre><code>android {
-    buildTypes {
-        release {
-            ...
-        }
-
-        debug {
-            applicationIdSuffix '.debug'
-            ...
-        }
-    }
-}
-</code></pre>
-
-
-  <div class="more">
-    <a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
