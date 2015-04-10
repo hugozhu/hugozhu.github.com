@@ -180,20 +180,20 @@
 <pre><code>/dev/sda       /mnt/usb        ext4    defaults,noatime  0       0
 </code></pre>
 
-<p>还可以测试一下SD卡和USB盘的读写性能：
+<p>还可以测试一下SD卡和USB盘的读写性能：</p>
 
-[root@raspberrypi2 ~]# hdparm -Tt /dev/mmcblk0</p>
+<pre><code>[root@raspberrypi2 ~]# hdparm -Tt /dev/mmcblk0
 
-<p>/dev/mmcblk0:
+/dev/mmcblk0:
  Timing cached reads:   292 MB in  2.00 seconds = 145.73 MB/sec
- Timing buffered disk reads:  48 MB in  3.12 seconds =  15.38 MB/sec</p>
+ Timing buffered disk reads:  48 MB in  3.12 seconds =  15.38 MB/sec
 
-<p>[root@raspberrypi2 ~]# hdparm  -Tt /dev/sda</p>
+[root@raspberrypi2 ~]# hdparm  -Tt /dev/sda
 
-<p>/dev/sda:
+/dev/sda:
  Timing cached reads:   280 MB in  2.00 seconds = 139.80 MB/sec
  Timing buffered disk reads:  50 MB in  3.01 seconds =  16.61 MB/sec
- </p>
+</code></pre>
 
 <p>等多信息可参考<a href="https://wiki.archlinux.org/index.php/USB_Storage_Devices#Auto-mounting_with_udev">Wiki</a></p>
 
@@ -333,19 +333,11 @@ Bus 001 Device 004: ID 148f:5370 Ralink Technology, Corp. RT5370 Wireless Adapte
 
 <li><p>设置开机启动无线网络</p>
 
-<p>使用<code>wifi-menu</code>手动连上wifi ap，可以连多个，相应的输入会保存在：/etc/network.d/，在下面的文件里输入相应的文件名</p>
-
-<p>修改/etc/conf.d/netcfg</p>
-
-<pre><code>DHCP_TIMEOUT=30 
-AUTO_PROFILES=(&quot;wlan0-Hugo2&quot; &quot;wlan0-hugo&quot;)
-</code></pre>
-
-<p>如果是隐藏SSID的要加一行&rdquo;HIDDEN=YES&rdquo;</p>
+<p>使用<code>wifi-menu</code>手动连上wifi ap，可以连多个，相应的输入会保存在：/etc/netctl/，在下面的文件里输入相应的文件名</p>
 
 <p>执行一下命令在重启时自动连上wifi
 <code>
-systemctl enable net-auto-wireless
+netctl enable wlan0-&lt;YOUR_AP_NAME&gt;
 </code></p></li>
 
 <li><p>有条件的可以在路由器里设置好根据MAC地址总是分配同一个ip给Pi，这样就可以拔掉网线的束缚了~</p></li>
