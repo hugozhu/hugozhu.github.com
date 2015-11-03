@@ -211,10 +211,24 @@ sudo cp /etc/ipsec.d/examples/l2tp-psk.conf /etc/ipsec.d/l2tp-psk.conf
 leftnexthop=1.2.3.1 #机器的Gateway
 </code></pre>
 
-<p>修改 /etc/ipsec.conf，在文件最后增加：</p>
+<p>如果机器直接连接网络，不需要NAT，需要注释下面几行
 
-<pre><code>include /etc/ipsec.d/l2tp-psk.conf
+#conn L2TP-PSK-NAT</p>
+
+<h1><a style="display: block;" name="rightsubnet=vhost:%priv" href="#rightsubnet=vhost:%priv"></a>rightsubnet=vhost:%priv</h1>
+
+<h1><a style="display: block;" name="also=l2tp-psk-nonat" href="#also=l2tp-psk-nonat"></a>also=L2TP-PSK-noNAT</h1>
+
+<pre><code>    
+修改 /etc/ipsec.conf，在文件最后增加：
+
+    include /etc/ipsec.d/l2tp-psk.conf
+
+如果机器直接连接网络，确认 /etc/ipsec.conf 中nat_traversal是yes
 </code></pre>
+
+<p>nat_traversal=yes
+</p>
 
 <p>修改 /etc/ipsec.secrets</p>
 
