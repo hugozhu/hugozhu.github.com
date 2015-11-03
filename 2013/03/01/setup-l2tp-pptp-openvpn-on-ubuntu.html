@@ -211,24 +211,22 @@ sudo cp /etc/ipsec.d/examples/l2tp-psk.conf /etc/ipsec.d/l2tp-psk.conf
 leftnexthop=1.2.3.1 #机器的Gateway
 </code></pre>
 
-<p>如果机器直接连接网络，不需要NAT，需要注释下面几行
+<p>如果机器直接连接网络，不需要NAT，需要注释下面几行</p>
 
-#conn L2TP-PSK-NAT</p>
-
-<h1><a style="display: block;" name="rightsubnet=vhost:%priv" href="#rightsubnet=vhost:%priv"></a>rightsubnet=vhost:%priv</h1>
-
-<h1><a style="display: block;" name="also=l2tp-psk-nonat" href="#also=l2tp-psk-nonat"></a>also=L2TP-PSK-noNAT</h1>
-
-<pre><code>    
-修改 /etc/ipsec.conf，在文件最后增加：
-
-    include /etc/ipsec.d/l2tp-psk.conf
-
-如果机器直接连接网络，确认 /etc/ipsec.conf 中nat_traversal是yes
+<pre><code>conn L2TP-PSK-NAT
+       rightsubnet=vhost:%priv
+       also=L2TP-PSK-noNAT
 </code></pre>
 
-<p>nat_traversal=yes
-</p>
+<p>修改 /etc/ipsec.conf，在文件最后增加：</p>
+
+<pre><code>include /etc/ipsec.d/l2tp-psk.conf
+</code></pre>
+
+<p>如果机器直接连接网络，确认 /etc/ipsec.conf 中nat_traversal是yes</p>
+
+<pre><code>nat_traversal=yes
+</code></pre>
 
 <p>修改 /etc/ipsec.secrets</p>
 
@@ -369,14 +367,14 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to-source 1.2.3.4
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/02/openvpn-multiple-ports.html" title="OpenVPN使用多个端口">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/03/01/resource-management-in-java.html" title="Java的资源管理">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/01/resource-management-in-java.html" title="Java的资源管理">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" title="在线广告系统架构变迁">Next &rarr;</a></li>
           
           
         </ul>
