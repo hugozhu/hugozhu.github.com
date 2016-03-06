@@ -112,6 +112,32 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2016/04/06/61-smart-router-with-iptable.html">用iptables搭建稳定的加速代理</a> <span class="date">2016-04-06</span></h1>
+
+  <h1><a style="display: block;" name="设置步骤" href="#设置步骤"></a>设置步骤</h1>
+
+<p>在阿里云中国和美国都购买一个VPS，用同样的操作系统，都安装好 <code>shadowsocks-libev</code> ( <a href="https://github.com/shadowsocks/shadowsocks-libev">https://github.com/shadowsocks/shadowsocks-libev</a> )</p>
+
+<h2><a style="display: block;" name="编辑配置文件-`config.json`-如下：" href="#编辑配置文件-`config.json`-如下："></a>编辑配置文件 <code>config.json</code> 如下：</h2>
+
+<pre><code>{
+    &quot;server&quot;:&quot;&lt;your_ip_address&gt;&quot;,
+    &quot;local_address&quot;:&quot;0.0.0.0&quot;,
+    &quot;server_port&quot;:10080,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;password&quot;,
+    &quot;method&quot;:&quot;bf-cfb&quot;,
+    &quot;timeout&quot;:600
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/2016/04/06/61-smart-router-with-iptable.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2015/04/12/60-run-docker-on-raspberry-pi.html">在树莓派上运行Docker</a> <span class="date">2015-04-12</span></h1>
 
   <h1><a style="display: block;" name="docker" href="#docker"></a>Docker</h1>
@@ -419,19 +445,6 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
 
   <div class="more">
     <a href="/2014/11/05/52-assemble-aar-with-all-dependencies-with-gradle.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2014/09/04/51-useful-linux-command.html">常用Linux命令</a> <span class="date">2014-09-04</span></h1>
-
-  <h1><a style="display: block;" name="拷贝文件" href="#拷贝文件"></a>拷贝文件</h1>
-
-<p>如果想事实看到拷贝的速度可以用<code>rsync -aP</code></p>
-
-
-  <div class="more">
-    <a href="/2014/09/04/51-useful-linux-command.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 

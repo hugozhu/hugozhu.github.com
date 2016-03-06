@@ -4,6 +4,11 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
+		<loc>http://hugozhu.myalert.info/2016/04/06/61-smart-router-with-iptable.html</loc>
+		<lastmod>2016-04-06</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://hugozhu.myalert.info/2015/04/12/60-run-docker-on-raspberry-pi.html</loc>
 		<lastmod>2015-04-12</lastmod>
 		<changefreq>weekly</changefreq>
@@ -184,12 +189,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/28/23-arduino-1st-day.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html</loc>
 		<lastmod>2013-03-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/28/23-arduino-1st-day.html</loc>
 		<lastmod>2013-03-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -254,12 +259,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
