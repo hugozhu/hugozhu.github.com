@@ -112,6 +112,34 @@
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2016/04/13/62-raspberrypi-3.html">第一代64位CPU，内置无线的树莓派3初体验</a> <span class="date">2016-04-13</span></h1>
+
+  <p>树莓派基金会今年推出的新品Raspberry Pi 3已经到手，官方宣传性能比树莓派2代快50%，比树莓派1代快10倍，第一次使用的64位四核处理器（博通BCM2837）配备了ARM Cortex-A53处理器，内置了802.11 b/g/n 2.4GHz WIFI和蓝牙4.1，显卡没变，还是双核VideoCore IV（并不支持4K视频）。CPU升级也对能耗有了更高的要求，官方说法最好是使用5V 2.5A的电源输入（iPad充电器），实测在无外设的情况下，2A的电流输出也可以让Pi 3正常运行。价格和树莓派2也一样，官方售价税前35美金，国内可以在淘宝上买到，238元一枚，<a href="https://item.taobao.com/item.htm?spm=a230r.1.14.19.82ysfy&amp;id=527525039334&amp;ns=1&amp;abbucket=18#detail">点此购买</a></p>
+
+<p><img src="http://files.linuxgizmos.com/rpi_pi3_detail.jpg" width=500/></p>
+
+<p>*我深刻的认为每个程序员都需要有一块树莓派，24*7的运行在家里的网络上*，投入成本在300人民币以内（树莓派加电源：250，SD卡：50），每年电费在10元以内。树莓派支持各种编程语言的开发，安装体验各种操作系统非常简单，丰富的外部接口，支持很多类型的传感器和控制器外设，可以让你轻松设计和实现智能硬件，技术让生活更美好~</p>
+
+<h1><a style="display: block;" name="外观" href="#外观"></a>外观</h1>
+
+<p>树莓派3的规格大小则和树莓派2完全一样，你甚至可以直接用树莓派2的外壳，完全贴合。</p>
+
+<p><img src="http://ww4.sinaimg.cn/bmiddle/6bc40342gw1f1sd7r0iwrj20zk0qodnp.jpg" alt="image" />
+</p>
+
+<p>背面看略有不同，中间的芯片是1G内存，树莓派3的内存速度快了1倍，右边是CF卡插槽，树莓派2是回弹式卡槽（取出CF卡时只要往力再摁一下就会弹出），树莓派3可能为了降低成本或是因为板卡空间的问题改成了更紧凑的插入式，装上外壳后取出的时候有点费劲，我需要用瑞士军刀的镊子夹出来。</p>
+
+<p><img src="http://ww2.sinaimg.cn/bmiddle/6bc40342gw1f1sd7pk73sj20qo0zkdpq.jpg" alt="image" />
+
+（下图是树莓派3）</p>
+
+
+  <div class="more">
+    <a href="/2016/04/13/62-raspberrypi-3.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2016/04/06/61-smart-router-with-iptable.html">用iptables搭建稳定的加速代理</a> <span class="date">2016-04-06</span></h1>
 
   <h1><a style="display: block;" name="设置步骤" href="#设置步骤"></a>设置步骤</h1>
@@ -358,93 +386,6 @@ sudo cp -R * /usr/local/
 
   <div class="more">
     <a href="/2015/02/10/53-robinhood-zero-commission-brokerage.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2014/11/05/52-assemble-aar-with-all-dependencies-with-gradle.html">使用Gradle生成包含所有依赖库(.jar或.aar)的aar包</a> <span class="date">2014-11-05</span></h1>
-
-  <p>Android Library项目中如果使用Android Gradle plugin打aar包，通过maven依赖的库，或者是local依赖的aar都不会包含在生成的aar包里，如果项目是发布一个SDK，为了方便开发者使用，我们倾向于生成一个包含所有依赖库以及.so等文件的aar包。</p>
-
-<p>通过反复研究和测试，以下Gradle脚本能满足需求，如果需要对代码运行ProGuard混淆，则需要使用Gradle 2.1</p>
-
-<p>方法是为项目增加一个sub project（如<code>pkg_project</code>）专门用于打包，该项目中<code>build.gradle</code>内容如下：</p>
-
-<pre><code>apply plugin: 'java'
-version = 1.0
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:19.1.0'
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile project(':&lt;your_library_project&gt;') //此处填写需要打包的Android Library Project name
-}
-
-task sync_jars() &lt;&lt; {
-     //把所有依赖的.jar库都拷贝到build/aar/libs下
-    copy {
-        into buildDir.getPath() +&quot;/aar/libs&quot;
-        from configurations.compile.findAll {
-            it.getName().endsWith(&quot;.jar&quot;)
-        }
-    }
-}
-
-task sync_aars(dependsOn:':&lt;your_library_project&gt;:assembleRelease') &lt;&lt; {
-     //把所有依赖的.aar库里包含的classes.jar都拷贝到build/aar/libs下，并重命名以不被覆盖
-    def jar_name
-    def aar_path
-    def dest_dir = buildDir.getPath()+&quot;/aar&quot;
-    configurations.compile.findAll {
-        it.getName().endsWith(&quot;.aar&quot;)
-    }.collect {
-        aar_path = it.getPath()
-        jar_name = &quot;libs/&quot;+it.getName().replace(&quot;.aar&quot;,&quot;.jar&quot;)
-        copy {
-            from zipTree(aar_path)
-            into dest_dir
-            include &quot;**/*&quot;
-            rename 'classes.jar', jar_name
-        }
-    }
-}
-
-task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
-    task (obfuse_classes_jar, type: proguard.gradle.ProGuardTask) {
-        //把build/aar/libs/*.jar混淆后生成build/aar/classes.jar
-        configuration &quot;proguard.cfg&quot;
-        injars buildDir.getPath()+&quot;/aar/libs&quot;
-        outjars buildDir.getPath()+&quot;/aar/classes.jar&quot;
-        libraryjars &quot;${System.getProperty('java.home')}/lib/rt.jar&quot;
-        libraryjars &quot;${System.getProperty('java.home')}/Contents/Classes/classes.jar&quot;
-        libraryjars System.getenv(&quot;ANDROID_HOME&quot;)+&quot;/platforms/android-19/android.jar&quot;
-    }.execute()
-
-    task (gen_aar, type: Zip) {
-        //把生成最终的aar包，注意libs目录需要被排除
-        def dest_dir = buildDir.getPath()+&quot;/aar/&quot;
-        baseName = &quot;mysdk-all&quot;
-        extension = &quot;aar&quot;
-        destinationDir = file(buildDir.getPath())
-        from dest_dir
-        exclude &quot;libs&quot;
-    }.execute()
-}
-</code></pre>
-
-
-  <div class="more">
-    <a href="/2014/11/05/52-assemble-aar-with-all-dependencies-with-gradle.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 

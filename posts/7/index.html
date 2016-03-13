@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用夏普GP2Y1010AU0F灰尘传感器检测空气质量 - When Go meets Raspberry Pi</title>
+    <title>树莓派网站容灾：利用DNSPod，Google App Engine和Github - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Sharp GP2Y1010AU0F Optical Dust Sensor 树莓派">
+    <meta name="description" content="Use Google App Engine to failover your blog between Raspberry Pi and Github 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -155,6 +155,38 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html">将Java的Properties文件转换成环境变量</a> <span class="date">2013-02-25</span></h1>
+
+        <h2><a style="display: block;" name="overview" href="#overview"></a>Overview</h2>
+
+<p>在Java程序中使用properties文件很方便，但有时候需要和脚本配合使用时，需要把properties文件内的多个变量转换成环境变量，本文提供一个转换脚本示范：</p>
+
+<p>比如env.properties如下（=附近可以有空格，也可以有空行）</p>
+
+<pre><code>MYSQL_URL = jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk
+MYSQL_USER = root
+MYSQL_PASS = 
+</code></pre>
+
+<p>执行下面的脚本后就相当于</p>
+
+<pre><code>export MYSQL_URL=&quot;//localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk&quot;
+export MYSQL_USER=&quot;root&quot;
+export MYSQL_PASS=&quot;&quot; 
+</code></pre>
+
+<p>env.sh脚本代码</p>
+
+<pre><code>#!/bin/bash
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2012/new-born.html">我的第一篇博客</a> <span class="date">2012-12-22</span></h1>
