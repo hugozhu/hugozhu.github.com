@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>简单手机应用同步协议设计和实现 - When Go meets Raspberry Pi</title>
+    <title>在Mac上使用Sublime 3写Go代码 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Sync data between mobile phone and server 树莓派">
+    <meta name="description" content="Use Sublime 3 on Mac for Go programming 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -155,6 +155,31 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2016/04/19/63-raspberrypi-as-ibeacon-transmitter.html">树莓派3变身iBeacon发射器</a> <span class="date">2016-04-19</span></h1>
+
+        <p>iBeacon是apple公司提出的“一种可以让附近手持电子设备检测到的一种新的低功耗、低成本信号传送器”的一套可用于室内定位系统的协议。iBeacon技术通过低功耗蓝牙（BLE），也就是我们所说的智能蓝牙来实现。</p>
+
+<h1><a style="display: block;" name="设置" href="#设置"></a>设置</h1>
+
+<p>树莓派3内置了蓝牙芯片，最新的Raspian也已经安装好<code>bluez</code>，所以基本上不用什么设置，就可以把树莓派3当做iBeacon基站来使用了。</p>
+
+<p>通过以下命令可以确认蓝牙芯片工作正常</p>
+
+<pre><code>hugo@raspberrypi3:~ $ sudo hciconfig
+hci0:   Type: BR/EDR  Bus: UART
+    BD Address: B8:27:EB:BF:E0:C5  ACL MTU: 1021:8  SCO MTU: 64:1
+    UP RUNNING 
+    RX bytes:3841 acl:0 sco:0 events:239 errors:0
+    TX bytes:5213 acl:0 sco:0 commands:237 errors:0
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2016/04/19/63-raspberrypi-as-ibeacon-transmitter.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2016/04/13/62-raspberrypi-3.html">树莓派3初体验</a> <span class="date">2016-04-13</span></h1>
@@ -400,37 +425,6 @@ sudo cp -R * /usr/local/
 
         <div class="more">
           <a href="/2015/02/26/54-raspberrypi2-pptp-redsocks2-chinadns.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2015/02/10/53-robinhood-zero-commission-brokerage.html">零佣金的券商靠什么赚钱？</a> <span class="date">2015-02-10</span></h1>
-
-        <p>最近一家叫<a href="https://www.robinhood.com/">Robinhood</a>的创业公司推出了零佣金的股票交易服务公测，用户可以通过iOS上的专用App交易。</p>
-
-<p>这家公司的两个创始人斯坦福大学毕业后去了纽约给华尔街的大型股票经济公司做交易系统，做了几年后突然有一天发现券商公司对每一笔交易付出的成本微乎其微，但要收取每个客户多达10美金的佣金。。。于是他们毅然决定辞职，回到硅谷创业去了。</p>
-
-<p>公司打出的口号是就是<strong>零佣金</strong>，如果你交易的资金来源于自己，那么买入和卖出交易，以及银行转入和转出（不包括电汇）都是免费的。</p>
-
-<p>零佣金对资金不那么充裕的年轻人来说非常有吸引力。那么问题来了，这家公司靠什么赚钱呢？</p>
-
-<ol>
-<li><p>交易过股票的人大概都知道，券商会提供融资服务给流动资金不充足的投资者，融资交易（Securities Margin Trading）就是投资者以资金或证券作为质押，向券商借入资金用于证券买卖，并在约定的期限内偿还借款本金和利息。相应的还有融券服务，融券交易是投资者以资金或证券作为质押，向券商借入证券卖出，在约定的期限内，买入相同数量和品种的证券归还券商并支付相应的融券费用。所以Robinhood首先可以通过融资融券服务盈利；</p></li>
-
-<li><p>对于投资者在Robinhood账户里的未购买股票的闲余资金，Robinhood可以通过金融市场获得一部分利息收入；</p></li>
-
-<li><p>提供收费接口给小型的量化和对冲基金；</p></li>
-</ol>
-
-<p>目前Robinhood已经完成了千万美元的风险投资，现阶段提供颠覆性的交易体验，吸引更多年轻的新投资者，赢得用户的信任显然更为重要。用户多了，盈利就不是问题了。。。</p>
-
-<p><img src="http://files.techcrunch.cn/2014/09/robinhood-app.png?w=556&amp;h=600"/></p>
-
-<p>App界面</p>
-
-
-        <div class="more">
-          <a href="/2015/02/10/53-robinhood-zero-commission-brokerage.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
