@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>我的第一篇博客 - When Go meets Raspberry Pi</title>
+    <title>在树莓派3上搭建监控系统 - When Go meets Raspberry Pi</title>
   
     <meta name="author" content="Hugo Zhu">
 
@@ -103,83 +103,135 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>我的第一篇博客 </h1>
+  <h1>在树莓派3上搭建监控系统 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h1>感谢使用Gor编写博客</h1>
+    
 
-<h2>本文位于 posts/first-blog.md , 你可以任何删掉,修改这个文件</h2>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">监控系统架构</a></li>
+<li><a href="#toc_1">安装</a>
+<ul>
+<li><a href="#toc_2">安装Prometheus</a></li>
+<li><a href="#toc_3">安装Prometheus Pushgateway</a></li>
+</ul></li>
+<li><a href="#toc_4">配置</a></li>
+<li><a href="#toc_5">启动</a></li>
+<li><a href="#toc_6">使用</a></li>
+</ul>
+</nav></p>
 
-<p>文件开头是当前文章的元数据</p>
-
-<ol>
-<li>date为自动生成, 当然,你可以修改,这是你的自由</li>
-<li>permalink 可以是固定地址,也可以由gor为你自动生成</li>
-<li>categories 就是分类, 可以多个</li>
-<li>tags 同理,多个标签也是很常见的</li>
-</ol>
-
-<p>请确保文件使用UTF8 without BOM编码</p>
-
-<h2>你可以通过执行下面的语句来新建一篇博客:</h2>
-
-<pre><code>gor post 文章标题
-</code></pre>
-
-<h2>编译你的博客,并预览之</h2>
-
-<pre><code>gor compile #编译
-gor http
-</code></pre>
-
-<p>然后打开你的浏览器,访问 <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a> 来预览</p>
-
-<h2>你将使用Markdown来编写博客</h2>
-
-<p><a href="http://wowubuntu.com/markdown/">Markdown 语法中文版</a> 能让你快速入门其语法</p>
-
-<p>相信<a href="http://markdownpad.com">MarkdownPad</a>或<a href="http://code.google.com/p/liteide/">liteide</a>会是你的编写博客的好帮手</p>
-
-<h2>如果你打算部署到github的pages上</h2>
+<p>之前用过<a href="https://github.com/alibaba/tsar">tsar</a>做监控，但没有基于浏览器的图表展示，而且tsar收集数据很频繁，容易写坏SD卡。后来一直用<a href="https://personal.xively.com">Xively</a> SaaS服务，但因为服务在国外，访问速度一直不尽人意。直到今天早上读到InfoQ的一篇文章才知道了<a href="https://prometheus.io">Prometheus</a>，看了一下介绍后发现Prometheus的以下特点非常合适在树莓派上部署：</p>
 
 <ol>
-<li>申请github帐户</li>
-<li>新建一个库 username.github.com 即你的用户名命名的地址</li>
-<li>将compiled目录,作为根路径,提交上去github.com上</li>
-<li>稍等几分钟, 你即可通过 <a href="http://username.github.com">http://username.github.com</a> 访问到</li>
+<li>采用Go实现支持，天然支持跨平台，配置相当简单，维护和二次开发的成本小；</li>
+<li>采集数据支持Pull和Push模式，可以自定义不同采集点的采样频率，适合轻量型应用降低能耗；</li>
+<li>二次计算和查询方式很灵活</li>
+<li>自带 <code>Grafana</code>数据可视化工具；</li>
+<li>可配置的内存+磁盘存储大小，采用的时间序列文件和Level DB做索引效率较高，不会让监控软件本身消耗过多的树莓派计算和存储资源</li>
 </ol>
 
-<h2>附上git教程 <a href="http://gitbook.liuhui998.com/">GitBook中文版</a></h2>
+<h1 id="toc_0">监控系统架构</h1>
 
-<p>一般来说,你只需要几个简单的git命令就足以应付大部分需求(仅示例)</p>
+<p><img src="http://prometheus.io/assets/architecture.svg"></p>
 
-<pre><code>git clone git://github.com/wendal/wendal.net.git
-git add -A
-git commit -m &quot;...&quot;
-git pull
-git push
+<h1 id="toc_1">安装</h1>
+
+<p>Prometheus采集数据的主要方式是通过HTTP到指定的URL上定时采集，为了支持Push方式收集数据，我们还需要安装一个<code>Prometheus Pushgateway</code>作为HTTP服务器来给Prometheus提供数据，你的应用则可以通过命令行或编程接口方式将数据推送到Pushgateway</p>
+
+<h2 id="toc_2">安装Prometheus</h2>
+
+<p>到 <a href="https://prometheus.io/download/">https://prometheus.io/download/</a> 选择<code>armv7</code>架构后可以直接下载树莓派3可运行的版本，解压后可以直接运行；缺省配置文件将监控Prometheus自身。</p>
+
+<h2 id="toc_3">安装Prometheus Pushgateway</h2>
+
+<p>假设你在树莓派上已经安装好了Go</p>
+
+<pre><code>git clone https://github.com/prometheus/pushgateway.git
+cd pushgateway.git
+export GOPATH=`pwd`
+go get -d 
+go build *.go
 </code></pre>
 
-<h2>用gor编写博客将会是一件很开心的事,如果有任何意见或建议,欢迎到 <a href="http://github.com/wendal/gor">gor的官网</a> 提交issue</h2>
+<p>编译成功后在当前目录下会生成可执行文件：<code>bindata</code></p>
 
-<h1>祝你使用愉快</h1>
+<h1 id="toc_4">配置</h1>
+
+<p>Prometheus启动后，缺省用9090 HTTP端口，Prometheus Pushgateway则是9091 HTTP端口, 以下文件配置了每15秒定时抓取Pushgateway上的监控数据。</p>
+
+<pre><code>hugo@raspberrypi3:~/prometheus $ cat prometheus.yml
+# my global config
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'codelab-monitor'
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  # - &quot;first.rules&quot;
+  # - &quot;second.rules&quot;
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.
+  - job_name: 'raspberrypi'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    target_groups:
+      - targets: ['localhost:9091']
+</code></pre>
+
+<h1 id="toc_5">启动</h1>
+
+<p>执行下面的命令可以将Prometheus和Push Gateway都启动，数据就可以开始收集了</p>
+
+<pre><code>hugo@raspberrypi3:~/prometheus $ cat prometheus.sh
+#!/bin/sh
+export GOMAXPROCS=2; cd /home/hugo/prometheus; ./prometheus -config.file=prometheus.yml -storage.local.memory-chunks=10240 &gt; /mnt/usb/logs/prometheus.log 2&gt;&amp;1 &amp;
+export GOMAXPROCS=2; cd /home/hugo/prometheus; ./bindata &gt; /mnt/usb/logs/prometheus-pg.log 2&gt;&amp;1 &amp;
+
+</code></pre>
+
+<h1 id="toc_6">使用</h1>
+
+<p>有了Push Gateway后，你可以很简单的使用Shell脚本增加监控数据</p>
+
+<pre><code>cat &lt;&lt;EOF | curl --data-binary @- http://pi3:9091/metrics/job/raspberrypi
+test 2.00
+EOF
+</code></pre>
+
+<p>过1分钟后打开 <a href="http://pi3:9090/">http://pi3:9090/</a> 就可以看到监控图了。
+<img src="http://ww1.sinaimg.cn/mw690/6bc40342gw1f2zs087ncyj20o00lhmzg.jpg"/></p>
+
+<p>使用这个方式，我们可以实现室内温度的趋势监控的功能。</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html" title="将Java的Properties文件转换成环境变量">&larr; Previous</a></li>
+            <li class="prev"><a href="/2016/04/19/63-raspberrypi-as-ibeacon-transmitter.html" title="树莓派3变身iBeacon发射器">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
+            <li class="next"><a href="/2016/04/13/62-raspberrypi-3.html" title="树莓派3初体验">Next &rarr;</a></li>
           
-            <li class="next disabled"><a>Next &rarr;</a>
           
         </ul>
       </ul>
@@ -227,7 +279,7 @@ git push
 
 
       <h4>Published</h4>
-      <div class="date"><span>2012-12-22</span></div>
+      <div class="date"><span>2016-04-19</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -240,6 +292,10 @@ git push
       <br>
       <h4>Tags</h4>
       <ul class="tag_box">
+      
+        <li>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>25</span></a>
+</li>
       
       </ul>
 
