@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>个人网站实时在线人数接口 - When Go meets Raspberry Pi</title>
+    <title>在树莓派3上搭建监控系统 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩 树莓派">
+    <meta name="description" content="Set up monitor system on Raspberry Pi 3 with Prometheus 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -105,47 +105,134 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>个人网站实时在线人数接口 </h1>
+  <h1>在树莓派3上搭建监控系统 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
+    
 
-<h1><a style="display: block;" name="实现方法" href="#实现方法"></a>实现方法</h1>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">监控系统架构</a></li>
+<li><a href="#toc_1">安装</a>
+<ul>
+<li><a href="#toc_2">安装Prometheus</a></li>
+<li><a href="#toc_3">安装Prometheus Pushgateway</a></li>
+</ul></li>
+<li><a href="#toc_4">配置</a></li>
+<li><a href="#toc_5">启动</a></li>
+<li><a href="#toc_6">使用</a></li>
+</ul>
+</nav></p>
 
-<h2><a style="display: block;" name="google-analytics" href="#google-analytics"></a>Google Analytics</h2>
+<p>之前用过<a href="https://github.com/alibaba/tsar">tsar</a>做监控，但没有基于浏览器的图表展示，而且tsar收集数据很频繁，容易写坏SD卡。后来一直用<a href="https://personal.xively.com">Xively</a> SaaS服务，但因为服务在国外，访问速度一直不尽人意。直到今天早上读到InfoQ的一篇文章才知道了<a href="https://prometheus.io">Prometheus</a>，看了一下介绍后发现Prometheus的以下特点非常合适在树莓派上部署：</p>
 
-<p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
+<ol>
+<li>采用Go实现支持，天然支持跨平台，配置相当简单，维护和二次开发的成本小；</li>
+<li>采集数据支持Pull和Push模式，可以自定义不同采集点的采样频率，适合轻量型应用降低能耗；</li>
+<li>二次计算和查询方式很灵活</li>
+<li>自带 <code>Grafana</code>数据可视化工具；</li>
+<li>可配置的内存+磁盘存储大小，采用的时间序列文件和Level DB做索引效率较高，不会让监控软件本身消耗过多的树莓派计算和存储资源</li>
+</ol>
 
-<h2><a style="display: block;" name="日志分析" href="#日志分析"></a>日志分析</h2>
+<h1 id="toc_0">监控系统架构</h1>
 
-<p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
-但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
+<p><img src="http://prometheus.io/assets/architecture.svg"></p>
 
-<h2><a style="display: block;" name="cnzz" href="#cnzz"></a>CNZZ</h2>
+<h1 id="toc_1">安装</h1>
 
-<p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
+<p>Prometheus采集数据的主要方式是通过HTTP到指定的URL上定时采集，为了支持Push方式收集数据，我们还需要安装一个<code>Prometheus Pushgateway</code>作为HTTP服务器来给Prometheus提供数据，你的应用则可以通过命令行或编程接口方式将数据推送到Pushgateway</p>
 
-<pre><code>curl -s &quot;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=[your_cnzz_server_id].cnzz.com&amp;on=1&amp;s=line&quot; | sed -e 's/.*当前在线\[\([0-9]\).*/\1/g'
+<h2 id="toc_2">安装Prometheus</h2>
+
+<p>到 <a href="https://prometheus.io/download/">https://prometheus.io/download/</a> 选择<code>armv7</code>架构后可以直接下载树莓派3可运行的版本，解压后可以直接运行；缺省配置文件将监控Prometheus自身。</p>
+
+<h2 id="toc_3">安装Prometheus Pushgateway</h2>
+
+<p>假设你在树莓派上已经安装好了Go</p>
+
+<pre><code>git clone https://github.com/prometheus/pushgateway.git
+cd pushgateway.git
+export GOPATH=`pwd`
+go get -d 
+go build *.go
+</code></pre>
+
+<p>编译成功后在当前目录下会生成可执行文件：<code>bindata</code></p>
+
+<h1 id="toc_4">配置</h1>
+
+<p>Prometheus启动后，缺省用9090 HTTP端口，Prometheus Pushgateway则是9091 HTTP端口, 以下文件配置了每15秒定时抓取Pushgateway上的监控数据。</p>
+
+<pre><code>hugo@raspberrypi3:~/prometheus $ cat prometheus.yml
+# my global config
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'codelab-monitor'
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  # - &quot;first.rules&quot;
+  # - &quot;second.rules&quot;
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.
+  - job_name: 'raspberrypi'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    target_groups:
+      - targets: ['localhost:9091']
+</code></pre>
+
+<h1 id="toc_5">启动</h1>
+
+<p>执行下面的命令可以将Prometheus和Push Gateway都启动，数据就可以开始收集了</p>
+
+<pre><code>hugo@raspberrypi3:~/prometheus $ cat prometheus.sh
+#!/bin/sh
+export GOMAXPROCS=2; cd /home/hugo/prometheus; ./prometheus -config.file=prometheus.yml -storage.local.memory-chunks=10240 &gt; /mnt/usb/logs/prometheus.log 2&gt;&amp;1 &amp;
+export GOMAXPROCS=2; cd /home/hugo/prometheus; ./bindata &gt; /mnt/usb/logs/prometheus-pg.log 2&gt;&amp;1 &amp;
 
 </code></pre>
 
-<p>于是先通过上面的脚本提取在线人数并上传到<a href="https://cosm.com/feeds/92372">Cosm</a>，Cosm有个触发器功能可以当在线人数超过某个值后发Twitter或HTTP Post到指定URL，并通过程序显示在液晶屏上。</p>
+<h1 id="toc_6">使用</h1>
+
+<p>有了Push Gateway后，你可以很简单的使用Shell脚本增加监控数据</p>
+
+<pre><code>cat &lt;&lt;EOF | curl --data-binary @- http://pi3:9091/metrics/job/raspberrypi
+test 2.00
+EOF
+</code></pre>
+
+<p>过1分钟后打开 <a href="http://pi3:9090/">http://pi3:9090/</a> 就可以看到监控图了。
+<img src="http://ww1.sinaimg.cn/mw690/6bc40342gw1f2zs087ncyj20o00lhmzg.jpg"/></p>
+
+<p>使用这个方式，我们可以实现室内温度的趋势监控的功能。</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/28/23-arduino-1st-day.html" title="Arduino初试">&larr; Previous</a></li>
+            <li class="prev"><a href="/2016/04/19/63-raspberrypi-as-ibeacon-transmitter.html" title="树莓派3变身iBeacon发射器">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html" title="升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏">Next &rarr;</a></li>
+            <li class="next"><a href="/2016/04/13/62-raspberrypi-3.html" title="树莓派3初体验">Next &rarr;</a></li>
           
           
         </ul>
@@ -194,7 +281,7 @@
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-03-27</span></div>
+      <div class="date"><span>2016-04-17</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -207,6 +294,10 @@
       <br>
       <h4>Tags</h4>
       <ul class="tag_box">
+      
+        <li>
+  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>25</span></a>
+</li>
       
       </ul>
 
