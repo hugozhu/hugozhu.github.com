@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用Github合作开发项目 - When Go meets Raspberry Pi</title>
+    <title>在Pi和Github上搭建自己的个人博客 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="介绍Fork + Pull Request的合作开发方法 树莓派">
+    <meta name="description" content="How to host your personal blog on raspberry pi and github 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -105,78 +105,124 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>使用Github合作开发项目 </h1>
+  <h1>在Pi和Github上搭建自己的个人博客 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>本文大部分内容来自： <a href="https://help.github.com/categories/63/articles">https://help.github.com/categories/63/articles</a></p>
+    <h1>方法如下：</h1>
 
-<p>Github上合作开发最好的方式是“<strong>Fork + Pull Request</strong>”。比如我最近需要一个静态Blog生成器，市面上有很多Ruby实现的，但我想要一个Go语言的实现，Github上找到了一个 <a href="https://github.com/wendal/gor">https://github.com/wendal/gor</a> ，测试了一下已有的功能基本能满足了，就用上了。</p>
+<p>本站同时托管在家里的<a href="http://www.raspberrypi.org">Raspberry Pi</a>和<a href="http://pages.github.com/">Github Pages</a>上，并同步保持更新，海外用户会访问Github，国内用户则会访问Pi，不同线路解析域名<strong>hugozhu.myalert.info</strong>到不同的服务器是通过<a href="http://dnspod.cn">DnsPod</a>的服务实现的，这么好的服务还是免费的，这里推荐一下。</p>
 
-<p>但实际使用过程中发现了一个问题，如果在URL中有中文，生成的URL如下没有做URL安全编码：</p>
+<p>因为Github Pages只能支持静态网页，你需要一个能生成静态网页的博客生成引擎。我使用的是<a href="http://github.com/wendal/gor">gor</a> ， 也可以使用<a href="http://ruhoh.com">ruhoh</a>，<a href="https://www.google.com/search?q=static+blog+generator&amp;hl=en&amp;newwindow=1&amp;client=safari&amp;rls=en&amp;biw=1238&amp;bih=868&amp;ei=msAuUY-vDMKO2AWQ7IHoBQ&amp;sqi=2&amp;start=10&amp;sa=N">Google一下还有很多</a>。</p>
 
-<pre><code>http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html
-</code></pre>
-
-<p>还有一种情况是如果URL中有空格，如：</p>
-
-<pre><code>http://hugozhu.myalert.info//2013//02/25/Java properties to enviorment variables.html
-</code></pre>
-
-<p>浏览器遇到这种URL时，会主动进行编码，但这里有两个问题：</p>
+<h2>静态页面博客的好处：</h2>
 
 <ol>
-<li>遇到中文时，浏览器是用GBK还是UTF-8还是其它字符集编码后再发送给服务器呢？</li>
-<li>遇到空格时，编码成+还是%20呢？
-不同浏览器实现可能不一样，在不同操作系统上也可能不一样（可能和用户设置的缺省语言有关），这样有些用户可能会遭遇404错误了，实际上我在服务器的错误日志上的确看到这样的错误</li>
+<li>性能是最好的，很合适用Raspberry Pi来做服务器，节省资源；</li>
+<li>文章可以用Markdown格式来编写，采用Github来做版本控制，我的Blog仓库在 <a href="http://github.com/hugozhu/blog">http://github.com/hugozhu/blog</a> ，数据安全很好，误删除也不担心了；</li>
+<li>很容易找到托管环境，方便迁移；</li>
+<li>用Gor在Pi上生成速度很快；再用Nginx提供Web服务，可以直接在Pi上写Blog；</li>
+<li>大繁至简</li>
 </ol>
 
-<p>日志：</p>
-
-<pre><code>2013/02/27 20:41:33 [error] 7791#0: *3285 open() &quot;.../2013/02/25/Java+properties+to+enviorment+variables.html&quot; failed (2: No such file or directory), client: 221.179.193.78, server: hugozhu.myalert.info, request: &quot;GET /2013/02/25/Java+properties+to+enviorment+variables.html HTTP/1.1&quot;, host: &quot;hugozhu.myalert.info&quot;
-</code></pre>
-
-<p>于是我需要动手修改代码：</p>
+<h2>Github设置</h2>
 
 <ol>
-<li>首先需要做的就是Fork一下原项目到自己的代码仓库： <a href="https://github.com/hugozhu/gor">https://github.com/hugozhu/gor</a></li>
-<li>修改好代码并提交到自己的仓库： <a href="https://github.com/hugozhu/gor/commit/db2784623d9df4d0652436efdbfbb9caccdc1e1d">https://github.com/hugozhu/gor/commit/db2784623d9df4d0652436efdbfbb9caccdc1e1d</a></li>
-<li>在你的代码仓库页面上点Pull Request:
-<img src="https://pbs.twimg.com/media/BEH7V0vCYAAMgcl.jpg:large"/></li>
-<li>选择好你刚提交好的Commits，然后点发送;</li>
-<li>原项目的维护者就会收到这个Pull Request: <a href="https://github.com/wendal/gor/pull/14">https://github.com/wendal/gor/pull/14</a></li>
-<li>如果你提交的代码足够好，维护者可以合并到项目主干上；</li>
-<li>记住下一次本地修改代码前要先Merge一下原作者新提交的改动;</li>
+<li>在你的仓库里增加一个your_github_id.github.com，比如我的github ID是hugozhu，相应的仓库名就是<a href="https://github.com/hugozhu/hugozhu.github.com">hugozhu.github.com</a>，这个仓库也就是网站的根目录了，在这里放生成好的静态文件</li>
+<li>如果你需要用自己的域名，而不是Github提供的，可以在根目录下增加一个<a href="https://github.com/hugozhu/hugozhu.github.com/blob/master/CNAME">CNAME</a>文件,文件内容则是你的域名，在DnsPod上需要建一个CNAME记录，将你的域名指向your_github_id.github.com. 也就是github原来分配给你的，完成这个设置后，访问your_github_id.github.com会跳转到你的域名；</li>
+<li>每次更新后，Github会在10分钟内生效。</li>
 </ol>
 
-<p>如下：</p>
+<h2>更新博客</h2>
 
-<pre><code>git remote add upstream https://github.com/wendal/gor
-git fetch upstream
-git checkout master
-git merge upstream/master 
+<ol>
+<li>Gor的使用详细说明可见 <a href="https://github.com/wendal/gor">https://github.com/wendal/gor</a></li>
+<li>我的整个网站的内容也通过Github开源了: <a href="https://github.com/hugozhu/blog">https://github.com/hugozhu/blog</a></li>
+</ol>
+
+<p>以我的网站为例：</p>
+
+<pre><code>git clone https://github.com/hugozhu/blog
+    Cloning into 'blog'...
+    remote: Counting objects: 190, done.
+    remote: Compressing objects: 100% (146/146), done.
+    remote: Total 190 (delta 81), reused 132 (delta 23)
+    Receiving objects: 100% (190/190), 155.48 KiB | 171 KiB/s, done.
+    Resolving deltas: 100% (81/81), done.
+cd blog
+gor compile
+    2013/02/27 13:17:19 gor.go:21: gor ver 2.1
+    2013/02/27 13:17:19 payload.go:572: Load Layout : default
+    2013/02/27 13:17:19 payload.go:572: Load Layout : page
+    2013/02/27 13:17:19 payload.go:572: Load Layout : post
+    2013/02/27 13:17:19 config.go:61: Look lile a Json, try it
+    2013/02/27 13:17:19 config.go:64: It is Json Map
+    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/analytics/config.yml
+    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/comments/config.yml
+    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/google_prettify/config.yml
+    2013/02/27 13:17:19 compile.go:125: Done
+cd compiled
+git init
+git add -A 
+git commit -m &quot;update website&quot; .
+git remote add origin hugozhu@github.com:hugozhu/hugozhu.github.com
+git push -u origin master
 </code></pre>
 
-<p>到此为止就完成了一次合作开发。</p>
+<p>最后等待10分钟，再打开 <a href="http://hugozhu.github.com">http://hugozhu.github.com</a> 就好了。。。</p>
 
-<p>==</p>
+<h2>Raspberry Pi设置</h2>
 
-<h1>我们日常的项目开发中也可以采用这种思路，代码Review也可以增加Pull Request，对项目的迭代速度会有很大帮助。</h1>
+<p>安装nginx</p>
+
+<pre><code>sudo apt-get install nginx
+</code></pre>
+
+<p>修改文件：/etc/nginx/sites-enabled/default，增加下面内容</p>
+
+<pre><code>server {
+    server_name hugozhu.myalert.info;
+
+    root /home/pi/blog/compiled;
+
+    location / {
+        ssi on;
+    }     
+}
+</code></pre>
+
+<p>重新启动nginx，这样在Pi上也有一个你的个人博客了，方便自己访问，这里有个小小的技巧是可以通过server side include给静态页面增加动态内容，上面的配置在首页上打开了此功能，这样我可以在页底加上如下代码来显示访问者的IP</p>
+
+<pre><code>&lt;!--# echo var=&quot;remote_addr&quot; default=&quot;no&quot; --&gt;
+</code></pre>
+
+<p>最后重启Nginx生效</p>
+
+<pre><code>sudo /etc/init.d/nginx restart
+</code></pre>
+
+<h1>TODO:</h1>
+
+<ol>
+<li>实现一个简单的Web界面，可以通个Web界面来保存Blog，并重现编译和更新到Github；
+&gt; 已部分实现：在Github的博客仓库里可以直接创建或修改文件，用Go写了一个HTTP接口，curl一下后可更新，</li>
+<li>微博到博客的快速发布；</li>
+</ol>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/27/how-to-host-personal-blog-on-github.html" title="在Pi和Github上搭建自己的个人博客">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/02/28/logging-in-java.html" title="Java程序的日志">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/26/dynamic-dns-script.html" title="动态DNS程序">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/27/collaborating-development-with-github.html" title="使用Github合作开发项目">Next &rarr;</a></li>
           
           
         </ul>
