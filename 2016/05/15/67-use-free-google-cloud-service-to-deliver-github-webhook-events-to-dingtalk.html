@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>在Android上使用tcpdump - When Go meets Raspberry Pi</title>
+    <title>用免费的Google云服务将Github项目Webhook事件通知到钉钉 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="tcpdump on android 树莓派">
+    <meta name="description" content="Use Free Google Cloud Service to deliver Github webhook events to DingTalk 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -105,58 +105,142 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>在Android上使用tcpdump </h1>
+  <h1>用免费的Google云服务将Github项目Webhook事件通知到钉钉 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>tcpdump工具是分析网络协议和数据包的利器，也可以在Android上使用（需要root）。</p>
+    
 
-<p>首先在android上安装tcpdump</p>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">+</a></li>
+<li><a href="#toc_1">准备开发环境</a>
+<ul>
+<li><a href="#toc_2">Checkout代码</a></li>
+<li><a href="#toc_3">修改配置</a></li>
+<li><a href="#toc_4">部署应用</a></li>
+<li><a href="#toc_5">创建钉钉提醒</a></li>
+</ul></li>
+</ul>
+</nav></p>
 
-<pre><code>wget http://www.strazzere.com/android/tcpdump
-adb push tcpdump /data/local/tmp/tcpdump
-adb chmod 755 /data/local/tmp/tcpdump
+<p>本教程使用<code>Go</code>语言来实现</p>
+
+<p><img src="http://static.dingtalk.com/media/lALOAQ6nfSvM5Q_229_43.png" alt="image" />
+</p>
+
+<h1 id="toc_0">+</h1>
+
+<p><img src="https://cloud.google.com/_static/b1956bdfe3/images/new-gcp-logo.png" alt="image" />
+</p>
+
+<h1 id="toc_1">准备开发环境</h1>
+
+<p>首先你需要下载Google AppEngine的SDK：<code>https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go</code></p>
+
+<p>安装好后执行<code>goapp</code>确认已安装好</p>
+
+<pre><code>4:30:40 Hugo-Mac-mini ~/Projects/hugozhu/godingtalk $ goapp env
+GOARCH=&quot;amd64&quot;
+GOBIN=&quot;&quot;
+GOEXE=&quot;&quot;
+GOHOSTARCH=&quot;amd64&quot;
+GOHOSTOS=&quot;darwin&quot;
+GOOS=&quot;darwin&quot;
+GOPATH=&quot;/Users/hugozhu/Projects/hugozhu/godingtalk&quot;
+GORACE=&quot;&quot;
+GOROOT=&quot;/Users/hugozhu/Projects/share/go_appengine/goroot&quot;
+GOTOOLDIR=&quot;/Users/hugozhu/Projects/share/go_appengine/goroot/pkg/tool/darwin_amd64&quot;
+GO15VENDOREXPERIMENT=&quot;1&quot;
+CC=&quot;clang&quot;
+GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fno-common&quot;
+CXX=&quot;clang++&quot;
+CGO_ENABLED=&quot;1&quot;
+
 </code></pre>
 
-<p>然后使用root用户启动tcpdump，在android上进行相应的操作后，按ctrl+c中断</p>
+<h2 id="toc_2">Checkout代码</h2>
 
-<pre><code>adb shell
-shell@android:/ $ su
-root@android:/ # /data/local/tmp/tcpdump -h                                    
-tcpdump version 3.9.8
-libpcap version 0.9.8
-Usage: tcpdump [-aAdDeflLnNOpqRStuUvxX] [-c count] [ -C file_size ]
-        [ -E algo:secret ] [ -F file ] [ -i interface ] [ -M secret ]
-        [ -r file ] [ -s snaplen ] [ -T type ] [ -w file ]
-        [ -W filecount ] [ -y datalinktype ] [ -Z user ]
-        [ expression ]
-root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
+<pre><code>export GOPATH=`pwd`
+14:34:49 Hugo-Mac-mini ~/Projects/hugozhu/github_alert $ go get github.com/hugozhu/godingtalk/demo/github/appengine
+package appengine: unrecognized import path &quot;appengine&quot; (import path does not begin with hostname)
+package appengine/memcache: unrecognized import path &quot;appengine/memcache&quot; (import path does not begin with hostname)
+package appengine/urlfetch: unrecognized import path &quot;appengine/urlfetch&quot; (import path does not begin with hostname)
 </code></pre>
 
-<p>tcpdump会在/sdcard下生成文件，可以通过<code>adb pull /sdcard/capture.pcap</code>把文件传到PC上用<a href="http://wireshark.org/">wireshark</a>看，也可以直接在android上通过<a href="https://play.google.com/store/apps/details?id=lv.n3o.sharkreader">SharkReader</a>看。</p>
+<h2 id="toc_3">修改配置</h2>
 
-<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
+<pre><code>cd src/github.com/hugozhu/godingtalk/demo/github/appengine
+</code></pre>
 
-<ol>
-<li><a href="http://www.kandroid.org/online-pdk/guide/tcpdump.html">http://www.kandroid.org/online-pdk/guide/tcpdump.html</a></li>
-<li><a href="http://wireshark.org/">http://wireshark.org/</a></li>
-<li><a href="http://www.strazzere.com/blog/2009/08/gather-packets-from-your-android-without-arp-spoofing/">http://www.strazzere.com/blog/2009/08/gather-packets-from-your-android-without-arp-spoofing/</a></li>
-</ol>
+<p>打开<code>app.yaml</code>，修改成你的配置</p>
+
+<pre><code>application: github-alert-&lt;random_number&gt;
+version: 1
+runtime: go
+api_version: go1
+
+env_variables:
+  CORP_ID: '&lt;从 http://oa.dingtalk.com 获取&gt;'
+  CORP_SECRET: '&lt;从 http://oa.dingtalk.com 获取&gt;'
+  GITHUB_WEBHOOK_SECRET: '&lt;从 http://github.com/ 获取&gt;'
+  SENDER_ID: '&lt;从 http://open.dingtalk.com 调用api获取&gt;'
+  CHAT_ID: '&lt;从 http://open.dingtalk.com 调用api获取&gt;'
+
+handlers:
+- url: /.*
+  script: _go_app
+</code></pre>
+
+<h2 id="toc_4">部署应用</h2>
+
+<p>安装<code>https://cloud.google.com/appengine/docs/go/quickstart</code>的文档，在Google AppEngine上建立一个<code>github-alert-&lt;random_number&gt;</code>项目，使用下面的命令，将看到如下输出</p>
+
+<pre><code>14:39:45 Hugo-Mac-mini ~/Projects/hugozhu/github_alert/src/github.com/hugozhu/godingtalk/demo/github/appengine $ goapp deploy
+02:43 PM Application: github-alert; version: 1
+02:43 PM Host: appengine.google.com
+02:43 PM Starting update of app: github-alert, version: 1
+02:43 PM Getting current resource limits.
+02:43 PM Scanning files on local disk.
+02:43 PM Cloning 66 application files.
+02:43 PM Uploading 3 files and blobs.
+02:43 PM Uploaded 3 files and blobs.
+02:43 PM Compilation starting.
+02:43 PM Compilation: 65 files left.
+02:43 PM Compilation completed.
+02:43 PM Starting deployment.
+02:44 PM Checking if deployment succeeded.
+02:44 PM Deployment successful.
+02:44 PM Checking if updated app version is serving.
+02:44 PM Completed update of app: github-alert, version: 1
+</code></pre>
+
+<p>部署好后可以用下面的命令验证：</p>
+
+<pre><code>curl https://github-alert-&lt;random_number&gt;.appspot.com/github 
+Invalid or empty signature
+</code></pre>
+
+<h2 id="toc_5">创建钉钉提醒</h2>
+
+<p>回到http://github.com/上找到你的项目设置，将webhook的地址填为<code>https://github-alert-&lt;random_number&gt;.appspot.com/github</code>，从此以后你就能在钉钉上接收到项目更新的提醒了。</p>
+
+<p><img src="http://ww2.sinaimg.cn/mw690/6bc40342gw1f3w2pykihej20k00zkadp.jpg" width="600"/></p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/06/30/38-java-volatile-variable.html" title="Java并发中正确使用volatile">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/06/01/36-use-ping-to-check-network-connectivity.html" title="使用Ping来检查网络连通性">Next &rarr;</a></li>
+            <li class="next"><a href="/2016/05/02/66-use-dingtalk-golang-sdk-to-send-message-on-pi.html" title="从树莓派上发消息到手机或桌面钉钉">Next &rarr;</a></li>
           
           
         </ul>
@@ -205,7 +289,7 @@ root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-06-24</span></div>
+      <div class="date"><span>2016-05-15</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -218,10 +302,6 @@ root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
       <br>
       <h4>Tags</h4>
       <ul class="tag_box">
-      
-        <li>
-  <a href="/tags/#Android-ref">Android <span>9</span></a>
-</li>
       
       </ul>
 
