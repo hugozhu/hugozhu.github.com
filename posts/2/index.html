@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>用16M的SD卡启动树莓派，在U盘上安装和运行Linux - When Go meets Raspberry Pi</title>
+    <title>Android异步编程 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Boot Raspberry Pi from 16M SDCard 树莓派">
+    <meta name="description" content="Asynchronous Android 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -155,6 +155,39 @@
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2015/03/15/58-diy-airplay-hifi-audio-system.html">自己搭建Airplay高清音乐播放系统</a> <span class="date">2015-03-15</span></h1>
+
+        <p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/5d6ddb93-220e-4c1d-a042-87a8835199dc/5e8345944ca4f948ee84636dacc77358/deep/0/77fa703f-71bc-40ac-8f65-861689fc2085-720-1,280-pixels.png" alt="Airplay" />
+</p>
+
+<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1eq68scsp62j20qn18galb.jpg" alt="pcDunio Acadia" />
+</p>
+
+<p>苹果的<a href="http://en.wikipedia.org/wiki/AirPlay">Airplay</a>协议是通过基于<a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RSTP</a>（Real Time Streaming Protocol）协议通过UDP传输的无损编码音频流(<a href="http://en.wikipedia.org/wiki/Apple_Lossless">Apple Lossless codec</a>，音频流本身经过了AES加密，私钥是不公开的，这样只有苹果和其合作伙伴才能使用这个协议。但是2004年有人通过逆向工程获得了私钥并将其公开，这样我们也可以自己搭建低成本高音质的基于Airplay的音乐系统。在iPhone成为街机的时代，每个人的手机里有很多喜欢的音乐，如果在家里可以通过无线网络在音响系统里播放会方便很多。</p>
+
+<h1><a style="display: block;" name="硬件" href="#硬件"></a>硬件</h1>
+
+<ol>
+<li>pcDunio Acadia 或 Raspberry Pi 一只</li>
+<li>3.5mm音频线一根，类似<a href="http://detail.tmall.com/item.htm?spm=a230r.1.14.20.nvOtPL&amp;id=27440984038&amp;ad_id=&amp;am_id=&amp;cm_id=140105335569ed55e27b&amp;pm_id=&amp;abbucket=18">这种</a></li>
+<li>有源音箱一对</li>
+<li>网线一根或USB无线网卡一只</li>
+</ol>
+
+<h1><a style="display: block;" name="音频芯片" href="#音频芯片"></a>音频芯片</h1>
+
+<p>好的音质需要好的音源，无损音乐加好的前端输出是必不可少的。
+<a href="http://www.linksprite.com/?page_id=829">pcDuino Acadia</a>集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。</p>
+
+
+        <div class="more">
+          <a href="/2015/03/15/58-diy-airplay-hifi-audio-system.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2015/03/07/57-use-node-module-phantom-to-monitor-webpage-updates.html">在树莓派上用Node.js监视网页变化并通知手机</a> <span class="date">2015-03-07</span></h1>
@@ -462,39 +495,6 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
 
         <div class="more">
           <a href="/2014/08/03/50-use-gradle-to-customize-apk-build.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html">安装第三方App到电视盒子</a> <span class="date">2014-07-26</span></h1>
-
-        <h1><a style="display: block;" name="安装第三方app方法1" href="#安装第三方app方法1"></a>安装第三方App方法1</h1>
-
-<ol>
-<li>准备一个U盘，注意用FAT格式（Windows能读写就OK）</li>
-<li>将需要安装的App下载到U盘，文件后缀名必须是.apk</li>
-<li>将U盘插入电视盒子，然后通过盒子自身带的文件管理App安装：如Magic Box：应用－－&gt; 本地播放，进入后选中U盘上的.apk文件即可安装</li>
-</ol>
-
-<h1><a style="display: block;" name="安装第三方app方法2" href="#安装第三方app方法2"></a>安装第三方App方法2</h1>
-
-<ol>
-<li>如果盒子不带USB盘，还可以用adb远程安装</li>
-<li>adb connect &lt;your_magic_box_ip&gt;</li>
-<li>adb install &lt;you_app_to_install&gt;.apk</li>
-</ol>
-
-<h1><a style="display: block;" name="直播和回放app" href="#直播和回放app"></a>直播和回放App</h1>
-
-<ol>
-<li>在电脑上用浏览器下载：http://app.shafa.com/shafa.apk 到U盘</li>
-<li>按方法1安装好后，在“应用“中找到“沙发管家”</li>
-<li>启动“沙发管家”，安装直播App：如“龙龙直播”，也有支持回放的App，如“电视猫视频”等。</li>
-</ol>
-
-
-        <div class="more">
-          <a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

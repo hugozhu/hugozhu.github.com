@@ -4,6 +4,11 @@
 		<loc>http://hugozhu.myalert.info/</loc>
 	</url>
 	<url>
+		<loc>http://hugozhu.myalert.info/2020/02/17/68-turn-raspberrypi-4-to-a-router-and-wifi-ap.html</loc>
+		<lastmod>2020-02-17</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://hugozhu.myalert.info/2016/05/15/67-use-free-google-cloud-service-to-deliver-github-webhook-events-to-dingtalk.html</loc>
 		<lastmod>2016-05-15</lastmod>
 		<changefreq>weekly</changefreq>
@@ -124,12 +129,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/07/21/41-use-phantomjs-on-raspberry-pi-to-login-weibo.html</loc>
 		<lastmod>2013-07-21</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/07/21/41-use-phantomjs-on-raspberry-pi-to-login-weibo.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html</loc>
 		<lastmod>2013-07-21</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -199,12 +204,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/04/08/26-backup-raspberry-pi.html</loc>
 		<lastmod>2013-04-08</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/04/08/26-backup-raspberry-pi.html</loc>
+		<loc>http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</loc>
 		<lastmod>2013-04-08</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -289,22 +294,22 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
-		<lastmod>2013-03-01</lastmod>
-		<changefreq>weekly</changefreq>
-	</url>
-	<url>
 		<loc>http://hugozhu.myalert.info/2013/03/01/resource-management-in-java.html</loc>
 		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://hugozhu.myalert.info/2013/02/28/the-evolution-of-online-advertsing-system.html</loc>
-		<lastmod>2013-02-28</lastmod>
+		<loc>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</loc>
+		<lastmod>2013-03-01</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://hugozhu.myalert.info/2013/02/28/logging-in-java.html</loc>
+		<lastmod>2013-02-28</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://hugozhu.myalert.info/2013/02/28/the-evolution-of-online-advertsing-system.html</loc>
 		<lastmod>2013-02-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>

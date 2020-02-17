@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>用16M的SD卡启动树莓派，在U盘上安装和运行Linux - When Go meets Raspberry Pi</title>
+    <title>Android异步编程 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Boot Raspberry Pi from 16M SDCard 树莓派">
+    <meta name="description" content="Asynchronous Android 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -157,6 +157,39 @@
 
     
       <div class="post">
+        <h1 class="title"><a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html">安装第三方App到电视盒子</a> <span class="date">2014-07-26</span></h1>
+
+        <h1><a style="display: block;" name="安装第三方app方法1" href="#安装第三方app方法1"></a>安装第三方App方法1</h1>
+
+<ol>
+<li>准备一个U盘，注意用FAT格式（Windows能读写就OK）</li>
+<li>将需要安装的App下载到U盘，文件后缀名必须是.apk</li>
+<li>将U盘插入电视盒子，然后通过盒子自身带的文件管理App安装：如Magic Box：应用－－&gt; 本地播放，进入后选中U盘上的.apk文件即可安装</li>
+</ol>
+
+<h1><a style="display: block;" name="安装第三方app方法2" href="#安装第三方app方法2"></a>安装第三方App方法2</h1>
+
+<ol>
+<li>如果盒子不带USB盘，还可以用adb远程安装</li>
+<li>adb connect &lt;your_magic_box_ip&gt;</li>
+<li>adb install &lt;you_app_to_install&gt;.apk</li>
+</ol>
+
+<h1><a style="display: block;" name="直播和回放app" href="#直播和回放app"></a>直播和回放App</h1>
+
+<ol>
+<li>在电脑上用浏览器下载：http://app.shafa.com/shafa.apk 到U盘</li>
+<li>按方法1安装好后，在“应用“中找到“沙发管家”</li>
+<li>启动“沙发管家”，安装直播App：如“龙龙直播”，也有支持回放的App，如“电视猫视频”等。</li>
+</ol>
+
+
+        <div class="more">
+          <a href="/2014/07/26/48-install-3rd-party-app-on-tv-box.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
         <h1 class="title"><a href="/2014/07/23/47-use-gradle-properties-to-set-alternative-android-build-tools.html">Gradle的Properties</a> <span class="date">2014-07-23</span></h1>
 
         <h1><a style="display: block;" name="问题背景" href="#问题背景"></a>问题背景</h1>
@@ -275,31 +308,6 @@ dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zl
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html">使用夏普GP2Y1010AU0F灰尘传感器检测空气质量</a> <span class="date">2013-07-21</span></h1>
-
-        <p>夏普<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.1.X4yMiN&amp;id=25584528001&amp;_u=oqa3375a">GP2Y1010AU0F</a>灰尘传感器价格较便宜，能检测出室内空气中的灰尘和烟尘含量。另外还有韩国SYHITECH生产的<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.9.NNhRMO&amp;id=15543884159">DSM501A</a>粉尘传感器也有类似功能。</p>
-
-<h1><a style="display: block;" name="检测原理" href="#检测原理"></a>检测原理</h1>
-
-<p>其原理如下图，传感器中心有个洞可以让空气自由流过，定向发射LED光，通过检测经过空气中灰尘折射过后的光线来判断灰尘的含量。</p>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/50d1faab-e7fc-45c6-9a0f-2b5f6743ce7f/4422cbee4a324b25d1ebaabba3eb350f/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
-
-<h1><a style="display: block;" name="电路图" href="#电路图"></a>电路图</h1>
-
-<p><img src="https://www.evernote.com/shard/s26/sh/d34f08d5-0a93-44cc-b360-0b0686efa11d/e8548764c41977130e79b645e8b82cc3/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
-
-<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e6x61e41ykj218g0xcamc.jpg" width="500"/></p>
-
-<p>因为数据是通过pin 5的电压模拟信号输出的，而树莓派的引脚不支持模拟信号直接读取（需要增加数模转换芯片），所以先用Arduino来实验。</p>
-
-
-        <div class="more">
-          <a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/07/21/41-use-phantomjs-on-raspberry-pi-to-login-weibo.html">在树莓派上使用Phantomjs自动登录微博</a> <span class="date">2013-07-21</span></h1>
 
         <p>使用过新浪开放平台的朋友都知道用户对小应用（用户数较少的）的授权Token很容易<a href="http://open.weibo.com/wiki/授权机制说明#.E6.8E.88.E6.9D.83.E6.9C.89.E6.95.88.E6.9C.9F">过期</a>，自动续期要求授权过的用户在过期前重新打开授权页。如果你想实现一个自动备份自己微博的App，就不得每天（周）自己去访问授权页（想死的心都有了吧？）。这里介绍一种通过脚本自动登录微博获取最新oAuth token的方法（需要微博登录名和密码），合适自己玩。将脚本部署在树莓派上后，我再也不用每周都去登录一次授权页了，只是收到报警消息后（经常是帐号被冻结了）需要手动处理一下。</p>
@@ -383,6 +391,31 @@ page.open(startUrl, function(status) {
 
         <div class="more">
           <a href="/2013/07/21/41-use-phantomjs-on-raspberry-pi-to-login-weibo.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html">使用夏普GP2Y1010AU0F灰尘传感器检测空气质量</a> <span class="date">2013-07-21</span></h1>
+
+        <p>夏普<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.1.X4yMiN&amp;id=25584528001&amp;_u=oqa3375a">GP2Y1010AU0F</a>灰尘传感器价格较便宜，能检测出室内空气中的灰尘和烟尘含量。另外还有韩国SYHITECH生产的<a href="http://item.taobao.com/item.htm?spm=a230r.1.14.9.NNhRMO&amp;id=15543884159">DSM501A</a>粉尘传感器也有类似功能。</p>
+
+<h1><a style="display: block;" name="检测原理" href="#检测原理"></a>检测原理</h1>
+
+<p>其原理如下图，传感器中心有个洞可以让空气自由流过，定向发射LED光，通过检测经过空气中灰尘折射过后的光线来判断灰尘的含量。</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/50d1faab-e7fc-45c6-9a0f-2b5f6743ce7f/4422cbee4a324b25d1ebaabba3eb350f/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
+
+<h1><a style="display: block;" name="电路图" href="#电路图"></a>电路图</h1>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/d34f08d5-0a93-44cc-b360-0b0686efa11d/e8548764c41977130e79b645e8b82cc3/deep/0/www.beck-elektronik.de/fileadmin/templates/beck_folder/opto/sensor/sharp/an-gp2y1010au.pdf.png" width="500"/></p>
+
+<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e6x61e41ykj218g0xcamc.jpg" width="500"/></p>
+
+<p>因为数据是通过pin 5的电压模拟信号输出的，而树莓派的引脚不支持模拟信号直接读取（需要增加数模转换芯片），所以先用Arduino来实验。</p>
+
+
+        <div class="more">
+          <a href="/2013/07/21/42-sharp-GP2Y1010AU0F-optical-dust-sensor.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -473,39 +506,6 @@ git checkout python3
 
         <div class="more">
           <a href="/2013/06/30/38-java-volatile-variable.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/06/24/37-tcpdump_on_android.html">在Android上使用tcpdump</a> <span class="date">2013-06-24</span></h1>
-
-        <p>tcpdump工具是分析网络协议和数据包的利器，也可以在Android上使用（需要root）。</p>
-
-<p>首先在android上安装tcpdump</p>
-
-<pre><code>wget http://www.strazzere.com/android/tcpdump
-adb push tcpdump /data/local/tmp/tcpdump
-adb chmod 755 /data/local/tmp/tcpdump
-</code></pre>
-
-<p>然后使用root用户启动tcpdump，在android上进行相应的操作后，按ctrl+c中断</p>
-
-<pre><code>adb shell
-shell@android:/ $ su
-root@android:/ # /data/local/tmp/tcpdump -h                                    
-tcpdump version 3.9.8
-libpcap version 0.9.8
-Usage: tcpdump [-aAdDeflLnNOpqRStuUvxX] [-c count] [ -C file_size ]
-        [ -E algo:secret ] [ -F file ] [ -i interface ] [ -M secret ]
-        [ -r file ] [ -s snaplen ] [ -T type ] [ -w file ]
-        [ -W filecount ] [ -y datalinktype ] [ -Z user ]
-        [ expression ]
-root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/06/24/37-tcpdump_on_android.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
