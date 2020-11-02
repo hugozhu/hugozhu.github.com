@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>把树莓派4设置成路由器和热点 - When Go meets Raspberry Pi</title>
+    <title>Java程序的日志 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Turn Raspberry Pi 4 into a router and AP 树莓派">
+    <meta name="description" content="Java日志最佳实践，给程序调试提供有用信息的日志 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -602,34 +602,32 @@ done
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/01/resource-management-in-java.html">Java的资源管理</a> <span class="date">2013-03-01</span></h1>
+        <h1 class="title"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a> <span class="date">2013-03-01</span></h1>
 
         <h2><a style="display: block;" name="overview" href="#overview"></a>Overview</h2>
 
-<p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。</p>
+<p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p>
 
-<h2><a style="display: block;" name="try-catch-finally" href="#try-catch-finally"></a>try-catch-finally</h2>
+<p>先打开内核的IP转发，修改 /etc/sysctl.conf</p>
 
-<p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如<a href="http://findbugs.sourceforge.net"><strong>FindBugs</strong></a>可以帮助发现此类问题。</p>
+<pre><code>net.ipv4.ip_forward=1
+</code></pre>
 
-<p>首先我们来看一段文件操作代码：</p>
+<p>执行下面命令以生效</p>
 
-<pre><code>private void copy(String from, String to) throws IOException {
-    FileInputStream in = null;  
-    FileOutputStream out = null;  
-    in = new FileInputStream(from);  
-    out = new FileOutputStream(to);  
-    int c;  
-    while ((c = in.read()) != -1)
-        out.write(c);  
-    in.close();
-    out.close();
-}
+<pre><code>sudo sysctl -p
+</code></pre>
+
+<h2><a style="display: block;" name="pptp" href="#pptp"></a>PPTP</h2>
+
+<p>安装pptpd</p>
+
+<pre><code>apt-get install pptpd
 </code></pre>
 
 
         <div class="more">
-          <a href="/2013/03/01/resource-management-in-java.html" class="btn btn-small">阅读全文</a>
+          <a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
