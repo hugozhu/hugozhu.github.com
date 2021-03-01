@@ -112,7 +112,7 @@
   <div class="span8">
     <p>前面提到了有关个人网站的<a href="http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html">实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p>
 
-<h1><a style="display: block;" name="google-channel-service" href="#google-channel-service"></a>Google Channel Service</h1>
+<h1>Google Channel Service</h1>
 
 <p><a href="https://developers.google.com/appengine/docs/go/channel/overview">Google Channel Service</a>允许应用和<a href="http://appengine.google.com/">GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p>
 
@@ -126,9 +126,9 @@
 <img src="https://developers.google.com/appengine/images/channel_overview02.png"/></p></li>
 </ol>
 
-<h1><a style="display: block;" name="在线人数统计实现" href="#在线人数统计实现"></a>在线人数统计实现</h1>
+<h1>在线人数统计实现</h1>
 
-<h2><a style="display: block;" name="在页面上部署beacon" href="#在页面上部署beacon"></a>在页面上部署beacon</h2>
+<h2>在页面上部署beacon</h2>
 
 <p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p>
 
@@ -137,68 +137,68 @@
 <pre><code>package counter
 
 import (
-    &quot;encoding/base64&quot;
-    &quot;fmt&quot;
-    &quot;time&quot;
-    &quot;net/http&quot;
+	&quot;encoding/base64&quot;
+	&quot;fmt&quot;
+	&quot;time&quot;
+	&quot;net/http&quot;
 
-    &quot;appengine&quot;
-    &quot;appengine/channel&quot;
+	&quot;appengine&quot;
+	&quot;appengine/channel&quot;
 )
 
 var GIF []byte
 
 const (
-    TOPIC = &quot;counter&quot;
+	TOPIC = &quot;counter&quot;
 )
 
 func init() {
-    GIF, _ = base64.StdEncoding.DecodeString(&quot;R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;)
-    
-    
-    http.HandleFunc(&quot;/beacon.gif&quot;, handler)
-    http.HandleFunc(&quot;/new_token&quot;, handler_new_token)    
+	GIF, _ = base64.StdEncoding.DecodeString(&quot;R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;)
+	
+	
+	http.HandleFunc(&quot;/beacon.gif&quot;, handler)
+	http.HandleFunc(&quot;/new_token&quot;, handler_new_token)	
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    context := appengine.NewContext(r)
+	context := appengine.NewContext(r)
 
-    now := time.Now()
-    expire := now.AddDate(30, 0, 0)
-    zcookie, _ := r.Cookie(&quot;z&quot;)
-    if zcookie == nil {
-        zcookie = &amp;http.Cookie{}
-        zcookie.Name = &quot;z&quot;
-        zcookie.Value = make_hash(&quot;&lt;your_salt&gt;&quot;, r.RemoteAddr, now.UnixNano())
-        zcookie.Expires = expire
-        zcookie.Path = &quot;/&quot;
-        http.SetCookie(w, zcookie)
-    }
+	now := time.Now()
+	expire := now.AddDate(30, 0, 0)
+	zcookie, _ := r.Cookie(&quot;z&quot;)
+	if zcookie == nil {
+		zcookie = &amp;http.Cookie{}
+		zcookie.Name = &quot;z&quot;
+		zcookie.Value = make_hash(&quot;&lt;your_salt&gt;&quot;, r.RemoteAddr, now.UnixNano())
+		zcookie.Expires = expire
+		zcookie.Path = &quot;/&quot;
+		http.SetCookie(w, zcookie)
+	}
 
-    w.Header().Set(&quot;Content-type&quot;, &quot;image/gif&quot;)
-    w.Header().Set(&quot;Cache-control&quot;, &quot;no-cache, must-revalidate&quot;)
-    w.Header().Set(&quot;Expires&quot;, &quot;Sat, 26 Jul 1997 05:00:00 GMT&quot;)
+	w.Header().Set(&quot;Content-type&quot;, &quot;image/gif&quot;)
+	w.Header().Set(&quot;Cache-control&quot;, &quot;no-cache, must-revalidate&quot;)
+	w.Header().Set(&quot;Expires&quot;, &quot;Sat, 26 Jul 1997 05:00:00 GMT&quot;)
 
-    fmt.Fprintf(w, &quot;%s&quot;, GIF)
+	fmt.Fprintf(w, &quot;%s&quot;, GIF)
 
-    channel.Send(context, TOPIC, zcookie.Value+&quot;\n&quot;+r.RemoteAddr+&quot;\n&quot;+r.Referer()+&quot;\n&quot;+r.UserAgent())
+	channel.Send(context, TOPIC, zcookie.Value+&quot;\n&quot;+r.RemoteAddr+&quot;\n&quot;+r.Referer()+&quot;\n&quot;+r.UserAgent())
 }
 
 func handler_new_token(w http.ResponseWriter, r *http.Request) {
-    c := appengine.NewContext(r)
-    tok, err := channel.Create(c, TOPIC)    
-    callback := r.FormValue(&quot;callback&quot;) 
-    if err != nil {
-        http.Error(w, &quot;Couldn't create Channel&quot;, http.StatusInternalServerError)
-        c.Errorf(&quot;channel.Create: %v&quot;, err)
-        return
-    }
-    if callback == &quot;&quot; {
-        w.Header().Set(&quot;Content-type&quot;, &quot;text/javascript&quot;)
-        fmt.Fprintf(w, &quot;%s&quot;, tok)
-    } else {
-        fmt.Fprintf(w, callback+&quot;('%s')&quot;, tok)
-    }
+	c := appengine.NewContext(r)
+	tok, err := channel.Create(c, TOPIC)	
+	callback := r.FormValue(&quot;callback&quot;)	
+	if err != nil {
+		http.Error(w, &quot;Couldn't create Channel&quot;, http.StatusInternalServerError)
+		c.Errorf(&quot;channel.Create: %v&quot;, err)
+		return
+	}
+	if callback == &quot;&quot; {
+		w.Header().Set(&quot;Content-type&quot;, &quot;text/javascript&quot;)
+		fmt.Fprintf(w, &quot;%s&quot;, tok)
+	} else {
+		fmt.Fprintf(w, callback+&quot;('%s')&quot;, tok)
+	}
 }
 </code></pre>
 
@@ -222,7 +222,7 @@ handlers:
 
 <p>将该应用发布到GAE后，可以通过在页面底部放置<code>&lt;img src=&quot;http://&lt;your_app_name&gt;.appspot.com/beacon.gif/&gt;&quot;</code>标签来将网站的流量引到GAE，并通过Channel发布出去。</p>
 
-<h2><a style="display: block;" name="接收实时消息" href="#接收实时消息"></a>接收实时消息</h2>
+<h2>接收实时消息</h2>
 
 <p>比较遗憾的是Google只提供了Javascript库来供浏览器接收实时消息，相应的使用代码如下。</p>
 
@@ -272,63 +272,63 @@ handlers:
 <pre><code>package main
 
 import (
-    . &quot;github.com/hugozhu/gae-channel&quot;
-    &quot;log&quot;
+	. &quot;github.com/hugozhu/gae-channel&quot;
+	&quot;log&quot;
 )
 
 func main() {
-    log.Println(&quot;started&quot;)
-    stop_chan := make(chan bool)
-    channel := NewChannel(&quot;http://&lt;your_app_name&gt;.appspot.com/new_token&quot;)
-    socket := channel.Open()
-    socket.OnOpened = func() {
-        log.Println(&quot;socket opened!&quot;)
-    }
+	log.Println(&quot;started&quot;)
+	stop_chan := make(chan bool)
+	channel := NewChannel(&quot;http://&lt;your_app_name&gt;.appspot.com/new_token&quot;)
+	socket := channel.Open()
+	socket.OnOpened = func() {
+		log.Println(&quot;socket opened!&quot;)
+	}
 
-    socket.OnClose = func() {
-        log.Println(&quot;socket closed!&quot;)
-        stop_chan &lt;- true
-    }
+	socket.OnClose = func() {
+		log.Println(&quot;socket closed!&quot;)
+		stop_chan &lt;- true
+	}
 
-    socket.OnMessage = func(msg *Message) {
-        log.Println(msg.ToString())
-    }
+	socket.OnMessage = func(msg *Message) {
+		log.Println(msg.ToString())
+	}
 
-    socket.OnError = func(err error) {
-        log.Println(&quot;error:&quot;, err)
-    }
+	socket.OnError = func(err error) {
+		log.Println(&quot;error:&quot;, err)
+	}
 
-    &lt;-stop_chan
+	&lt;-stop_chan
 }
 </code></pre>
 
-<h2><a style="display: block;" name="实时分析日志" href="#实时分析日志"></a>实时分析日志</h2>
+<h2>实时分析日志</h2>
 
 <p>在Pi上利用Channel客户端库，脚本可以实时获取访问日志，可以通过最近15分钟内的日志计算出每分钟独立访客数和PV数，最后可以在Pi的液晶屏幕用柱状图显示出来。</p>
 
 <pre><code>package main
 
 import (
-    &quot;analytics&quot;
-    &quot;encoding/json&quot;
-    &quot;fmt&quot;
-    &quot;log&quot;
-    &quot;strings&quot;
-    &quot;time&quot;
-    
-    . &quot;github.com/hugozhu/gae-channel&quot;
-    . &quot;github.com/hugozhu/rpi&quot;
-    &quot;github.com/hugozhu/rpi/pcd8544&quot;
+	&quot;analytics&quot;
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+	&quot;log&quot;
+	&quot;strings&quot;
+	&quot;time&quot;
+	
+	. &quot;github.com/hugozhu/gae-channel&quot;
+	. &quot;github.com/hugozhu/rpi&quot;
+	&quot;github.com/hugozhu/rpi/pcd8544&quot;
 )
 
 // pin setup
 const (
-    _din     = 3
-    _sclk    = 5
-    _dc      = 2
-    _rst     = 0
-    _cs      = 1
-    contrast = 43
+	_din     = 3
+	_sclk    = 5
+	_dc      = 2
+	_rst     = 0
+	_cs      = 1
+	contrast = 43
 )
 
 var pv = analytics.NewPV(5, 60)
@@ -336,69 +336,69 @@ var uv = analytics.NewUV(5 * 60)
 
 
 func init() {
-    //must be called before everything else!
-    WiringPiSetup()
-    pcd8544.LCDInit(_sclk, _din, _dc, _cs, _rst, contrast)
+	//must be called before everything else!
+	WiringPiSetup()
+	pcd8544.LCDInit(_sclk, _din, _dc, _cs, _rst, contrast)
 }
 
 
 func main() {
 
-    log.Println(&quot;started&quot;)
-    stop_chan := make(chan bool)
+	log.Println(&quot;started&quot;)
+	stop_chan := make(chan bool)
 
-    channel := NewChannel(&quot;http://&lt;your_app_name&gt;.appspot.com/new_token&quot;)
-    socket := channel.Open()
-    socket.OnOpened = func() {
-        log.Println(&quot;socket opened!&quot;)
-    }
+	channel := NewChannel(&quot;http://&lt;your_app_name&gt;.appspot.com/new_token&quot;)
+	socket := channel.Open()
+	socket.OnOpened = func() {
+		log.Println(&quot;socket opened!&quot;)
+	}
 
-    socket.OnClose = func() {
-        log.Println(&quot;socket closed!&quot;)
-        stop_chan &lt;- true
-    }
+	socket.OnClose = func() {
+		log.Println(&quot;socket closed!&quot;)
+		stop_chan &lt;- true
+	}
 
-    socket.OnMessage = func(msg *Message) {
-        if msg.Level() &gt;= 3 &amp;&amp; msg.Child.Key == &quot;c&quot; {
-            v1 := *msg.Child.Child.Val
-            if len(v1) &gt; 0 {
-                s := &quot;[&quot; + v1[0].Key + &quot;]&quot;
-                var v []string
-                json.Unmarshal([]byte(s), &amp;v)
-                if len(v) == 2 &amp;&amp; v[0] == &quot;ae&quot; {
-                    s = v[1]
-                    v = strings.Split(s, &quot;\n&quot;)
-                    zcookie := v[0]
-                    t := time.Now()
-                    pv.AddOne(t)
-                    uv.AddOne(zcookie, t)
-                }
-            }
-        }
-    }
+	socket.OnMessage = func(msg *Message) {
+		if msg.Level() &gt;= 3 &amp;&amp; msg.Child.Key == &quot;c&quot; {
+			v1 := *msg.Child.Child.Val
+			if len(v1) &gt; 0 {
+				s := &quot;[&quot; + v1[0].Key + &quot;]&quot;
+				var v []string
+				json.Unmarshal([]byte(s), &amp;v)
+				if len(v) == 2 &amp;&amp; v[0] == &quot;ae&quot; {
+					s = v[1]
+					v = strings.Split(s, &quot;\n&quot;)
+					zcookie := v[0]
+					t := time.Now()
+					pv.AddOne(t)
+					uv.AddOne(zcookie, t)
+				}
+			}
+		}
+	}
 
-    socket.OnError = func(err error) {
-        log.Println(&quot;error:&quot;, err)
-    }
+	socket.OnError = func(err error) {
+		log.Println(&quot;error:&quot;, err)
+	}
 
-    go func() {
-        for {
-            pcd8544.LCDclear()
-            pcd8544.LCDdrawstring(0, 0, time.Now().Format(&quot;06-01-02 15:04&quot;))
-            // pcd8544.LCDdrawline(0, 10, 83, 10, pcd8544.BLACK)
-            pcd8544.LCDdrawstring(0, 14, fmt.Sprintf(&quot;UV: %d&quot;, uv.Sum()))
-            pcd8544.LCDdrawstring(0, 24, fmt.Sprintf(&quot;PV: %d&quot;, pv.Sum()))
-            pcd8544.LCDdisplay()
-            time.Sleep(5 * time.Second)
-        }
-    }()
+	go func() {
+		for {
+			pcd8544.LCDclear()
+			pcd8544.LCDdrawstring(0, 0, time.Now().Format(&quot;06-01-02 15:04&quot;))
+			// pcd8544.LCDdrawline(0, 10, 83, 10, pcd8544.BLACK)
+			pcd8544.LCDdrawstring(0, 14, fmt.Sprintf(&quot;UV: %d&quot;, uv.Sum()))
+			pcd8544.LCDdrawstring(0, 24, fmt.Sprintf(&quot;PV: %d&quot;, pv.Sum()))
+			pcd8544.LCDdisplay()
+			time.Sleep(5 * time.Second)
+		}
+	}()
 
-    &lt;-stop_chan
+	&lt;-stop_chan
 }
 
 </code></pre>
 
-<h2><a style="display: block;" name="实际效果" href="#实际效果"></a>实际效果</h2>
+<h2>实际效果</h2>
 
 <p><img src="http://ww4.sinaimg.cn/bmiddle/6bc40342jw1e3dzagtsl6j.jpg"/></p>
 
@@ -429,7 +429,7 @@ func main() {
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -515,7 +515,7 @@ func main() {
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

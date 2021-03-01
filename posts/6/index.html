@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>简单手机应用同步协议设计和实现 - When Go meets Raspberry Pi</title>
+    <title>Hugo Zhu Page 6 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Sync data between mobile phone and server 树莓派">
+    <meta name="description" content="Asynchronous Android 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -118,37 +118,37 @@
       
         
         
-          <li><a href="/posts/1/">1</a></li>
+          <li><a href="//posts/1/">1</a></li>
         
       
         
         
-          <li><a href="/posts/2/">2</a></li>
+          <li><a href="//posts/2/">2</a></li>
         
       
         
         
-          <li><a href="/posts/3/">3</a></li>
+          <li><a href="//posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/4/">4</a></li>
+          <li><a href="//posts/4/">4</a></li>
         
       
         
         
-          <li><a href="/posts/5/">5</a></li>
+          <li><a href="//posts/5/">5</a></li>
         
       
         
-          <li class="active"><a href="/posts/6/">6</a></li>
+          <li class="active"><a href="//posts/6/">6</a></li>
         
         
       
         
         
-          <li><a href="/posts/7/">7</a></li>
+          <li><a href="//posts/7/">7</a></li>
         
       
       </ul>
@@ -161,7 +161,7 @@
 
         <p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p>
 
-<h1><a style="display: block;" name="gpio库" href="#gpio库"></a>GPIO库</h1>
+<h1>GPIO库</h1>
 
 <ol>
 <li><a href="https://github.com/WiringPi/WiringPi">wiringPi</a> C，有Perl, PHP, Ruby, Node.JS和<strong><a href="http://github.com/hugozhu/rpi">Golang</a></strong>的扩展，支持wiringPi Pin和BCM GPIO两种编号</li>
@@ -170,7 +170,7 @@
 <li><a href="http://github.com/hugozhu/rpi">WiringPi-Go</a>, Go语言，支持以上三种编号</li>
 </ol>
 
-<h1><a style="display: block;" name="编号规范" href="#编号规范"></a>编号规范</h1>
+<h1>编号规范</h1>
 
 <ol>
 <li>第一列是wiringPi API中的缺省编号，<code>wiringPiSetup()</code>采用这列编号</li>
@@ -182,10 +182,10 @@
 <table>
 <thead>
 <tr>
-<td>wiringPi Pin</td>
-<td>Name</td>
-<td>Board Pin</td>
-<td>BCM GPIO</td>
+<th>wiringPi Pin</th>
+<th>Name</th>
+<th>Board Pin</th>
+<th>BCM GPIO</th>
 </tr>
 </thead>
 
@@ -320,7 +320,7 @@
       <div class="post">
         <h1 class="title"><a href="/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html">如何使用Raspberry Pi测量室内温度和湿度并绘制曲线</a> <span class="date">2013-03-17</span></h1>
 
-        <h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
+        <h1>硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
@@ -331,13 +331,13 @@
 <li><a href="http://list.tmall.com//search_product.htm?q=DHT11&amp;type=p&amp;style=&amp;cat=all">DHT11</a>温度和湿度传感器一个或<a href="http://s.taobao.com/search?q=DHT22&amp;keyword=&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;atype=&amp;tracelog=&amp;sourceId=tb.index&amp;rt=1364041904459&amp;source=haiwaigou&amp;pid=mm_14507416_2297358_8935934&amp;unid=">DHT22</a></li>
 </ol>
 
-<h1><a style="display: block;" name="传感器电路及原理" href="#传感器电路及原理"></a>传感器电路及原理</h1>
+<h1>传感器电路及原理</h1>
 
-<h2><a style="display: block;" name="dht11传感器外观" href="#dht11传感器外观"></a>DHT11传感器外观</h2>
+<h2>DHT11传感器外观</h2>
 
 <p><img src="http://learn.adafruit.com/system/products/images/000/000/386/medium225/dht11_MED.jpg?1342023044"/></p>
 
-<h2><a style="display: block;" name="参数" href="#参数"></a>参数</h2>
+<h2>参数</h2>
 
 
         <div class="more">
@@ -348,7 +348,7 @@
       <div class="post">
         <h1 class="title"><a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html">如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</a> <span class="date">2013-03-16</span></h1>
 
-        <h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
+        <h1>硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
@@ -359,7 +359,7 @@
 <li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLuXQmw2TUIlWTNRCvS2wo483pjZyXspPuvkTH5pg4vQUqrztOAoNz2Gfp8MmwKPg%2FbQb8%3D">UL2003芯片步进电机驱动板</a>一块</li>
 </ol>
 
-<h1><a style="display: block;" name="安装" href="#安装"></a>安装</h1>
+<h1>安装</h1>
 
 <p>按下图将步进电机接到驱动板上，也就是白色的接口</p>
 
@@ -378,7 +378,7 @@
 
         <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
 
-<h1><a style="display: block;" name="硬件安装" href="#硬件安装"></a>硬件安装</h1>
+<h1>硬件安装</h1>
 
 <p>需要以下硬件：</p>
 
@@ -391,7 +391,7 @@
 <li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
 </ol>
 
-<h2><a style="display: block;" name="gpio接口" href="#gpio接口"></a>GPIO接口</h2>
+<h2>GPIO接口</h2>
 
 <p><img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/></p>
 
@@ -406,7 +406,7 @@
       <div class="post">
         <h1 class="title"><a href="/2013/03/09/setup-archliunx-on-raspberry-pi.html">在Raspberry Pi上安装ArchLinux</a> <span class="date">2013-03-09</span></h1>
 
-        <h1><a style="display: block;" name="介绍" href="#介绍"></a>介绍</h1>
+        <h1>介绍</h1>
 
 <p>之前买的Raspberry Pi因为要跑<a href="http://hugozhu.myalert.info">这个网站</a>，不能经常拔下来玩别的，所以又买了一个，这次安装的是<a href="https://www.archlinux.org">Arch Linux</a>。这个发行版安装好后非常基础，占用的空间也只有600M不到，比较合适已有Linux基础的同学玩。初学者可以玩官方推荐的<a href="http://www.raspbian.org">Raspbian</a>。</p>
 
@@ -421,7 +421,7 @@
 <li>从中国用下载包很快，比Raspbian的源快多了</li>
 </ol>
 
-<h1><a style="display: block;" name="增加sudo用户" href="#增加sudo用户"></a>增加sudo用户</h1>
+<h1>增加sudo用户</h1>
 
 <pre><code>   useradd hugo
    passwd hugo
@@ -483,13 +483,13 @@ done
       <div class="post">
         <h1 class="title"><a href="/2013/03/06/raspberry-pi-with-xmbc.html">Raspberry Pi做BT下载机+高清播放器</a> <span class="date">2013-03-06</span></h1>
 
-        <h2><a style="display: block;" name="介绍" href="#介绍"></a>介绍</h2>
+        <h2>介绍</h2>
 
 <p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个<a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;initiative_id=tbindexz_20130306">山寨的</a>的更简单。。。</p>
 
 <p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了<a href="http://xbmc.org">XBMC</a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如<a href="http://yisou.com">一搜</a>，优酷，搜狐视频，奇艺等。</p>
 
-<h2><a style="display: block;" name="外设" href="#外设"></a>外设</h2>
+<h2>外设</h2>
 
 <p>除了Pi单片机外，你还需要以下外设附件：</p>
 
@@ -500,7 +500,7 @@ done
 <li>SD卡一张，最少2G</li>
 </ol>
 
-<h2><a style="display: block;" name="raspbmc" href="#raspbmc"></a>Raspbmc</h2>
+<h2>Raspbmc</h2>
 
 <p><a href="http://www.raspbmc.com/">Raspbmc</a> 是专为在Raspberry Pi上运行<a href="http://xbmc.org">XBMC</a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。</p>
 
@@ -534,7 +534,7 @@ done
       <div class="post">
         <h1 class="title"><a href="/2013/03/05/java-SynchronousQueue-notes.html">Java并发包中的同步队列SynchronousQueue实现原理</a> <span class="date">2013-03-05</span></h1>
 
-        <h2><a style="display: block;" name="介绍" href="#介绍"></a>介绍</h2>
+        <h2>介绍</h2>
 
 <p>Java 6的并发编程包中的<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/SynchronousQueue.html">SynchronousQueue</a>是一个没有数据缓冲的<a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html">BlockingQueue</a>，生产者线程对其的插入操作put必须等待消费者的移除操作take，反过来也一样。</p>
 
@@ -542,7 +542,7 @@ done
 
 <p>SynchronousQueue的一个使用场景是在线程池里。Executors.newCachedThreadPool()就使用了SynchronousQueue，这个线程池根据需要（新任务到来时）创建新的线程，如果有空闲线程则会重复使用，线程空闲了60秒后会被回收。</p>
 
-<h2><a style="display: block;" name="实现原理" href="#实现原理"></a>实现原理</h2>
+<h2>实现原理</h2>
 
 <p>同步队列的实现方法有许多：</p>
 
@@ -604,7 +604,7 @@ done
       <div class="post">
         <h1 class="title"><a href="/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">在Ubuntu上配置L2TP，PPTP和OpenVPN服务</a> <span class="date">2013-03-01</span></h1>
 
-        <h2><a style="display: block;" name="overview" href="#overview"></a>Overview</h2>
+        <h2>Overview</h2>
 
 <p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p>
 
@@ -618,7 +618,7 @@ done
 <pre><code>sudo sysctl -p
 </code></pre>
 
-<h2><a style="display: block;" name="pptp" href="#pptp"></a>PPTP</h2>
+<h2>PPTP</h2>
 
 <p>安装pptpd</p>
 
@@ -637,37 +637,37 @@ done
       
         
         
-          <li><a href="/posts/1/">1</a></li>
+          <li><a href="//posts/1/">1</a></li>
         
       
         
         
-          <li><a href="/posts/2/">2</a></li>
+          <li><a href="//posts/2/">2</a></li>
         
       
         
         
-          <li><a href="/posts/3/">3</a></li>
+          <li><a href="//posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/4/">4</a></li>
+          <li><a href="//posts/4/">4</a></li>
         
       
         
         
-          <li><a href="/posts/5/">5</a></li>
+          <li><a href="//posts/5/">5</a></li>
         
       
         
-          <li class="active"><a href="/posts/6/">6</a></li>
+          <li class="active"><a href="//posts/6/">6</a></li>
         
         
       
         
         
-          <li><a href="/posts/7/">7</a></li>
+          <li><a href="//posts/7/">7</a></li>
         
       
       </ul>
@@ -694,7 +694,7 @@ done
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

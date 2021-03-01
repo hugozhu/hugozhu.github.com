@@ -206,7 +206,7 @@
 <ol>
 <li>pacman -Syu &amp;&amp; sync #更新整个系统，<strong>新安装好要运行一次</strong></li>
 <li>pacman -S gcc make git #安装gcc, make等，作为程序员必须的</li>
-<li>pacman -R package_name &ndash;nosave #删除干净某个包</li>
+<li>pacman -R package_name --nosave #删除干净某个包</li>
 <li>pacman -Scc #完全清理包缓存</li>
 </ol>
 
@@ -335,10 +335,10 @@ Bus 001 Device 004: ID 148f:5370 Ralink Technology, Corp. RT5370 Wireless Adapte
 
 <p>使用<code>wifi-menu</code>手动连上wifi ap，可以连多个，相应的输入会保存在：/etc/netctl/，在下面的文件里输入相应的文件名</p>
 
-<p>执行一下命令在重启时自动连上wifi
-<code>
-netctl enable wlan0-&lt;YOUR_AP_NAME&gt;
-</code></p></li>
+<p>执行一下命令在重启时自动连上wifi</p>
+
+<pre><code>netctl enable wlan0-&lt;YOUR_AP_NAME&gt;
+</code></pre></li>
 
 <li><p>有条件的可以在路由器里设置好根据MAC地址总是分配同一个ip给Pi，这样就可以拔掉网线的束缚了~</p></li>
 
@@ -389,7 +389,7 @@ netctl enable wlan0-&lt;YOUR_AP_NAME&gt;
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -475,7 +475,7 @@ netctl enable wlan0-&lt;YOUR_AP_NAME&gt;
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

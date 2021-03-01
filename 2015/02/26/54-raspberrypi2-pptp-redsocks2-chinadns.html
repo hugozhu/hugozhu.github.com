@@ -142,7 +142,7 @@
 
 <p>首先在树莓派上安装和设置VPN服务器，移动设备就可以通过运营商网络连接回家里的树莓派（iPhone和Android都内置了PPTP和L2TP客户端），这样移动设备将以树莓派为路由访问网站，通过一些设置我们可以让树莓派提供科学上网服务。</p>
 
-<p>关于PPTP和L2TP VPN设置和安装可以参考： <a href="http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">http://hugozhu.myalert.info/<sup>2013</sup>&frasl;<sub>03</sub>/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</a></p>
+<p>关于PPTP和L2TP VPN设置和安装可以参考： <a href="http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</a></p>
 
 <p>但在树莓派上安装L2TP时不能直接<code>apt-get install openswan</code>，需要手动下载来安装，原因是因为最新的版本在协议上有些不兼容：</p>
 
@@ -235,7 +235,7 @@ server=127.0.0.1#1053
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -321,7 +321,7 @@ server=127.0.0.1#1053
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

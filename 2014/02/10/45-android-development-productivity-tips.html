@@ -110,14 +110,14 @@
 
 <div class="row">
   <div class="span8">
-    <h1><a style="display: block;" name="查看日志-adb-logcat" href="#查看日志-adb-logcat"></a>查看日志 adb logcat</h1>
+    <h1>查看日志 adb logcat</h1>
 
 <p>下面命令将只显示错误日志，和所有Tag＝mytag的调试日志，-C 会用不同颜色区分不同级别的日志，但只有Android 4.3以后才支持。</p>
 
 <pre><code>adb logcat [-C] *:E &lt;mytag&gt;:D
 </code></pre>
 
-<h1><a style="display: block;" name="远程调试-adb-over-tcp" href="#远程调试-adb-over-tcp"></a>远程调试 adb over TCP</h1>
+<h1>远程调试 adb over TCP</h1>
 
 <p>首先在手机或Pad上执行以下命令（要求root）</p>
 
@@ -143,7 +143,7 @@ adb shell
 <pre><code>gradle installDebug &amp;&amp; adb shell am start -n com.laiwang.protocol.android/.MainActivity
 </code></pre>
 
-<h1><a style="display: block;" name="over" href="#over"></a>Over</h1>
+<h1>Over</h1>
 
     <hr>
     <div class="pagination">
@@ -172,7 +172,7 @@ adb shell
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -258,7 +258,7 @@ adb shell
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

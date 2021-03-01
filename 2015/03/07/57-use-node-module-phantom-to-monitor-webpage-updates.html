@@ -147,27 +147,27 @@ sudo cp -R * /usr/local/
 <pre><code>var phantom = require('phantom');
 
 phantom.create(function (ph) {
-    ph.createPage(function (page) {
-        page.open('http://8.wacai.com/list/fund', function(status) {
-            if (status!='success') {
-                console.log('network error');
-            } else {
-                // page.includeJs(&quot;http://code.jquery.com/jquery-1.11.2.min.js&quot;, function() {
-                    var data = page.evaluate(function(){
-                        var str = &quot;&quot;;
-                        $(&quot;.fundItem&quot;).each(function(index) {
-                            txt = $(this).text().trim().replace(/\s+/g,&quot; &quot;);
-                            str = str + &quot;\n&quot;+ index + &quot; : &quot; + txt;
-                        })
-                        return str;
-                    }, function(result) {
-                        console.log(result);
-                        ph.exit();
-                    });
-                // });
-            }
-        });     
-    });
+	ph.createPage(function (page) {
+		page.open('http://8.wacai.com/list/fund', function(status) {
+			if (status!='success') {
+				console.log('network error');
+			} else {
+				// page.includeJs(&quot;http://code.jquery.com/jquery-1.11.2.min.js&quot;, function() {
+					var data = page.evaluate(function(){
+						var str = &quot;&quot;;
+						$(&quot;.fundItem&quot;).each(function(index) {
+							txt = $(this).text().trim().replace(/\s+/g,&quot; &quot;);
+							str = str + &quot;\n&quot;+ index + &quot; : &quot; + txt;
+						})
+						return str;
+					}, function(result) {
+						console.log(result);
+						ph.exit();
+					});
+				// });
+			}
+		});		
+	});
 });
 </code></pre>
 
@@ -208,33 +208,33 @@ $last = @file_get_contents($file);
 
 $funds = array();
 foreach ($output as $i=&gt;$line) {
-    if (empty($line)) {
-        continue;
-    }
-    if (strpos($line, &quot;立即申购 本息保障&quot;) !== false) {
-        $arr = explode(&quot; &quot;, $line);
-        if ($arr[2] == &quot;新手专享&quot;) {
-            continue;
-        }
-        $fund = array(
-            'index'=&gt;$i,
-            'name'=&gt;$arr[2],
-            'ratio'=&gt;$arr[4],
-            'days'=&gt;$arr[8],
-        );
-        $funds[] = $fund;
-    } else {
-    }
+	if (empty($line)) {
+		continue;
+	}
+	if (strpos($line, &quot;立即申购 本息保障&quot;) !== false) {
+		$arr = explode(&quot; &quot;, $line);
+		if ($arr[2] == &quot;新手专享&quot;) {
+			continue;
+		}
+		$fund = array(
+			'index'=&gt;$i,
+			'name'=&gt;$arr[2],
+			'ratio'=&gt;$arr[4],
+			'days'=&gt;$arr[8],
+		);
+		$funds[] = $fund;
+	} else {
+	}
 }
 
 $all = json_encode($funds,JSON_UNESCAPED_UNICODE);
 
 if ($last != $all) {
-    foreach ($funds as $fund) {
-        $msg =  $output[$fund['index']];
-        exec(&quot;echo 'msg 树莓派通知 $msg' | nc localhost 17777&quot;);
-    }
-    file_put_contents($file, $all);
+	foreach ($funds as $fund) {
+		$msg =  $output[$fund['index']];
+		exec(&quot;echo 'msg 树莓派通知 $msg' | nc localhost 17777&quot;);
+	}
+	file_put_contents($file, $all);
 }
 </code></pre>
 
@@ -271,7 +271,7 @@ if ($last != $all) {
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -357,7 +357,7 @@ if ($last != $all) {
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

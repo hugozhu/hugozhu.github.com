@@ -203,14 +203,12 @@ iface wlan0 inet static
 <h2 id="toc_3">设置hostapd</h2>
 
 <ol>
-<li>修改<code>/etc/default/hostapd</code>，最后增加下一行：</li>
-</ol>
+<li><p>修改<code>/etc/default/hostapd</code>，最后增加下一行：</p>
 
 <pre><code>DAEMON_CONF=&quot;/etc/hostapd/hostapd.conf&quot;
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>新增文件<code>/etc/hostapd/hostapd.conf</code></li>
+<li><p>新增文件<code>/etc/hostapd/hostapd.conf</code></p></li>
 </ol>
 
 <p>RT5370芯片的按以下设置：</p>
@@ -340,7 +338,7 @@ cd /home/pi/startproject/atcui
 python manage.py runserver 0.0.0.0:80 &amp;
 </code></pre>
 
-<p>重新启动树莓派后，大约30s后，可以用iPhone连上<code>Raspberry AP</code>，然后用Safari打开http://192.168.3.1 你就可以可以看弱网模拟系统的控制面板了。</p>
+<p>重新启动树莓派后，大约30s后，可以用iPhone连上<code>Raspberry AP</code>，然后用Safari打开<a href="http://192.168.3.1">http://192.168.3.1</a> 你就可以可以看弱网模拟系统的控制面板了。</p>
 
 <h2 id="toc_8">其它设置</h2>
 
@@ -385,7 +383,7 @@ options 8192cu rtw_power_mgnt=0
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -471,7 +469,7 @@ options 8192cu rtw_power_mgnt=0
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

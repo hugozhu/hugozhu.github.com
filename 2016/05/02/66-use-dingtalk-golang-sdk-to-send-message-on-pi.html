@@ -123,8 +123,7 @@
 </ul>
 </nav></p>
 
-<p><img src="http://static.dingtalk.com/media/lALOAQ6nfSvM5Q_229_43.png" alt="image" />
-</p>
+<p><img src="http://static.dingtalk.com/media/lALOAQ6nfSvM5Q_229_43.png" alt="image" /></p>
 
 <p>钉钉是阿里巴巴专为中小企业和团队打造的沟通、协同的多端平台，钉钉开放平台旨在为企业提供更为丰富的办公协同解决方案。通过钉钉开放平台，企业或第三方合作伙伴可以帮助企业快速、低成本的实现高质量的移动微应用，实现生产、管理、协作、运营的移动化。</p>
 
@@ -163,18 +162,18 @@ go get github.com/hugozhu/godingtalk
 <pre><code>package main
 
 import (
-    &quot;github.com/hugozhu/godingtalk&quot;
-    &quot;log&quot;
-    &quot;os&quot;
+	&quot;github.com/hugozhu/godingtalk&quot;
+	&quot;log&quot;
+	&quot;os&quot;
 )
 
 func main() {
-    c := godingtalk.NewDingTalkClient(os.Getenv(&quot;corpid&quot;), os.Getenv(&quot;corpsecret&quot;))
-    c.RefreshAccessToken()
-    err := c.SendAppMessage(os.Args[1], os.Args[2], os.Args[3])
-    if err != nil {
-        log.Println(err)
-    }
+	c := godingtalk.NewDingTalkClient(os.Getenv(&quot;corpid&quot;), os.Getenv(&quot;corpsecret&quot;))
+	c.RefreshAccessToken()
+	err := c.SendAppMessage(os.Args[1], os.Args[2], os.Args[3])
+	if err != nil {
+		log.Println(err)
+	}
 }
 </code></pre>
 
@@ -235,7 +234,7 @@ timeout 10 ~/bin/push &lt;agentid&gt; &quot;@all&quot; &quot;$1&quot;
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -321,7 +320,7 @@ timeout 10 ~/bin/push &lt;agentid&gt; &quot;@all&quot; &quot;$1&quot;
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

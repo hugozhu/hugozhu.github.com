@@ -110,13 +110,13 @@
 
 <div class="row">
   <div class="span8">
-    <h2><a style="display: block;" name="overview" href="#overview"></a>Overview</h2>
+    <h2>Overview</h2>
 
 <p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。</p>
 
-<h2><a style="display: block;" name="try-catch-finally" href="#try-catch-finally"></a>try-catch-finally</h2>
+<h2>try-catch-finally</h2>
 
-<p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如<a href="http://findbugs.sourceforge.net"><strong>FindBugs</strong></a>可以帮助发现此类问题。</p>
+<p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 -- 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如<a href="http://findbugs.sourceforge.net"><strong>FindBugs</strong></a>可以帮助发现此类问题。</p>
 
 <p>首先我们来看一段文件操作代码：</p>
 
@@ -251,7 +251,7 @@ end
 
 <p>终于Java 7通过自动资源管理较好的解决了这个问题，try()代码块内的变量在离开时候会自动调用AutoCloseable接口必须实现的close()方法。java.lang.AutoCloseable接口是在Java 7内新增的。</p>
 
-<h2><a style="display: block;" name="独占资源和并发访问" href="#独占资源和并发访问"></a>独占资源和并发访问</h2>
+<h2>独占资源和并发访问</h2>
 
 <h3>锁</h3>
 
@@ -261,11 +261,11 @@ end
 
 <h3>连接池</h3>
 
-<h2><a style="display: block;" name="作业" href="#作业"></a>作业</h2>
+<h2>作业</h2>
 
 <p>TODO：</p>
 
-<h2><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h2>
+<h2>参考链接</h2>
 
 <ol>
 <li><a href="http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html">Better Resource Management with Java SE 7: Beyond Syntactic Sugar</a></li>
@@ -283,7 +283,7 @@ end
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/28/logging-in-java.html" title="Java程序的日志">Next &rarr;</a></li>
+            <li class="next"><a href="/2013/02/28/the-evolution-of-online-advertsing-system.html" title="在线广告系统架构变迁">Next &rarr;</a></li>
           
           
         </ul>
@@ -298,7 +298,7 @@ end
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -388,7 +388,7 @@ end
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
