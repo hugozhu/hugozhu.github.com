@@ -110,11 +110,11 @@
 
 <div class="row">
   <div class="span8">
-    <h1>背景介绍</h1>
+    <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
 
 <p><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">把网站托管在树莓派上</a>后如果家里停电或是宽带故障，会造成网站中断。本文提供一个免费的解决方案（前提是你需要有自己的一个域名，并由DNSPod解析）</p>
 
-<h1>DNSPod</h1>
+<h1><a style="display: block;" name="dnspod" href="#dnspod"></a>DNSPod</h1>
 
 <p>首先需要在DNSPod里设置好需要failover的域名CNAME：比如<code>hugozhu.myalert.info</code></p>
 
@@ -132,114 +132,114 @@
 <pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
 </code></pre>
 
-<h1>Google App Engine</h1>
+<h1><a style="display: block;" name="google-app-engine" href="#google-app-engine"></a>Google App Engine</h1>
 
-<h2>切换DNS脚本</h2>
+<h2><a style="display: block;" name="切换dns脚本" href="#切换dns脚本"></a>切换DNS脚本</h2>
 
 <pre><code>package dnspod
 
 import (
-	&quot;io/ioutil&quot;
-	&quot;net/http&quot;
-	&quot;net/url&quot;
-	&quot;strings&quot;
+    &quot;io/ioutil&quot;
+    &quot;net/http&quot;
+    &quot;net/url&quot;
+    &quot;strings&quot;
 )
 
 const (
-	login_email    = &quot;&lt;your_login_email&gt;&quot;
-	login_password = &quot;&lt;your_login_password&gt;&quot;
-	format         = &quot;json&quot;
-	domain_id      = &quot;&lt;domain_id&gt;&quot;
-	record_id      = &quot;&lt;record_id&gt;&quot;
-	sub_domain     = &quot;&lt;your_subdomain&gt;&quot;
-	record_type    = &quot;CNAME&quot;
-	record_line    = &quot;默认&quot;
-	ttl            = &quot;600&quot;
+    login_email    = &quot;&lt;your_login_email&gt;&quot;
+    login_password = &quot;&lt;your_login_password&gt;&quot;
+    format         = &quot;json&quot;
+    domain_id      = &quot;&lt;domain_id&gt;&quot;
+    record_id      = &quot;&lt;record_id&gt;&quot;
+    sub_domain     = &quot;&lt;your_subdomain&gt;&quot;
+    record_type    = &quot;CNAME&quot;
+    record_line    = &quot;默认&quot;
+    ttl            = &quot;600&quot;
 )
 
 func Update(client *http.Client, cname string) string {
-	body := url.Values{
-		&quot;login_email&quot;:    {login_email},
-		&quot;login_password&quot;: {login_password},
-		&quot;format&quot;:         {format},
-		&quot;domain_id&quot;:      {domain_id},
-		&quot;record_id&quot;:      {record_id},
-		&quot;sub_domain&quot;:     {sub_domain},
-		&quot;record_type&quot;:    {record_type},
-		&quot;record_line&quot;:    {record_line},
-		&quot;value&quot;:          {cname},
-		&quot;ttl&quot;:            {ttl},
-	}
-	req, err := http.NewRequest(&quot;POST&quot;, &quot;https://dnsapi.cn/Record.Modify&quot;, strings.NewReader(body.Encode()))
-	req.Header.Set(&quot;Accept&quot;, &quot;text/json&quot;)
-	req.Header.Set(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;)
-	resp, err := client.Do(req)
-	if err != nil {
-		return err.Error()
-	}
-	defer resp.Body.Close()
-	bytes, _ := ioutil.ReadAll(resp.Body)
-	return string(bytes)
+    body := url.Values{
+        &quot;login_email&quot;:    {login_email},
+        &quot;login_password&quot;: {login_password},
+        &quot;format&quot;:         {format},
+        &quot;domain_id&quot;:      {domain_id},
+        &quot;record_id&quot;:      {record_id},
+        &quot;sub_domain&quot;:     {sub_domain},
+        &quot;record_type&quot;:    {record_type},
+        &quot;record_line&quot;:    {record_line},
+        &quot;value&quot;:          {cname},
+        &quot;ttl&quot;:            {ttl},
+    }
+    req, err := http.NewRequest(&quot;POST&quot;, &quot;https://dnsapi.cn/Record.Modify&quot;, strings.NewReader(body.Encode()))
+    req.Header.Set(&quot;Accept&quot;, &quot;text/json&quot;)
+    req.Header.Set(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;)
+    resp, err := client.Do(req)
+    if err != nil {
+        return err.Error()
+    }
+    defer resp.Body.Close()
+    bytes, _ := ioutil.ReadAll(resp.Body)
+    return string(bytes)
 }
 </code></pre>
 
-<h2>检测接口</h2>
+<h2><a style="display: block;" name="检测接口" href="#检测接口"></a>检测接口</h2>
 
 <p>部署一个web应用到Google App Engine上，该应用接受树莓派上的一个URL（注意这里不应该用需failver的域名），并请求该域名以检查网站是否正常。这里也可以使用监控宝来监控，但只有付费专业版才支持出错后回调URL。</p>
 
 <pre><code>func ping(w http.ResponseWriter, r *http.Request) {
-	url := r.FormValue(&quot;url&quot;)
-	c := appengine.NewContext(r)
-	client := urlfetch.Client(c)
-	ok, body := url_ok(client, url)
+    url := r.FormValue(&quot;url&quot;)
+    c := appengine.NewContext(r)
+    client := urlfetch.Client(c)
+    ok, body := url_ok(client, url)
 
-	item, _ := memcache.Get(c, &quot;site_fails&quot;)
+    item, _ := memcache.Get(c, &quot;site_fails&quot;)
 
-	if ok {
-		if item != nil {
-			//switch back to pi
-			dnspod.Update(client, &quot;pi.myalert.info.&quot;)
-			memcache.Delete(c, &quot;site_fails&quot;)
-		}
-	} else {
-		if item != nil {
-			//previously failed, switch to github
-			dnspod.Update(client, &quot;hugozhu.github.com.&quot;)
-			value, _ := strconv.Atoi(string(item.Value))
-			value++
-			item.Value = []byte(strconv.Itoa(value))
-			memcache.Set(c, item)
-		} else {
-			//first time failed
-			item = &amp;memcache.Item{
-				Key:   &quot;site_fails&quot;,
-				Value: []byte(&quot;0&quot;),
-			}
-			memcache.Set(c, item)
-		}
-	}
+    if ok {
+        if item != nil {
+            //switch back to pi
+            dnspod.Update(client, &quot;pi.myalert.info.&quot;)
+            memcache.Delete(c, &quot;site_fails&quot;)
+        }
+    } else {
+        if item != nil {
+            //previously failed, switch to github
+            dnspod.Update(client, &quot;hugozhu.github.com.&quot;)
+            value, _ := strconv.Atoi(string(item.Value))
+            value++
+            item.Value = []byte(strconv.Itoa(value))
+            memcache.Set(c, item)
+        } else {
+            //first time failed
+            item = &amp;memcache.Item{
+                Key:   &quot;site_fails&quot;,
+                Value: []byte(&quot;0&quot;),
+            }
+            memcache.Set(c, item)
+        }
+    }
 
-	w.Header().Set(&quot;Content-type&quot;, &quot;text/plain&quot;)
-	fmt.Fprintf(w, &quot;%s&quot;, body)
+    w.Header().Set(&quot;Content-type&quot;, &quot;text/plain&quot;)
+    fmt.Fprintf(w, &quot;%s&quot;, body)
 }
 
 func url_ok(client *http.Client, url string) (bool, string) {
-	resp, err := client.Get(url)
-	ok := false
-	body := &quot;&quot;
-	if err != nil {
-		body = err.Error()
-	} else {
-		bytes, _ := ioutil.ReadAll(resp.Body)
-		body = string(bytes)
-		resp.Body.Close()
-		ok = resp.StatusCode == 200
-	}
-	return ok, body
+    resp, err := client.Get(url)
+    ok := false
+    body := &quot;&quot;
+    if err != nil {
+        body = err.Error()
+    } else {
+        bytes, _ := ioutil.ReadAll(resp.Body)
+        body = string(bytes)
+        resp.Body.Close()
+        ok = resp.StatusCode == 200
+    }
+    return ok, body
 }
 </code></pre>
 
-<h2>定时任务</h2>
+<h2><a style="display: block;" name="定时任务" href="#定时任务"></a>定时任务</h2>
 
 <p>在gae项目里增加一个文件：<a href="https://github.com/hugozhu/gae-rpi-webapp/blob/master/cron.yaml">cron.yaml</a>，内容如下，这样gae会自动每隔15分钟检查一次，如果连续发现两次不可用，就会切换到Github，恢复后则会切换回来。</p>
 
@@ -249,7 +249,7 @@ func url_ok(client *http.Client, url string) (bool, string) {
   schedule: every 15 minutes
 </code></pre>
 
-<h1>参考链接</h1>
+<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
 
 <ol>
 <li><a href="http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html">http://hugozhu.myalert.info/2013/02/27/在Pi和Github上搭建自己的个人博客.html</a></li>
@@ -283,7 +283,7 @@ func url_ok(client *http.Client, url string) (bool, string) {
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -373,7 +373,7 @@ func url_ok(client *http.Client, url string) (bool, string) {
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

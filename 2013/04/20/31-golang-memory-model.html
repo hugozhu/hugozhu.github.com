@@ -152,16 +152,16 @@
 <pre><code>package main
 
 import (
-	&quot;log&quot;
+    &quot;log&quot;
 )
 
 var a, b, c int
 
 func main() {
-	a = 1
-	b = 2
-	c = a + 2
-	log.Println(a, b, c)
+    a = 1
+    b = 2
+    c = a + 2
+    log.Println(a, b, c)
 }
 </code></pre>
 
@@ -170,20 +170,20 @@ func main() {
 <pre><code>package main
 
 import (
-	&quot;log&quot;
+    &quot;log&quot;
 )
 
 var a, b, c int
 
 func main() {
-	go func() {
-		a = 1
-		b = 2
-	}()
-	go func() {
-		c = a + 2
-	}()
-	log.Println(a, b, c)
+    go func() {
+        a = 1
+        b = 2
+    }()
+    go func() {
+        c = a + 2
+    }()
+    log.Println(a, b, c)
 }
 </code></pre>
 
@@ -211,7 +211,7 @@ func main() {
 
 <p><strong>要保证并行执行体对共享变量的顺序访问方法就是用锁</strong>。Java和Go在这点上是一致的。</p>
 
-<p>以下是具体的可被利用的Go语言的happens-before规则，从本质上来讲，happens-before规则确定了CPU缓冲和主存的同步时间点（通过<a href="http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html">内存屏障</a>等指令），从而使得对变量的读写顺序可被确定--也就是我们通常说的“同步”。</p>
+<p>以下是具体的可被利用的Go语言的happens-before规则，从本质上来讲，happens-before规则确定了CPU缓冲和主存的同步时间点（通过<a href="http://hugozhu.myalert.info/2013/03/28/22-memory-barriers-or-fences.html">内存屏障</a>等指令），从而使得对变量的读写顺序可被确定&ndash;也就是我们通常说的“同步”。</p>
 
 <h1 id="toc_4">同步方法</h1>
 
@@ -225,55 +225,55 @@ func main() {
 <h2 id="toc_6">创建Goroutine</h2>
 
 <ol>
-<li><p><strong>go语句创建新的goroutine happens-before 该goroutine执行</strong>（这个应该很容易理解）</p>
+<li><strong>go语句创建新的goroutine happens-before 该goroutine执行</strong>（这个应该很容易理解）</li>
+</ol>
 
 <pre><code>package main
 
 import (
-	&quot;log&quot;
-	&quot;time&quot;
+    &quot;log&quot;
+    &quot;time&quot;
 )
 
 var a, b, c int
 
 func main() {
-	a = 1
-	b = 2
-	go func() {
-		c = a + 2
-		log.Println(a, b, c)
-	}()
-	time.Sleep(1 * time.Second)
+    a = 1
+    b = 2
+    go func() {
+        c = a + 2
+        log.Println(a, b, c)
+    }()
+    time.Sleep(1 * time.Second)
 }
-</code></pre></li>
-</ol>
+</code></pre>
 
 <p>利用这条happens-before，我们可以确定<code>c=a+2</code>是happens-after<code>a=1和b=2</code>，所以结果输出是可以确定的<code>1 2 3</code>，但如果是下面这样的代码，输出就不确定了，有可能是<code>1 2 3</code>或<code>0 0 2</code></p>
 
 <pre><code>func main() {
-	go func() {
-		c = a + 2
-		log.Println(a, b, c)
-	}()
-	a = 1
-	b = 2
-	time.Sleep(1 * time.Second)
+    go func() {
+        c = a + 2
+        log.Println(a, b, c)
+    }()
+    a = 1
+    b = 2
+    time.Sleep(1 * time.Second)
 }
 </code></pre>
 
 <h2 id="toc_7">销毁Goroutine</h2>
 
 <ol>
-<li><p><strong>Goroutine的退出并不保证happens-before任何事件</strong>。</p>
+<li><strong>Goroutine的退出并不保证happens-before任何事件</strong>。</li>
+</ol>
 
 <pre><code>var a string
 
 func hello() {
-	go func() { a = &quot;hello&quot; }()
-	print(a)
+    go func() { a = &quot;hello&quot; }()
+    print(a)
 }
-</code></pre></li>
-</ol>
+</code></pre>
 
 <p>上面代码因为<code>a=&quot;hello&quot;</code> 没有使用同步事件，并不能保证这个赋值被主goroutine可见。事实上，极度优化的Go编译器甚至可以完全删除这行代码<code>go func() { a = &quot;hello&quot; }()</code>。</p>
 
@@ -286,24 +286,23 @@ func hello() {
 <ol>
 <li><strong>对一个Channel的发送操作(send) happens-before 相应Channel的接收操作完成</strong></li>
 <li><strong>关闭一个Channel happens-before 从该Channel接收到最后的返回值0</strong></li>
-
-<li><p><strong>不带缓冲的Channel的接收操作（receive） happens-before 相应Channel的发送操作完成</strong></p>
+<li><strong>不带缓冲的Channel的接收操作（receive） happens-before 相应Channel的发送操作完成</strong></li>
+</ol>
 
 <pre><code>var c = make(chan int, 10)
 var a string
 
 func f() {
-	a = &quot;hello, world&quot;
-	c &lt;- 0
+    a = &quot;hello, world&quot;
+    c &lt;- 0
 }
 
 func main() {
-	go f()
-	&lt;-c
-	print(a)
+    go f()
+    &lt;-c
+    print(a)
 }
-</code></pre></li>
-</ol>
+</code></pre>
 
 <p>上述代码可以确保输出<code>hello, world</code>，因为<code>a = &quot;hello, world&quot;</code> happens-before <code>c &lt;- 0</code>，<code>print(a)</code> happens-after <code>&lt;-c</code>， 根据上面的规则1）以及happens-before的可传递性，<code>a = &quot;hello, world&quot;</code> happens-before<code>print(a)</code>。</p>
 
@@ -313,14 +312,14 @@ func main() {
 var a string
 
 func f() {
-	a = &quot;hello, world&quot;
-	&lt;-c
+    a = &quot;hello, world&quot;
+    &lt;-c
 }
 
 func main() {
-	go f()
-	c &lt;- 0
-	print(a)
+    go f()
+    c &lt;- 0
+    print(a)
 }
 </code></pre>
 
@@ -338,24 +337,24 @@ func main() {
 <p>其happens-before规则和Java的也类似：</p>
 
 <ol>
-<li><p><strong>任何sync.Mutex或sync.RWMutex 变量（l），定义 n &lt; m， 第n次 <code>l.Unlock()</code> happens-before 第m次<code>l.lock()</code>调用返回。</strong></p>
+<li><strong>任何sync.Mutex或sync.RWMutex 变量（l），定义 n &lt; m， 第n次 <code>l.Unlock()</code> happens-before 第m次<code>l.lock()</code>调用返回。</strong></li>
+</ol>
 
 <pre><code>var l sync.Mutex
 var a string
 
 func f() {
-	a = &quot;hello, world&quot;
-	l.Unlock()
+    a = &quot;hello, world&quot;
+    l.Unlock()
 }
 
 func main() {
-	l.Lock()
-	go f()
-	l.Lock()
-	print(a)
+    l.Lock()
+    go f()
+    l.Lock()
+    print(a)
 }
-</code></pre></li>
-</ol>
+</code></pre>
 
 <p><code>a = &quot;hello, world&quot;</code> happens-before <code>l.Unlock()</code> happens-before 第二个 <code>l.Lock()</code> happens-before <code>print(a)</code></p>
 
@@ -364,26 +363,26 @@ func main() {
 <p><code>sync</code>包还提供了一个安全的初始化工具Once。还记得Java的Singleton设计模式，double-check，甚至triple-check的各种单例初始化方法吗？Go则提供了一个标准的方法。</p>
 
 <ol>
-<li><p><strong><code>once.Do(f)</code>中的<code>f()</code> happens-before 任何多个once.Do(f)调用的返回，且f()有且只有一次调用。</strong></p>
+<li><strong><code>once.Do(f)</code>中的<code>f()</code> happens-before 任何多个once.Do(f)调用的返回，且f()有且只有一次调用。</strong></li>
+</ol>
 
 <pre><code>var a string
 var once sync.Once
 
 func setup() {
-	a = &quot;hello, world&quot;
+    a = &quot;hello, world&quot;
 }
 
 func doprint() {
-	once.Do(setup)
-	print(a)
+    once.Do(setup)
+    print(a)
 }
 
 func twoprint() {
-	go doprint()
-	go doprint()
+    go doprint()
+    go doprint()
 }
-</code></pre></li>
-</ol>
+</code></pre>
 
 <p>上面的代码虽然调用两次<code>doprint()</code>，但实际上<code>setup</code>只会执行一次，并且并发的<code>once.Do(setup)</code>都会等待<code>setup</code>返回后再继续执行。</p>
 
@@ -423,7 +422,7 @@ func twoprint() {
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -513,7 +512,7 @@ func twoprint() {
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

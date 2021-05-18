@@ -148,13 +148,15 @@
 Linux下可以用<code>fdisk</code>来解决，我的方法是把该U盘插到已经正常启动的树莓派的USB口上，正常识别后，执行<code>sudo fdisk /dev/sda</code></p>
 
 <ol>
-<li><p>按<code>p</code>后打印出分区表：</p>
+<li>按<code>p</code>后打印出分区表：</li>
+</ol>
 
 <pre><code>/dev/sda1            8192      122879       57344    c  W95 FAT32 (LBA)
 /dev/sda2          122880     6399999     3138560   83  Linux
-</code></pre></li>
+</code></pre>
 
-<li><p>记住/dev/sda2的起始点<code>122880'，然后按</code>d<code>，删除掉二个分区，接着按</code>n<code>重新创建一个分区，起始点就设置为</code>122880`，结束点可以设置为最大</p></li>
+<ol>
+<li><p>记住/dev/sda2的起始点<code>122880'，然后按</code>d<code>，删除掉二个分区，接着按</code>n<code>重新创建一个分区，起始点就设置为</code>122880，结束点可以设置为最大</p></li>
 
 <li><p>最后按<code>w</code>保存新的分区表</p></li>
 </ol>
@@ -194,7 +196,7 @@ Linux下可以用<code>fdisk</code>来解决，我的方法是把该U盘插到�
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -280,7 +282,7 @@ Linux下可以用<code>fdisk</code>来解决，我的方法是把该U盘插到�
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

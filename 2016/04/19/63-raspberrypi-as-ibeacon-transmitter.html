@@ -137,11 +137,11 @@
 <p>通过以下命令可以确认蓝牙芯片工作正常</p>
 
 <pre><code>hugo@raspberrypi3:~ $ sudo hciconfig
-hci0:	Type: BR/EDR  Bus: UART
-	BD Address: B8:27:EB:BF:E0:C5  ACL MTU: 1021:8  SCO MTU: 64:1
-	UP RUNNING 
-	RX bytes:3841 acl:0 sco:0 events:239 errors:0
-	TX bytes:5213 acl:0 sco:0 commands:237 errors:0
+hci0:   Type: BR/EDR  Bus: UART
+    BD Address: B8:27:EB:BF:E0:C5  ACL MTU: 1021:8  SCO MTU: 64:1
+    UP RUNNING 
+    RX bytes:3841 acl:0 sco:0 events:239 errors:0
+    TX bytes:5213 acl:0 sco:0 commands:237 errors:0
 </code></pre>
 
 <h1 id="toc_1">脚本</h1>
@@ -193,11 +193,11 @@ s=uuid.uuid4().hex
 sys.stdout.write(&quot;UUID:\t\t&quot;+s+&quot;\n&quot;)
 sys.stdout.write(&quot;Proximity UUID:\t&quot;+s[0:8]+'-'+s[8:12]+'-'+s[12:16]+'-'+s[16:20]+'-'+s[20:]+&quot;\n&quot;)
 sys.stdout.write(&quot;Cmd:\t\thcitool -i hci0 cmd 0x08 0x0008 1E 02 01 1A 1A FF 4C 00 02 15 &quot;+
-	s[0:2]  +' '+s[2:4]  +' '+s[4:6]  +' '+s[6:8]  +' '+
-	s[8:10] +' '+s[10:12]+' '+s[12:14]+' '+s[14:16]+' '+
-	s[16:18]+' '+s[18:20]+' '+s[20:22]+' '+s[22:24]+' '+
-	s[24:26]+' '+s[26:28]+' '+s[28:30]+' '+s[30:32]+' '+
-	&quot;00 00 00 00 C8 00\n&quot;)
+    s[0:2]  +' '+s[2:4]  +' '+s[4:6]  +' '+s[6:8]  +' '+
+    s[8:10] +' '+s[10:12]+' '+s[12:14]+' '+s[14:16]+' '+
+    s[16:18]+' '+s[18:20]+' '+s[20:22]+' '+s[22:24]+' '+
+    s[24:26]+' '+s[26:28]+' '+s[28:30]+' '+s[30:32]+' '+
+    &quot;00 00 00 00 C8 00\n&quot;)
 </code></pre>
 
 <h2 id="toc_5">发射信号命令</h2>
@@ -260,7 +260,7 @@ sudo hcitool -i hci0 cmd 0x08 0x0008 1E 02 01 1A 1A FF 4C 00 02 15 f6 bc 15 e0 9
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -350,7 +350,7 @@ sudo hcitool -i hci0 cmd 0x08 0x0008 1E 02 01 1A 1A FF 4C 00 02 15 f6 bc 15 e0 9
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

@@ -112,7 +112,7 @@
   <div class="span8">
     <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
 
-<h1>硬件安装</h1>
+<h1><a style="display: block;" name="硬件安装" href="#硬件安装"></a>硬件安装</h1>
 
 <p>需要以下硬件：</p>
 
@@ -125,7 +125,7 @@
 <li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
 </ol>
 
-<h2>GPIO接口</h2>
+<h2><a style="display: block;" name="gpio接口" href="#gpio接口"></a>GPIO接口</h2>
 
 <p><img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/></p>
 
@@ -135,9 +135,9 @@
 
 <p><img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg"/></p>
 
-<h1>GPIO接口编程</h1>
+<h1><a style="display: block;" name="gpio接口编程" href="#gpio接口编程"></a>GPIO接口编程</h1>
 
-<h2>WiringPi</h2>
+<h2><a style="display: block;" name="wiringpi" href="#wiringpi"></a>WiringPi</h2>
 
 <p>An implementation of most of the Arduino Wiring functions for the Raspberry Pi。
 代码地址在： <a href="https://github.com/wiringPi">https://github.com/wiringPi</a></p>
@@ -146,7 +146,7 @@
 
 <pre><code>git clone https://github.com/WiringPi/WiringPi
 cd WiringPi/wiringPi
-sudo make install	
+sudo make install   
 </code></pre>
 
 <p>让二极管闪一下的示例代码：</p>
@@ -157,24 +157,24 @@ sudo make install
 
 int main (int argc, char* argv[])
 {
-	int pinNumber = 4;
-	if (-1 == wiringPiSetup()) {
-		printf(&quot;failed to setup wiringPi&quot;);
-		return 1;
-	}	
-	pinMode(pinNumber, OUTPUT);
-	digitalWrite(pinNumber, 1);
-	delay(200);
-	digitalWrite(pinNumber, 0);
-	delay(200);
-	return 0;	
+    int pinNumber = 4;
+    if (-1 == wiringPiSetup()) {
+        printf(&quot;failed to setup wiringPi&quot;);
+        return 1;
+    }   
+    pinMode(pinNumber, OUTPUT);
+    digitalWrite(pinNumber, 1);
+    delay(200);
+    digitalWrite(pinNumber, 0);
+    delay(200);
+    return 0;   
 }
 
 </code></pre>
 
 <p>WiringPi也有Python, Perl, PHP, Ruby的接口包装，按<a href="https://github.com/wiringPi">这里</a>，怎么没有Go的呢。。。</p>
 
-<h2>RPi.GPIO</h2>
+<h2><a style="display: block;" name="rpi.gpio" href="#rpi.gpio"></a>RPi.GPIO</h2>
 
 <p>这是GPIO的Python库，地址在：<a href="https://pypi.python.org/pypi/RPi.GPIO">https://pypi.python.org/pypi/RPi.GPIO</a>
 这里建议用python2，原因是web.py还不支持python 3 &hellip;</p>
@@ -205,7 +205,7 @@ while True:
     
 </code></pre>
 
-<h1>Webiopi</h1>
+<h1><a style="display: block;" name="webiopi" href="#webiopi"></a>Webiopi</h1>
 
 <p>项目地址： <a href="http://code.google.com/p/webiopi/">http://code.google.com/p/webiopi/</a> 这是一个使用RESTful API控制Pi的GPIO接口，文档丰富，使用起来非常简单。</p>
 
@@ -213,7 +213,7 @@ while True:
 
 <p><img src="http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png" width="630"/></p>
 
-<h1>完成的代码</h1>
+<h1><a style="display: block;" name="完成的代码" href="#完成的代码"></a>完成的代码</h1>
 
 <p>最后用一小段代码来实现最初的想法，这段代码可以较实时的处理QPS&lt;=3的网站流量，如果流量较大则会滞后反应。。。</p>
 
@@ -259,7 +259,7 @@ done
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -345,7 +345,7 @@ done
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

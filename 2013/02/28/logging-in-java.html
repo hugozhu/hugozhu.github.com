@@ -110,7 +110,7 @@
 
 <div class="row">
   <div class="span8">
-    <h2>Overview</h2>
+    <h2><a style="display: block;" name="overview" href="#overview"></a>Overview</h2>
 
 <p>一个在生产环境里运行的程序如果没有日志是很让维护者提心吊胆的，有太多杂乱又无意义的日志也是令人伤神。程序出现问题时候，从日志里如果发现不了问题可能的原因是很令人受挫的。本文想讨论的是如何在Java程序里写好日志。大多数的Web服务器（如Apache，Nginx）都有access日志和error日志，分别记录在不同的文件内；我们使用的服务器操作系统Linux有Syslog日志, /var/log目录下也有很多基础应用和服务的日志文件；桌面Windows有事件查看器, Mac有Console应用可以查看和管理日志；这些成熟的系统及工具方法都值得我们学习并在自己的项目中应用。</p>
 
@@ -122,7 +122,7 @@
 <li>对系统性能的影响尽量小；</li>
 </ol>
 
-<h2>日志规范</h2>
+<h2><a style="display: block;" name="日志规范" href="#日志规范"></a>日志规范</h2>
 
 <p>程序框架应该提供统一的日志记录接口，日志格式也需要有一定的规范，方便利用日志工具来分析日志。
 首先我们有必要了解一下Linux普遍使用的<a href="http://en.wikipedia.org/wiki/Syslog">Syslog</a>标准协议，协议规定日志中应包含产生日志的模块(Facility)，严重性（Severity Level），时间，主机名或IP，进程名，进程ID和日志内容，根据模块和严重性可以配置相应的动作：是否需要记录，日志存储路径（文件或网络）。</p>
@@ -132,9 +132,9 @@
 <table>
 <thead>
 <tr>
-<th><strong>模块ID</strong></th>
-<th><strong>关键词</strong></th>
-<th><strong>描述</strong></th>
+<td><strong>模块ID</strong></td>
+<td><strong>关键词</strong></td>
+<td><strong>描述</strong></td>
 </tr>
 </thead>
 
@@ -188,10 +188,10 @@
 <table>
 <thead>
 <tr>
-<th><strong>代码</strong></th>
-<th><strong>严重程度</strong></th>
-<th><strong>关键词</strong></th>
-<th><strong>描述</strong></th>
+<td><strong>代码</strong></td>
+<td><strong>严重程度</strong></td>
+<td><strong>关键词</strong></td>
+<td><strong>描述</strong></td>
 </tr>
 </thead>
 
@@ -256,7 +256,7 @@
 
 <p>在你的Java程序里日志也可以参考Syslog的设计，根据业务对程序的模块和日志级别做一定的规划和设计。</p>
 
-<h2>Java日志框架</h2>
+<h2><a style="display: block;" name="java日志框架" href="#java日志框架"></a>Java日志框架</h2>
 
 <p>Java的日志框架太多了。。。</p>
 
@@ -270,7 +270,7 @@
 
 <p>选项太多了的后果就是选择困难症，我的看法是没有最好的，只有最合适的。在比较关注性能的地方，选择Logback或自己实现高性能Logging API可能更合适；在已经使用了Log4j的项目中，如果没有发现问题，继续使用可能是更合适的方式；我一般会在项目里选择使用Slf4j, 如果不想有依赖则使用java.util.logging或框架容器已经提供的日志接口。</p>
 
-<h2>Java日志最佳实践</h2>
+<h2><a style="display: block;" name="java日志最佳实践" href="#java日志最佳实践"></a>Java日志最佳实践</h2>
 
 <h3>定义日志变量</h3>
 
@@ -355,7 +355,7 @@ LOGGER.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
 
 <p>日志中尽量不要包含敏感信息，对于敏感信息如用户身份证号码，密码可以加密后存储；以防止日志文件不慎外泄时保全用户的数据安全；日志通常不允许修改，必要时还可以通过校验位来鉴别日志是否正确。</p>
 
-<h2>日志监控方法</h2>
+<h2><a style="display: block;" name="日志监控方法" href="#日志监控方法"></a>日志监控方法</h2>
 
 <p>错误日志需要设置监控才能及时发现问题，所以在程序里记录日志的时候也需要考虑这点。</p>
 
@@ -373,7 +373,7 @@ LOGGER.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
 </ol></li>
 </ol>
 
-<h2>作业</h2>
+<h2><a style="display: block;" name="作业" href="#作业"></a>作业</h2>
 
 <p>TODO：</p>
 
@@ -412,7 +412,7 @@ LOGGER.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -502,7 +502,7 @@ LOGGER.info(&quot;execution cost : &quot; + (System.currentTime() - startTime) +
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

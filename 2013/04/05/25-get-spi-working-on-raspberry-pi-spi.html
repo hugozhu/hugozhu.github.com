@@ -110,7 +110,7 @@
 
 <div class="row">
   <div class="span8">
-    <h1>什么是SPI</h1>
+    <h1><a style="display: block;" name="什么是spi" href="#什么是spi"></a>什么是SPI</h1>
 
 <p>SPI (Serial Peripheral Interface)，是一种高速，全双工，同步的通信总线协议，基于SPI的设备需要4根线：</p>
 
@@ -126,7 +126,7 @@
 
 <p>通过CS，主设备可以控制和哪个从设备通信。</p>
 
-<h2>Bit Banging</h2>
+<h2><a style="display: block;" name="bit-banging" href="#bit-banging"></a>Bit Banging</h2>
 
 <p>Bit-banging是一种用软件替代专职硬件的串行通信的技术。软件直接对微处理器的管脚的状态进行设置和采样，其功能涵盖诸如：时钟，电平，同步等所有参数。与此不同的是（传统的串行通信技术中），专职硬件诸如 modem、UART 或者 位移寄存器等一般是用来处理这些参数并且提供一个（缓存）的数据接口，软件在这种情况下同信号处理无关。</p>
 
@@ -146,16 +146,16 @@
 <p><img src="http://ww1.sinaimg.cn/small/6bc40342jw1e3f6d4wsjij.jpg"/>
 硬件SPI时钟信号波形</p>
 
-<h1>测试Pi的硬件SPI</h1>
+<h1><a style="display: block;" name="测试pi的硬件spi" href="#测试pi的硬件spi"></a>测试Pi的硬件SPI</h1>
 
-<h2>确认内核支持</h2>
+<h2><a style="display: block;" name="确认内核支持" href="#确认内核支持"></a>确认内核支持</h2>
 
 <pre><code>root@raspberrypi2 ~/projects/spi_test # ls -la /dev/spi*
 crw------- 1 root root 153, 0 Jan  1  1970 /dev/spidev0.0
 crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
 </code></pre>
 
-<h2>测试代码</h2>
+<h2><a style="display: block;" name="测试代码" href="#测试代码"></a>测试代码</h2>
 
 <p>下载 <a href="http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/plain/Documentation/spi/spidev_test.c">spidev_test.c</a> 或拷贝下面的代码：</p>
 
@@ -186,8 +186,8 @@ crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
 
 static void pabort(const char *s)
 {
-	perror(s);
-	abort();
+    perror(s);
+    abort();
 }
 
 static const char *device = &quot;/dev/spidev1.1&quot;;
@@ -198,176 +198,176 @@ static uint16_t delay;
 
 static void transfer(int fd)
 {
-	int ret;
-	uint8_t tx[] = {
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0x40, 0x00, 0x00, 0x00, 0x00, 0x95,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xDE, 0xAD, 0xBE, 0xEF, 0xBA, 0xAD,
-		0xF0, 0x0D,
-	};
-	uint8_t rx[ARRAY_SIZE(tx)] = {0, };
-	struct spi_ioc_transfer tr = {
-		.tx_buf = (unsigned long)tx,
-		.rx_buf = (unsigned long)rx,
-		.len = ARRAY_SIZE(tx),
-		.delay_usecs = delay,
-		.speed_hz = speed,
-		.bits_per_word = bits,
-	};
+    int ret;
+    uint8_t tx[] = {
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0x40, 0x00, 0x00, 0x00, 0x00, 0x95,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xDE, 0xAD, 0xBE, 0xEF, 0xBA, 0xAD,
+        0xF0, 0x0D,
+    };
+    uint8_t rx[ARRAY_SIZE(tx)] = {0, };
+    struct spi_ioc_transfer tr = {
+        .tx_buf = (unsigned long)tx,
+        .rx_buf = (unsigned long)rx,
+        .len = ARRAY_SIZE(tx),
+        .delay_usecs = delay,
+        .speed_hz = speed,
+        .bits_per_word = bits,
+    };
 
-	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &amp;tr);
-	if (ret &lt; 1)
-		pabort(&quot;can't send spi message&quot;);
+    ret = ioctl(fd, SPI_IOC_MESSAGE(1), &amp;tr);
+    if (ret &lt; 1)
+        pabort(&quot;can't send spi message&quot;);
 
-	for (ret = 0; ret &lt; ARRAY_SIZE(tx); ret++) {
-		if (!(ret % 6))
-			puts(&quot;&quot;);
-		printf(&quot;%.2X &quot;, rx[ret]);
-	}
-	puts(&quot;&quot;);
+    for (ret = 0; ret &lt; ARRAY_SIZE(tx); ret++) {
+        if (!(ret % 6))
+            puts(&quot;&quot;);
+        printf(&quot;%.2X &quot;, rx[ret]);
+    }
+    puts(&quot;&quot;);
 }
 
 static void print_usage(const char *prog)
 {
-	printf(&quot;Usage: %s [-DsbdlHOLC3]\n&quot;, prog);
-	puts(&quot;  -D --device   device to use (default /dev/spidev1.1)\n&quot;
-	     &quot;  -s --speed    max speed (Hz)\n&quot;
-	     &quot;  -d --delay    delay (usec)\n&quot;
-	     &quot;  -b --bpw      bits per word \n&quot;
-	     &quot;  -l --loop     loopback\n&quot;
-	     &quot;  -H --cpha     clock phase\n&quot;
-	     &quot;  -O --cpol     clock polarity\n&quot;
-	     &quot;  -L --lsb      least significant bit first\n&quot;
-	     &quot;  -C --cs-high  chip select active high\n&quot;
-	     &quot;  -3 --3wire    SI/SO signals shared\n&quot;);
-	exit(1);
+    printf(&quot;Usage: %s [-DsbdlHOLC3]\n&quot;, prog);
+    puts(&quot;  -D --device   device to use (default /dev/spidev1.1)\n&quot;
+         &quot;  -s --speed    max speed (Hz)\n&quot;
+         &quot;  -d --delay    delay (usec)\n&quot;
+         &quot;  -b --bpw      bits per word \n&quot;
+         &quot;  -l --loop     loopback\n&quot;
+         &quot;  -H --cpha     clock phase\n&quot;
+         &quot;  -O --cpol     clock polarity\n&quot;
+         &quot;  -L --lsb      least significant bit first\n&quot;
+         &quot;  -C --cs-high  chip select active high\n&quot;
+         &quot;  -3 --3wire    SI/SO signals shared\n&quot;);
+    exit(1);
 }
 
 static void parse_opts(int argc, char *argv[])
 {
-	while (1) {
-		static const struct option lopts[] = {
-			{ &quot;device&quot;,  1, 0, 'D' },
-			{ &quot;speed&quot;,   1, 0, 's' },
-			{ &quot;delay&quot;,   1, 0, 'd' },
-			{ &quot;bpw&quot;,     1, 0, 'b' },
-			{ &quot;loop&quot;,    0, 0, 'l' },
-			{ &quot;cpha&quot;,    0, 0, 'H' },
-			{ &quot;cpol&quot;,    0, 0, 'O' },
-			{ &quot;lsb&quot;,     0, 0, 'L' },
-			{ &quot;cs-high&quot;, 0, 0, 'C' },
-			{ &quot;3wire&quot;,   0, 0, '3' },
-			{ &quot;no-cs&quot;,   0, 0, 'N' },
-			{ &quot;ready&quot;,   0, 0, 'R' },
-			{ NULL, 0, 0, 0 },
-		};
-		int c;
+    while (1) {
+        static const struct option lopts[] = {
+            { &quot;device&quot;,  1, 0, 'D' },
+            { &quot;speed&quot;,   1, 0, 's' },
+            { &quot;delay&quot;,   1, 0, 'd' },
+            { &quot;bpw&quot;,     1, 0, 'b' },
+            { &quot;loop&quot;,    0, 0, 'l' },
+            { &quot;cpha&quot;,    0, 0, 'H' },
+            { &quot;cpol&quot;,    0, 0, 'O' },
+            { &quot;lsb&quot;,     0, 0, 'L' },
+            { &quot;cs-high&quot;, 0, 0, 'C' },
+            { &quot;3wire&quot;,   0, 0, '3' },
+            { &quot;no-cs&quot;,   0, 0, 'N' },
+            { &quot;ready&quot;,   0, 0, 'R' },
+            { NULL, 0, 0, 0 },
+        };
+        int c;
 
-		c = getopt_long(argc, argv, &quot;D:s:d:b:lHOLC3NR&quot;, lopts, NULL);
+        c = getopt_long(argc, argv, &quot;D:s:d:b:lHOLC3NR&quot;, lopts, NULL);
 
-		if (c == -1)
-			break;
+        if (c == -1)
+            break;
 
-		switch (c) {
-		case 'D':
-			device = optarg;
-			break;
-		case 's':
-			speed = atoi(optarg);
-			break;
-		case 'd':
-			delay = atoi(optarg);
-			break;
-		case 'b':
-			bits = atoi(optarg);
-			break;
-		case 'l':
-			mode |= SPI_LOOP;
-			break;
-		case 'H':
-			mode |= SPI_CPHA;
-			break;
-		case 'O':
-			mode |= SPI_CPOL;
-			break;
-		case 'L':
-			mode |= SPI_LSB_FIRST;
-			break;
-		case 'C':
-			mode |= SPI_CS_HIGH;
-			break;
-		case '3':
-			mode |= SPI_3WIRE;
-			break;
-		case 'N':
-			mode |= SPI_NO_CS;
-			break;
-		case 'R':
-			mode |= SPI_READY;
-			break;
-		default:
-			print_usage(argv[0]);
-			break;
-		}
-	}
+        switch (c) {
+        case 'D':
+            device = optarg;
+            break;
+        case 's':
+            speed = atoi(optarg);
+            break;
+        case 'd':
+            delay = atoi(optarg);
+            break;
+        case 'b':
+            bits = atoi(optarg);
+            break;
+        case 'l':
+            mode |= SPI_LOOP;
+            break;
+        case 'H':
+            mode |= SPI_CPHA;
+            break;
+        case 'O':
+            mode |= SPI_CPOL;
+            break;
+        case 'L':
+            mode |= SPI_LSB_FIRST;
+            break;
+        case 'C':
+            mode |= SPI_CS_HIGH;
+            break;
+        case '3':
+            mode |= SPI_3WIRE;
+            break;
+        case 'N':
+            mode |= SPI_NO_CS;
+            break;
+        case 'R':
+            mode |= SPI_READY;
+            break;
+        default:
+            print_usage(argv[0]);
+            break;
+        }
+    }
 }
 
 int main(int argc, char *argv[])
 {
-	int ret = 0;
-	int fd;
+    int ret = 0;
+    int fd;
 
-	parse_opts(argc, argv);
+    parse_opts(argc, argv);
 
-	fd = open(device, O_RDWR);
-	if (fd &lt; 0)
-		pabort(&quot;can't open device&quot;);
+    fd = open(device, O_RDWR);
+    if (fd &lt; 0)
+        pabort(&quot;can't open device&quot;);
 
-	/*
-	 * spi mode
-	 */
-	ret = ioctl(fd, SPI_IOC_WR_MODE, &amp;mode);
-	if (ret == -1)
-		pabort(&quot;can't set spi mode&quot;);
+    /*
+     * spi mode
+     */
+    ret = ioctl(fd, SPI_IOC_WR_MODE, &amp;mode);
+    if (ret == -1)
+        pabort(&quot;can't set spi mode&quot;);
 
-	ret = ioctl(fd, SPI_IOC_RD_MODE, &amp;mode);
-	if (ret == -1)
-		pabort(&quot;can't get spi mode&quot;);
+    ret = ioctl(fd, SPI_IOC_RD_MODE, &amp;mode);
+    if (ret == -1)
+        pabort(&quot;can't get spi mode&quot;);
 
-	/*
-	 * bits per word
-	 */
-	ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &amp;bits);
-	if (ret == -1)
-		pabort(&quot;can't set bits per word&quot;);
+    /*
+     * bits per word
+     */
+    ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &amp;bits);
+    if (ret == -1)
+        pabort(&quot;can't set bits per word&quot;);
 
-	ret = ioctl(fd, SPI_IOC_RD_BITS_PER_WORD, &amp;bits);
-	if (ret == -1)
-		pabort(&quot;can't get bits per word&quot;);
+    ret = ioctl(fd, SPI_IOC_RD_BITS_PER_WORD, &amp;bits);
+    if (ret == -1)
+        pabort(&quot;can't get bits per word&quot;);
 
-	/*
-	 * max speed hz
-	 */
-	ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &amp;speed);
-	if (ret == -1)
-		pabort(&quot;can't set max speed hz&quot;);
+    /*
+     * max speed hz
+     */
+    ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &amp;speed);
+    if (ret == -1)
+        pabort(&quot;can't set max speed hz&quot;);
 
-	ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &amp;speed);
-	if (ret == -1)
-		pabort(&quot;can't get max speed hz&quot;);
+    ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &amp;speed);
+    if (ret == -1)
+        pabort(&quot;can't get max speed hz&quot;);
 
-	printf(&quot;spi mode: %d\n&quot;, mode);
-	printf(&quot;bits per word: %d\n&quot;, bits);
-	printf(&quot;max speed: %d Hz (%d KHz)\n&quot;, speed, speed/1000);
+    printf(&quot;spi mode: %d\n&quot;, mode);
+    printf(&quot;bits per word: %d\n&quot;, bits);
+    printf(&quot;max speed: %d Hz (%d KHz)\n&quot;, speed, speed/1000);
 
-	transfer(fd);
+    transfer(fd);
 
-	close(fd);
+    close(fd);
 
-	return ret;
+    return ret;
 }
 </code></pre>
 
@@ -387,7 +387,7 @@ DE AD BE EF BA AD
 F0 0D 
 </code></pre>
 
-<h2>wiringPiSPI</h2>
+<h2><a style="display: block;" name="wiringpispi" href="#wiringpispi"></a>wiringPiSPI</h2>
 
 <p><a href="https://projects.drogon.net/raspberry-pi/wiringpi/">wiringPi</a> 软件包提供了SPI使用的帮助类，接口定义如下：</p>
 
@@ -419,12 +419,12 @@ int main (void)
 }
 </code></pre>
 
-<h1>实际应用</h1>
+<h1><a style="display: block;" name="实际应用" href="#实际应用"></a>实际应用</h1>
 
 <p>前面介绍过的Nokia 5110是采用飞利浦PC8544芯片驱动的，就是采用SPI协议的。
 采用软件模拟的驱动不是很稳定，改成硬件SPI后就好了，<a href="https://github.com/hugozhu/rpi/tree/master/lib/PCD8544">基于wiringPi的实现</a>, <a href="https://github.com/hugozhu/rpi/tree/master/pcd8544">Go的封装</a></p>
 
-<h1>参考链接</h1>
+<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
 
 <ol>
 <li><a href="http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html">http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html</a></li>
@@ -460,7 +460,7 @@ int main (void)
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -546,7 +546,7 @@ int main (void)
     </div> <!-- /container -->
 
     
-<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
