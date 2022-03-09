@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 3 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Raspberry Pi 3 树莓派">
+    <meta name="description" content="Useful Liunx Command 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -596,12 +596,17 @@ git checkout python3
 	
   // Feature detects Navigation Timing API support.
   if (window.performance) {
-     // Gets the number of milliseconds since page load
-     // (and rounds the result since the value must be an integer).
-     var timeSincePageLoad = Math.round(performance.now());
-     // Sends the timing hit to Google Analytics.
-     ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad); 
-  }	
+    // Gets the number of milliseconds since page load
+    // (and rounds the result since the value must be an integer).
+    var timeSincePageLoad = Math.round(performance.now());
+
+    // Sends the timing event to Google Analytics.
+    gtag('event', 'timing_complete', {
+      'name': 'load',
+      'value': timeSincePageLoad,
+      'event_category': 'JS Dependencies'
+    });
+  }
 </script>	  	  
 </body>
 </html>
