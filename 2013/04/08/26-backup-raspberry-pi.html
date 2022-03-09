@@ -120,7 +120,7 @@
 mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest
 </code></pre>
 
-<h1><a style="display: block;" name="完整备份" href="#完整备份"></a>完整备份</h1>
+<h1>完整备份</h1>
 
 <p>确定相应的SD卡设备ID</p>
 
@@ -150,7 +150,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 1973420032 bytes (2.0 GB) copied, 786.555 s, 2.5 MB/s
 </code></pre>
 
-<h1><a style="display: block;" name="增量备份" href="#增量备份"></a>增量备份</h1>
+<h1>增量备份</h1>
 
 <p>增量备份最简单的方法是用rsync，每天定时将指定目录下变化的文件保存到备份目录，方法如下：</p>
 
@@ -195,7 +195,7 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -281,7 +281,7 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -302,6 +302,16 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

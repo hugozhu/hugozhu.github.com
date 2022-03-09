@@ -112,18 +112,18 @@
   <div class="span8">
     <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
 
-<h1><a style="display: block;" name="实现方法" href="#实现方法"></a>实现方法</h1>
+<h1>实现方法</h1>
 
-<h2><a style="display: block;" name="google-analytics" href="#google-analytics"></a>Google Analytics</h2>
+<h2>Google Analytics</h2>
 
 <p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
 
-<h2><a style="display: block;" name="日志分析" href="#日志分析"></a>日志分析</h2>
+<h2>日志分析</h2>
 
 <p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
 但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
 
-<h2><a style="display: block;" name="cnzz" href="#cnzz"></a>CNZZ</h2>
+<h2>CNZZ</h2>
 
 <p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
 
@@ -138,7 +138,7 @@
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/03/28/23-arduino-1st-day.html" title="Arduino初试">&larr; Previous</a></li>
+            <li class="prev"><a href="/2013/03/28/22-memory-barriers-or-fences.html" title="并发编程之内存屏障">&larr; Previous</a></li>
           
           
 
@@ -160,7 +160,7 @@
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -242,7 +242,7 @@
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -263,6 +263,16 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

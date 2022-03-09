@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用tsar记录和监控树莓派CPU温度 - When Go meets Raspberry Pi</title>
+    <title>Hugo Zhu Page 5 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Use tsar to monitor Raspberry Pi CPU Temperature 树莓派">
+    <meta name="description" content="Use Google App Engine to failover your blog between Raspberry Pi and Github 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -118,37 +118,37 @@
       
         
         
-          <li><a href="/posts/1/">1</a></li>
+          <li><a href="//posts/1/">1</a></li>
         
       
         
         
-          <li><a href="/posts/2/">2</a></li>
+          <li><a href="//posts/2/">2</a></li>
         
       
         
         
-          <li><a href="/posts/3/">3</a></li>
+          <li><a href="//posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/4/">4</a></li>
+          <li><a href="//posts/4/">4</a></li>
         
       
         
-          <li class="active"><a href="/posts/5/">5</a></li>
+          <li class="active"><a href="//posts/5/">5</a></li>
         
-        
-      
-        
-        
-          <li><a href="/posts/6/">6</a></li>
         
       
         
         
-          <li><a href="/posts/7/">7</a></li>
+          <li><a href="//posts/6/">6</a></li>
+        
+      
+        
+        
+          <li><a href="//posts/7/">7</a></li>
         
       
       </ul>
@@ -163,7 +163,7 @@
 
 <p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。</p>
 
-<h1><a style="display: block;" name="**更新**" href="#**更新**"></a><strong>更新</strong></h1>
+<h1><strong>更新</strong></h1>
 
 <p>[2013-04-14] mod_rpi已经被合并到了主干代码：<a href="https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c">https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c</a>  只需要增加文件：<code>/etc/tsar/conf.d/rpi.conf</code>，内容为以下即可开始使用mod_rpi模块：</p>
 
@@ -173,7 +173,7 @@
 output_stdio_mod mod_rpi
 </code></pre>
 
-<h1><a style="display: block;" name="mod_rpi模块开发方法" href="#mod_rpi模块开发方法"></a>mod_rpi模块开发方法</h1>
+<h1>mod_rpi模块开发方法</h1>
 
 <p>首先按照安装说明，见<a href="https://github.com/alibaba/tsar">https://github.com/alibaba/tsar</a>将tsar和tsardevel安装好。</p>
 
@@ -186,7 +186,7 @@ output_stdio_mod mod_rpi
       <div class="post">
         <h1 class="title"><a href="/2013/04/08/27-interrupts-with-gpio-pins.html">Raspberry Pi的GPIO中断编程</a> <span class="date">2013-04-08</span></h1>
 
-        <h1><a style="display: block;" name="背景介绍" href="#背景介绍"></a>背景介绍</h1>
+        <h1>背景介绍</h1>
 
 <p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p>
 
@@ -194,7 +194,7 @@ output_stdio_mod mod_rpi
 
 <p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href="https://zh.wikipedia.org/zh/上拉电阻">上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p>
 
-<h1><a style="display: block;" name="应用" href="#应用"></a>应用</h1>
+<h1>应用</h1>
 
 <p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p>
 
@@ -223,7 +223,7 @@ output_stdio_mod mod_rpi
 mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest
 </code></pre>
 
-<h1><a style="display: block;" name="完整备份" href="#完整备份"></a>完整备份</h1>
+<h1>完整备份</h1>
 
 <p>确定相应的SD卡设备ID</p>
 
@@ -254,7 +254,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
       <div class="post">
         <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a> <span class="date">2013-04-05</span></h1>
 
-        <h1><a style="display: block;" name="什么是spi" href="#什么是spi"></a>什么是SPI</h1>
+        <h1>什么是SPI</h1>
 
 <p>SPI (Serial Peripheral Interface)，是一种高速，全双工，同步的通信总线协议，基于SPI的设备需要4根线：</p>
 
@@ -270,7 +270,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
 <p>通过CS，主设备可以控制和哪个从设备通信。</p>
 
-<h2><a style="display: block;" name="bit-banging" href="#bit-banging"></a>Bit Banging</h2>
+<h2>Bit Banging</h2>
 
 <p>Bit-banging是一种用软件替代专职硬件的串行通信的技术。软件直接对微处理器的管脚的状态进行设置和采样，其功能涵盖诸如：时钟，电平，同步等所有参数。与此不同的是（传统的串行通信技术中），专职硬件诸如 modem、UART 或者 位移寄存器等一般是用来处理这些参数并且提供一个（缓存）的数据接口，软件在这种情况下同信号处理无关。</p>
 
@@ -287,7 +287,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <p>前面提到了有关个人网站的<a href="http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html">实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p>
 
-<h1><a style="display: block;" name="google-channel-service" href="#google-channel-service"></a>Google Channel Service</h1>
+<h1>Google Channel Service</h1>
 
 <p><a href="https://developers.google.com/appengine/docs/go/channel/overview">Google Channel Service</a>允许应用和<a href="http://appengine.google.com/">GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p>
 
@@ -301,9 +301,9 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 <img src="https://developers.google.com/appengine/images/channel_overview02.png"/></p></li>
 </ol>
 
-<h1><a style="display: block;" name="在线人数统计实现" href="#在线人数统计实现"></a>在线人数统计实现</h1>
+<h1>在线人数统计实现</h1>
 
-<h2><a style="display: block;" name="在页面上部署beacon" href="#在页面上部署beacon"></a>在页面上部署beacon</h2>
+<h2>在页面上部署beacon</h2>
 
 <p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p>
 
@@ -312,6 +312,40 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/04/03/24-google-channel-service.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
+
+        <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
+
+<p>Arduino特点:</p>
+
+<ol>
+<li>开源，硬件标准化，配套传感器等模块很多；</li>
+<li>结构简单</li>
+<li>实时系统，稳定，启动只要0.5秒</li>
+</ol>
+
+<h1>Arduino IDE</h1>
+
+<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
+
+<h1>上电测试</h1>
+
+<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
+<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
+
+<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
+
+<h1>上传代码</h1>
+
+<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
+
+
+        <div class="more">
+          <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
@@ -341,60 +375,26 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
       </div>
     
       <div class="post">
-        <h1 class="title"><a href="/2013/03/28/23-arduino-1st-day.html">Arduino初试</a> <span class="date">2013-03-28</span></h1>
-
-        <p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p>
-
-<p>Arduino特点:</p>
-
-<ol>
-<li>开源，硬件标准化，配套传感器等模块很多；</li>
-<li>结构简单</li>
-<li>实时系统，稳定，启动只要0.5秒</li>
-</ol>
-
-<h1><a style="display: block;" name="arduino-ide" href="#arduino-ide"></a>Arduino IDE</h1>
-
-<p><a href="http://arduino.cc/en/Main/Software">下载Arduino IDE</a></p>
-
-<h1><a style="display: block;" name="上电测试" href="#上电测试"></a>上电测试</h1>
-
-<p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
-<img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg"/></p>
-
-<p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p>
-
-<h1><a style="display: block;" name="上传代码" href="#上传代码"></a>上传代码</h1>
-
-<p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p>
-
-
-        <div class="more">
-          <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
         <h1 class="title"><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a> <span class="date">2013-03-27</span></h1>
 
         <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
 
-<h1><a style="display: block;" name="实现方法" href="#实现方法"></a>实现方法</h1>
+<h1>实现方法</h1>
 
-<h2><a style="display: block;" name="google-analytics" href="#google-analytics"></a>Google Analytics</h2>
+<h2>Google Analytics</h2>
 
 <p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
 
-<h2><a style="display: block;" name="日志分析" href="#日志分析"></a>日志分析</h2>
+<h2>日志分析</h2>
 
 <p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
 但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
 
-<h2><a style="display: block;" name="cnzz" href="#cnzz"></a>CNZZ</h2>
+<h2>CNZZ</h2>
 
 <p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
 
-<p></p>
+<p>```</p>
 
 
         <div class="more">
@@ -413,7 +413,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 <li>84x48点阵，可显示100多个字符</li>
 </ol>
 
-<h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
+<h1>硬件准备</h1>
 
 <ol>
 <li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li>
@@ -423,7 +423,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 <li><a href="http://detail.tmall.com/item.htm?id=22096296909&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁</a></li>
 </ol>
 
-<h1><a style="display: block;" name="电路" href="#电路"></a>电路</h1>
+<h1>电路</h1>
 
 <p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。</p>
 
@@ -436,7 +436,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
       <div class="post">
         <h1 class="title"><a href="/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</a> <span class="date">2013-03-23</span></h1>
 
-        <h1><a style="display: block;" name="硬件准备" href="#硬件准备"></a>硬件准备</h1>
+        <h1>硬件准备</h1>
 
 <p>需要以下硬件：</p>
 
@@ -450,9 +450,9 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 <li><a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5+%B5%E7%D4%B4&amp;type=p&amp;style=&amp;cat=all">面包板电源</a></li>
 </ol>
 
-<h1><a style="display: block;" name="1602-lcd液晶屏" href="#1602-lcd液晶屏"></a>1602 LCD液晶屏</h1>
+<h1>1602 LCD液晶屏</h1>
 
-<p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&ndash;请参考<a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则</a>：</p>
+<p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可--请参考<a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则</a>：</p>
 
 <ol>
 <li>VSS，接地，RPi PIN 6</li>
@@ -485,37 +485,37 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
       
         
         
-          <li><a href="/posts/1/">1</a></li>
+          <li><a href="//posts/1/">1</a></li>
         
       
         
         
-          <li><a href="/posts/2/">2</a></li>
+          <li><a href="//posts/2/">2</a></li>
         
       
         
         
-          <li><a href="/posts/3/">3</a></li>
+          <li><a href="//posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/4/">4</a></li>
+          <li><a href="//posts/4/">4</a></li>
         
       
         
-          <li class="active"><a href="/posts/5/">5</a></li>
+          <li class="active"><a href="//posts/5/">5</a></li>
         
-        
-      
-        
-        
-          <li><a href="/posts/6/">6</a></li>
         
       
         
         
-          <li><a href="/posts/7/">7</a></li>
+          <li><a href="//posts/6/">6</a></li>
+        
+      
+        
+        
+          <li><a href="//posts/7/">7</a></li>
         
       
       </ul>
@@ -542,7 +542,7 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -563,6 +563,16 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

@@ -134,11 +134,9 @@
 
 <p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：</p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/5d6ddb93-220e-4c1d-a042-87a8835199dc/5e8345944ca4f948ee84636dacc77358/deep/0/77fa703f-71bc-40ac-8f65-861689fc2085-720-1,280-pixels.png" alt="Airplay" />
-</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/5d6ddb93-220e-4c1d-a042-87a8835199dc/5e8345944ca4f948ee84636dacc77358/deep/0/77fa703f-71bc-40ac-8f65-861689fc2085-720-1,280-pixels.png" alt="Airplay" /></p>
 
-<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1eq68scsp62j20qn18galb.jpg" alt="pcDunio Acadia" />
-</p>
+<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1eq68scsp62j20qn18galb.jpg" alt="pcDunio Acadia" /></p>
 
 <p>苹果的<a href="http://en.wikipedia.org/wiki/AirPlay">Airplay</a>协议是通过基于<a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RSTP</a>（Real Time Streaming Protocol）协议通过UDP传输的无损编码音频流(<a href="http://en.wikipedia.org/wiki/Apple_Lossless">Apple Lossless codec</a>，音频流本身经过了AES加密，私钥是不公开的，这样只有苹果和其合作伙伴才能使用这个协议。但是2004年有人通过逆向工程获得了私钥并将其公开，这样我们也可以自己搭建低成本高音质的基于Airplay的音乐系统。在iPhone成为街机的时代，每个人的手机里有很多喜欢的音乐，如果在家里可以通过无线网络在音响系统里播放会方便很多。</p>
 
@@ -157,22 +155,18 @@
 <a href="http://www.linksprite.com/?page_id=829">pcDuino Acadia</a>集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。</p>
 
 <p>下面是树莓派音频口播放1kHz正弦信号的输出波形，可以看出来波形并不好。
-<img src="https://www.evernote.com/shard/s26/sh/0ae05aca-ea18-4c4d-bee8-2a98f9467d76/e1b636d369435324e3ef1a7f38bf7c59/deep/0/onboard.png-300-180-pixels.png" alt="raspberry pi audio" />
-</p>
+<img src="https://www.evernote.com/shard/s26/sh/0ae05aca-ea18-4c4d-bee8-2a98f9467d76/e1b636d369435324e3ef1a7f38bf7c59/deep/0/onboard.png-300-180-pixels.png" alt="raspberry pi audio" /></p>
 
 <p><br/></p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/3b5a026b-9725-40e8-b1e1-429bfe9d1438/a86296da1bec5cf7bb8d98d530d271fe/deep/0/thd_onboard.png-300-213-pixels.png" alt="raspberry pi audio2" />
-</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/3b5a026b-9725-40e8-b1e1-429bfe9d1438/a86296da1bec5cf7bb8d98d530d271fe/deep/0/thd_onboard.png-300-213-pixels.png" alt="raspberry pi audio2" /></p>
 
 <p>正是因为板载音频质量差强人意，Wolfson也专为树莓派设计了基于<a href="http://www.cirrus.com/en/products/wm5102.html">WM5102</a> codec芯片的<a href="http://www.adafruit.com/product/1761">Wolfson Audio Card</a> （售价高达$34.95，性价比不高，这块芯片也用在了魅族MX3上）。
-<img src="https://www.evernote.com/shard/s26/sh/7321c82f-96ad-42aa-9171-f10d0da456c0/c65f41888045af7bf1d879320ee3e171/deep/0/1761-00.jpg-970-728-pixels.png" alt="Wolfson Audio Card" />
-</p>
+<img src="https://www.evernote.com/shard/s26/sh/7321c82f-96ad-42aa-9171-f10d0da456c0/c65f41888045af7bf1d879320ee3e171/deep/0/1761-00.jpg-970-728-pixels.png" alt="Wolfson Audio Card" /></p>
 
 <p>更好的方案是使用USB声卡，如淘宝上可以购买的基于德州仪器的<a href="http://www.ti.com/product/pcm2704">PCM2704</a>的<a href="http://s.taobao.com/search?q=PCM2704&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;spm=1.7274553.1997520841.1&amp;initiative_id=tbindexz_20150315">USB声卡</a>，40多人民币。</p>
 
-<p><img src="http://g.search1.alicdn.com/img/bao/uploaded/i4/i1/11699024068466586/T144m3XyFcXXXXXXXX_!!0-item_pic.jpg_250x250.jpg" alt="PCM2704 USB DAC" />
-</p>
+<p><img src="http://g.search1.alicdn.com/img/bao/uploaded/i4/i1/11699024068466586/T144m3XyFcXXXXXXXX_!!0-item_pic.jpg_250x250.jpg" alt="PCM2704 USB DAC" /></p>
 
 <p>综上，如果想DIY自己的高清音乐播放系统，只有树莓派还是不够的，可以考虑用pcDunio Acadia或额外购买USB DAC。</p>
 
@@ -274,11 +268,9 @@ options snd-usb-audio nrpacks=
 
 <p>对比一下可以看到pcDunio Acadia的设置项要丰富多了，除了Headphone这项可以提高音量(5dB)外，Digital这项的增益调节也可以大幅提高音量（23.25dB）。推力方面也相对好多了，可以直推一些好耳机。</p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/924d1a7f-d4fb-4cb6-aea9-4b45843a7226/439c2ae62288609058555c06006ec99b/deep/0/hugozhu---hugo@raspberrypi2------ssh---65-27.png" alt="pi" />
-</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/924d1a7f-d4fb-4cb6-aea9-4b45843a7226/439c2ae62288609058555c06006ec99b/deep/0/hugozhu---hugo@raspberrypi2------ssh---65-27.png" alt="pi" /></p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/5f01fea9-0726-45ac-a1d0-7ef508862487/f0a830f6c56b40744a1ab62a3623fdf4/deep/0/workapp---hugo@Acadia------ssh---98-35.png" alt="pcDunio" />
-</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/5f01fea9-0726-45ac-a1d0-7ef508862487/f0a830f6c56b40744a1ab62a3623fdf4/deep/0/workapp---hugo@Acadia------ssh---98-35.png" alt="pcDunio" /></p>
 
 <h1 id="toc_6">Airplay设置</h1>
 
@@ -320,11 +312,12 @@ root@Acadia  ~/perl-net-sdp $ cd ..
 
 <h2 id="toc_9">运行Shairport</h2>
 
-<p>运行非常简单：
-<code>
-sudo shairport -a &quot;Acadia&quot;
-</code>
-执行完后拿起你的iPhone，虾米，QQ音乐或百度音乐App都支持Airplay了，在播放界面上选择输出到<code>Acadia</code>上就可以开始欣赏Airplay啦。</p>
+<p>运行非常简单：</p>
+
+<pre><code>sudo shairport -a &quot;Acadia&quot;
+</code></pre>
+
+<p>执行完后拿起你的iPhone，虾米，QQ音乐或百度音乐App都支持Airplay了，在播放界面上选择输出到<code>Acadia</code>上就可以开始欣赏Airplay啦。</p>
 
 <h1 id="toc_10">参考文章</h1>
 
@@ -361,7 +354,7 @@ sudo shairport -a &quot;Acadia&quot;
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -451,7 +444,7 @@ sudo shairport -a &quot;Acadia&quot;
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -472,6 +465,16 @@ sudo shairport -a &quot;Acadia&quot;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

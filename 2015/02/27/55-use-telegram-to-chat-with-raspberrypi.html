@@ -133,8 +133,7 @@
 
 <h1 id="toc_0">Telegram</h1>
 
-<p><img src="https://telegram.org/img/t_logo.png" alt="image" />
-</p>
+<p><img src="https://telegram.org/img/t_logo.png" alt="image" /></p>
 
 <p>Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似<a href="http://www.msxiaoice.com/v2/DesktopLanding">微软小冰</a>的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。</p>
 
@@ -160,19 +159,19 @@ safe_commands[&quot;ss&quot;]      = &quot;ss&quot;
 safe_commands[&quot;free&quot;]    = &quot;free&quot;
 
 function on_msg_receive (msg)
-    if msg.out then
-        return
-    end
-    if msg.text then
-        -- mark_read(msg.from.print_name)   
-        -- vardump(msg)
-        cmd = string.lower(trim(msg.text))
-        if cmd == &quot;ping&quot; then
-            send_msg (chat, 'pong', ok_cb, false)
-        elseif safe_commands[cmd] ~= nil then
-            send_msg (chat, exec(safe_commands[cmd]), ok_cb, false)
-        end
-    end
+	if msg.out then
+	    return
+	end
+	if msg.text then
+		-- mark_read(msg.from.print_name)	
+		-- vardump(msg)
+		cmd = string.lower(trim(msg.text))
+		if cmd == &quot;ping&quot; then
+			send_msg (chat, 'pong', ok_cb, false)
+		elseif safe_commands[cmd] ~= nil then
+			send_msg (chat, exec(safe_commands[cmd]), ok_cb, false)
+		end
+	end
 end
 
 function on_our_id (id)
@@ -201,7 +200,7 @@ function exec(cmd)
    end -- for loop
    f:close()
    return output
-end 
+end	
 
 function trim(s)
   return (s:gsub(&quot;^%s*(.-)%s*$&quot;, &quot;%1&quot;))
@@ -229,14 +228,14 @@ function vardump(value, depth, key)
     else
       print(spaces ..&quot;(metatable) &quot;)
         value = mTable
-    end     
+    end		
     for tableKey, tableValue in pairs(value) do
       vardump(tableValue, depth, tableKey)
     end
-  elseif type(value)    == 'function' or 
-      type(value)   == 'thread' or 
-      type(value)   == 'userdata' or
-      value     == nil
+  elseif type(value)	== 'function' or 
+      type(value)	== 'thread' or 
+      type(value)	== 'userdata' or
+      value		== nil
   then
     print(spaces..tostring(value))
   else
@@ -308,7 +307,7 @@ print(exec(&quot;uptime&quot;))
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -394,7 +393,7 @@ print(exec(&quot;uptime&quot;))
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -415,6 +414,16 @@ print(exec(&quot;uptime&quot;))
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

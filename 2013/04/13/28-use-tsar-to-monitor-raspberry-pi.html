@@ -114,7 +114,7 @@
 
 <p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。</p>
 
-<h1><a style="display: block;" name="**更新**" href="#**更新**"></a><strong>更新</strong></h1>
+<h1><strong>更新</strong></h1>
 
 <p>[2013-04-14] mod_rpi已经被合并到了主干代码：<a href="https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c">https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c</a>  只需要增加文件：<code>/etc/tsar/conf.d/rpi.conf</code>，内容为以下即可开始使用mod_rpi模块：</p>
 
@@ -124,7 +124,7 @@
 output_stdio_mod mod_rpi
 </code></pre>
 
-<h1><a style="display: block;" name="mod_rpi模块开发方法" href="#mod_rpi模块开发方法"></a>mod_rpi模块开发方法</h1>
+<h1>mod_rpi模块开发方法</h1>
 
 <p>首先按照安装说明，见<a href="https://github.com/alibaba/tsar">https://github.com/alibaba/tsar</a>将tsar和tsardevel安装好。</p>
 
@@ -163,7 +163,7 @@ Makefile  mod_rpi.c  mod_rpi.conf
  * Structure for rpi infomation.
  */
 struct stats_rpi {
-    unsigned int cpu_temp;
+	unsigned int cpu_temp;
 };
 
 #define STATS_TEST_SIZE (sizeof(struct stats_rpi))
@@ -173,44 +173,44 @@ static char *rpi_usage = &quot;    --rpi               Rapsberry Pi information 
 
 static void read_rpi_stats(struct module *mod, char *parameter)
 {
-    FILE *fp;
-    char buf[64];
-    memset(buf, 0, sizeof(buf));
-    struct stats_rpi st_rpi;
-    memset(&amp;st_rpi, 0, sizeof(struct stats_rpi));
+	FILE *fp;
+	char buf[64];
+	memset(buf, 0, sizeof(buf));
+	struct stats_rpi st_rpi;
+	memset(&amp;st_rpi, 0, sizeof(struct stats_rpi));
 
-    if ((fp = fopen(&quot;/sys/class/thermal/thermal_zone0/temp&quot;, &quot;r&quot;)) == NULL) {
-        return;
-    }
+	if ((fp = fopen(&quot;/sys/class/thermal/thermal_zone0/temp&quot;, &quot;r&quot;)) == NULL) {
+		return;
+	}
 
-    int cpu_temp;
+	int cpu_temp;
 
-    fscanf(fp, &quot;%d&quot;, &amp;cpu_temp);
+	fscanf(fp, &quot;%d&quot;, &amp;cpu_temp);
 
-    st_rpi.cpu_temp = cpu_temp;
+	st_rpi.cpu_temp = cpu_temp;
 
-    int pos = sprintf(buf, &quot;%u&quot;,
-            /* the store order is not same as read procedure */
-            st_rpi.cpu_temp);
-    buf[pos] = '\0';
-    set_mod_record(mod, buf);
-    fclose(fp);
-    return;
+	int pos = sprintf(buf, &quot;%u&quot;,
+			/* the store order is not same as read procedure */
+			st_rpi.cpu_temp);
+	buf[pos] = '\0';
+	set_mod_record(mod, buf);
+	fclose(fp);
+	return;
 }
 
 static struct mod_info rpi_info[] = {
-    {&quot;  temp&quot;, SUMMARY_BIT,  0,  STATS_NULL}
+	{&quot;  temp&quot;, SUMMARY_BIT,  0,  STATS_NULL}
 };
 
 static void set_rpi_record(struct module *mod, double st_array[],
-        U_64 pre_array[], U_64 cur_array[], int inter)
+		U_64 pre_array[], U_64 cur_array[], int inter)
 {
-    st_array[0] = cur_array[0]/1000.0;
+	st_array[0] = cur_array[0]/1000.0;
 }
 
 void mod_register(struct module *mod)
-{   
-    register_mod_fileds(mod, &quot;--rpi&quot;, rpi_usage, rpi_info, 1, read_rpi_stats, set_rpi_record);
+{	
+	register_mod_fileds(mod, &quot;--rpi&quot;, rpi_usage, rpi_info, 1, read_rpi_stats, set_rpi_record);
 }
 
 </code></pre>
@@ -275,7 +275,7 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
 
 </code></pre>
 
-<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
+<h1>参考链接</h1>
 
 <ol>
 <li><a href="http://hugozhu.myalert.info/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html">http://hugozhu.myalert.info/2013/03/17/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi.html</a></li>
@@ -308,7 +308,7 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -394,7 +394,7 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -415,6 +415,16 @@ curl -v --request PUT --header &quot;X-ApiKey: $API_KEY&quot; --data-binary @$LO
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

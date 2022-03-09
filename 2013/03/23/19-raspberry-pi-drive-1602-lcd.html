@@ -140,7 +140,7 @@
 
 <h1 id="toc_1">1602 LCD液晶屏</h1>
 
-<p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&ndash;请参考<a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则</a>：</p>
+<p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可--请参考<a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则</a>：</p>
 
 <ol>
 <li>VSS，接地，RPi PIN 6</li>
@@ -191,57 +191,57 @@ from time import sleep
 class Adafruit_CharLCD:
 
     # commands
-    LCD_CLEARDISPLAY        = 0x01
-    LCD_RETURNHOME          = 0x02
-    LCD_ENTRYMODESET        = 0x04
-    LCD_DISPLAYCONTROL      = 0x08
-    LCD_CURSORSHIFT         = 0x10
-    LCD_FUNCTIONSET         = 0x20
-    LCD_SETCGRAMADDR        = 0x40
-    LCD_SETDDRAMADDR        = 0x80
+    LCD_CLEARDISPLAY 		= 0x01
+    LCD_RETURNHOME 		    = 0x02
+    LCD_ENTRYMODESET 		= 0x04
+    LCD_DISPLAYCONTROL 		= 0x08
+    LCD_CURSORSHIFT 		= 0x10
+    LCD_FUNCTIONSET 		= 0x20
+    LCD_SETCGRAMADDR 		= 0x40
+    LCD_SETDDRAMADDR 		= 0x80
 
     # flags for display entry mode
-    LCD_ENTRYRIGHT      = 0x00
-    LCD_ENTRYLEFT       = 0x02
-    LCD_ENTRYSHIFTINCREMENT     = 0x01
-    LCD_ENTRYSHIFTDECREMENT     = 0x00
+    LCD_ENTRYRIGHT 		= 0x00
+    LCD_ENTRYLEFT 		= 0x02
+    LCD_ENTRYSHIFTINCREMENT 	= 0x01
+    LCD_ENTRYSHIFTDECREMENT 	= 0x00
 
     # flags for display on/off control
-    LCD_DISPLAYON       = 0x04
-    LCD_DISPLAYOFF      = 0x00
-    LCD_CURSORON        = 0x02
-    LCD_CURSOROFF       = 0x00
-    LCD_BLINKON         = 0x01
-    LCD_BLINKOFF        = 0x00
+    LCD_DISPLAYON 		= 0x04
+    LCD_DISPLAYOFF 		= 0x00
+    LCD_CURSORON 		= 0x02
+    LCD_CURSOROFF 		= 0x00
+    LCD_BLINKON 		= 0x01
+    LCD_BLINKOFF 		= 0x00
 
     # flags for display/cursor shift
-    LCD_DISPLAYMOVE         = 0x08
-    LCD_CURSORMOVE      = 0x00
+    LCD_DISPLAYMOVE 		= 0x08
+    LCD_CURSORMOVE 		= 0x00
 
     # flags for display/cursor shift
-    LCD_DISPLAYMOVE         = 0x08
-    LCD_CURSORMOVE      = 0x00
-    LCD_MOVERIGHT       = 0x04
-    LCD_MOVELEFT        = 0x00
+    LCD_DISPLAYMOVE 		= 0x08
+    LCD_CURSORMOVE 		= 0x00
+    LCD_MOVERIGHT 		= 0x04
+    LCD_MOVELEFT 		= 0x00
 
     # flags for function set
-    LCD_8BITMODE        = 0x10
-    LCD_4BITMODE        = 0x00
-    LCD_2LINE           = 0x08
-    LCD_1LINE           = 0x00
-    LCD_5x10DOTS        = 0x04
-    LCD_5x8DOTS         = 0x00
+    LCD_8BITMODE 		= 0x10
+    LCD_4BITMODE 		= 0x00
+    LCD_2LINE 			= 0x08
+    LCD_1LINE 			= 0x00
+    LCD_5x10DOTS 		= 0x04
+    LCD_5x8DOTS 		= 0x00
 
 
 
     def __init__(self, pin_rs=8, pin_e=10, pins_db=[11,12,13,15], GPIO = None):
-    # Emulate the old behavior of using RPi.GPIO if we haven't been given
-    # an explicit GPIO interface to use
-    if not GPIO:
-        import RPi.GPIO as GPIO
+	# Emulate the old behavior of using RPi.GPIO if we haven't been given
+	# an explicit GPIO interface to use
+	if not GPIO:
+	    import RPi.GPIO as GPIO
         GPIO.setwarnings(False)
 
-    self.GPIO = GPIO
+   	self.GPIO = GPIO
         self.pin_rs = pin_rs
         self.pin_e = pin_e
         self.pins_db = pins_db
@@ -253,139 +253,139 @@ class Adafruit_CharLCD:
         for pin in self.pins_db:
             self.GPIO.setup(pin, GPIO.OUT)
 
-    self.write4bits(0x33) # initialization
-    self.write4bits(0x32) # initialization
-    self.write4bits(0x28) # 2 line 5x7 matrix
-    self.write4bits(0x0C) # turn cursor off 0x0E to enable cursor
-    self.write4bits(0x06) # shift cursor right
+	self.write4bits(0x33) # initialization
+	self.write4bits(0x32) # initialization
+	self.write4bits(0x28) # 2 line 5x7 matrix
+	self.write4bits(0x0C) # turn cursor off 0x0E to enable cursor
+	self.write4bits(0x06) # shift cursor right
 
-    self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
+	self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
 
-    self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
-    self.displayfunction |= self.LCD_2LINE
+	self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
+	self.displayfunction |= self.LCD_2LINE
 
-    &quot;&quot;&quot; Initialize to default text direction (for romance languages) &quot;&quot;&quot;
-    self.displaymode =  self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
-    self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
+	&quot;&quot;&quot; Initialize to default text direction (for romance languages) &quot;&quot;&quot;
+	self.displaymode =  self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
+	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
 
         self.clear()
 
 
     def begin(self, cols, lines):
 
-    if (lines &gt; 1):
-        self.numlines = lines
-            self.displayfunction |= self.LCD_2LINE
-        self.currline = 0
+	if (lines &gt; 1):
+		self.numlines = lines
+    		self.displayfunction |= self.LCD_2LINE
+		self.currline = 0
 
 
     def home(self):
 
-    self.write4bits(self.LCD_RETURNHOME) # set cursor position to zero
-    self.delayMicroseconds(3000) # this command takes a long time!
-    
+	self.write4bits(self.LCD_RETURNHOME) # set cursor position to zero
+	self.delayMicroseconds(3000) # this command takes a long time!
+	
 
     def clear(self):
 
-    self.write4bits(self.LCD_CLEARDISPLAY) # command to clear display
-    self.delayMicroseconds(3000)    # 3000 microsecond sleep, clearing the display takes a long time
+	self.write4bits(self.LCD_CLEARDISPLAY) # command to clear display
+	self.delayMicroseconds(3000)	# 3000 microsecond sleep, clearing the display takes a long time
 
 
     def setCursor(self, col, row):
 
-    self.row_offsets = [ 0x00, 0x40, 0x14, 0x54 ]
+	self.row_offsets = [ 0x00, 0x40, 0x14, 0x54 ]
 
-    if ( row &gt; self.numlines ): 
-        row = self.numlines - 1 # we count rows starting w/0
+	if ( row &gt; self.numlines ): 
+		row = self.numlines - 1 # we count rows starting w/0
 
-    self.write4bits(self.LCD_SETDDRAMADDR | (col + self.row_offsets[row]))
+	self.write4bits(self.LCD_SETDDRAMADDR | (col + self.row_offsets[row]))
 
 
     def noDisplay(self): 
-    &quot;&quot;&quot; Turn the display off (quickly) &quot;&quot;&quot;
+	&quot;&quot;&quot; Turn the display off (quickly) &quot;&quot;&quot;
 
-    self.displaycontrol &amp;= ~self.LCD_DISPLAYON
-    self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+	self.displaycontrol &amp;= ~self.LCD_DISPLAYON
+	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
 
 
     def display(self):
-    &quot;&quot;&quot; Turn the display on (quickly) &quot;&quot;&quot;
+	&quot;&quot;&quot; Turn the display on (quickly) &quot;&quot;&quot;
 
-    self.displaycontrol |= self.LCD_DISPLAYON
-    self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+	self.displaycontrol |= self.LCD_DISPLAYON
+	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
 
 
     def noCursor(self):
-    &quot;&quot;&quot; Turns the underline cursor on/off &quot;&quot;&quot;
+	&quot;&quot;&quot; Turns the underline cursor on/off &quot;&quot;&quot;
 
-    self.displaycontrol &amp;= ~self.LCD_CURSORON
-    self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+	self.displaycontrol &amp;= ~self.LCD_CURSORON
+	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
 
 
     def cursor(self):
-    &quot;&quot;&quot; Cursor On &quot;&quot;&quot;
+	&quot;&quot;&quot; Cursor On &quot;&quot;&quot;
 
-    self.displaycontrol |= self.LCD_CURSORON
-    self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-
-
-    def noBlink(self):
-    &quot;&quot;&quot; Turn on and off the blinking cursor &quot;&quot;&quot;
-
-    self.displaycontrol &amp;= ~self.LCD_BLINKON
-    self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+	self.displaycontrol |= self.LCD_CURSORON
+	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
 
 
     def noBlink(self):
-    &quot;&quot;&quot; Turn on and off the blinking cursor &quot;&quot;&quot;
+	&quot;&quot;&quot; Turn on and off the blinking cursor &quot;&quot;&quot;
 
-    self.displaycontrol &amp;= ~self.LCD_BLINKON
-    self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+	self.displaycontrol &amp;= ~self.LCD_BLINKON
+	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+
+
+    def noBlink(self):
+	&quot;&quot;&quot; Turn on and off the blinking cursor &quot;&quot;&quot;
+
+	self.displaycontrol &amp;= ~self.LCD_BLINKON
+	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
 
 
     def DisplayLeft(self):
-    &quot;&quot;&quot; These commands scroll the display without changing the RAM &quot;&quot;&quot;
+	&quot;&quot;&quot; These commands scroll the display without changing the RAM &quot;&quot;&quot;
 
-    self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVELEFT)
+	self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVELEFT)
 
 
     def scrollDisplayRight(self):
-    &quot;&quot;&quot; These commands scroll the display without changing the RAM &quot;&quot;&quot;
+	&quot;&quot;&quot; These commands scroll the display without changing the RAM &quot;&quot;&quot;
 
-    self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVERIGHT);
+	self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVERIGHT);
 
 
     def leftToRight(self):
-    &quot;&quot;&quot; This is for text that flows Left to Right &quot;&quot;&quot;
+	&quot;&quot;&quot; This is for text that flows Left to Right &quot;&quot;&quot;
 
-    self.displaymode |= self.LCD_ENTRYLEFT
-    self.write4bits(self.LCD_ENTRYMODESET | self.displaymode);
+	self.displaymode |= self.LCD_ENTRYLEFT
+	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode);
 
 
     def rightToLeft(self):
-    &quot;&quot;&quot; This is for text that flows Right to Left &quot;&quot;&quot;
-    self.displaymode &amp;= ~self.LCD_ENTRYLEFT
-    self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
+	&quot;&quot;&quot; This is for text that flows Right to Left &quot;&quot;&quot;
+	self.displaymode &amp;= ~self.LCD_ENTRYLEFT
+	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
 
 
     def autoscroll(self):
-    &quot;&quot;&quot; This will 'right justify' text from the cursor &quot;&quot;&quot;
+	&quot;&quot;&quot; This will 'right justify' text from the cursor &quot;&quot;&quot;
 
-    self.displaymode |= self.LCD_ENTRYSHIFTINCREMENT
-    self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
+	self.displaymode |= self.LCD_ENTRYSHIFTINCREMENT
+	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
 
 
     def noAutoscroll(self): 
-    &quot;&quot;&quot; This will 'left justify' text from the cursor &quot;&quot;&quot;
+	&quot;&quot;&quot; This will 'left justify' text from the cursor &quot;&quot;&quot;
 
-    self.displaymode &amp;= ~self.LCD_ENTRYSHIFTINCREMENT
-    self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
+	self.displaymode &amp;= ~self.LCD_ENTRYSHIFTINCREMENT
+	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
 
 
     def write4bits(self, bits, char_mode=False):
         &quot;&quot;&quot; Send command to LCD &quot;&quot;&quot;
 
-    self.delayMicroseconds(1000) # 1000 microsecond sleep
+	self.delayMicroseconds(1000) # 1000 microsecond sleep
 
         bits=bin(bits)[2:].zfill(8)
 
@@ -398,7 +398,7 @@ class Adafruit_CharLCD:
             if bits[i] == &quot;1&quot;:
                 self.GPIO.output(self.pins_db[::-1][i], True)
 
-    self.pulseEnable()
+	self.pulseEnable()
 
         for pin in self.pins_db:
             self.GPIO.output(pin, False)
@@ -407,21 +407,21 @@ class Adafruit_CharLCD:
             if bits[i] == &quot;1&quot;:
                 self.GPIO.output(self.pins_db[::-1][i-4], True)
 
-    self.pulseEnable()
+	self.pulseEnable()
 
 
     def delayMicroseconds(self, microseconds):
-    seconds = microseconds / float(1000000) # divide microseconds by 1 million for seconds
-    sleep(seconds)
+	seconds = microseconds / float(1000000)	# divide microseconds by 1 million for seconds
+	sleep(seconds)
 
 
     def pulseEnable(self):
-    self.GPIO.output(self.pin_e, False)
-    self.delayMicroseconds(1)       # 1 microsecond pause - enable pulse must be &gt; 450ns 
-    self.GPIO.output(self.pin_e, True)
-    self.delayMicroseconds(1)       # 1 microsecond pause - enable pulse must be &gt; 450ns 
-    self.GPIO.output(self.pin_e, False)
-    self.delayMicroseconds(1)       # commands need &gt; 37us to settle
+	self.GPIO.output(self.pin_e, False)
+	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be &gt; 450ns 
+	self.GPIO.output(self.pin_e, True)
+	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be &gt; 450ns 
+	self.GPIO.output(self.pin_e, False)
+	self.delayMicroseconds(1)		# commands need &gt; 37us to settle
 
 
     def message(self, text):
@@ -484,7 +484,7 @@ if __name__ == '__main__':
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -570,7 +570,7 @@ if __name__ == '__main__':
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -591,6 +591,16 @@ if __name__ == '__main__':
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

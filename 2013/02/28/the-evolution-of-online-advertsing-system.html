@@ -181,7 +181,7 @@
 
 <h1 id="toc_1">从展示广告到搜索广告再到社会化广告</h1>
 
-<p>早期的互联网广告以展示广告为主，业务模式和在报纸，期刊上刊登广告相似，广告主按其广告的展现次数或时长来付费。直到1998年有个叫GoTo的公司（后公司改名为Overture，2005年被Yahoo收购）开始提供关键词广告，这是一种简单高效的定向广告，广告主可以按与其业务相关的关键词购买搜索流量，按访客的点击计费，和早期的展示广告相比这无疑是一个巨大的进步，通过关键词将用户和广告关联起来，而不是在广告位上一直展现同样的广告或随机的展现。随后Google迅速的采用了这个方法将自身的搜索流量变现，并不断优化和壮大，最终形成了Google的Adword产品，早期Google并不为搜索用户建立个性化数据，因此可用于定向的数据比较有限，于是Google又推出了AdSense产品，将触角伸向了全网，通过AdSense的合作网站，Google可以采集到访客在这些网站的访问足迹，并利用这些数据提高其广告的相关性；随着以Facebook为代表的社交网络的兴起，这些网站有个特点就是自身就具备了比较完善的用户个性化数据，利用这些数据，网站可以将定向技术使用到展示广告，这使展示广告迎来了第二春，广告产业对数据的应用价值有了极大的兴趣，也催化了大数据的技术广泛应用。近年来一种新的广告业务模式&ndash;“实时竞价广告交易系统”也逐渐被网站主和广告主接受，其核心目的是让每次广告展现都创造出尽可能多的回报，以自动化的方式系统使用实时数据和竞价信息将广告空间分配给那一时刻出价最高的销售渠道。</p>
+<p>早期的互联网广告以展示广告为主，业务模式和在报纸，期刊上刊登广告相似，广告主按其广告的展现次数或时长来付费。直到1998年有个叫GoTo的公司（后公司改名为Overture，2005年被Yahoo收购）开始提供关键词广告，这是一种简单高效的定向广告，广告主可以按与其业务相关的关键词购买搜索流量，按访客的点击计费，和早期的展示广告相比这无疑是一个巨大的进步，通过关键词将用户和广告关联起来，而不是在广告位上一直展现同样的广告或随机的展现。随后Google迅速的采用了这个方法将自身的搜索流量变现，并不断优化和壮大，最终形成了Google的Adword产品，早期Google并不为搜索用户建立个性化数据，因此可用于定向的数据比较有限，于是Google又推出了AdSense产品，将触角伸向了全网，通过AdSense的合作网站，Google可以采集到访客在这些网站的访问足迹，并利用这些数据提高其广告的相关性；随着以Facebook为代表的社交网络的兴起，这些网站有个特点就是自身就具备了比较完善的用户个性化数据，利用这些数据，网站可以将定向技术使用到展示广告，这使展示广告迎来了第二春，广告产业对数据的应用价值有了极大的兴趣，也催化了大数据的技术广泛应用。近年来一种新的广告业务模式--“实时竞价广告交易系统”也逐渐被网站主和广告主接受，其核心目的是让每次广告展现都创造出尽可能多的回报，以自动化的方式系统使用实时数据和竞价信息将广告空间分配给那一时刻出价最高的销售渠道。</p>
 
 <h1 id="toc_2">广告系统的架构变迁</h1>
 
@@ -276,7 +276,7 @@
 <pre><code>input | map | shuffle &amp; sort | reduce | output
 </code></pre>
 
-<p>在Hadoop之上有Hive，Pig等简易数据分析接口，还有类Google Bigtable的开源实现HBase&ndash;高可靠、高性能、面向列、可伸缩的分布式存储系统。</p>
+<p>在Hadoop之上有Hive，Pig等简易数据分析接口，还有类Google Bigtable的开源实现HBase--高可靠、高性能、面向列、可伸缩的分布式存储系统。</p>
 
     <hr>
     <div class="pagination">
@@ -305,7 +305,7 @@
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -391,7 +391,7 @@
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -412,6 +412,16 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

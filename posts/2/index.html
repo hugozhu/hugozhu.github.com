@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>使用tsar记录和监控树莓派CPU温度 - When Go meets Raspberry Pi</title>
+    <title>Hugo Zhu Page 2 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Use tsar to monitor Raspberry Pi CPU Temperature 树莓派">
+    <meta name="description" content="Use Google App Engine to failover your blog between Raspberry Pi and Github 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -118,37 +118,37 @@
       
         
         
-          <li><a href="/posts/1/">1</a></li>
+          <li><a href="//posts/1/">1</a></li>
         
       
         
-          <li class="active"><a href="/posts/2/">2</a></li>
+          <li class="active"><a href="//posts/2/">2</a></li>
         
-        
-      
-        
-        
-          <li><a href="/posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/4/">4</a></li>
+          <li><a href="//posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/5/">5</a></li>
+          <li><a href="//posts/4/">4</a></li>
         
       
         
         
-          <li><a href="/posts/6/">6</a></li>
+          <li><a href="//posts/5/">5</a></li>
         
       
         
         
-          <li><a href="/posts/7/">7</a></li>
+          <li><a href="//posts/6/">6</a></li>
+        
+      
+        
+        
+          <li><a href="//posts/7/">7</a></li>
         
       
       </ul>
@@ -159,7 +159,7 @@
       <div class="post">
         <h1 class="title"><a href="/2015/03/28/59-use-raspberrypi-to-build-an-augmented-traffic-control-system.html">使用树莓派搭建低成本，便携，多用户的弱网模拟器：高效测试手机App在弱网下的可用性</a> <span class="date">2015-03-28</span></h1>
 
-        <h1><a style="display: block;" name="背景" href="#背景"></a>背景</h1>
+        <h1>背景</h1>
 
 <p>我们的手机经常会处于弱网情况下，电梯里，高铁上，在地铁站，电影院里。。。如果手机应用不针对弱网做优化，就会出现：白屏页面刷不出来，界面卡死，错误提示一堆，菊花转不停，用户抓狂。。。</p>
 
@@ -189,15 +189,13 @@
 
         <p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：</p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/5d6ddb93-220e-4c1d-a042-87a8835199dc/5e8345944ca4f948ee84636dacc77358/deep/0/77fa703f-71bc-40ac-8f65-861689fc2085-720-1,280-pixels.png" alt="Airplay" />
-</p>
+<p><img src="https://www.evernote.com/shard/s26/sh/5d6ddb93-220e-4c1d-a042-87a8835199dc/5e8345944ca4f948ee84636dacc77358/deep/0/77fa703f-71bc-40ac-8f65-861689fc2085-720-1,280-pixels.png" alt="Airplay" /></p>
 
-<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1eq68scsp62j20qn18galb.jpg" alt="pcDunio Acadia" />
-</p>
+<p><img src="http://ww1.sinaimg.cn/bmiddle/6bc40342jw1eq68scsp62j20qn18galb.jpg" alt="pcDunio Acadia" /></p>
 
 <p>苹果的<a href="http://en.wikipedia.org/wiki/AirPlay">Airplay</a>协议是通过基于<a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RSTP</a>（Real Time Streaming Protocol）协议通过UDP传输的无损编码音频流(<a href="http://en.wikipedia.org/wiki/Apple_Lossless">Apple Lossless codec</a>，音频流本身经过了AES加密，私钥是不公开的，这样只有苹果和其合作伙伴才能使用这个协议。但是2004年有人通过逆向工程获得了私钥并将其公开，这样我们也可以自己搭建低成本高音质的基于Airplay的音乐系统。在iPhone成为街机的时代，每个人的手机里有很多喜欢的音乐，如果在家里可以通过无线网络在音响系统里播放会方便很多。</p>
 
-<h1><a style="display: block;" name="硬件" href="#硬件"></a>硬件</h1>
+<h1>硬件</h1>
 
 <ol>
 <li>pcDunio Acadia 或 Raspberry Pi 一只</li>
@@ -206,7 +204,7 @@
 <li>网线一根或USB无线网卡一只</li>
 </ol>
 
-<h1><a style="display: block;" name="音频芯片" href="#音频芯片"></a>音频芯片</h1>
+<h1>音频芯片</h1>
 
 <p>好的音质需要好的音源，无损音乐加好的前端输出是必不可少的。
 <a href="http://www.linksprite.com/?page_id=829">pcDuino Acadia</a>集成的音频芯片是业界领先的英国<a href="http://en.wikipedia.org/wiki/Wolfson_Microelectronics">Wolfson（欧胜微电子）</a>为高清音频设计的<a href="http://www.cirrus.com/en/products/wm8962-62b.html">WM8962</a> 。树莓派集成的音频芯片则是由美国Broadcom（博通）封装在主芯片<a href="http://www.broadcom.com/products/BCM2835">BCM2835</a>里通过PWM (pulse-width modulation) 提供的，比较简单音质一般，达不到高清音频的要求。</p>
@@ -224,11 +222,11 @@
 
 <p>最近互联网理财很流行， 好的理财产品一出来很快就抢光了。有24x7运行的低功耗树莓派在就可以帮你检查网页是否有更新并将更新的内容通知到你的手机上。</p>
 
-<h1><a style="display: block;" name="安装phantomjs" href="#安装phantomjs"></a>安装phantomjs</h1>
+<h1>安装phantomjs</h1>
 
 <p>从 <a href="https://github.com/piksel/phantomjs-raspberrypi">https://github.com/piksel/phantomjs-raspberrypi</a> 下载已经编译好的phatomjs，并复制到<code>$PATH</code>下</p>
 
-<h1><a style="display: block;" name="安装node.js" href="#安装node.js"></a>安装Node.js</h1>
+<h1>安装Node.js</h1>
 
 <p>在树莓派上编译Node.js非常非常耗时。。。你也可以下载已经编译好的node和npm</p>
 
@@ -249,7 +247,7 @@ sudo cp -R * /usr/local/
 
         <p>树莓派官方的操作系统Raspbian最少需要4G的SDCard，如果你恰好有比较小的SD卡怎么办呢？设计上树莓派只能从SD卡引导启动，但我们可以在SD卡上装一个最小的引导系统，然后把树莓派引导到U盘上启动。SD卡连续运行，读写比较频繁也容易损坏（我已经坏掉3张了。。。），相比之下U盘价格便宜些，读写速度可以比SD卡还高。</p>
 
-<h1><a style="display: block;" name="制作引导sd卡" href="#制作引导sd卡"></a>制作引导SD卡</h1>
+<h1>制作引导SD卡</h1>
 
 <p>这个引导系统只需要16M容量的SD卡，先把SD卡格式化成FAT（windows），然后拷贝下面的文件到根目录。</p>
 
@@ -261,7 +259,7 @@ sudo cp -R * /usr/local/
 <pre><code>dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait cgroup_enable=memory
 </code></pre>
 
-<h1><a style="display: block;" name="安装操作系统raspbian到u盘" href="#安装操作系统raspbian到u盘"></a>安装操作系统Raspbian到U盘</h1>
+<h1>安装操作系统Raspbian到U盘</h1>
 
 <p>方法和安装到SD卡一样，在Mac上使用 <code>dd</code> 命令安装，在Windows上可以用win32diskimager：</p>
 
@@ -276,18 +274,17 @@ sudo cp -R * /usr/local/
 
         <p>如果你的树莓派不能通过路由器端口转发直接从家庭网络外访问，你还可以用类似聊天App一样的方式来和防火墙后的树莓派轻松交互，通过命令来控制树莓派。</p>
 
-<h1><a style="display: block;" name="telegram" href="#telegram"></a>Telegram</h1>
+<h1>Telegram</h1>
 
-<p><img src="https://telegram.org/img/t_logo.png" alt="image" />
-</p>
+<p><img src="https://telegram.org/img/t_logo.png" alt="image" /></p>
 
 <p>Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似<a href="http://www.msxiaoice.com/v2/DesktopLanding">微软小冰</a>的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。</p>
 
-<h2><a style="display: block;" name="安装telegram-cli" href="#安装telegram-cli"></a>安装telegram-cli</h2>
+<h2>安装telegram-cli</h2>
 
 <p>Linux的Telegram客户端telegram-cli源代码在 <a href="https://github.com/vysheng/tg">https://github.com/vysheng/tg</a>，按照Readme在树莓派上编译好。telegram-cli支持消息事件对lua脚本中的函数进行回调，支持的函数列表在：<a href="https://github.com/vysheng/tg/blob/master/README-LUA">https://github.com/vysheng/tg/blob/master/README-LUA</a>，也支持外部程序通过telegram-cli侦听的端口发送交互命令（一次连接只能一个命令）</p>
 
-<h2><a style="display: block;" name="lua交互脚本" href="#lua交互脚本"></a>Lua交互脚本</h2>
+<h2>Lua交互脚本</h2>
 
 
         <div class="more">
@@ -310,11 +307,11 @@ sudo cp -R * /usr/local/
 
 <p>假设家里的路由器IP地址为:<strong>192.168.1.1</strong>，树莓派2的IP地址为:<strong>192.168.1.3</strong>，以下是需要安装和设置步骤。</p>
 
-<h1><a style="display: block;" name="pptp和l2tp-vpn-server" href="#pptp和l2tp-vpn-server"></a>PPTP和L2TP VPN Server</h1>
+<h1>PPTP和L2TP VPN Server</h1>
 
 <p>首先在树莓派上安装和设置VPN服务器，移动设备就可以通过运营商网络连接回家里的树莓派（iPhone和Android都内置了PPTP和L2TP客户端），这样移动设备将以树莓派为路由访问网站，通过一些设置我们可以让树莓派提供科学上网服务。</p>
 
-<p>关于PPTP和L2TP VPN设置和安装可以参考： <a href="http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">http://hugozhu.myalert.info/<sup>2013</sup>&frasl;<sub>03</sub>/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</a></p>
+<p>关于PPTP和L2TP VPN设置和安装可以参考： <a href="http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</a></p>
 
 
         <div class="more">
@@ -383,7 +380,7 @@ dependencies {
 }
 
 task sync_jars() &lt;&lt; {
-     //把所有依赖的.jar库都拷贝到build/aar/libs下
+	 //把所有依赖的.jar库都拷贝到build/aar/libs下
     copy {
         into buildDir.getPath() +&quot;/aar/libs&quot;
         from configurations.compile.findAll {
@@ -393,7 +390,7 @@ task sync_jars() &lt;&lt; {
 }
 
 task sync_aars(dependsOn:':&lt;your_library_project&gt;:assembleRelease') &lt;&lt; {
-     //把所有依赖的.aar库里包含的classes.jar都拷贝到build/aar/libs下，并重命名以不被覆盖
+	 //把所有依赖的.aar库里包含的classes.jar都拷贝到build/aar/libs下，并重命名以不被覆盖
     def jar_name
     def aar_path
     def dest_dir = buildDir.getPath()+&quot;/aar&quot;
@@ -413,7 +410,7 @@ task sync_aars(dependsOn:':&lt;your_library_project&gt;:assembleRelease') &lt;&l
 
 task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
     task (obfuse_classes_jar, type: proguard.gradle.ProGuardTask) {
-        //把build/aar/libs/*.jar混淆后生成build/aar/classes.jar
+    	//把build/aar/libs/*.jar混淆后生成build/aar/classes.jar
         configuration &quot;proguard.cfg&quot;
         injars buildDir.getPath()+&quot;/aar/libs&quot;
         outjars buildDir.getPath()+&quot;/aar/classes.jar&quot;
@@ -423,7 +420,7 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
     }.execute()
 
     task (gen_aar, type: Zip) {
-        //把生成最终的aar包，注意libs目录需要被排除
+    	//把生成最终的aar包，注意libs目录需要被排除
         def dest_dir = buildDir.getPath()+&quot;/aar/&quot;
         baseName = &quot;mysdk-all&quot;
         extension = &quot;aar&quot;
@@ -443,7 +440,7 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
       <div class="post">
         <h1 class="title"><a href="/2014/09/04/51-useful-linux-command.html">常用Linux命令</a> <span class="date">2014-09-04</span></h1>
 
-        <h1><a style="display: block;" name="拷贝文件" href="#拷贝文件"></a>拷贝文件</h1>
+        <h1>拷贝文件</h1>
 
 <p>如果想事实看到拷贝的速度可以用<code>rsync -aP</code></p>
 
@@ -470,7 +467,7 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
 <li>客户端保存全量数据（对于客户端只保存部分数据的情况后面再做讨论）；</li>
 </ol>
 
-<h1><a style="display: block;" name="应用场景" href="#应用场景"></a>应用场景</h1>
+<h1>应用场景</h1>
 
 <ol>
 <li>通讯录同步</li>
@@ -495,37 +492,37 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
       
         
         
-          <li><a href="/posts/1/">1</a></li>
+          <li><a href="//posts/1/">1</a></li>
         
       
         
-          <li class="active"><a href="/posts/2/">2</a></li>
+          <li class="active"><a href="//posts/2/">2</a></li>
         
-        
-      
-        
-        
-          <li><a href="/posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/4/">4</a></li>
+          <li><a href="//posts/3/">3</a></li>
         
       
         
         
-          <li><a href="/posts/5/">5</a></li>
+          <li><a href="//posts/4/">4</a></li>
         
       
         
         
-          <li><a href="/posts/6/">6</a></li>
+          <li><a href="//posts/5/">5</a></li>
         
       
         
         
-          <li><a href="/posts/7/">7</a></li>
+          <li><a href="//posts/6/">6</a></li>
+        
+      
+        
+        
+          <li><a href="//posts/7/">7</a></li>
         
       
       </ul>
@@ -552,7 +549,7 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -573,6 +570,16 @@ task fataar(dependsOn:[sync_aars, sync_jars]) &lt;&lt; {
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

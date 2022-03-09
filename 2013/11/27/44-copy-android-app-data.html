@@ -110,12 +110,12 @@
 
 <div class="row">
   <div class="span8">
-    <h1><a style="display: block;" name="有root权限" href="#有root权限"></a>有root权限</h1>
+    <h1>有root权限</h1>
 
 <pre><code>adb shell su -c cat /data/data/app.package.name/databases/application.sqlite | sed 's/\r$//' &gt; application.sqlite
 </code></pre>
 
-<h1><a style="display: block;" name="应用可调试的话" href="#应用可调试的话"></a>应用可调试的话</h1>
+<h1>应用可调试的话</h1>
 
 <pre><code>adb shell
 run-as app.package.name \
@@ -124,13 +124,13 @@ exit
 adb pull /sdcard/application.sqlite ~/
 </code></pre>
 
-<h1><a style="display: block;" name="使用备份方法" href="#使用备份方法"></a>使用备份方法</h1>
+<h1>使用备份方法</h1>
 
 <pre><code>adb backup -f ~/data.ab -noapk app.package.name
 dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zlib.decompress(sys.stdin.read()))&quot; | tar -xvf -
 </code></pre>
 
-<h1><a style="display: block;" name="参考链接" href="#参考链接"></a>参考链接</h1>
+<h1>参考链接</h1>
 
 <ol>
 <li><a href="http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html">http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html</a></li>
@@ -163,7 +163,7 @@ dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zl
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -249,7 +249,7 @@ dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zl
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -270,6 +270,16 @@ dd if=data.ab bs=1 skip=24 | python -c &quot;import zlib,sys;sys.stdout.write(zl
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>

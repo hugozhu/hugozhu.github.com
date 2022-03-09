@@ -110,13 +110,13 @@
 
 <div class="row">
   <div class="span8">
-    <h2><a style="display: block;" name="介绍" href="#介绍"></a>介绍</h2>
+    <h2>介绍</h2>
 
 <p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个<a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;initiative_id=tbindexz_20130306">山寨的</a>的更简单。。。</p>
 
 <p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了<a href="http://xbmc.org">XBMC</a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如<a href="http://yisou.com">一搜</a>，优酷，搜狐视频，奇艺等。</p>
 
-<h2><a style="display: block;" name="外设" href="#外设"></a>外设</h2>
+<h2>外设</h2>
 
 <p>除了Pi单片机外，你还需要以下外设附件：</p>
 
@@ -127,7 +127,7 @@
 <li>SD卡一张，最少2G</li>
 </ol>
 
-<h2><a style="display: block;" name="raspbmc" href="#raspbmc"></a>Raspbmc</h2>
+<h2>Raspbmc</h2>
 
 <p><a href="http://www.raspbmc.com/">Raspbmc</a> 是专为在Raspberry Pi上运行<a href="http://xbmc.org">XBMC</a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。</p>
 
@@ -157,23 +157,19 @@
 <ol>
 <li><p>Windows下载<a href="http://download.raspbmc.com/downloads/bin/installers/raspbmc-win32.zip">安装程序</a>，运行即可。</p>
 
-<p><img src="http://www.raspbmc.com/wp-content/uploads/2012/06/ins-300x165.jpg" alt="image" />
-</p></li>
+<p><img src="http://www.raspbmc.com/wp-content/uploads/2012/06/ins-300x165.jpg" alt="image" /></p></li>
 
 <li><p>Linux/Mac:</p>
 
 <pre><code>curl -O http://svn.stmlabs.com/svn/raspbmc/testing/installers/python/install.py
 chmod +x install.py
 sudo python install.py
-
-
-</code></pre>
+    
+</code></pre></li>
+</ol>
 
 <p><img src="http://www.raspbmc.com/wp-content/uploads/2012/06/installPython.png" alt="image" />
-</p></li>
-
-<li><p>或直接下载<a href="http://download.raspbmc.com/downloads/bin/ramdistribution/installer.img.gz">安装包</a>安装</p></li>
-</ol>
+3.  或直接下载<a href="http://download.raspbmc.com/downloads/bin/ramdistribution/installer.img.gz">安装包</a>安装</p>
 
 <h3>下载</h3>
 
@@ -189,23 +185,21 @@ sudo /etc/init.d/transmission-daemon stop
 sudo nano /etc/transmission-daemon/settings.json
 </code></pre></li>
 
-<li><p>配置</p></li>
-</ol>
+<li><p>配置</p>
 
-<pre><code>    “rpc-whitelist”: “127.0.0.1″, to “rpc-whitelist”: “*.*.*.*”,
-    “rpc-password”: “password”, to “rpc-password”: “替换成管理密码“,
-    “rpc-username”: “username”, to “rpc-username”: “替换成管理用户“,   
-    “download-dir”：“\/home\/xbmc\/Videos\/Downloads”,
+<pre><code>“rpc-whitelist”: “127.0.0.1″, to “rpc-whitelist”: “*.*.*.*”,
+“rpc-password”: “password”, to “rpc-password”: “替换成管理密码“,
+“rpc-username”: “username”, to “rpc-username”: “替换成管理用户“,   
+“download-dir”：“\/home\/xbmc\/Videos\/Downloads”,
 </code></pre>
 
-<pre><code>    sudo chmod g+rw /home/xbmc/Videos/Downloads
-    sudo chgrp -R debian-transmission /home/xbmc/Videos/Downloads   
-    sudo /etc/init.d/transmission-daemon start
-</code></pre>
+<pre><code>sudo chmod g+rw /home/xbmc/Videos/Downloads
+sudo chgrp -R debian-transmission /home/xbmc/Videos/Downloads   
+sudo /etc/init.d/transmission-daemon start
+</code></pre></li>
 
-<ol>
-<li>24x7开始下载，耗电量很低的，这是下载界面：
-<img src="https://pbs.twimg.com/media/BErnJ-6CcAEVYsV.jpg:large" alt="image" /></li>
+<li><p>24x7开始下载，耗电量很低的，这是下载界面：
+<img src="https://pbs.twimg.com/media/BErnJ-6CcAEVYsV.jpg:large" alt="image" /></p></li>
 </ol>
 
 <h3>遥控和播放</h3>
@@ -256,7 +250,7 @@ sudo nano /etc/transmission-daemon/settings.json
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
@@ -342,7 +336,7 @@ sudo nano /etc/transmission-daemon/settings.json
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {
@@ -363,6 +357,16 @@ sudo nano /etc/transmission-daemon/settings.json
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+	
+	
+// Feature detects Navigation Timing API support.
+if (window.performance) {
+  // Gets the number of milliseconds since page load
+  // (and rounds the result since the value must be an integer).
+  var timeSincePageLoad = Math.round(performance.now());
+  // Sends the timing hit to Google Analytics.
+  ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}	
 </script>
 
 </body>
