@@ -507,6 +507,19 @@ Bus 001 Device 004: ID 148f:5370 Ralink Technology, Corp. RT5370 Wireless Adapte
       'event_category': 'JS Dependencies'
     });
   }	
+	
+	
+gtag('event', 'test_event_name', {
+  'screen_name' : document.title,
+  'page_title' : document.title,
+  'page_location': location.href
+});
+
+gtag('event', 'screen_view', {
+  'screen_name' : document.title,
+  'test_param' : location.href
+});
+	
 </script>	  
  
 </body>

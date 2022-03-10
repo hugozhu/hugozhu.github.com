@@ -313,6 +313,19 @@ rsync -v -a --delete --size-only -O --no-l --no-t --no-o --no-p --no-g /etc /mnt
       'event_category': 'JS Dependencies'
     });
   }	
+	
+	
+gtag('event', 'test_event_name', {
+  'screen_name' : document.title,
+  'page_title' : document.title,
+  'page_location': location.href
+});
+
+gtag('event', 'screen_view', {
+  'screen_name' : document.title,
+  'test_param' : location.href
+});
+	
 </script>	  
  
 </body>

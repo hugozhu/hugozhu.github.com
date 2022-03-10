@@ -312,6 +312,19 @@ Linux下可以用<code>fdisk</code>来解决，我的方法是把该U盘插到�
       'event_category': 'JS Dependencies'
     });
   }	
+	
+	
+gtag('event', 'test_event_name', {
+  'screen_name' : document.title,
+  'page_title' : document.title,
+  'page_location': location.href
+});
+
+gtag('event', 'screen_view', {
+  'screen_name' : document.title,
+  'test_param' : location.href
+});
+	
 </script>	  
  
 </body>

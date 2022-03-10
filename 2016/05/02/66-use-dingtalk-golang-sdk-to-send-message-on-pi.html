@@ -352,6 +352,19 @@ timeout 10 ~/bin/push &lt;agentid&gt; &quot;@all&quot; &quot;$1&quot;
       'event_category': 'JS Dependencies'
     });
   }	
+	
+	
+gtag('event', 'test_event_name', {
+  'screen_name' : document.title,
+  'page_title' : document.title,
+  'page_location': location.href
+});
+
+gtag('event', 'screen_view', {
+  'screen_name' : document.title,
+  'test_param' : location.href
+});
+	
 </script>	  
  
 </body>

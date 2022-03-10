@@ -507,6 +507,19 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to-source 1.2.3.4
       'event_category': 'JS Dependencies'
     });
   }	
+	
+	
+gtag('event', 'test_event_name', {
+  'screen_name' : document.title,
+  'page_title' : document.title,
+  'page_location': location.href
+});
+
+gtag('event', 'screen_view', {
+  'screen_name' : document.title,
+  'test_param' : location.href
+});
+	
 </script>	  
  
 </body>

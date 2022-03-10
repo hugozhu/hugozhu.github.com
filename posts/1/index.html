@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 1 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Running Grafana on Raspberry Pi 3 树莓派">
+    <meta name="description" content="Nokia 5110比前面介绍过的1602液晶屏功能好很多 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -598,6 +598,19 @@ hci0:	Type: BR/EDR  Bus: UART
       'event_category': 'JS Dependencies'
     });
   }	
+	
+	
+gtag('event', 'test_event_name', {
+  'screen_name' : document.title,
+  'page_title' : document.title,
+  'page_location': location.href
+});
+
+gtag('event', 'screen_view', {
+  'screen_name' : document.title,
+  'test_param' : location.href
+});
+	
 </script>	  
  
 </body>
