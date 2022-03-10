@@ -2,12 +2,12 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://hugozhu.myalert.info</link>
-    <pubDate>09 Mar 22 12:37 UTC</pubDate>
+    <pubDate>10 Mar 22 01:25 UTC</pubDate>
     <item>
       <title>在iPad上写Blog</title>
       <link>http://hugozhu.myalert.info/2020/03/20/69-write-your-blog-on-ipad.html</link>
       <pubDate>2020-03-20 12:00:00 +0800</pubDate>
-      <description>&#xA;&#xA;&lt;p&gt;&lt;h1&gt;目录：&lt;/h1&gt;&lt;nav&gt;&#xA;&lt;/nav&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;iPad的创作能力越来越强，直接修改Github上的文件就可以写Blog了。&lt;/p&gt;&#xA;</description>
+      <description>&#xA;&#xA;&lt;p&gt;&lt;h1&gt;目录：&lt;/h1&gt;&lt;nav&gt;&#xA;&lt;/nav&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;iPad的创作能力越来越强，直接修改Github上的文件就可以写Blog了，方法是在Github上建一个自动更新网站的Workflow&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;name: Blog of hugozhu.myalert.info&#xA;&#xA;on:&#xA;  push:&#xA;    branches: [ master ]&#xA;jobs:&#xA;  checks:&#xA;    name: run&#xA;    runs-on: ubuntu-latest&#xA;    steps:&#xA;    - uses: actions/checkout@v2&#xA;      with:&#xA;        token: $&#xA;    - name: Set up Go&#xA;      uses: actions/setup-go@v2&#xA;      with:&#xA;        go-version: 1.16&#xA;    - name: Install gor&#xA;      run: |&#xA;        go version&#xA;        go install github.com/hugozhu/gor/gor@latest&#xA;    - name: Clone blog&#xA;      run: |&#xA;        mkdir compiled&#xA;        git clone https://github.com/hugozhu/hugozhu.github.com compiled&#xA;    - name: Compile blog&#xA;      run: |&#xA;        gor compile&#xA;    - name: Publish blog&#xA;      run: |&#xA;        cd compiled&#xA;        git status&#xA;        git config --global user.name &amp;quot;Hugo Zhu&amp;quot;&#xA;        git config --global user.email &amp;quot;hugozhu@gmail.com&amp;quot;&#xA;        git remote set-url origin https://x-access-token:$@github.com/hugozhu/hugozhu.github.com        &#xA;        git add *&#xA;        git commit -m &amp;quot;Updated $&amp;quot; .&#xA;        git push origin&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
     </item>
     <item>
       <title>把树莓派4设置成路由器和热点</title>

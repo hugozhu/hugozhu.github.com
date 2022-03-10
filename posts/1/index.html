@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 1 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Nokia 5110比前面介绍过的1602液晶屏功能好很多 树莓派">
+    <meta name="description" content="Running Grafana on Raspberry Pi 3 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -162,7 +162,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="post">
         <h1 class="title"><a href="/2020/03/20/69-write-your-blog-on-ipad.html">在iPad上写Blog</a> <span class="date">2020-03-20</span></h1>
 
-        <p>iPad的创作能力越来越强，直接修改Github上的文件就可以写Blog了。</p>
+        <p>iPad的创作能力越来越强，直接修改Github上的文件就可以写Blog了，方法是在Github上建一个自动更新网站的Workflow</p>
+
+<pre><code>name: Blog of hugozhu.myalert.info
+
+on:
+  push:
+    branches: [ master ]
+jobs:
+  checks:
+    name: run
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: $
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+    - name: Install gor
+      run: |
+        go version
+        go install github.com/hugozhu/gor/gor@latest
+    - name: Clone blog
+      run: |
+        mkdir compiled
+        git clone https://github.com/hugozhu/hugozhu.github.com compiled
+    - name: Compile blog
+      run: |
+        gor compile
+    - name: Publish blog
+      run: |
+        cd compiled
+        git status
+        git config --global user.name &quot;Hugo Zhu&quot;
+        git config --global user.email &quot;hugozhu@gmail.com&quot;
+        git remote set-url origin https://x-access-token:$@github.com/hugozhu/hugozhu.github.com        
+        git add *
+        git commit -m &quot;Updated $&quot; .
+        git push origin
+</code></pre>
 
 
         <div class="more">
