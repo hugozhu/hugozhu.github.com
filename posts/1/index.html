@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 1 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Nokia 5110比前面介绍过的1602液晶屏功能好很多 树莓派">
+    <meta name="description" content="介绍Fork + Pull Request的合作开发方法 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -600,15 +600,16 @@ hci0:	Type: BR/EDR  Bus: UART
   }	
 	
 	
-gtag('event', 'test_event_name', {
-  'screen_name' : document.title,
-  'page_title' : document.title,
-  'page_location': location.href
+gtag('event', 'hho_login_view', {
+  'click' : "tab_signin",
 });
 
-gtag('event', 'screen_view', {
-  'screen_name' : document.title,
-  'test_param' : location.href
+gtag('event', 'hho_login_view', {
+  'click' : "ink_bottom_service",
+});
+
+gtag('event', 'hho_login_view', {
+  'input_email' : location.href,
 });
 	
 </script>	  

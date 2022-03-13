@@ -127,27 +127,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   
 
 
-  <li><a href="/about">About Me</a></li>
-
-
-
-  
-
-
-  <li><a href="/archive">Archive</a></li>
-
-
-
-  
-
-
-  <li><a href="/categories">Categories</a></li>
-
-
-
-  
-
-
   <li><a href="/">When Go meets Raspberry Pi 4</a></li>
 
 
@@ -177,6 +156,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
   <li><a href="/tools">Tools</a></li>
+
+
+
+  
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+
+  
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+
+  
+
+
+  <li><a href="/categories">Categories</a></li>
 
 
 
@@ -233,15 +233,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }	
 	
 	
-gtag('event', 'test_event_name', {
-  'screen_name' : document.title,
-  'page_title' : document.title,
-  'page_location': location.href
+gtag('event', 'hho_login_view', {
+  'click' : "tab_signin",
 });
 
-gtag('event', 'screen_view', {
-  'screen_name' : document.title,
-  'test_param' : location.href
+gtag('event', 'hho_login_view', {
+  'click' : "ink_bottom_service",
+});
+
+gtag('event', 'hho_login_view', {
+  'input_email' : location.href,
 });
 	
 </script>	  
