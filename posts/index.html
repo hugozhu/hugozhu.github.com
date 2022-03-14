@@ -115,6 +115,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2021/03/10/70-google-analytics-101.html">Google Analytics 101</a> <span class="date">2021-03-10</span></h1>
+
+  <h1>Google Analytics 4 介绍</h1>
+
+<p>Google Analytics（分析）可帮助您了解人们使用您的 Web、Apple 或 Android 应用的方式。SDK 会自动收集大量事件和用户属性，您也可以定义自定义事件，以便衡量对您的业务有特殊影响的因素。收集到数据后，可通过 Firebase 控制台到信息中心中查看。通过此信息中心，您可以深入、详细地了解您的数据，包括摘要数据（如活跃用户和受众特征）和更详细的数据（如识别您最畅销的商品）。</p>
+
+<p>Analytics 还集成了 Firebase 的一些其他功能。例如，它自动记录与通过通知编辑器发送的通知消息相对应的事件，并就每个广告系列的影响提供报告。</p>
+
+<p>Analytics 可帮助您了解用户的行为方式，以便您就如何推广您的应用制定明智的决策。您可以查看您的广告系列在自然渠道和付费渠道的效果，以了解哪些方法对于吸引高价值用户最为有效。如果您需要执行自定义分析或者将您的数据与其他源数据联接，您可以将自己的 Analytics 数据关联到 BigQuery，从而进行更复杂的分析，例如查询大型数据集以及联接多个数据源。</p>
+
+<h1>网站和App的用户行为跟踪技术：从 UA （Google Universal Analytics, GA3) -&gt; GA4（Google  Analytics 4)，三种实现方案：analytics.js -&gt; gtag.js -&gt; GTM (Google Tag Manager)</h1>
+
+<p><a href="https://support.google.com/analytics/answer/10270783?hl=zh-Hans">https://support.google.com/analytics/answer/10270783?hl=zh-Hans</a></p>
+
+<p>GA4是UA（GA3）的一次全新的升级，测量模型从以传统的基于会话（Session）转变为事件（Event）驱动，GA3专注于在一次会话中收集和处理用户的各种行为数据（如页面展现，事件，交易），在GA4中，一次页面展现（Pageview）也被认为是一个事件，而页面的标题（Page Title）和路径（Page Path）则是事件的参数。</p>
+
+<p>UA（GA3）只有一种跟踪代码类型，但GA4有两种代码类型：GA4配置代码和GA4事件代码，其中GA4配置代码的作用域范围是页面全局，用户在页面上所有交互事件共享相同的配置。运行期GA4配置代码要在事件代码触发前执行。</p>
+
+<ol>
+<li>可以填入第三方追踪代码，例如 Facebook/Tiktok Pixel</li>
+<li>追踪事件 (转化) 或其他项目时候，不用工程师改代码</li>
+<li>有代码预览，审核发布流程，适合团队协作</li>
+</ol>
+
+
+  <div class="more">
+    <a href="/2021/03/10/70-google-analytics-101.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2020/03/20/69-write-your-blog-on-ipad.html">在iPad上写Blog</a> <span class="date">2020-03-20</span></h1>
 
   <p>iPad的创作能力越来越强，直接修改Github上的文件就可以写Blog了，方法是在Github上建一个自动更新网站的Workflow</p>
@@ -431,33 +462,6 @@ hci0:   Type: BR/EDR  Bus: UART
 
   <div class="more">
     <a href="/2016/04/06/61-smart-router-with-iptable.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2015/04/12/60-run-docker-on-raspberry-pi.html">在树莓派上运行Docker</a> <span class="date">2015-04-12</span></h1>
-
-  <h1>Docker</h1>
-
-<p>Docker是目前非常流行的代码运行容器，操作系统虚拟化，运维自动化架构和开源的解决方案。</p>
-
-<p>Docker的基础是Linux容器（LXC）技术，相比传统的VM虚拟化技术, LXC更轻量，性能更好。</p>
-
-<p>Docker采用Golang语言开发，在LXC基础上Docker进行了封装，简化了容器的管理。</p>
-
-<p>Docker还提供了一个标准(Dockerile)来实现软件部署环境代码化，全球的开发和运维工程师可以通过官方的Docker Hub仓库分享自己创建的镜像，使用者则可以快速的把系统和应用部署到自己的环境。</p>
-
-<h1>树莓派二代</h1>
-
-<p>树莓派二代的CPU有4核，运行速度是第一代的6倍，通过Docker快速部署开发环境，开发应用，再把开发好的系统通过镜像分享和发布出去也是非常有意义的事。因为树莓派的官方操作系统Raspbian并不支持Docker，本文主要介绍下如何在树莓派二代上运行Docker的几种方法。</p>
-
-<h2>Arch Linux ARM</h2>
-
-<p><a href="http://archlinuxarm.org">Arch Linux ARM</a> 是由开源社区维护专为ARMv6（如树莓派一代）和 ARMv7（如树莓派二代, pcDuino3）等嵌入式硬件提供内核及软件支持的Linux发行版本。</p>
-
-
-  <div class="more">
-    <a href="/2015/04/12/60-run-docker-on-raspberry-pi.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 
