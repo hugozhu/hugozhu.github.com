@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Google Analytics 101 - When Go meets Raspberry Pi</title>
+    <title>Google Analytics 4 简介 - When Go meets Raspberry Pi</title>
   
     <meta name="description" content="How to use Google Analytics to measure shopping app 树莓派">
   
@@ -108,7 +108,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="content">
         <div class="page-header">
-  <h1>Google Analytics 101 </h1>
+  <h1>Google Analytics 4 简介 </h1>
 </div>
 
 <div class="row">
@@ -117,11 +117,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li><a href="#toc_0">Google Analytics 4 介绍</a></li>
+<li><a href="#toc_0">Google Analytics 4 简介</a></li>
 <li><a href="#toc_1">网站和App用户行为跟踪技术的演进</a></li>
 <li><a href="#toc_2">重要概念</a>
 <ul>
-<li><a href="#toc_3">Segments（受众群体）</a></li>
+<li><a href="#toc_3">Segments（受众）</a></li>
 <li><a href="#toc_4">Event（事件）</a></li>
 <li><a href="#toc_5">Dimension （维度）</a></li>
 <li><a href="#toc_6">Metrics （指标）</a></li>
@@ -137,7 +137,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 </nav></p>
 
-<h1 id="toc_0">Google Analytics 4 介绍</h1>
+<h1 id="toc_0">Google Analytics 4 简介</h1>
 
 <p>Google Analytics（分析）可帮助您了解人们使用您的 Web、Apple 或 Android 应用的方式。SDK 会自动收集大量事件和用户属性，您也可以定义自定义事件，以便衡量对您的业务有特殊影响的因素。收集到数据后，可通过 Firebase 控制台到信息中心中查看。通过此信息中心，您可以深入、详细地了解您的数据，包括摘要数据（如活跃用户和受众特征）和更详细的数据（如识别您最畅销的商品）。</p>
 
@@ -154,7 +154,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>三种实现方案：analytics.js -&gt; gtag.js -&gt; GTM (Google Tag Manager)</p>
 
-<p>analytics.js已不被推荐使用，GTM是目前的最佳实践。</p>
+<p>analytics.js已不被推荐使用，*GTM*是目前的最佳实践。</p>
 
 <p>GTM的三个优势：</p>
 
@@ -170,9 +170,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h1 id="toc_2">重要概念</h1>
 
-<h2 id="toc_3">Segments（受众群体）</h2>
+<h2 id="toc_3">Segments（受众）</h2>
 
-<p>建立起产品受众分层是产品精准营销的基础。受众群体的分层是产品用户的具体分类，可根据地区，访问设备，年龄等用户属性来分类，每一个产品都有一个目标获取的受众群体，具体的营销活动应该根据目标受众的喜好来追求ROI最大化，用户增长首先要找到最容易获取的受众群体。</p>
+<p>建立起产品受众分层是产品精准营销的基础。受众分层是使用产品用户的具体分类，可根据地区，访问设备，年龄等用户属性来分类，每一个产品都有一个目标获取的受众群体，具体的营销活动应该根据目标受众的喜好来追求ROI最大化，用户增长首先要找到最易获取的受众群体。</p>
 
 <p>Segment示例：</p>
 
@@ -241,7 +241,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h1 id="toc_9">GA4 和 GTM 事件跟踪使用流程</h1>
 
-<p>** 重要！！！请工程师阅读并完整完成一次流程，从GA4报表数据确认配置正确 **
+<p>** 重要！！！请工程师阅读并完成一次流程，从GA4报表数据确认配置正确 **
 <a href="https://www.optimizesmart.com/event-tracking-in-google-tag-manager-v2-complete-guide/">https://www.optimizesmart.com/event-tracking-in-google-tag-manager-v2-complete-guide/</a></p>
 
 <h2 id="toc_10">DataLayer</h2>
@@ -270,7 +270,7 @@ logEvent({
 
 用户页面互动自定义打点：
 logEvent({
-  name: &quot;hho_login_view&quot;,
+  name: &quot;login_view&quot;,
   params: {
     click : &quot;tab_signin | tab_register | btn_signin | btn_register | link_forget_password | link_bottom_privacy | link_bottom_service&quot;,
     input: &quot;email ｜ password&quot;
