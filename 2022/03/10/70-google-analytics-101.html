@@ -135,6 +135,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><a href="#toc_12">Logging Event 记录事件</a></li>
 </ul></li>
 <li><a href="#toc_13">电子商务 (GA4) 开发者指南</a></li>
+<li><a href="#toc_14">页面预加载请求如何打点</a></li>
+<li><a href="#toc_15">导出GA4数据到Google BigQuery</a></li>
 </ul>
 </nav></p>
 
@@ -299,6 +301,24 @@ function logEvent(name, params) {
 
 <p><strong>重要！！！</strong>
 <a href="https://developers.google.com/tag-manager/ecommerce-ga4">https://developers.google.com/tag-manager/ecommerce-ga4</a></p>
+
+<h1 id="toc_14">页面预加载请求如何打点</h1>
+
+<p><a href="https://support.google.com/analytics/answer/1033068#NonInteractionEvents&amp;zippy=%2Cin-this-article">https://support.google.com/analytics/answer/1033068#NonInteractionEvents&amp;zippy=%2Cin-this-article</a></p>
+
+<pre><code>gtag('event', 'video_auto_play_start', {
+  'event_label': 'My promotional video',
+  'event_category': 'video_auto_play',
+  'non_interaction': true
+});
+</code></pre>
+
+<p>GTM同样可以标记非交互事件。</p>
+
+<h1 id="toc_15">导出GA4数据到Google BigQuery</h1>
+
+<p>导出后可以看到打点的原始数据，免费可以有100万条事件：
+<a href="https://support.google.com/analytics/answer/7029846?hl=en">https://support.google.com/analytics/answer/7029846?hl=en</a></p>
 
     <hr>
     <div class="pagination">
