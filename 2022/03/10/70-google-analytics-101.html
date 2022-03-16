@@ -321,6 +321,17 @@ function logEvent(name, params) {
 <p>导出后可以看到打点的原始数据，免费可以有100万条事件：
 <a href="https://support.google.com/analytics/answer/7029846?hl=en">https://support.google.com/analytics/answer/7029846?hl=en</a></p>
 
+<p>导出一天的event日志成json文件后就可以用 <strong>jq</strong> 命令快速过滤分析:</p>
+
+<pre><code>cat results-20220316-111605.json | jq -r '
+.[] | [ 
+  .event_timestamp, 
+  .event_name, 
+  (.event_params | .[] | select (.key == &quot;click&quot;) | .value.string_value) 
+] | @csv'
+
+</code></pre>
+
     <hr>
     <div class="pagination">
       <ul>
