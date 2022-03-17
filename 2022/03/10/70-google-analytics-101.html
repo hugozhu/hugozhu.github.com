@@ -158,7 +158,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>三种实现方案：analytics.js -&gt; gtag.js -&gt; GTM (Google Tag Manager)</p>
 
-<p>analytics.js已不被推荐使用，*GTM*是目前的最佳实践。</p>
+<p>analytics.js已不被推荐使用，<strong>GTM</strong>是目前的最佳实践。</p>
 
 <p>GTM的三个优势：</p>
 
@@ -321,7 +321,7 @@ function logEvent(name, params) {
 
 <h1 id="toc_15">导出GA4数据到Google BigQuery</h1>
 
-<p>导出后可以看到打点的原始数据，免费每天可以有100万条事件：</p>
+<p>GA3不能导出原始数据是最大的诟病，好在GA4支持导出了，免费额度每天有100万条事件：</p>
 
 <p>GA4事件原始表结构：<a href="https://support.google.com/analytics/answer/7029846?hl=en">https://support.google.com/analytics/answer/7029846?hl=en</a></p>
 
@@ -336,17 +336,22 @@ function logEvent(name, params) {
 
 </code></pre>
 
-<p>同步GA4 Event Logs到自己的数据仓库
-* 配置好 Google BigQuery API 访问权限
-* 调用Export接口，将数据导出到Google Cloud Storage（类似Aliyun OSS的服务）
-* 调用Storage API下载到Aliyun OSS，再通过ODPS倒入数据仓库
-* 如果需要实时数据，也可以定时Query GA4每天的实时表同步到MongoDB等数据库。</p>
+<p>同步GA4 Event Logs到自己的数据仓库的步骤：</p>
+
+<ul>
+<li>配置好 Google BigQuery API 访问权限</li>
+<li>调用Export接口，将数据导出到Google Cloud Storage（类似Aliyun OSS的服务）</li>
+<li>调用Storage API下载到Aliyun OSS，再通过ODPS倒入数据仓库</li>
+<li>如果需要实时数据，也可以定时Query GA4每天的实时表同步到MongoDB等数据库。</li>
+</ul>
 
 <h1 id="toc_16">GA4 演示账号</h1>
 
 <p><a href="https://support.google.com/analytics/answer/6367342?hl=en#zippy=%2Cin-this-article">https://support.google.com/analytics/answer/6367342?hl=en#zippy=%2Cin-this-article</a></p>
 
-<p>安装演示账号后可以体验GA4内建的电商网站的流量获取渠道效率，成交转化漏斗等报表和数据洞察，这是最大的业务价值。<strong>实现这个价值的前提是规范的使用GA打点。</strong></p>
+<p>安装GA4演示账号后可以体验GA4内建的电商网站的流量获取渠道效率，成交转化漏斗等报表和数据洞察，这是最大的业务价值。</p>
+
+<p><strong>实现这个价值的前提是规范的使用GA打点。</strong></p>
 
     <hr>
     <div class="pagination">
