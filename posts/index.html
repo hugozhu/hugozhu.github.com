@@ -119,6 +119,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p><a href="https://docs.gitlab.com/ee/ci/docker/using_docker_build.html">https://docs.gitlab.com/ee/ci/docker/using_docker_build.html</a></p>
 
+<h1>docker-compose.yaml</h1>
+
+<pre><code>version: '3.6'
+services:
+  gitlab-runner:
+    image: 'gitlab/gitlab-runner:latest'
+    restart: always
+    volumes:
+      - ./config:/etc/gitlab-runner
+      - /data/gitlab-runner:/home/gitlab-runner
+</code></pre>
+
+<h1>./config/config.toml</h1>
+
+<p>/root/.docker/config.json 里放docker hub的授权token</p>
+
 
   <div class="more">
     <a href="/2022/05/16/71-gitlab-runner-using-docker-build.html" class="btn btn-small">阅读全文</a>

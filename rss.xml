@@ -2,12 +2,12 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://blog.hugozhu.site</link>
-    <pubDate>16 May 22 08:48 UTC</pubDate>
+    <pubDate>16 May 22 17:38 UTC</pubDate>
     <item>
       <title>用Gitlab Runner来打包并上传Harbor</title>
       <link>http://blog.hugozhu.site/2022/05/16/71-gitlab-runner-using-docker-build.html</link>
       <pubDate>2022-05-16 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;&lt;a href=&#34;https://docs.gitlab.com/ee/ci/docker/using_docker_build.html&#34;&gt;https://docs.gitlab.com/ee/ci/docker/using_docker_build.html&lt;/a&gt;&lt;/p&gt;&#xA;</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.gitlab.com/ee/ci/docker/using_docker_build.html&#34;&gt;https://docs.gitlab.com/ee/ci/docker/using_docker_build.html&lt;/a&gt;&lt;/p&gt;&#xA;&#xA;&lt;h1&gt;docker-compose.yaml&lt;/h1&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;version: &#39;3.6&#39;&#xA;services:&#xA;  gitlab-runner:&#xA;    image: &#39;gitlab/gitlab-runner:latest&#39;&#xA;    restart: always&#xA;    volumes:&#xA;      - ./config:/etc/gitlab-runner&#xA;      - /data/gitlab-runner:/home/gitlab-runner&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h1&gt;./config/config.toml&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;/root/.docker/config.json 里放docker hub的授权token&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;concurrent = 1&#xA;check_interval = 0&#xA;&#xA;[session_server]&#xA;  session_timeout = 1800&#xA;&#xA;[[runners]]&#xA;  name = &amp;quot;Dev1 Docker Runner&amp;quot;&#xA;  url = &amp;quot;https://gitlab.xxxx.com/&amp;quot;&#xA;  token = &amp;quot;xxxxxxxxxxxx&amp;quot;&#xA;  executor = &amp;quot;docker&amp;quot;&#xA;  [runners.docker]&#xA;    tls_verify = false&#xA;    image = &amp;quot;docker:20.10.15&amp;quot;&#xA;    privileged = false&#xA;    disable_entrypoint_overwrite = false&#xA;    oom_kill_disable = false&#xA;    disable_cache = false&#xA;    volumes = [&amp;quot;/home/hugo/.docker/config.json:/root/.docker/config.json:ro&amp;quot;,&amp;quot;/var/run/docker.sock:/var/run/docker.sock&amp;quot;, &amp;quot;/data/gitlab-runner/cache:/home/gitlab-runner/cache&amp;quot;]&#xA;    shm_size = 0&#xA;    cache_dir = &amp;quot;/home/gitlab-runner/cache&amp;quot;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h1&gt;.gitlab-ci.yml&lt;/h1&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;workflow:&#xA;before_script:&#xA;  - docker info&#xA;&#xA;build-job:&#xA;  stage: build&#xA;  script:&#xA;    - docker build -t test:latest .&#xA;    - docker push test:latest&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
     </item>
     <item>
       <title>Google Analytics 4 简介</title>
