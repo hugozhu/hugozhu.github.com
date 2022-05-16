@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>动态DNS程序 - When Go meets Raspberry Pi</title>
+    <title>用Gitlab Runner来打包并上传Harbor - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="动态根据宽带外网IP更新dnspod登记的域名, Go语言实现 树莓派">
+    <meta name="description" content="Gitlab Runner with docker build command 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -108,42 +108,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="content">
         <div class="page-header">
-  <h1>动态DNS程序 </h1>
+  <h1>用Gitlab Runner来打包并上传Harbor </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h2>动态根据宽带public ip更新dnspod登记的域名</h2>
-
-<p>按照 <a href="https://gist.github.com/833369">https://gist.github.com/833369</a> 逻辑重新用Go实现了，用更少的内存开销在Raspberry Pi上跑。</p>
-
-<p>替换上你的Email，密码，域名ID，记录ID等参数，就可以运行了。 会在后台一直运行，每隔30秒检查一遍IP，如果修改了就更新IP。</p>
-
-<p>获得domain_id可以用：</p>
-
-<pre><code>curl curl -k https://dnsapi.cn/Domain.List -d &quot;login_email=xxx&amp;login_password=xxx&quot; 
-</code></pre>
-
-<p>获得record_id：</p>
-
-<pre><code>curl -k https://dnsapi.cn/Record.List -d &quot;login_email=xxx&amp;login_password=xxx&amp;domain_id=xxx&quot;
-</code></pre>
-
-<script src="https://gist.github.com/hugozhu/6506189.js"></script>
+    <p><a href="https://docs.gitlab.com/ee/ci/docker/using_docker_build.html">https://docs.gitlab.com/ee/ci/docker/using_docker_build.html</a></p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/02/26/linux_perf_tools.html" title="系统调试和分析工具">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/02/25/Java%20properties%20to%20enviorment%20variables.html" title="将Java的Properties文件转换成环境变量">Next &rarr;</a></li>
+            <li class="next"><a href="/2022/03/10/70-google-analytics-101.html" title="Google Analytics 4 简介">Next &rarr;</a></li>
           
           
         </ul>
@@ -192,7 +176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-02-26</span></div>
+      <div class="date"><span>2022-05-16</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -207,11 +191,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Linux-ref">Linux <span>6</span></a>
-</li>
-      
-        <li>
-  <a href="/tags/#Network-ref">Network <span>2</span></a>
+  <a href="/tags/#Gitlab-Docker-ref">Gitlab Docker <span>1</span></a>
 </li>
       
       </ul>

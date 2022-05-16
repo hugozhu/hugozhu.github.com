@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 6 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="How does zero commision brokerage make money? 树莓派">
+    <meta name="description" content="DIY airplay HIFI audio system 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -154,10 +154,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="/posts/7/">7</a></li>
         
       
+        
+        
+          <li><a href="/posts/8/">8</a></li>
+        
+      
       </ul>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html">升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</a> <span class="date">2013-03-24</span></h1>
+
+        <p>Nokia 5110屏比前面介绍过的<a href="http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">1602液晶屏</a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：</p>
+
+<ol>
+<li>带蓝色背光</li>
+<li>使用Philips PCD8544 LCD控制器（通过SPI接口）</li>
+<li>84x48点阵，可显示100多个字符</li>
+</ol>
+
+<h1>硬件准备</h1>
+
+<ol>
+<li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li>
+<li><a href="http://item.taobao.com/item.htm?id=3125173573&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118594_4k1_653822857&amp;clk1=0b755dfca67112cd1b605914b40146e7&amp;spm=a230z.1.5634029.2.foR1Yu">Nokia 5110 拆机屏</a> 或 <a href="http://item.taobao.com/item.htm?spm=a230r.1.10.154.SdjftL&amp;id=13361097288&amp;_u=oqa31997">焊好的？</a> 注意不要买裸屏，需要带电路板的</li>
+<li><a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">杜邦线</a> 母对母8条</li>
+<li>8P排针 用来焊接5110屏幕PCB板</li>
+<li><a href="http://detail.tmall.com/item.htm?id=22096296909&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁</a></li>
+</ol>
+
+<h1>电路</h1>
+
+<p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。</p>
+
+
+        <div class="more">
+          <a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</a> <span class="date">2013-03-23</span></h1>
@@ -633,23 +669,6 @@ done
         </div>
       </div>
     
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/02/openvpn-multiple-ports.html">OpenVPN使用多个端口</a> <span class="date">2013-03-02</span></h1>
-
-        <p>Openvpn本身不能设置多个端口，使用iptables可以解决这个问题 （假设openvpn本来56788端口）：</p>
-
-<pre><code>for port in {56780..56787}
-do 
-    iptables -t nat -A PREROUTING -p tcp -d &lt;your_external_ip&gt; --dport $port -j REDIRECT --to-port 56788
-done
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/03/02/openvpn-multiple-ports.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
 
     <div class="pagination">
       <ul>
@@ -687,6 +706,11 @@ done
         
         
           <li><a href="/posts/7/">7</a></li>
+        
+      
+        
+        
+          <li><a href="/posts/8/">8</a></li>
         
       
       </ul>

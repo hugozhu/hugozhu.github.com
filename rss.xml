@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://blog.hugozhu.site</link>
-    <pubDate>28 Mar 22 07:53 UTC</pubDate>
+    <pubDate>16 May 22 08:48 UTC</pubDate>
+    <item>
+      <title>用Gitlab Runner来打包并上传Harbor</title>
+      <link>http://blog.hugozhu.site/2022/05/16/71-gitlab-runner-using-docker-build.html</link>
+      <pubDate>2022-05-16 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.gitlab.com/ee/ci/docker/using_docker_build.html&#34;&gt;https://docs.gitlab.com/ee/ci/docker/using_docker_build.html&lt;/a&gt;&lt;/p&gt;&#xA;</description>
+    </item>
     <item>
       <title>Google Analytics 4 简介</title>
       <link>http://blog.hugozhu.site/2022/03/10/70-google-analytics-101.html</link>

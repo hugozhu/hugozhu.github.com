@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 5 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="How does zero commision brokerage make money? 树莓派">
+    <meta name="description" content="DIY airplay HIFI audio system 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -154,10 +154,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="/posts/7/">7</a></li>
         
       
+        
+        
+          <li><a href="/posts/8/">8</a></li>
+        
+      
       </ul>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/04/18/30-raspberrypi-i2c-programming.html">树莓派I2C编程</a> <span class="date">2013-04-18</span></h1>
+
+        <p>(！未完！)</p>
+
+<p>除了<a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">SPI</a>协议外，树莓派还支持<a href="http://zh.wikipedia.org/wiki/I²C">I2C</a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。</p>
+
+<h1>I2C</h1>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png"/></p>
+
+<p>上图是一个主控使用I2C驱动3个设备的示意图</p>
+
+<h1>参考链接</h1>
+
+<ol>
+<li><a href="http://zh.wikipedia.org/wiki/I²C">http://zh.wikipedia.org/wiki/I²C</a></li>
+<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/">https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</a></li>
+</ol>
+
+
+        <div class="more">
+          <a href="/2013/04/18/30-raspberrypi-i2c-programming.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/04/14/29-use-wiringpi-go-binding.html">使用Go语言在树莓派上编程</a> <span class="date">2013-04-14</span></h1>
@@ -545,37 +576,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
         </div>
       </div>
     
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html">升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</a> <span class="date">2013-03-24</span></h1>
-
-        <p>Nokia 5110屏比前面介绍过的<a href="http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">1602液晶屏</a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：</p>
-
-<ol>
-<li>带蓝色背光</li>
-<li>使用Philips PCD8544 LCD控制器（通过SPI接口）</li>
-<li>84x48点阵，可显示100多个字符</li>
-</ol>
-
-<h1>硬件准备</h1>
-
-<ol>
-<li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li>
-<li><a href="http://item.taobao.com/item.htm?id=3125173573&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118594_4k1_653822857&amp;clk1=0b755dfca67112cd1b605914b40146e7&amp;spm=a230z.1.5634029.2.foR1Yu">Nokia 5110 拆机屏</a> 或 <a href="http://item.taobao.com/item.htm?spm=a230r.1.10.154.SdjftL&amp;id=13361097288&amp;_u=oqa31997">焊好的？</a> 注意不要买裸屏，需要带电路板的</li>
-<li><a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">杜邦线</a> 母对母8条</li>
-<li>8P排针 用来焊接5110屏幕PCB板</li>
-<li><a href="http://detail.tmall.com/item.htm?id=22096296909&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁</a></li>
-</ol>
-
-<h1>电路</h1>
-
-<p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。</p>
-
-
-        <div class="more">
-          <a href="/2013/03/24/20-raspberry-pi-drive-nokia-5110.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
 
     <div class="pagination">
       <ul>
@@ -613,6 +613,11 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
         
         
           <li><a href="/posts/7/">7</a></li>
+        
+      
+        
+        
+          <li><a href="/posts/8/">8</a></li>
         
       
       </ul>
