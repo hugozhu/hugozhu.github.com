@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 5 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Running Grafana on Raspberry Pi 3 树莓派">
+    <meta name="description" content="A collection of handy Bash One-Liners and terminal tricks for data processing and Linux system maintenance. 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -163,6 +163,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/04/20/31-golang-memory-model.html">Go语言内存模型</a> <span class="date">2013-04-20</span></h1>
+
+        <h1>名词定义</h1>
+
+<p>执行体 - Go里的Goroutine或Java中的Thread</p>
+
+<h1>背景介绍</h1>
+
+<p>内存模型的目的是为了定义清楚变量的读写在不同执行体里的可见性。理解内存模型在并发编程中非常重要，因为代码的执行顺序和书写的逻辑顺序并不会完全一致，甚至在编译期间编译器也有可能重排代码以最优化CPU执行, 另外还因为有CPU缓存的存在，内存的数据不一定会及时更新，这样对内存中的同一个变量读和写也不一定和期望一样。</p>
+
+<p>和<a href="http://ifeve.com/java-memory-model-1/">Java的内存模型规范</a>类似，Go语言也有一个内存模型，相对JMM来说，Go的内存模型比较简单，Go的并发模型是基于CSP（<a href="http://en.wikipedia.org/wiki/Communicating_sequential_processes">Communicating Sequential Process</a>）的，不同的Goroutine通过一种叫Channel的数据结构来通信；Java的并发模型则基于多线程和共享内存，有较多的概念（violatie, lock, final, construct, thread, atomic等）和场景，当然java.util.concurrent并发工具包大大简化了Java并发编程。</p>
+
+<p>Go内存模型规范了在什么条件下一个Goroutine对某个变量的修改一定对其它Goroutine可见。</p>
+
+<h1>Happens Before</h1>
+
+<p>在一个单独的Goroutine里，对变量的读写和代码的书写顺序一致。比如以下的代码:</p>
+
+<pre><code>package main
+
+import (
+	&quot;log&quot;
+)
+
+var a, b, c int
+
+func main() {
+	a = 1
+	b = 2
+	c = a + 2
+	log.Println(a, b, c)
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/04/20/31-golang-memory-model.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/04/18/30-raspberrypi-i2c-programming.html">树莓派I2C编程</a> <span class="date">2013-04-18</span></h1>
@@ -545,34 +586,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/03/28/22-memory-barriers-or-fences.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/27/21-realtime-online-user-counter.html">个人网站实时在线人数接口</a> <span class="date">2013-03-27</span></h1>
-
-        <p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p>
-
-<h1>实现方法</h1>
-
-<h2>Google Analytics</h2>
-
-<p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p>
-
-<h2>日志分析</h2>
-
-<p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
-但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p>
-
-<h2>CNZZ</h2>
-
-<p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p>
-
-<p>```</p>
-
-
-        <div class="more">
-          <a href="/2013/03/27/21-realtime-online-user-counter.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

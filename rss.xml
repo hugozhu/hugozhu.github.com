@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://blog.hugozhu.site</link>
-    <pubDate>16 May 22 17:38 UTC</pubDate>
+    <pubDate>18 Jul 22 07:09 UTC</pubDate>
+    <item>
+      <title>Bash-Oneliner</title>
+      <link>http://blog.hugozhu.site/2022/07/18/72-bash-oneliner.html</link>
+      <pubDate>2022-07-18 12:00:00 +0800</pubDate>
+      <description>&#xA;&#xA;&lt;p&gt;&lt;h1&gt;目录：&lt;/h1&gt;&lt;nav&gt;&#xA;&lt;/nav&gt;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;&lt;a href=&#34;https://onceupon.github.io/Bash-Oneliner/#time&#34;&gt;https://onceupon.github.io/Bash-Oneliner/#time&lt;/a&gt;&lt;/p&gt;&#xA;</description>
+    </item>
     <item>
       <title>用Gitlab Runner来打包并上传Harbor</title>
       <link>http://blog.hugozhu.site/2022/05/16/71-gitlab-runner-using-docker-build.html</link>
