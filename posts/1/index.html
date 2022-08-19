@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 1 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="A collection of handy Bash One-Liners and terminal tricks for data processing and Linux system maintenance. 树莓派">
+    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -163,6 +163,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2022/08/16/73-use-rancher-to-create-k8s-cluster.html">Use Rancher to manage k8s cluster</a> <span class="date">2022-08-16</span></h1>
+
+        <h1>必要的集群内部通讯端口要在防火墙上打开</h1>
+
+<p>2379, 2380, 80, 443, 22, 6443, 10250</p>
+
+<h1>清理干净 <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/">https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/</a></h1>
+
+<pre><code>docker rm -f $(docker ps -qa)
+# docker rmi -f $(docker images -q)
+docker volume rm $(docker volume ls -q)
+
+for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do sudo umount $mount; done
+
+sudo rm -rf /etc/ceph \
+       /etc/cni \
+       /etc/kubernetes \
+       /opt/cni \
+       /opt/rke \
+       /run/secrets/kubernetes.io \
+       /run/calico \
+       /run/flannel \
+       /var/lib/calico \
+       /var/lib/etcd \
+       /var/lib/cni \
+       /var/lib/kubelet \
+       /var/lib/rancher/rke/log \
+       /var/log/containers \
+       /var/log/kube-audit \
+       /var/log/pods \
+       /var/run/calico
+
+
+sudo ip link delete flannel.1
+
+sudo reboot
+
+sudo iptables -L -t nat
+sudo iptables -L -t mangle
+sudo iptables -L
+
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2022/08/16/73-use-rancher-to-create-k8s-cluster.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2022/07/18/72-bash-oneliner.html">Bash-Oneliner</a> <span class="date">2022-07-18</span></h1>
@@ -469,33 +519,6 @@ hci0:	Type: BR/EDR  Bus: UART
 
         <div class="more">
           <a href="/2016/04/19/63-raspberrypi-as-ibeacon-transmitter.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html">在树莓派3上搭建监控系统</a> <span class="date">2016-04-17</span></h1>
-
-        <p>之前用过<a href="https://github.com/alibaba/tsar">tsar</a>做监控，但没有基于浏览器的图表展示，而且tsar收集数据很频繁，容易写坏SD卡。后来一直用<a href="https://personal.xively.com">Xively</a> SaaS服务，但因为服务在国外，访问速度一直不尽人意。直到今天早上读到InfoQ的一篇文章才知道了<a href="https://prometheus.io">Prometheus</a>，看了一下介绍后发现Prometheus的以下特点非常合适在树莓派上部署：</p>
-
-<ol>
-<li>采用Go实现支持，天然支持跨平台，配置相当简单，维护和二次开发的成本小；</li>
-<li>采集数据支持Pull和Push模式，可以自定义不同采集点的采样频率，适合轻量型应用降低能耗；</li>
-<li>二次计算和查询方式很灵活</li>
-<li>自带 <code>Grafana</code>数据可视化工具；</li>
-<li>可配置的内存+磁盘存储大小，采用的时间序列文件和Level DB做索引效率较高，不会让监控软件本身消耗过多的树莓派计算和存储资源</li>
-</ol>
-
-<h1>监控系统架构</h1>
-
-<p><img src="http://prometheus.io/assets/architecture.svg"></p>
-
-<h1>安装</h1>
-
-<p>Prometheus采集数据的主要方式是通过HTTP到指定的URL上定时采集，为了支持Push方式收集数据，我们还需要安装一个<code>Prometheus Pushgateway</code>作为HTTP服务器来给Prometheus提供数据，你的应用则可以通过命令行或编程接口方式将数据推送到Pushgateway</p>
-
-
-        <div class="more">
-          <a href="/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>树莓派的GPIO接口输出电流限制 - When Go meets Raspberry Pi</title>
+    <title>Use Rancher to manage k8s cluster - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Understanding output 树莓派">
+    <meta name="description" content="How to use Rancher to manage k8s cluster 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -108,7 +108,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="content">
         <div class="page-header">
-  <h1>树莓派的GPIO接口输出电流限制 </h1>
+  <h1>Use Rancher to manage k8s cluster </h1>
 </div>
 
 <div class="row">
@@ -117,61 +117,93 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li><a href="#toc_0">阻抗 (impendance)</a></li>
-<li><a href="#toc_1">结论</a></li>
-<li><a href="#toc_2">参考链接</a></li>
+<li><a href="#toc_0">必要的集群内部通讯端口要在防火墙上打开</a></li>
+<li><a href="#toc_1">清理干净 <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/">https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/</a></a></li>
+<li><a href="#toc_2">启动管理节点</a></li>
+<li><a href="#toc_3">登录</a></li>
+<li><a href="#toc_4">安装节点</a></li>
+<li><a href="#toc_5">安装APISIX</a></li>
+<li><a href="#toc_6">安装ARGOCD</a></li>
 </ul>
 </nav></p>
 
-<p>树莓派提供了一个连接头让我们访问CPU的17个GPIO接口，如下图</p>
+<h1 id="toc_0">必要的集群内部通讯端口要在防火墙上打开</h1>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/92d52938-5bd9-46a7-9b05-478e9f30f5d7/b29dcc510983784a07472c8282330b30/deep/0/Screenshot%205/14/13%208:51%20PM.png"/></p>
+<p>2379, 2380, 80, 443, 22, 6443, 10250</p>
 
-<p>这些接口可配置成输入或输出。本文主要讨论GPIO引脚作为输出时电流的限制。</p>
+<h1 id="toc_1">清理干净 <a href="https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/">https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/</a></h1>
 
-<h1 id="toc_0">阻抗 (impendance)</h1>
+<pre><code>docker rm -f $(docker ps -qa)
+# docker rmi -f $(docker images -q)
+docker volume rm $(docker volume ls -q)
 
-<p>阻抗和和电阻的区别（resistance）在于电阻的阻值是固定的，不会随着电流变化，阻抗则不然，可能随着外部变化，如电流或频率变化。从另一个角度来说，电阻是线性的，但阻抗不是。比如放大器的阻抗会随着输出的信号频率变化。</p>
+for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do sudo umount $mount; done
 
-<p>树莓派的的每个GPIO引脚都有一个寄存器可以设置引脚的驱动强度，也就是在保持输出电压为逻辑0和1的情况下，可以改变阻抗的大小从而改变GPIO引脚的输出电流大小。</p>
+sudo rm -rf /etc/ceph \
+       /etc/cni \
+       /etc/kubernetes \
+       /opt/cni \
+       /opt/rke \
+       /run/secrets/kubernetes.io \
+       /run/calico \
+       /run/flannel \
+       /var/lib/calico \
+       /var/lib/etcd \
+       /var/lib/cni \
+       /var/lib/kubelet \
+       /var/lib/rancher/rke/log \
+       /var/log/containers \
+       /var/log/kube-audit \
+       /var/log/pods \
+       /var/run/calico
 
-<p>通过如下电路测量相同电流下不同阻抗对应的GPIO电压输出（其中用到了一个电位器调节电流保持恒定）：</p>
 
-<p><img src="https://www.evernote.com/shard/s26/sh/11008332-acac-4625-9b6a-963c97ec7498/1e6d153774b7e95214fe0c2bba9121d8/deep/0/Screenshot%205/14/13%2010:22%20PM.png"/></p>
+sudo ip link delete flannel.1
 
-<p>通过计算后，下表是当输出电流为2，4 … 16mA时，对应的阻抗大小以及如果发生短路时的短路电流大小。</p>
+sudo reboot
 
-<p><img src="https://www.evernote.com/shard/s26/sh/7a411df0-56b1-4f76-bce5-54961bcfcfc7/4e46d9e28d7d01a34eb9e66ee28a5ba8/deep/0/Screenshot%205/14/13%2010:39%20PM.png"/></p>
+sudo iptables -L -t nat
+sudo iptables -L -t mangle
+sudo iptables -L
 
-<p>可以看出短路电流都是超过16mA的。</p>
+</code></pre>
 
-<p>一个发光二极管压降约为1.5~2.0v，工作电流为3~10v</p>
+<h1 id="toc_2">启动管理节点</h1>
 
-<p>GPIO引脚的电流是通过板上的3.3V电压调整器输出的，树莓派是按平均每个引脚3mA来设计的，所以总的电流不能超过17 * 3 = 51mA。</p>
+<p>sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher</p>
 
-<h1 id="toc_1">结论</h1>
+<h1 id="toc_3">登录</h1>
 
-<p>树莓派引脚电流大小的限制是：<strong>每个引脚最大输出电流为16毫安(mA)，且同一时刻所有引脚的总输出电流不超过51毫安</strong></p>
+<p>获取初次安装密码：docker logs  $(docker ps -qa)  2&gt;&amp;1 | grep &ldquo;Bootstrap Password:&rdquo;
+设置Server URL为内网地址：<a href="https://192.168.85.40，所有节点必须能访问这个服务器">https://192.168.85.40，所有节点必须能访问这个服务器</a></p>
 
-<h1 id="toc_2">参考链接</h1>
+<h1 id="toc_4">安装节点</h1>
 
-<ol>
-<li><a href="http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html">http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html</a></li>
-</ol>
+<p>docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run  rancher/rancher-agent:v2.6.6 --server https://<api_server> --token <token> --ca-checksum <check_sum> --etcd --controlplane --worker</p>
+
+<h1 id="toc_5">安装APISIX</h1>
+
+<pre><code>helm repo add apisix https://charts.apiseven.com
+helm repo update
+helm install apisix apisix/apisix --create-namespace  --namespace apisix
+
+</code></pre>
+
+<h1 id="toc_6">安装ARGOCD</h1>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/06/01/36-use-ping-to-check-network-connectivity.html" title="使用Ping来检查网络连通性">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/05/13/34-use-74HC595-8-bit-shift-register-with-raspberry-pi.html" title="使用8位移位寄存器74HC595扩展树莓派的IO端口">Next &rarr;</a></li>
+            <li class="next"><a href="/2022/07/18/72-bash-oneliner.html" title="Bash-Oneliner">Next &rarr;</a></li>
           
           
         </ul>
@@ -220,7 +252,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-05-14</span></div>
+      <div class="date"><span>2022-08-16</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -235,7 +267,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Raspberry-Pi-ref">Raspberry Pi <span>28</span></a>
+  <a href="/tags/#Rancher-K8s-ref">Rancher K8s <span>1</span></a>
 </li>
       
       </ul>

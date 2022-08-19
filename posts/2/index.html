@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 2 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="A collection of handy Bash One-Liners and terminal tricks for data processing and Linux system maintenance. 树莓派">
+    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -163,6 +163,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html">在树莓派3上搭建监控系统</a> <span class="date">2016-04-17</span></h1>
+
+        <p>之前用过<a href="https://github.com/alibaba/tsar">tsar</a>做监控，但没有基于浏览器的图表展示，而且tsar收集数据很频繁，容易写坏SD卡。后来一直用<a href="https://personal.xively.com">Xively</a> SaaS服务，但因为服务在国外，访问速度一直不尽人意。直到今天早上读到InfoQ的一篇文章才知道了<a href="https://prometheus.io">Prometheus</a>，看了一下介绍后发现Prometheus的以下特点非常合适在树莓派上部署：</p>
+
+<ol>
+<li>采用Go实现支持，天然支持跨平台，配置相当简单，维护和二次开发的成本小；</li>
+<li>采集数据支持Pull和Push模式，可以自定义不同采集点的采样频率，适合轻量型应用降低能耗；</li>
+<li>二次计算和查询方式很灵活</li>
+<li>自带 <code>Grafana</code>数据可视化工具；</li>
+<li>可配置的内存+磁盘存储大小，采用的时间序列文件和Level DB做索引效率较高，不会让监控软件本身消耗过多的树莓派计算和存储资源</li>
+</ol>
+
+<h1>监控系统架构</h1>
+
+<p><img src="http://prometheus.io/assets/architecture.svg"></p>
+
+<h1>安装</h1>
+
+<p>Prometheus采集数据的主要方式是通过HTTP到指定的URL上定时采集，为了支持Push方式收集数据，我们还需要安装一个<code>Prometheus Pushgateway</code>作为HTTP服务器来给Prometheus提供数据，你的应用则可以通过命令行或编程接口方式将数据推送到Pushgateway</p>
+
+
+        <div class="more">
+          <a href="/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2016/04/13/62-raspberrypi-3.html">树莓派3初体验</a> <span class="date">2016-04-13</span></h1>
@@ -402,37 +429,6 @@ sudo cp -R * /usr/local/
 
         <div class="more">
           <a href="/2015/02/26/54-raspberrypi2-pptp-redsocks2-chinadns.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2015/02/10/53-robinhood-zero-commission-brokerage.html">零佣金的券商靠什么赚钱？</a> <span class="date">2015-02-10</span></h1>
-
-        <p>最近一家叫<a href="https://www.robinhood.com/">Robinhood</a>的创业公司推出了零佣金的股票交易服务公测，用户可以通过iOS上的专用App交易。</p>
-
-<p>这家公司的两个创始人斯坦福大学毕业后去了纽约给华尔街的大型股票经济公司做交易系统，做了几年后突然有一天发现券商公司对每一笔交易付出的成本微乎其微，但要收取每个客户多达10美金的佣金。。。于是他们毅然决定辞职，回到硅谷创业去了。</p>
-
-<p>公司打出的口号是就是<strong>零佣金</strong>，如果你交易的资金来源于自己，那么买入和卖出交易，以及银行转入和转出（不包括电汇）都是免费的。</p>
-
-<p>零佣金对资金不那么充裕的年轻人来说非常有吸引力。那么问题来了，这家公司靠什么赚钱呢？</p>
-
-<ol>
-<li><p>交易过股票的人大概都知道，券商会提供融资服务给流动资金不充足的投资者，融资交易（Securities Margin Trading）就是投资者以资金或证券作为质押，向券商借入资金用于证券买卖，并在约定的期限内偿还借款本金和利息。相应的还有融券服务，融券交易是投资者以资金或证券作为质押，向券商借入证券卖出，在约定的期限内，买入相同数量和品种的证券归还券商并支付相应的融券费用。所以Robinhood首先可以通过融资融券服务盈利；</p></li>
-
-<li><p>对于投资者在Robinhood账户里的未购买股票的闲余资金，Robinhood可以通过金融市场获得一部分利息收入；</p></li>
-
-<li><p>提供收费接口给小型的量化和对冲基金；</p></li>
-</ol>
-
-<p>目前Robinhood已经完成了千万美元的风险投资，现阶段提供颠覆性的交易体验，吸引更多年轻的新投资者，赢得用户的信任显然更为重要。用户多了，盈利就不是问题了。。。</p>
-
-<p><img src="http://files.techcrunch.cn/2014/09/robinhood-app.png?w=556&amp;h=600"/></p>
-
-<p>App界面</p>
-
-
-        <div class="more">
-          <a href="/2015/02/10/53-robinhood-zero-commission-brokerage.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

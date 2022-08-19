@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 5 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="A collection of handy Bash One-Liners and terminal tricks for data processing and Linux system maintenance. 树莓派">
+    <meta name="description" content="客人来了发光二极管会闪0.2秒 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -163,6 +163,103 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html">使用Goroutine和Channel实现按键超时交互</a> <span class="date">2013-04-21</span></h1>
+
+        <h1>背景介绍</h1>
+
+<p>前面的文章（见<a href="#参考链接">参考链接</a>）已经介绍了如何使用按键作为树莓派的输入。在实际应用中可以通过按下按键循环显示预先设定的脚本输出到显示屏幕，需求如下：</p>
+
+<ol>
+<li>如果按键不被触动，则定时5秒执行脚本获取最新内容显示；</li>
+<li>因为不同的脚本获取内容速度会不一样，我们要求如果超过500ms脚本还未返回，需要在屏幕上显示“loading…”这样的过渡内容，如果脚本在500ms内返回，则不显示。</li>
+</ol>
+
+<p>使用Goroutine和Channel可以很方便的实现这个需求。</p>
+
+<h1>代码</h1>
+
+<pre><code>var screen_chan chan int
+var switch_chan = make(chan bool)
+
+func main() {
+	//a goroutine： 检查按键是否被按
+	go func() {
+		last_time := time.Now().UnixNano() / 1000000
+		btn_pushed := 0
+		total_mode := 3
+		for msg := range WiringPiISR(PIN_GPIO_6, INT_EDGE_FALLING) {
+			if msg &gt; -1 {
+				n := time.Now().UnixNano() / 1000000
+				delta := n - last_time
+				if delta &gt; 300 { //如果两次按键变化的间隔时间&lt;300ms，是因为接触信号不稳定可以忽略掉
+					last_time = n
+					btn_pushed++
+					screen_chan &lt;- btn_pushed % total_mode
+				}
+			}
+		}
+	}()
+
+	//a goroutine： 根据管道消息刷新屏幕
+	go loop_update_display()
+
+	//选择确实的屏幕内容脚本编号
+	screen_chan &lt;- 0
+
+	//a goroutine: 定时5s向管道发送更新屏幕内容的信号
+	ticker := time.NewTicker(5 * time.Second)
+	go func() {
+		for {
+			&lt;-ticker.C
+			screen_chan &lt;- -1
+		}
+	}()
+	
+	...	
+}
+
+func loop_update_display() {
+	current_screen := 0
+	for msg := range screen_chan {
+		switch_screen := false
+		if msg &gt;= 0 {
+		   //说明是按钮触发的消息，而不是定时器触发的(-1)
+			if msg != current_screen {
+				//btn pushed
+				current_screen = msg
+				switch_screen = true
+				go func() {
+					select {
+					case &lt;-time.After(500 * time.Millisecond):
+						display_loading()
+						&lt;-switch_chan
+					case &lt;-switch_chan:
+					}
+				}()
+			}
+		}
+		switch current_screen {
+		case 0:
+			display_screen0()
+		case 1:
+			display_screen1()
+		case 2:
+			display_screen2()
+		}
+		if switch_screen {
+			switch_chan &lt;- true
+		}
+	}
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/04/21/32-use-goroutine-and-channel-to-implement-interaction-with-timeout.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/04/20/31-golang-memory-model.html">Go语言内存模型</a> <span class="date">2013-04-20</span></h1>
@@ -561,31 +658,6 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
         <div class="more">
           <a href="/2013/03/28/23-arduino-1st-day.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/28/22-memory-barriers-or-fences.html">并发编程之内存屏障</a> <span class="date">2013-03-28</span></h1>
-
-        <p>原文地址：<a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html"><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href="http://ifeve.com/memory-barriersfences/"><code>http://ifeve.com/memory-barriersfences/</code></a></p>
-
-<p>关键词：Load Barrier, Store Barrier, Full Barrier</p>
-
-<p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
-
-<p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &ldquo;Write Combing - 合并写&rdquo;中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。</p>
-
-<p>当一个程序执行时指令是否被重排并不重要，只要最终的结果是一样的。例如，在一个循环里，如果循环体内没用到这个计数器，循环的计数器什么时候更新（在循环开始，中间还是最后）并不重要。编译器和CPU可以自由的重排指令以最佳的利用CPU，只要下一次循环前更新该计数器即可。并且在循环执行中，这个变量可能一直存在寄存器上，并没有被推到缓存或主存，这样这个变量对其他CPU来说一直都是不可见的。</p>
-
-<p>CPU核内部包含了多个执行单元。例如，现代Intel CPU包含了6个执行单元，可以组合进行算术运算，逻辑条件判断及内存操作。每个执行单元可以执行上述任务的某种组合。这些执行单元是并行执行的，这样指令也就是在并行执行。但如果站在另一个CPU角度看，这也就产生了程序顺序的另一种不确定性。</p>
-
-<p>最后，当一个缓存失效发生时，现代CPU可以先假设一个内存载入的值并根据这个假设值继续执行，直到内存载入返回确切的值。</p>
-
-<p><img src="http://ifeve.com/wp-content/uploads/2013/03/cpu.png"/></p>
-
-
-        <div class="more">
-          <a href="/2013/03/28/22-memory-barriers-or-fences.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
