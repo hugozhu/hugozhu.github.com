@@ -2,7 +2,7 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://blog.hugozhu.site</link>
-    <pubDate>19 Aug 22 05:25 UTC</pubDate>
+    <pubDate>31 Aug 22 07:26 UTC</pubDate>
     <item>
       <title>Use Rancher to manage k8s cluster</title>
       <link>http://blog.hugozhu.site/2022/08/16/73-use-rancher-to-create-k8s-cluster.html</link>
