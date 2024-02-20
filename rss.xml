@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>http://blog.hugozhu.site</link>
-    <pubDate>21 Jun 23 07:57 UTC</pubDate>
+    <pubDate>20 Feb 24 07:52 UTC</pubDate>
+    <item>
+      <title>Ubuntu 22 Remote Desktop Sharing Without Real Monitor</title>
+      <link>http://blog.hugozhu.site/2024/02/20/73-ubuntu-22-remote-desktop.html</link>
+      <pubDate>2024-02-20 12:00:00 +0800</pubDate>
+      <description>&#xA;&#xA;&lt;p&gt;&lt;h1&gt;目录：&lt;/h1&gt;&lt;nav&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_0&#34;&gt;xrdp solution&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_1&#34;&gt;关掉账号自动登录&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_2&#34;&gt;还原下面的文件内容来使用物理显示器&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/nav&gt;&lt;/p&gt;&#xA;&#xA;&lt;h2 id=&#34;toc_0&#34;&gt;xrdp solution&lt;/h2&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;sudo apt-get install xserver-xorg-video-dummy&#xA;sudo apt-get install xserver-xorg-core&#xA;&#xA;Download Microsoft Remote Desktop client&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;p&gt;&lt;em&gt;/usr/share/X11/xorg.conf.d/xorg.conf&lt;/em&gt;&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;Section &amp;quot;Device&amp;quot;&#xA;    Identifier &amp;quot;DummyDevice&amp;quot;&#xA;    Driver &amp;quot;dummy&amp;quot;&#xA;    VideoRam 256000&#xA;EndSection&#xA;&#xA;Section &amp;quot;Screen&amp;quot;&#xA;    Identifier &amp;quot;DummyScreen&amp;quot;&#xA;    Device &amp;quot;DummyDevice&amp;quot;&#xA;    Monitor &amp;quot;DummyMonitor&amp;quot;&#xA;    DefaultDepth 24&#xA;    SubSection &amp;quot;Display&amp;quot;&#xA;        Depth 24&#xA;        Modes &amp;quot;1920x1080_60.0&amp;quot;&#xA;    EndSubSection&#xA;EndSection&#xA;&#xA;Section &amp;quot;Monitor&amp;quot;&#xA;    Identifier &amp;quot;DummyMonitor&amp;quot;&#xA;    HorizSync 30-70&#xA;    VertRefresh 50-75&#xA;    ModeLine &amp;quot;1920x1080&amp;quot; 148.50 1920 2448 2492 2640 1080 1084 1089 1125 +Hsync +Vsync&#xA;EndSection&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;ln -s  /usr/share/X11/xorg.conf.d/xorg.conf /etc/X11&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h2 id=&#34;toc_1&#34;&gt;关掉账号自动登录&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;非常重要！&lt;/p&gt;&#xA;&#xA;&lt;h2 id=&#34;toc_2&#34;&gt;还原下面的文件内容来使用物理显示器&lt;/h2&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;/usr/share/X11/xorg.conf.d/xorg.conf&#xA;/etc/X11/xorg.conf &#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
+    </item>
     <item>
       <title>Use Rancher to manage k8s cluster</title>
       <link>http://blog.hugozhu.site/2022/08/16/73-use-rancher-to-create-k8s-cluster.html</link>
