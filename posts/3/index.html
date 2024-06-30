@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 3 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Assemble aar package with all dependencies using Gradle 2.1 树莓派">
-  
     <meta name="author" content="Hugo Zhu">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -163,6 +161,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html">用Telegram和树莓派交互</a> <span class="date">2015-02-27</span></h1>
+
+        <p>如果你的树莓派不能通过路由器端口转发直接从家庭网络外访问，你还可以用类似聊天App一样的方式来和防火墙后的树莓派轻松交互，通过命令来控制树莓派。</p>
+
+<h1>Telegram</h1>
+
+<p><img src="https://telegram.org/img/t_logo.png" alt="image" /></p>
+
+<p>Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似<a href="http://www.msxiaoice.com/v2/DesktopLanding">微软小冰</a>的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。</p>
+
+<h2>安装telegram-cli</h2>
+
+<p>Linux的Telegram客户端telegram-cli源代码在 <a href="https://github.com/vysheng/tg">https://github.com/vysheng/tg</a>，按照Readme在树莓派上编译好。telegram-cli支持消息事件对lua脚本中的函数进行回调，支持的函数列表在：<a href="https://github.com/vysheng/tg/blob/master/README-LUA">https://github.com/vysheng/tg/blob/master/README-LUA</a>，也支持外部程序通过telegram-cli侦听的端口发送交互命令（一次连接只能一个命令）</p>
+
+<h2>Lua交互脚本</h2>
+
+
+        <div class="more">
+          <a href="/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2015/02/26/54-raspberrypi2-pptp-redsocks2-chinadns.html">用树莓派2代打造智能家庭路由</a> <span class="date">2015-02-26</span></h1>
@@ -486,34 +507,6 @@ android {
 
         <div class="more">
           <a href="/2014/06/29/46-async-android.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2014/02/10/45-android-development-productivity-tips.html">提高Android开发效率的小贴士</a> <span class="date">2014-02-10</span></h1>
-
-        <h1>查看日志 adb logcat</h1>
-
-<p>下面命令将只显示错误日志，和所有Tag＝mytag的调试日志，-C 会用不同颜色区分不同级别的日志，但只有Android 4.3以后才支持。</p>
-
-<pre><code>adb logcat [-C] *:E &lt;mytag&gt;:D
-</code></pre>
-
-<h1>远程调试 adb over TCP</h1>
-
-<p>首先在手机或Pad上执行以下命令（要求root）</p>
-
-<pre><code>su
-setprop service.adb.tcp.port 5555
-stop adbd
-start adbd
-</code></pre>
-
-<p>再执行下面命令则可以看到手机的网络地址</p>
-
-
-        <div class="more">
-          <a href="/2014/02/10/45-android-development-productivity-tips.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 2 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Assemble aar package with all dependencies using Gradle 2.1 树莓派">
-  
     <meta name="author" content="Hugo Zhu">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -163,6 +161,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2016/04/24/65-running-grafana-on-raspberry-pi-3.html">用Grafana制作树莓派上的监控大盘</a> <span class="date">2016-04-24</span></h1>
+
+        <p><a href="http://grafana.org">Grafana</a>是一个优秀的开源图表系统，支持多种数据源，其中包括
+<a href="https://influxdata.com">InfluxDB</a>和<a href="http://hugozhu.myalert.info/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html">Prometheus</a></p>
+
+<p><a href="http://grafana.org/assets/img/features/dashboard_ex.png"><img src="http://grafana.org/assets/img/features/dashboard_ex.png" width="500"/></a></p>
+
+<h1>安装</h1>
+
+<pre><code>export GOPATH=`pwd`
+go get github.com/grafana/grafana
+cd $GOPATH/src/github.com/grafana/grafana
+go run build.go setup              # (only needed once to install godep)
+$GOPATH/bin/godep restore          # (will pull down all golang lib dependencies in your current GOPATH)
+go run build.go build              # (or 'go build .')
+</code></pre>
+
+<p>编译好后会在bin目录下生成<code>grafana-server</code>和<code>grafana-cli</code></p>
+
+
+        <div class="more">
+          <a href="/2016/04/24/65-running-grafana-on-raspberry-pi-3.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2016/04/19/63-raspberrypi-as-ibeacon-transmitter.html">树莓派3变身iBeacon发射器</a> <span class="date">2016-04-19</span></h1>
@@ -404,29 +428,6 @@ sudo cp -R * /usr/local/
 
         <div class="more">
           <a href="/2015/03/05/56-boot-raspberrypi-from-16m-sdcard-and-install-raspbian-on-usb-sticker.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html">用Telegram和树莓派交互</a> <span class="date">2015-02-27</span></h1>
-
-        <p>如果你的树莓派不能通过路由器端口转发直接从家庭网络外访问，你还可以用类似聊天App一样的方式来和防火墙后的树莓派轻松交互，通过命令来控制树莓派。</p>
-
-<h1>Telegram</h1>
-
-<p><img src="https://telegram.org/img/t_logo.png" alt="image" /></p>
-
-<p>Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似<a href="http://www.msxiaoice.com/v2/DesktopLanding">微软小冰</a>的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。</p>
-
-<h2>安装telegram-cli</h2>
-
-<p>Linux的Telegram客户端telegram-cli源代码在 <a href="https://github.com/vysheng/tg">https://github.com/vysheng/tg</a>，按照Readme在树莓派上编译好。telegram-cli支持消息事件对lua脚本中的函数进行回调，支持的函数列表在：<a href="https://github.com/vysheng/tg/blob/master/README-LUA">https://github.com/vysheng/tg/blob/master/README-LUA</a>，也支持外部程序通过telegram-cli侦听的端口发送交互命令（一次连接只能一个命令）</p>
-
-<h2>Lua交互脚本</h2>
-
-
-        <div class="more">
-          <a href="/2015/02/27/55-use-telegram-to-chat-with-raspberrypi.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

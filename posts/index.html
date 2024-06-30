@@ -115,6 +115,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="row">
   <div class="span12">
     <div class="post">
+  <h1 class="title"><a href="/2024/06/30/74-armbian-bridge-network-hostapd.html">Armbian Hostapd with bridge network sharing same IP range as host</a> <span class="date">2024-06-30</span></h1>
+
+  <h1>User netplan to set ip</h1>
+
+<p>add the following lines to  /etc/netplan/armbian-default.yaml</p>
+
+<pre><code>network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    enx4a09fe05257f:
+      dhcp4: no
+      addresses: [192.168.3.1/24]
+    end0:
+      dhcp4: yes  
+</code></pre>
+
+<h1>Disable system-resolved</h1>
+
+<p>add the following line to /etc/systemd/resolved.conf
+```</p>
+
+
+  <div class="more">
+    <a href="/2024/06/30/74-armbian-bridge-network-hostapd.html" class="btn btn-small">阅读全文</a>
+  </div>
+</div>
+
+<div class="post">
   <h1 class="title"><a href="/2024/02/20/73-ubuntu-22-remote-desktop.html">Ubuntu 22 Remote Desktop Sharing Without Real Monitor</a> <span class="date">2024-02-20</span></h1>
 
   <h2>xrdp solution</h2>
@@ -462,32 +491,6 @@ CGO_ENABLED=&quot;1&quot;
 
   <div class="more">
     <a href="/2016/05/02/66-use-dingtalk-golang-sdk-to-send-message-on-pi.html" class="btn btn-small">阅读全文</a>
-  </div>
-</div>
-
-<div class="post">
-  <h1 class="title"><a href="/2016/04/24/65-running-grafana-on-raspberry-pi-3.html">用Grafana制作树莓派上的监控大盘</a> <span class="date">2016-04-24</span></h1>
-
-  <p><a href="http://grafana.org">Grafana</a>是一个优秀的开源图表系统，支持多种数据源，其中包括
-<a href="https://influxdata.com">InfluxDB</a>和<a href="http://hugozhu.myalert.info/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html">Prometheus</a></p>
-
-<p><a href="http://grafana.org/assets/img/features/dashboard_ex.png"><img src="http://grafana.org/assets/img/features/dashboard_ex.png" width="500"/></a></p>
-
-<h1>安装</h1>
-
-<pre><code>export GOPATH=`pwd`
-go get github.com/grafana/grafana
-cd $GOPATH/src/github.com/grafana/grafana
-go run build.go setup              # (only needed once to install godep)
-$GOPATH/bin/godep restore          # (will pull down all golang lib dependencies in your current GOPATH)
-go run build.go build              # (or 'go build .')
-</code></pre>
-
-<p>编译好后会在bin目录下生成<code>grafana-server</code>和<code>grafana-cli</code></p>
-
-
-  <div class="more">
-    <a href="/2016/04/24/65-running-grafana-on-raspberry-pi-3.html" class="btn btn-small">阅读全文</a>
   </div>
 </div>
 

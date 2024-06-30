@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>在Android上使用tcpdump - When Go meets Raspberry Pi</title>
+    <title>Armbian Hostapd with bridge network sharing same IP range as host - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="tcpdump on android 树莓派">
+    <meta name="description" content="Armbian Hostapd with bridge network sharing same IP range as host. 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -108,58 +108,98 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="content">
         <div class="page-header">
-  <h1>在Android上使用tcpdump </h1>
+  <h1>Armbian Hostapd with bridge network sharing same IP range as host </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>tcpdump工具是分析网络协议和数据包的利器，也可以在Android上使用（需要root）。</p>
+    
 
-<p>首先在android上安装tcpdump</p>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">User netplan to set ip</a></li>
+<li><a href="#toc_1">Disable system-resolved</a></li>
+<li><a href="#toc_2">配置lan口</a></li>
+<li><a href="#toc_3">Setup iptables</a></li>
+<li><a href="#toc_4">brctl to list all bridge</a></li>
+</ul>
+</nav></p>
 
-<pre><code>wget http://www.strazzere.com/android/tcpdump
-adb push tcpdump /data/local/tmp/tcpdump
-adb chmod 755 /data/local/tmp/tcpdump
+<h1 id="toc_0">User netplan to set ip</h1>
+
+<p>add the following lines to  /etc/netplan/armbian-default.yaml</p>
+
+<pre><code>network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    enx4a09fe05257f:
+      dhcp4: no
+      addresses: [192.168.3.1/24]
+    end0:
+      dhcp4: yes  
 </code></pre>
 
-<p>然后使用root用户启动tcpdump，在android上进行相应的操作后，按ctrl+c中断</p>
+<h1 id="toc_1">Disable system-resolved</h1>
 
-<pre><code>adb shell
-shell@android:/ $ su
-root@android:/ # /data/local/tmp/tcpdump -h                                    
-tcpdump version 3.9.8
-libpcap version 0.9.8
-Usage: tcpdump [-aAdDeflLnNOpqRStuUvxX] [-c count] [ -C file_size ]
-		[ -E algo:secret ] [ -F file ] [ -i interface ] [ -M secret ]
-		[ -r file ] [ -s snaplen ] [ -T type ] [ -w file ]
-		[ -W filecount ] [ -y datalinktype ] [ -Z user ]
-		[ expression ]
-root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
+<p>add the following line to /etc/systemd/resolved.conf</p>
+
+<pre><code>DNSStubListener=no
 </code></pre>
 
-<p>tcpdump会在/sdcard下生成文件，可以通过<code>adb pull /sdcard/capture.pcap</code>把文件传到PC上用<a href="http://wireshark.org/">wireshark</a>看，也可以直接在android上通过<a href="https://play.google.com/store/apps/details?id=lv.n3o.sharkreader">SharkReader</a>看。</p>
+<h1 id="toc_2">配置lan口</h1>
 
-<h1>参考链接</h1>
+<p>add the following lines to /etc/dnsmasq.conf</p>
 
-<ol>
-<li><a href="http://www.kandroid.org/online-pdk/guide/tcpdump.html">http://www.kandroid.org/online-pdk/guide/tcpdump.html</a></li>
-<li><a href="http://wireshark.org/">http://wireshark.org/</a></li>
-<li><a href="http://www.strazzere.com/blog/2009/08/gather-packets-from-your-android-without-arp-spoofing/">http://www.strazzere.com/blog/2009/08/gather-packets-from-your-android-without-arp-spoofing/</a></li>
-</ol>
+<pre><code>port=53 #启用局域网DNS
+resolv-file=/etc/resolv.dnsmasq.conf
+server=192.168.1.1
+listen-address=192.168.3.1,127.0.0.1
+dhcp-range=192.168.3.50,192.168.3.250,24
+dhcp-option=3,192.168.3.1
+dhcp-option=6,192.168.3.1,119.29.29.29
+cache-size=1500
+min-cache-ttl=1200
+</code></pre>
+
+<h1 id="toc_3">Setup iptables</h1>
+
+<pre><code>iptables -t nat -I POSTROUTING -j MASQUERADE
+</code></pre>
+
+<h1 id="toc_4">brctl to list all bridge</h1>
+
+<p>sudo brctl show</p>
+
+<pre><code># 配置 enx4a09fe05257f 接口为手动模式
+nmcli connection add type ethernet ifname enx4a09fe05257f con-name enx4a09fe05257f
+
+# 创建桥接接口 br1，并配置其静态 IP 和桥接参数
+nmcli connection add type bridge ifname br1 con-name br1
+nmcli connection modify br1 ipv4.method manual ipv4.addresses 192.168.5.1/24
+nmcli connection modify br1 bridge.stp on
+nmcli connection modify br1 bridge.forward-delay 2
+
+# 将 enx4a09fe05257f 添加到桥接 br1
+nmcli connection add type bridge-slave ifname enx4a09fe05257f master br1
+
+# 启用 br1 接口
+nmcli connection up br1
+</code></pre>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/06/30/38-java-volatile-variable.html" title="Java并发中正确使用volatile">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/06/01/36-use-ping-to-check-network-connectivity.html" title="使用Ping来检查网络连通性">Next &rarr;</a></li>
+            <li class="next"><a href="/2024/02/20/73-ubuntu-22-remote-desktop.html" title="Ubuntu 22 Remote Desktop Sharing Without Real Monitor">Next &rarr;</a></li>
           
           
         </ul>
@@ -208,7 +248,7 @@ root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-06-24</span></div>
+      <div class="date"><span>2024-06-30</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -223,7 +263,7 @@ root@android:/ # /data/local/tmp/tcpdump -p -vv -s 0 w /sdcard/capture.pcap
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Android-ref">Android <span>9</span></a>
+  <a href="/tags/#Armbian-Linux-ref">Armbian Linux <span>1</span></a>
 </li>
       
       </ul>
