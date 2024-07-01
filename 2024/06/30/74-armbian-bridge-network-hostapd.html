@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Armbian Hostapd with bridge network sharing same IP range as host - When Go meets Raspberry Pi</title>
+    <title>R2S使用场景：基础系统Armbian，Docker安装openwrt，USB网卡做热点，无线接入通过openwrt做路由 - When Go meets Raspberry Pi</title>
   
     <meta name="description" content="Armbian Hostapd with bridge network sharing same IP range as host. 树莓派">
   
@@ -108,7 +108,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="content">
         <div class="page-header">
-  <h1>Armbian Hostapd with bridge network sharing same IP range as host </h1>
+  <h1>R2S使用场景：基础系统Armbian，Docker安装openwrt，USB网卡做热点，无线接入通过openwrt做路由 </h1>
 </div>
 
 <div class="row">
@@ -117,15 +117,121 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><h1>目录：</h1><nav>
 <ul>
-<li><a href="#toc_0">User netplan to set ip</a></li>
-<li><a href="#toc_1">Disable system-resolved</a></li>
-<li><a href="#toc_2">配置lan口</a></li>
-<li><a href="#toc_3">Setup iptables</a></li>
-<li><a href="#toc_4">brctl to list all bridge</a></li>
+<li><a href="#toc_0">背景</a></li>
+<li><a href="#toc_1">方案</a>
+<ul>
+<li>
+<ul>
+<li><a href="#toc_2">以下为过时的做法，不够简练</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#toc_3">User netplan to set ip</a></li>
+<li><a href="#toc_4">Disable system-resolved</a></li>
+<li><a href="#toc_5">配置lan口</a></li>
+<li><a href="#toc_6">Setup iptables</a></li>
+<li><a href="#toc_7">brctl to list all bridge</a></li>
 </ul>
 </nav></p>
 
-<h1 id="toc_0">User netplan to set ip</h1>
+<h1 id="toc_0">背景</h1>
+
+<p>Armbian 是一款基于 Debian 或 Ubuntu 的开源操作系统，专门针对嵌入式 ARM 平台进行优化和定制。它可以运行在多种不同的嵌入式设备上，例如树莓派、R2S，R4S，玩客云等等。Armbian 针对不同的嵌入式平台，提供了相应的硬件支持，可以让用户轻松地在这些平台上搭建自己的嵌入式系统。</p>
+
+<p>刚好有一块闲置了几年的R2S卡片机和树莓派2时代的无线网卡。</p>
+
+<h1 id="toc_1">方案</h1>
+
+<p>基于最小化配置改动，尽量用docker来部署的原则。</p>
+
+<p>openwrt的docker-compose文件如下，网络设置采用docker的macvlan，使得openwrt看上去像网络上的一个独立主机</p>
+
+<pre><code>version: '2.4'
+services: 
+  openwrt:
+    container_name: openwrt
+    image: piaoyizy/openwrt-aarch64:latest
+    privileged: true
+    ports:
+     - 80:80
+    env_file:
+     - .env      
+    networks:
+      macnet:
+        ipv4_address: 192.168.1.11
+    sysctls:
+      - net.ipv4.ip_forward=1
+      # - net.ipv4.conf.all.rp_filter=0
+    restart: unless-stopped          
+    logging:
+      driver: &quot;json-file&quot;
+      options:
+        max-size: &quot;20m&quot;
+        max-file: &quot;2&quot;
+
+# ip link set end0 promisc on          
+networks:
+  macnet:
+    name: macnet
+    ipam:
+      driver: default
+      config:
+        - subnet: '192.168.1.0/24'
+          gateway: 192.168.1.1
+    driver: macvlan
+    driver_opts:
+      parent: end0   
+      macvlan_mode: bridge
+</code></pre>
+
+<p>但是这样做有一个问题，是r2s反而不能访问这个docker容器（因为内核安全问题），解决的方法是增加一个本地的桥接网口，并设置路由，本机通过这个桥接网口访问，设置如下：</p>
+
+<pre><code>ip link set end0 promisc on
+ip link add macvlan-br link end0 type macvlan mode bridge
+ip addr add 192.168.1.223/32 dev macvlan-br
+ip link set macvlan-br up
+ip route add 192.168.1.11/32 dev macvlan-br
+</code></pre>
+
+<p>设置r2s可路由转发：</p>
+
+<pre><code>sudo echo &quot;net.ipv4.ip_forward=1&quot; &gt;&gt; /etc/sysctl.conf 
+sudo sysctl -p
+
+# make client from wifi can access the net 
+iptables -t nat -I POSTROUTING -j MASQUERADE
+</code></pre>
+
+<p>hostapd容器的docker-compose</p>
+
+<pre><code>version: '2.4'
+services: 
+  hostapd:
+    container_name: hostapd
+    build: .
+    image: hostapd
+    cap_add: 
+      - NET_ADMIN
+    stop_grace_period: 3s
+    network_mode: host
+    env_file:
+     - .env      
+    volumes: 
+      - ./conf/r2s/openwrt/hostapd.conf:/etc/hostapd/hostapd.conf
+      - ./conf/r2s/openwrt/dhcpd.conf:/etc/dhcp/dhcpd.conf
+      - ./conf/r2s/openwrt/entrypoint.sh:/entrypoint.sh
+    entrypoint: [&quot;/entrypoint.sh&quot;] 
+    logging:
+      driver: &quot;json-file&quot;
+      options:
+        max-size: &quot;20m&quot;
+        max-file: &quot;2&quot;
+</code></pre>
+
+<h3 id="toc_2">以下为过时的做法，不够简练</h3>
+
+<p>======================================================================</p>
+
+<h1 id="toc_3">User netplan to set ip</h1>
 
 <p>add the following lines to  /etc/netplan/armbian-default.yaml</p>
 
@@ -140,14 +246,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       dhcp4: yes  
 </code></pre>
 
-<h1 id="toc_1">Disable system-resolved</h1>
+<h1 id="toc_4">Disable system-resolved</h1>
 
 <p>add the following line to /etc/systemd/resolved.conf</p>
 
 <pre><code>DNSStubListener=no
 </code></pre>
 
-<h1 id="toc_2">配置lan口</h1>
+<h1 id="toc_5">配置lan口</h1>
 
 <p>add the following lines to /etc/dnsmasq.conf</p>
 
@@ -162,12 +268,12 @@ cache-size=1500
 min-cache-ttl=1200
 </code></pre>
 
-<h1 id="toc_3">Setup iptables</h1>
+<h1 id="toc_6">Setup iptables</h1>
 
 <pre><code>iptables -t nat -I POSTROUTING -j MASQUERADE
 </code></pre>
 
-<h1 id="toc_4">brctl to list all bridge</h1>
+<h1 id="toc_7">brctl to list all bridge</h1>
 
 <p>sudo brctl show</p>
 

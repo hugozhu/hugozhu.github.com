@@ -115,27 +115,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="row">
   <div class="span12">
     <div class="post">
-  <h1 class="title"><a href="/2024/06/30/74-armbian-bridge-network-hostapd.html">Armbian Hostapd with bridge network sharing same IP range as host</a> <span class="date">2024-06-30</span></h1>
+  <h1 class="title"><a href="/2024/06/30/74-armbian-bridge-network-hostapd.html">R2S使用场景：基础系统Armbian，Docker安装openwrt，USB网卡做热点，无线接入通过openwrt做路由</a> <span class="date">2024-06-30</span></h1>
 
-  <h1>User netplan to set ip</h1>
+  <h1>背景</h1>
 
-<p>add the following lines to  /etc/netplan/armbian-default.yaml</p>
+<p>Armbian 是一款基于 Debian 或 Ubuntu 的开源操作系统，专门针对嵌入式 ARM 平台进行优化和定制。它可以运行在多种不同的嵌入式设备上，例如树莓派、R2S，R4S，玩客云等等。Armbian 针对不同的嵌入式平台，提供了相应的硬件支持，可以让用户轻松地在这些平台上搭建自己的嵌入式系统。</p>
 
-<pre><code>network:
-  version: 2
-  renderer: NetworkManager
-  ethernets:
-    enx4a09fe05257f:
-      dhcp4: no
-      addresses: [192.168.3.1/24]
-    end0:
-      dhcp4: yes  
+<p>刚好有一块闲置了几年的R2S卡片机和树莓派2时代的无线网卡。</p>
+
+<h1>方案</h1>
+
+<p>基于最小化配置改动，尽量用docker来部署的原则。</p>
+
+<p>openwrt的docker-compose文件如下，网络设置采用docker的macvlan，使得openwrt看上去像网络上的一个独立主机</p>
+
+<pre><code>version: '2.4'
+services: 
+  openwrt:
+    container_name: openwrt
+    image: piaoyizy/openwrt-aarch64:latest
+    privileged: true
+    ports:
+     - 80:80
+    env_file:
+     - .env      
+    networks:
+      macnet:
+        ipv4_address: 192.168.1.11
+    sysctls:
+      - net.ipv4.ip_forward=1
+      # - net.ipv4.conf.all.rp_filter=0
+    restart: unless-stopped          
+    logging:
+      driver: &quot;json-file&quot;
+      options:
+        max-size: &quot;20m&quot;
+        max-file: &quot;2&quot;
+
+# ip link set end0 promisc on          
+networks:
+  macnet:
+    name: macnet
+    ipam:
+      driver: default
+      config:
+        - subnet: '192.168.1.0/24'
+          gateway: 192.168.1.1
+    driver: macvlan
+    driver_opts:
+      parent: end0   
+      macvlan_mode: bridge
 </code></pre>
-
-<h1>Disable system-resolved</h1>
-
-<p>add the following line to /etc/systemd/resolved.conf
-```</p>
 
 
   <div class="more">
