@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 6 - When Go meets Raspberry Pi</title>
   
-    <meta name="description" content="Use Free Google Cloud Service to deliver Github webhook events to DingTalk 树莓派">
+    <meta name="description" content="Replace USB sticker on Raspberry Pi 树莓派">
   
     <meta name="author" content="Hugo Zhu">
 
@@ -163,6 +163,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">在Raspberry Pi上使用硬件SPI</a> <span class="date">2013-04-05</span></h1>
+
+        <h1>什么是SPI</h1>
+
+<p>SPI (Serial Peripheral Interface)，是一种高速，全双工，同步的通信总线协议，基于SPI的设备需要4根线：</p>
+
+<p><img src="https://www.evernote.com/shard/s26/sh/61dba789-b17b-4570-b124-03925a97a4bf/4e64405c3b1a486f7aa4b9451e142b32/deep/0/Screenshot%204/5/13%204:27%20PM.jpg
+"/></p>
+
+<ol>
+<li>SDO / MOSI - 主设备数据输出，从设备数据输入</li>
+<li>SDI / MISO - 主设备数据输入，从设备数据输出</li>
+<li>SCLK / CLK - 时钟信号，由主设备产生</li>
+<li>CS / SS - 从设备使能信号，由主设备控制</li>
+</ol>
+
+<p>通过CS，主设备可以控制和哪个从设备通信。</p>
+
+<h2>Bit Banging</h2>
+
+<p>Bit-banging是一种用软件替代专职硬件的串行通信的技术。软件直接对微处理器的管脚的状态进行设置和采样，其功能涵盖诸如：时钟，电平，同步等所有参数。与此不同的是（传统的串行通信技术中），专职硬件诸如 modem、UART 或者 位移寄存器等一般是用来处理这些参数并且提供一个（缓存）的数据接口，软件在这种情况下同信号处理无关。</p>
+
+<p>bit-banging 具有明显优点诸如：让相同的设备运行不同的协议而只需很小的（甚至不需）硬件的改动。借助很少的额外设备，我们也许可以从数字管脚（数字终端）可以得到视频信号。</p>
+
+
+        <div class="more">
+          <a href="/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/04/03/24-google-channel-service.html">在Raspberry Pi上使用Google Channel服务搭建实时应用</a> <span class="date">2013-04-03</span></h1>
@@ -575,36 +606,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="more">
           <a href="/2013/03/16/03-16-use-raspberry-pi-control-step-motor-rotate-webcam.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/03/13/vistor-on-homepage-led-indicator.html">如何在Raspberry Pi上用LED闪烁提示网站首页新访客</a> <span class="date">2013-03-13</span></h1>
-
-        <p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。</p>
-
-<h1>硬件安装</h1>
-
-<p>需要以下硬件：</p>
-
-<ol>
-<li>可以工作的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">1P杜邦线2条</a></li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm9RKSkRargJCPYP6KVEIQUWKzMUFn1hvlcbkMSKk3m2pVJo%2BqQDYKVz%2Bt1%2FjL7Iywe7g%3D%3D">面包板</a>一个</li>
-<li><a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">面包板跳线</a> 或 <a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.166.XlEzyw&amp;id=15208013820&amp;_u=nqa35596&amp;is_b=1&amp;cat_id=2&amp;q=%C5%C5%D5%EB&amp;rn=bb53adf333ca7517208da34346ac3ffb">单排针</a> 两根</li>
-<li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.30.wnPTNf&amp;id=14576731464&amp;_u=nqa35af3&amp;is_b=1&amp;cat_id=2&amp;q=%B7%A2%B9%E2%B6%FE%BC%AB%B9%DC&amp;rn=b12ffd48699547ed9cb982a88014a0aa">发光二极管</a>一个</li>
-<li>300欧姆的<a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻</a>一个</li>
-</ol>
-
-<h2>GPIO接口</h2>
-
-<p><img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/></p>
-
-<p>用杜邦线将上图的3.3V输出和GPIO 23引出（板子正面朝上，GPIO引脚在左上角），将电阻和LED串联起来（电阻防止LED电流过大烧掉），注意二极管的两根脚不一样长，长脚的接正级，这样GPIO 23如果输出高电平，二极管就不发光了，输出低电平就亮啦！</p>
-
-
-        <div class="more">
-          <a href="/2013/03/13/vistor-on-homepage-led-indicator.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     
