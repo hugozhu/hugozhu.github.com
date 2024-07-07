@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 1 - Raspberry Pi, R4S, StreamDeck</title>
     
-      <meta name="description" content="Use Gradle Properties to set alternative version of Android SDK build-tools and Android Gradle Plugin in team project. 树莓派">
+      <meta name="description" content="DIY airplay HIFI audio system 树莓派">
     
     <meta name="author" content="Hugo Zhu">
 
@@ -180,6 +180,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2024/07/10/76-acme_docker_auto_uptime.html">使用acme docker来自动化3个月需要更新的免费域名证书</a> <span class="date">2024-07-10</span></h1>
+
+        <h1>问题和解决方案</h1>
+
+<p>免费域名证书需要三个月更新一次。
+解决方案：apisix, docker, acme.sh, dnspod</p>
+
+<h1>Apisix</h1>
+
+<p><a href="https://apisix.org">https://apisix.org</a>
+Apisix是优秀的开源网关，更新证书不需要重启服务，可以作为所有服务的网关</p>
+
+<h1>Acme Docker</h1>
+
+<p><a href="https://github.com/hugozhu/acme_docker/blob/main/README.md">https://github.com/hugozhu/acme_docker/blob/main/README.md</a>
+项目已配置好使用docker来更新证书并生成apisix的json</p>
+
+<p>docker-compose.yaml</p>
+
+<pre><code>version: &quot;3&quot;
+services:
+  acme:
+    image: neilpang/acme.sh
+    container_name: acme
+    #restart: always
+    command: daemon
+    env_file:
+     - .env
+    volumes:
+      - ./cert:/acme.sh
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2024/07/10/76-acme_docker_auto_uptime.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2024/07/02/75-vidhub-infuse-which-one-is-the-best.html">VidHub vs. Infuse: Which one is the best video player on iOS Platform</a> <span class="date">2024-07-02</span></h1>
@@ -548,48 +587,6 @@ COMMIT
 
         <div class="more">
           <a href="/2020/02/17/68-turn-raspberrypi-4-to-a-router-and-wifi-ap.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2016/05/15/67-use-free-google-cloud-service-to-deliver-github-webhook-events-to-dingtalk.html">用免费的Google云服务将Github项目Webhook事件通知到钉钉</a> <span class="date">2016-05-15</span></h1>
-
-        <p>本教程使用<code>Go</code>语言来实现</p>
-
-<p><img src="http://static.dingtalk.com/media/lALOAQ6nfSvM5Q_229_43.png" alt="image" /></p>
-
-<h1>+</h1>
-
-<p><img src="https://cloud.google.com/_static/b1956bdfe3/images/new-gcp-logo.png" alt="image" /></p>
-
-<h1>准备开发环境</h1>
-
-<p>首先你需要下载Google AppEngine的SDK：<code>https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go</code></p>
-
-<p>安装好后执行<code>goapp</code>确认已安装好</p>
-
-<pre><code>4:30:40 Hugo-Mac-mini ~/Projects/hugozhu/godingtalk $ goapp env
-GOARCH=&quot;amd64&quot;
-GOBIN=&quot;&quot;
-GOEXE=&quot;&quot;
-GOHOSTARCH=&quot;amd64&quot;
-GOHOSTOS=&quot;darwin&quot;
-GOOS=&quot;darwin&quot;
-GOPATH=&quot;/Users/hugozhu/Projects/hugozhu/godingtalk&quot;
-GORACE=&quot;&quot;
-GOROOT=&quot;/Users/hugozhu/Projects/share/go_appengine/goroot&quot;
-GOTOOLDIR=&quot;/Users/hugozhu/Projects/share/go_appengine/goroot/pkg/tool/darwin_amd64&quot;
-GO15VENDOREXPERIMENT=&quot;1&quot;
-CC=&quot;clang&quot;
-GOGCCFLAGS=&quot;-fPIC -m64 -pthread -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fno-common&quot;
-CXX=&quot;clang++&quot;
-CGO_ENABLED=&quot;1&quot;
-
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2016/05/15/67-use-free-google-cloud-service-to-deliver-github-webhook-events-to-dingtalk.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

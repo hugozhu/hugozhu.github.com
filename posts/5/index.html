@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Hugo Zhu Page 5 - Raspberry Pi, R4S, StreamDeck</title>
     
-      <meta name="description" content="Use Gradle Properties to set alternative version of Android SDK build-tools and Android Gradle Plugin in team project. 树莓派">
+      <meta name="description" content="DIY airplay HIFI audio system 树莓派">
     
     <meta name="author" content="Hugo Zhu">
 
@@ -180,6 +180,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/2013/06/01/36-use-ping-to-check-network-connectivity.html">使用Ping来检查网络连通性</a> <span class="date">2013-06-01</span></h1>
+
+        <p>树莓派使用了一个无线网卡连接家里的无线路由器，在实际使用过程中发现连续运行多天后会掉线，而且掉线后基本上就再也连不上网了，需要重启树莓派才能恢复，十分麻烦。</p>
+
+<p>假设无线路由器IP是192.168.1.1，于是每隔15分钟检查一下，是否能从树莓派上ping通路由器；如果不能则重启无线网络，脚本如下：</p>
+
+<p><strong>network.sh</strong></p>
+
+<pre><code>#!/bin/bash
+
+export PATH=/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+
+ping_count() {
+  count=0
+  `timeout 5 ping 192.168.1.1 | while read LINE; do
+  {
+        if [[ &quot;${LINE}&quot; =~ &quot;64 bytes from&quot; ]]; then
+                let &quot;count = $count + 1&quot;
+                echo &quot;export count=$count&quot;
+        fi
+  }
+  done`
+  echo $count
+}
+
+
+if [[ $(ping_count) &lt; 1 ]]; then
+        ifconfig wlan0
+        ifconfig wlan0 down
+        sleep 1
+        ifconfig wlan0 up
+        sleep 1
+        netcfg -r wlan0-Hugo-Nas
+        sleep 5
+        if [[ $(ping_count) &lt; 1 ]]; then
+                echo &quot;Fatal error: wifi is down, rebooting now...&quot;
+                reboot
+        fi
+fi
+</code></pre>
+
+
+        <div class="more">
+          <a href="/2013/06/01/36-use-ping-to-check-network-connectivity.html" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/2013/05/14/35-understanding-output.html">树莓派的GPIO接口输出电流限制</a> <span class="date">2013-05-14</span></h1>
@@ -674,47 +722,6 @@ output_stdio_mod mod_rpi
 
         <div class="more">
           <a href="/2013/04/08/27-interrupts-with-gpio-pins.html" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
-      <div class="post">
-        <h1 class="title"><a href="/2013/04/08/26-backup-raspberry-pi.html">备份Raspberry Pi</a> <span class="date">2013-04-08</span></h1>
-
-        <p>树莓派的操作系统安装在SD卡，使用一段时间后还是很有必要备份一下，以防哪天SD卡就坏了。</p>
-
-<p>备份的目的地最方便的还是使用网络存储，我使用的是西部数据的<a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.1.Cz5Mlq&amp;id=13865367896&amp;is_b=1&amp;cat_id=50099232&amp;q=mybooklive&amp;rn=638aa11bdda81f8d589bb0e052c57187">MyBooklive</a>3T网络硬盘。挺不错的一个产品，功能基本满足我的需求。</p>
-
-<p>准备好备份目标盘，将Nas的备份目录mount到树莓派:</p>
-
-<pre><code>mkdir /mnt/backup
-mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest
-</code></pre>
-
-<h1>完整备份</h1>
-
-<p>确定相应的SD卡设备ID</p>
-
-<pre><code>root@raspberrypi2 ~/bin # fdisk -l
-
-Disk /dev/mmcblk0: 1973 MB, 1973420032 bytes, 3854336 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x0004f23a
-
-        Device Boot      Start         End      Blocks   Id  System
-/dev/mmcblk0p1   *        2048      186367       92160    c  W95 FAT32 (LBA)
-/dev/mmcblk0p2          186368     3667967     1740800   83  Linux
-
-Disk /dev/sda: 2107 MB, 2107637760 bytes, 4116480 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-</code></pre>
-
-
-        <div class="more">
-          <a href="/2013/04/08/26-backup-raspberry-pi.html" class="btn btn-small">阅读全文</a>
         </div>
       </div>
     

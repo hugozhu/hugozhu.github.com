@@ -4,6 +4,11 @@
 		<loc>https://blog.hugozhu.site/</loc>
 	</url>
 	<url>
+		<loc>https://blog.hugozhu.site/2024/07/10/76-acme_docker_auto_uptime.html</loc>
+		<lastmod>2024-07-10</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>https://blog.hugozhu.site/2024/07/02/75-vidhub-infuse-which-one-is-the-best.html</loc>
 		<lastmod>2024-07-02</lastmod>
 		<changefreq>weekly</changefreq>

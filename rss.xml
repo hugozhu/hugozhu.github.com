@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>Hugo Zhu</title>
     <link>https://blog.hugozhu.site</link>
-    <pubDate>07 Jul 24 02:30 UTC</pubDate>
+    <pubDate>07 Jul 24 03:20 UTC</pubDate>
+    <item>
+      <title>使用acme docker来自动化3个月需要更新的免费域名证书</title>
+      <link>https://blog.hugozhu.site/2024/07/10/76-acme_docker_auto_uptime.html</link>
+      <pubDate>2024-07-10 12:00:00 +0800</pubDate>
+      <description>&#xA;&#xA;&lt;p&gt;&lt;h1&gt;目录：&lt;/h1&gt;&lt;nav&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_0&#34;&gt;问题和解决方案&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_1&#34;&gt;Apisix&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_2&#34;&gt;Acme Docker&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_3&#34;&gt;重新申请免费证书&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#toc_4&#34;&gt;apisix上更新证书&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/nav&gt;&lt;/p&gt;&#xA;&#xA;&lt;h1 id=&#34;toc_0&#34;&gt;问题和解决方案&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;免费域名证书需要三个月更新一次。&#xA;解决方案：apisix, docker, acme.sh, dnspod&lt;/p&gt;&#xA;&#xA;&lt;h1 id=&#34;toc_1&#34;&gt;Apisix&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;&lt;a href=&#34;https://apisix.org&#34;&gt;https://apisix.org&lt;/a&gt;&#xA;Apisix是优秀的开源网关，更新证书不需要重启服务，可以作为所有服务的网关&lt;/p&gt;&#xA;&#xA;&lt;h1 id=&#34;toc_2&#34;&gt;Acme Docker&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/hugozhu/acme_docker/blob/main/README.md&#34;&gt;https://github.com/hugozhu/acme_docker/blob/main/README.md&lt;/a&gt;&#xA;项目已配置好使用docker来更新证书并生成apisix的json&lt;/p&gt;&#xA;&#xA;&lt;p&gt;docker-compose.yaml&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;version: &amp;quot;3&amp;quot;&#xA;services:&#xA;  acme:&#xA;    image: neilpang/acme.sh&#xA;    container_name: acme&#xA;    #restart: always&#xA;    command: daemon&#xA;    env_file:&#xA;     - .env&#xA;    volumes:&#xA;      - ./cert:/acme.sh&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h1 id=&#34;toc_3&#34;&gt;重新申请免费证书&lt;/h1&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;docker-compose up -d&#xA;docker exec acme acme.sh --set-default-ca --server letsencrypt&#xA;docker exec acme acme.sh --issue --dns dns_dp  -d hugozhu.site -d *.hugozhu.site -d *.go.hugozhu.site&#xA;docker-compose down&#xA;&#xA;cat hugozhu.site.json&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&#xA;&lt;h1 id=&#34;toc_4&#34;&gt;apisix上更新证书&lt;/h1&gt;&#xA;&#xA;&lt;pre&gt;&lt;code&gt;data=$( cat &amp;quot;hugozhu.site.json&amp;quot; )&#xA;curl &#39;http://127.0.0.1:9180/apisix/admin/ssls/1&#39; \&#xA;        -H &amp;quot;X-API-KEY: $API_KEY&amp;quot; -X PUT -d &amp;quot;$data&amp;quot;`&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;</description>
+    </item>
     <item>
       <title>VidHub vs. Infuse: Which one is the best video player on iOS Platform</title>
       <link>https://blog.hugozhu.site/2024/07/02/75-vidhub-infuse-which-one-is-the-best.html</link>

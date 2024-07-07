@@ -3,9 +3,9 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <title>使用Goroutine和Channel实现按键超时交互 - Raspberry Pi, R4S, StreamDeck</title>
+    <title>使用acme docker来自动化3个月需要更新的免费域名证书 - Raspberry Pi, R4S, StreamDeck</title>
     
-      <meta name="description" content="Use Goroutine and Channel to implement interaction with timeout 树莓派">
+      <meta name="description" content="Use acme docker to renew ssls on apisix 树莓派">
     
     <meta name="author" content="Hugo Zhu">
 
@@ -125,137 +125,83 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="content">
         <div class="page-header">
-  <h1>使用Goroutine和Channel实现按键超时交互 </h1>
+  <h1>使用acme docker来自动化3个月需要更新的免费域名证书 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <h1>背景介绍</h1>
+    
 
-<p>前面的文章（见<a href="#参考链接">参考链接</a>）已经介绍了如何使用按键作为树莓派的输入。在实际应用中可以通过按下按键循环显示预先设定的脚本输出到显示屏幕，需求如下：</p>
+<p><h1>目录：</h1><nav>
+<ul>
+<li><a href="#toc_0">问题和解决方案</a></li>
+<li><a href="#toc_1">Apisix</a></li>
+<li><a href="#toc_2">Acme Docker</a></li>
+<li><a href="#toc_3">重新申请免费证书</a></li>
+<li><a href="#toc_4">apisix上更新证书</a></li>
+</ul>
+</nav></p>
 
-<ol>
-<li>如果按键不被触动，则定时5秒执行脚本获取最新内容显示；</li>
-<li>因为不同的脚本获取内容速度会不一样，我们要求如果超过500ms脚本还未返回，需要在屏幕上显示“loading…”这样的过渡内容，如果脚本在500ms内返回，则不显示。</li>
-</ol>
+<h1 id="toc_0">问题和解决方案</h1>
 
-<p>使用Goroutine和Channel可以很方便的实现这个需求。</p>
+<p>免费域名证书需要三个月更新一次。
+解决方案：apisix, docker, acme.sh, dnspod</p>
 
-<h1>代码</h1>
+<h1 id="toc_1">Apisix</h1>
 
-<pre><code>var screen_chan chan int
-var switch_chan = make(chan bool)
+<p><a href="https://apisix.org">https://apisix.org</a>
+Apisix是优秀的开源网关，更新证书不需要重启服务，可以作为所有服务的网关</p>
 
-func main() {
-	//a goroutine： 检查按键是否被按
-	go func() {
-		last_time := time.Now().UnixNano() / 1000000
-		btn_pushed := 0
-		total_mode := 3
-		for msg := range WiringPiISR(PIN_GPIO_6, INT_EDGE_FALLING) {
-			if msg &gt; -1 {
-				n := time.Now().UnixNano() / 1000000
-				delta := n - last_time
-				if delta &gt; 300 { //如果两次按键变化的间隔时间&lt;300ms，是因为接触信号不稳定可以忽略掉
-					last_time = n
-					btn_pushed++
-					screen_chan &lt;- btn_pushed % total_mode
-				}
-			}
-		}
-	}()
+<h1 id="toc_2">Acme Docker</h1>
 
-	//a goroutine： 根据管道消息刷新屏幕
-	go loop_update_display()
+<p><a href="https://github.com/hugozhu/acme_docker/blob/main/README.md">https://github.com/hugozhu/acme_docker/blob/main/README.md</a>
+项目已配置好使用docker来更新证书并生成apisix的json</p>
 
-	//选择确实的屏幕内容脚本编号
-	screen_chan &lt;- 0
+<p>docker-compose.yaml</p>
 
-	//a goroutine: 定时5s向管道发送更新屏幕内容的信号
-	ticker := time.NewTicker(5 * time.Second)
-	go func() {
-		for {
-			&lt;-ticker.C
-			screen_chan &lt;- -1
-		}
-	}()
-	
-	...	
-}
-
-func loop_update_display() {
-	current_screen := 0
-	for msg := range screen_chan {
-		switch_screen := false
-		if msg &gt;= 0 {
-		   //说明是按钮触发的消息，而不是定时器触发的(-1)
-			if msg != current_screen {
-				//btn pushed
-				current_screen = msg
-				switch_screen = true
-				go func() {
-					select {
-					case &lt;-time.After(500 * time.Millisecond):
-						display_loading()
-						&lt;-switch_chan
-					case &lt;-switch_chan:
-					}
-				}()
-			}
-		}
-		switch current_screen {
-		case 0:
-			display_screen0()
-		case 1:
-			display_screen1()
-		case 2:
-			display_screen2()
-		}
-		if switch_screen {
-			switch_chan &lt;- true
-		}
-	}
-}
+<pre><code>version: &quot;3&quot;
+services:
+  acme:
+    image: neilpang/acme.sh
+    container_name: acme
+    #restart: always
+    command: daemon
+    env_file:
+     - .env
+    volumes:
+      - ./cert:/acme.sh
 </code></pre>
 
-<pre><code>go func() {
-	select {
-	case &lt;-time.After(500 * time.Millisecond):
-		display_loading(current_screen)
-		&lt;-switch_chan
-	case &lt;-switch_chan:
-	}
-}()
+<h1 id="toc_3">重新申请免费证书</h1>
+
+<pre><code>docker-compose up -d
+docker exec acme acme.sh --set-default-ca --server letsencrypt
+docker exec acme acme.sh --issue --dns dns_dp  -d hugozhu.site -d *.hugozhu.site -d *.go.hugozhu.site
+docker-compose down
+
+cat hugozhu.site.json
 </code></pre>
 
-<p>超时控制的代码就是上面几行了。首先如果是按键触发，主goroutine会创建一个检查超时的goroutine，该goroutine执行<code>select</code>语句时会试图从两个管道里获取消息，先获取到消息的管道会继续执行相应分支的代码。</p>
+<h1 id="toc_4">apisix上更新证书</h1>
 
-<p>如果<code>display_screenN</code>方法在500ms内完成了，<code>switch_chan</code>会被主goroutine发送<code>true</code>，这时超时检查的goroutine就会直接从<code>select</code>语句退出；</p>
-
-<p>如果<code>display_screenN</code>方法在500ms内未完成，则<code>display_loading()</code>会先执行，执行完后继续等待<code>switch_chan</code>的消息，直到<code>display_screenN</code>完成。注意<code>display_xxxxxx</code>方法内部都使用了互斥锁，有一种边界情况是<code>display_screenN</code>先获取了锁，完成显示后<code>dislay_loading</code>再执行，这样内容就会一直保持为&rdquo;loading…&rdquo;直到下一次定时刷新到来。</p>
-
-<p>如果有其它更好的方法请指教。</p>
-
-<h1>参考链接</h1>
-
-<ol>
-<li><a href="http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html">http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html</a></li>
-<li><a href="http://hugozhu.myalert.info/2013/04/14/29-use-wiringpi-go-binding.html">http://hugozhu.myalert.info/2013/04/14/29-use-wiringpi-go-binding.html</a></li>
-</ol>
+<pre><code>data=$( cat &quot;hugozhu.site.json&quot; )
+curl 'http://127.0.0.1:9180/apisix/admin/ssls/1' \
+        -H &quot;X-API-KEY: $API_KEY&quot; -X PUT -d &quot;$data&quot;`
+</code></pre>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/2013/04/22/33-use-google-app-engine-failover-your-blog-between-raspberrypi-and-github.html" title="树莓派网站容灾：利用DNSPod，Google App Engine和Github">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/2013/04/20/31-golang-memory-model.html" title="Go语言内存模型">Next &rarr;</a></li>
+            <li class="next"><a href="/2024/07/02/75-vidhub-infuse-which-one-is-the-best.html" title="VidHub vs. Infuse: Which one is the best video player on iOS Platform">Next &rarr;</a></li>
           
           
         </ul>
@@ -304,7 +250,7 @@ func loop_update_display() {
 
 
       <h4>Published</h4>
-      <div class="date"><span>2013-04-21</span></div>
+      <div class="date"><span>2024-07-10</span></div>
       <br>
       <h4>Categories</h4>
       <ul class="tag_box">
@@ -319,7 +265,7 @@ func loop_update_display() {
       <ul class="tag_box">
       
         <li>
-  <a href="/tags/#Golang-ref">Golang <span>4</span></a>
+  <a href="/tags/#apisix%2C-docker%2C-acme.sh%2C-dnspod-ref">apisix, docker, acme.sh, dnspod <span>1</span></a>
 </li>
       
       </ul>
