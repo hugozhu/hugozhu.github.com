@@ -1,21 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Rancher on All about Raspberry Pi</title>
-    <link>https://blog.hugozhu.site/tags/rancher/</link>
-    <description>Recent content in Rancher on All about Raspberry Pi</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
-    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
-    <lastBuildDate>Tue, 16 Aug 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.hugozhu.site/tags/rancher/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Use Rancher to manage k8s cluster</title>
-      <link>https://blog.hugozhu.site/post/2022/73-use-rancher-to-create-k8s-cluster/</link>
-      <pubDate>Tue, 16 Aug 2022 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
-      <guid>https://blog.hugozhu.site/post/2022/73-use-rancher-to-create-k8s-cluster/</guid>
-      <description>必要的集群内部通讯端口要在防火墙上打开 2379, 2380, 80, 443, 22, 6443, 10250&#xA;清理干净 https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/ docker rm -f $(docker ps -qa) # docker rmi -f $(docker images -q) docker volume rm $(docker volume ls -q) for mount in $(mount | grep tmpfs | grep &amp;#39;/var/lib/kubelet&amp;#39; | awk &amp;#39;{ print $3 }&amp;#39;) /var/lib/kubelet /var/lib/rancher; do sudo umount $mount; done sudo rm -rf /etc/ceph \ /etc/cni \ /etc/kubernetes \ /opt/cni \ /opt/rke \ /run/secrets/kubernetes.io \ /run/calico \ /run/flannel \ /var/lib/calico \ /var/lib/etcd \ /var/lib/cni \ /var/lib/kubelet \ /var/lib/rancher/rke/log \ /var/log/containers \ /var/log/kube-audit \ /var/log/pods \ /var/run/calico sudo ip link delete flannel.</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rancher on All about Raspberry Pi</title><link>/tags/rancher/</link><description>Recent content in Rancher on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor><webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster><lastBuildDate>Tue, 16 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/rancher/index.xml" rel="self" type="application/rss+xml"/><item><title>Use Rancher to manage k8s cluster</title><link>/post/2022/73-use-rancher-to-create-k8s-cluster/</link><pubDate>Tue, 16 Aug 2022 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>/post/2022/73-use-rancher-to-create-k8s-cluster/</guid><description>必要的集群内部通讯端口要在防火墙上打开 2379, 2380, 80, 443, 22, 6443, 10250
+清理干净 https://rancher.com/docs/rancher/v2.5/en/cluster-admin/cleaning-cluster-nodes/ docker rm -f $(docker ps -qa) # docker rmi -f $(docker images -q) docker volume rm $(docker volume ls -q) for mount in $(mount | grep tmpfs | grep &amp;#39;/var/lib/kubelet&amp;#39; | awk &amp;#39;{ print $3 }&amp;#39;) /var/lib/kubelet /var/lib/rancher; do sudo umount $mount; done sudo rm -rf /etc/ceph \ /etc/cni \ /etc/kubernetes \ /opt/cni \ /opt/rke \ /run/secrets/kubernetes.io \ /run/calico \ /run/flannel \ /var/lib/calico \ /var/lib/etcd \ /var/lib/cni \ /var/lib/kubelet \ /var/lib/rancher/rke/log \ /var/log/containers \ /var/log/kube-audit \ /var/log/pods \ /var/run/calico sudo ip link delete flannel.</description></item></channel></rss>

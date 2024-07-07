@@ -1,21 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Iptables on All about Raspberry Pi</title>
-    <link>https://blog.hugozhu.site/tags/iptables/</link>
-    <description>Recent content in Iptables on All about Raspberry Pi</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
-    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
-    <lastBuildDate>Wed, 06 Apr 2016 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.hugozhu.site/tags/iptables/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>用iptables搭建稳定的加速代理</title>
-      <link>https://blog.hugozhu.site/post/2016/61-smart-router-with-iptable/</link>
-      <pubDate>Wed, 06 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
-      <guid>https://blog.hugozhu.site/post/2016/61-smart-router-with-iptable/</guid>
-      <description>设置步骤 在阿里云中国和美国都购买一个VPS，用同样的操作系统，都安装好 shadowsocks-libev ( https://github.com/shadowsocks/shadowsocks-libev )&#xA;编辑配置文件 config.json 如下： { &amp;#34;server&amp;#34;:&amp;#34;&amp;lt;your_ip_address&amp;gt;&amp;#34;, &amp;#34;local_address&amp;#34;:&amp;#34;0.0.0.0&amp;#34;, &amp;#34;server_port&amp;#34;:10080, &amp;#34;local_port&amp;#34;:1080, &amp;#34;password&amp;#34;:&amp;#34;password&amp;#34;, &amp;#34;method&amp;#34;:&amp;#34;bf-cfb&amp;#34;, &amp;#34;timeout&amp;#34;:600 } 在美国的服务器上执行： nohup ss-server config.json &amp;amp; 在中国的服务器上执行： nohup ss-redir config.json &amp;amp; 在中国的服务器上安装好L2TP服务， /etc/xl2tpd/xl2tpd.conf 里设置好vpn ip段&#xA;[global] ipsec saref = yes listen-addr = &amp;lt;外网IP&amp;gt; [lns default] ip range = 192.168.1.10-192.168.1.20 local ip = 192.168.1.1 ;require chap = yes refuse chap = yes refuse pap = yes require authentication = yes ppp debug = yes pppoptfile = /etc/ppp/xl2tpd-options length bit = yes /etc/ppp/xl2tpd-options 里设置通过vpn接入进来的设备DNS</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Iptables on All about Raspberry Pi</title><link>/tags/iptables/</link><description>Recent content in Iptables on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor><webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster><lastBuildDate>Wed, 06 Apr 2016 00:00:00 +0000</lastBuildDate><atom:link href="/tags/iptables/index.xml" rel="self" type="application/rss+xml"/><item><title>用iptables搭建稳定的加速代理</title><link>/post/2016/61-smart-router-with-iptable/</link><pubDate>Wed, 06 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>/post/2016/61-smart-router-with-iptable/</guid><description>设置步骤 在阿里云中国和美国都购买一个VPS，用同样的操作系统，都安装好 shadowsocks-libev ( https://github.com/shadowsocks/shadowsocks-libev )
+编辑配置文件 config.json 如下： { &amp;#34;server&amp;#34;:&amp;#34;&amp;lt;your_ip_address&amp;gt;&amp;#34;, &amp;#34;local_address&amp;#34;:&amp;#34;0.0.0.0&amp;#34;, &amp;#34;server_port&amp;#34;:10080, &amp;#34;local_port&amp;#34;:1080, &amp;#34;password&amp;#34;:&amp;#34;password&amp;#34;, &amp;#34;method&amp;#34;:&amp;#34;bf-cfb&amp;#34;, &amp;#34;timeout&amp;#34;:600 } 在美国的服务器上执行： nohup ss-server config.json &amp;amp; 在中国的服务器上执行： nohup ss-redir config.json &amp;amp; 在中国的服务器上安装好L2TP服务， /etc/xl2tpd/xl2tpd.conf 里设置好vpn ip段
+[global] ipsec saref = yes listen-addr = &amp;lt;外网IP&amp;gt; [lns default] ip range = 192.168.1.10-192.168.1.20 local ip = 192.168.1.1 ;require chap = yes refuse chap = yes refuse pap = yes require authentication = yes ppp debug = yes pppoptfile = /etc/ppp/xl2tpd-options length bit = yes /etc/ppp/xl2tpd-options 里设置通过vpn接入进来的设备DNS</description></item></channel></rss>

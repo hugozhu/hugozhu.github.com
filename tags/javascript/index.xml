@@ -1,21 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Javascript on All about Raspberry Pi</title>
-    <link>https://blog.hugozhu.site/tags/javascript/</link>
-    <description>Recent content in Javascript on All about Raspberry Pi</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
-    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
-    <lastBuildDate>Sun, 21 Jul 2013 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.hugozhu.site/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>在树莓派上使用Phantomjs自动登录微博</title>
-      <link>https://blog.hugozhu.site/post/2013/41-use-phantomjs-on-raspberry-pi-to-login-weibo/</link>
-      <pubDate>Sun, 21 Jul 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
-      <guid>https://blog.hugozhu.site/post/2013/41-use-phantomjs-on-raspberry-pi-to-login-weibo/</guid>
-      <description>使用过新浪开放平台的朋友都知道用户对小应用（用户数较少的）的授权Token很容易过期，自动续期要求授权过的用户在过期前重新打开授权页。如果你想实现一个自动备份自己微博的App，就不得每天（周）自己去访问授权页（想死的心都有了吧？）。这里介绍一种通过脚本自动登录微博获取最新oAuth token的方法（需要微博登录名和密码），合适自己玩。将脚本部署在树莓派上后，我再也不用每周都去登录一次授权页了，只是收到报警消息后（经常是帐号被冻结了）需要手动处理一下。&#xA;Phantomjs Phantomjs 是一个开源的，没有界面可运行在命令行，跨平台，基于WebKit的全功能浏览器，可以用来做网站自动化测试。从源代码编译比较费时间，可以直接下载二进制版本，树莓派的版本在这里可下载。Phantomjs下载好了后就一个可执行文件，依赖非常少，我很喜欢这种方式。&#xA;代码 以下代码使用提供的微博用户名和密码登录，获得Token后还会打开微博首页看帐号是否被冻结了。&#xA;var page = require(&amp;#39;webpage&amp;#39;).create(), system = require(&amp;#39;system&amp;#39;), fs = require(&amp;#39;fs&amp;#39;), address; var weibo_userid = system.args[1] var weibo_passwd = system.args[2] var startUrl = &amp;#34;https://api.weibo.com/oauth2/authorize?client_id=&amp;lt;your_app_key&amp;gt;&amp;amp;redirect_uri=&amp;lt;your_return_url&amp;gt;/&amp;amp;response_type=token&amp;#34;; var verify_weibo_freeze = false; page.onResourceReceived = function (res,network) { if (res.stage == &amp;#34;end&amp;#34;) { // console.log(&amp;#34;\t&amp;lt;-&amp;#34; + res.url); if (res.url.indexOf(&amp;#34;authorize?client_id&amp;#34;)&amp;gt;0) { startUrl = res.url } if (res.url.indexOf(&amp;#34;?access_token&amp;#34;)&amp;gt;0) { var pos1 = res.url.indexOf(&amp;#34;access_token=&amp;#34;) var pos2 = res.url.indexOf(&amp;#34;&amp;amp;&amp;#34;) var access_token = res.url.substring(pos1+&amp;#34;access_token=&amp;#34;.length, pos2) console.</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Javascript on All about Raspberry Pi</title><link>/tags/javascript/</link><description>Recent content in Javascript on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor><webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster><lastBuildDate>Sun, 21 Jul 2013 00:00:00 +0000</lastBuildDate><atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml"/><item><title>在树莓派上使用Phantomjs自动登录微博</title><link>/post/2013/41-use-phantomjs-on-raspberry-pi-to-login-weibo/</link><pubDate>Sun, 21 Jul 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>/post/2013/41-use-phantomjs-on-raspberry-pi-to-login-weibo/</guid><description>使用过新浪开放平台的朋友都知道用户对小应用（用户数较少的）的授权Token很容易过期，自动续期要求授权过的用户在过期前重新打开授权页。如果你想实现一个自动备份自己微博的App，就不得每天（周）自己去访问授权页（想死的心都有了吧？）。这里介绍一种通过脚本自动登录微博获取最新oAuth token的方法（需要微博登录名和密码），合适自己玩。将脚本部署在树莓派上后，我再也不用每周都去登录一次授权页了，只是收到报警消息后（经常是帐号被冻结了）需要手动处理一下。
+Phantomjs Phantomjs 是一个开源的，没有界面可运行在命令行，跨平台，基于WebKit的全功能浏览器，可以用来做网站自动化测试。从源代码编译比较费时间，可以直接下载二进制版本，树莓派的版本在这里可下载。Phantomjs下载好了后就一个可执行文件，依赖非常少，我很喜欢这种方式。
+代码 以下代码使用提供的微博用户名和密码登录，获得Token后还会打开微博首页看帐号是否被冻结了。
+var page = require(&amp;#39;webpage&amp;#39;).create(), system = require(&amp;#39;system&amp;#39;), fs = require(&amp;#39;fs&amp;#39;), address; var weibo_userid = system.args[1] var weibo_passwd = system.args[2] var startUrl = &amp;#34;https://api.weibo.com/oauth2/authorize?client_id=&amp;lt;your_app_key&amp;gt;&amp;amp;redirect_uri=&amp;lt;your_return_url&amp;gt;/&amp;amp;response_type=token&amp;#34;; var verify_weibo_freeze = false; page.onResourceReceived = function (res,network) { if (res.stage == &amp;#34;end&amp;#34;) { // console.log(&amp;#34;\t&amp;lt;-&amp;#34; + res.url); if (res.url.indexOf(&amp;#34;authorize?client_id&amp;#34;)&amp;gt;0) { startUrl = res.url } if (res.url.indexOf(&amp;#34;?access_token&amp;#34;)&amp;gt;0) { var pos1 = res.url.indexOf(&amp;#34;access_token=&amp;#34;) var pos2 = res.url.indexOf(&amp;#34;&amp;amp;&amp;#34;) var access_token = res.url.substring(pos1+&amp;#34;access_token=&amp;#34;.length, pos2) console.</description></item></channel></rss>

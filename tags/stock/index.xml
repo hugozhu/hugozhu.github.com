@@ -1,21 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Stock on All about Raspberry Pi</title>
-    <link>https://blog.hugozhu.site/tags/stock/</link>
-    <description>Recent content in Stock on All about Raspberry Pi</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
-    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
-    <lastBuildDate>Tue, 10 Feb 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.hugozhu.site/tags/stock/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>零佣金的券商靠什么赚钱？</title>
-      <link>https://blog.hugozhu.site/post/2015/53-robinhood-zero-commission-brokerage/</link>
-      <pubDate>Tue, 10 Feb 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
-      <guid>https://blog.hugozhu.site/post/2015/53-robinhood-zero-commission-brokerage/</guid>
-      <description>最近一家叫Robinhood的创业公司推出了零佣金的股票交易服务公测，用户可以通过iOS上的专用App交易。&#xA;这家公司的两个创始人斯坦福大学毕业后去了纽约给华尔街的大型股票经济公司做交易系统，做了几年后突然有一天发现券商公司对每一笔交易付出的成本微乎其微，但要收取每个客户多达10美金的佣金。。。于是他们毅然决定辞职，回到硅谷创业去了。&#xA;公司打出的口号是就是零佣金，如果你交易的资金来源于自己，那么买入和卖出交易，以及银行转入和转出（不包括电汇）都是免费的。&#xA;零佣金对资金不那么充裕的年轻人来说非常有吸引力。那么问题来了，这家公司靠什么赚钱呢？&#xA;交易过股票的人大概都知道，券商会提供融资服务给流动资金不充足的投资者，融资交易（Securities Margin Trading）就是投资者以资金或证券作为质押，向券商借入资金用于证券买卖，并在约定的期限内偿还借款本金和利息。相应的还有融券服务，融券交易是投资者以资金或证券作为质押，向券商借入证券卖出，在约定的期限内，买入相同数量和品种的证券归还券商并支付相应的融券费用。所以Robinhood首先可以通过融资融券服务盈利；&#xA;对于投资者在Robinhood账户里的未购买股票的闲余资金，Robinhood可以通过金融市场获得一部分利息收入；&#xA;提供收费接口给小型的量化和对冲基金；&#xA;目前Robinhood已经完成了千万美元的风险投资，现阶段提供颠覆性的交易体验，吸引更多年轻的新投资者，赢得用户的信任显然更为重要。用户多了，盈利就不是问题了。。。&#xA;App界面&#xA;创始人&#xA;参考文档 http://techcrunch.cn/2014/09/25/robinhood-stock-app/ https://robinhoodapp.zendesk.com/hc/en-us/articles/202853769-How-does-Robinhood-make-money- http://baike.baidu.com/view/431144.htm?fromtitle=融资融券&amp;amp;fromid=1628138&amp;amp;type=syn </description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stock on All about Raspberry Pi</title><link>/tags/stock/</link><description>Recent content in Stock on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor><webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster><lastBuildDate>Tue, 10 Feb 2015 00:00:00 +0000</lastBuildDate><atom:link href="/tags/stock/index.xml" rel="self" type="application/rss+xml"/><item><title>零佣金的券商靠什么赚钱？</title><link>/post/2015/53-robinhood-zero-commission-brokerage/</link><pubDate>Tue, 10 Feb 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>/post/2015/53-robinhood-zero-commission-brokerage/</guid><description>最近一家叫Robinhood的创业公司推出了零佣金的股票交易服务公测，用户可以通过iOS上的专用App交易。
+这家公司的两个创始人斯坦福大学毕业后去了纽约给华尔街的大型股票经济公司做交易系统，做了几年后突然有一天发现券商公司对每一笔交易付出的成本微乎其微，但要收取每个客户多达10美金的佣金。。。于是他们毅然决定辞职，回到硅谷创业去了。
+公司打出的口号是就是零佣金，如果你交易的资金来源于自己，那么买入和卖出交易，以及银行转入和转出（不包括电汇）都是免费的。
+零佣金对资金不那么充裕的年轻人来说非常有吸引力。那么问题来了，这家公司靠什么赚钱呢？
+交易过股票的人大概都知道，券商会提供融资服务给流动资金不充足的投资者，融资交易（Securities Margin Trading）就是投资者以资金或证券作为质押，向券商借入资金用于证券买卖，并在约定的期限内偿还借款本金和利息。相应的还有融券服务，融券交易是投资者以资金或证券作为质押，向券商借入证券卖出，在约定的期限内，买入相同数量和品种的证券归还券商并支付相应的融券费用。所以Robinhood首先可以通过融资融券服务盈利；
+对于投资者在Robinhood账户里的未购买股票的闲余资金，Robinhood可以通过金融市场获得一部分利息收入；
+提供收费接口给小型的量化和对冲基金；
+目前Robinhood已经完成了千万美元的风险投资，现阶段提供颠覆性的交易体验，吸引更多年轻的新投资者，赢得用户的信任显然更为重要。用户多了，盈利就不是问题了。。。
+App界面
+创始人
+参考文档 http://techcrunch.cn/2014/09/25/robinhood-stock-app/ https://robinhoodapp.zendesk.com/hc/en-us/articles/202853769-How-does-Robinhood-make-money- http://baike.baidu.com/view/431144.htm?fromtitle=融资融券&amp;amp;fromid=1628138&amp;amp;type=syn</description></item></channel></rss>
