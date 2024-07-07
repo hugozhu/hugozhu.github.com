@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rasperry Pi on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/tags/rasperry-pi/</link>
+    <description>Recent content in Rasperry Pi on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <lastBuildDate>Mon, 08 Apr 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.hugozhu.site/tags/rasperry-pi/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>备份Raspberry Pi</title>
+      <link>https://blog.hugozhu.site/post/2013/26-backup-raspberry-pi/</link>
+      <pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2013/26-backup-raspberry-pi/</guid>
+      <description>树莓派的操作系统安装在SD卡，使用一段时间后还是很有必要备份一下，以防哪天SD卡就坏了。&#xA;备份的目的地最方便的还是使用网络存储，我使用的是西部数据的MyBooklive3T网络硬盘。挺不错的一个产品，功能基本满足我的需求。&#xA;准备好备份目标盘，将Nas的备份目录mount到树莓派:&#xA;mkdir /mnt/backup mount -t cifs //mybooklive/Public/Backup /mnt/backup -o guest 完整备份 确定相应的SD卡设备ID&#xA;root@raspberrypi2 ~/bin # fdisk -l Disk /dev/mmcblk0: 1973 MB, 1973420032 bytes, 3854336 sectors Units = sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disk identifier: 0x0004f23a Device Boot Start End Blocks Id System /dev/mmcblk0p1 * 2048 186367 92160 c W95 FAT32 (LBA) /dev/mmcblk0p2 186368 3667967 1740800 83 Linux Disk /dev/sda: 2107 MB, 2107637760 bytes, 4116480 sectors Units = sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes 执行备份</description>
+    </item>
+    <item>
+      <title>在Raspberry Pi上使用硬件SPI</title>
+      <link>https://blog.hugozhu.site/post/2013/25-get-spi-working-on-raspberry-pi-spi/</link>
+      <pubDate>Fri, 05 Apr 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2013/25-get-spi-working-on-raspberry-pi-spi/</guid>
+      <description>什么是SPI SPI (Serial Peripheral Interface)，是一种高速，全双工，同步的通信总线协议，基于SPI的设备需要4根线：&#xA;SDO / MOSI - 主设备数据输出，从设备数据输入 SDI / MISO - 主设备数据输入，从设备数据输出 SCLK / CLK - 时钟信号，由主设备产生 CS / SS - 从设备使能信号，由主设备控制 通过CS，主设备可以控制和哪个从设备通信。&#xA;Bit Banging Bit-banging是一种用软件替代专职硬件的串行通信的技术。软件直接对微处理器的管脚的状态进行设置和采样，其功能涵盖诸如：时钟，电平，同步等所有参数。与此不同的是（传统的串行通信技术中），专职硬件诸如 modem、UART 或者 位移寄存器等一般是用来处理这些参数并且提供一个（缓存）的数据接口，软件在这种情况下同信号处理无关。&#xA;bit-banging 具有明显优点诸如：让相同的设备运行不同的协议而只需很小的（甚至不需）硬件的改动。借助很少的额外设备，我们也许可以从数字管脚（数字终端）可以得到视频信号。&#xA;bit-banging 也有一些明显的缺点。在软件仿真的过程中消耗的能量比同样功能的专职硬件大。微处理器过忙地从管脚采样和发送采样信号到管脚。在同等微处理器处理能力下，系统常常会有些噪音。&#xA;在Rasperry Pi上使用Bit Banging在实际情况下有可能因为操作系统调度造成时钟信号不稳定而使设备收到错误的消息，具体的表现就是Nokia 5110屏在长时间运行过程中出现白屏或花屏现象，如下图：&#xA;采用硬件SPI，由Pi的管脚14号Pin（左边倒数第二个）SCLK发出一定频率的时钟信号。经过测试，这种方法产生的时钟信号比Bit Banging软件模拟产生的信号要稳定很多。&#xA;软件模拟时钟信号波形 硬件SPI时钟信号波形 测试Pi的硬件SPI 确认内核支持 root@raspberrypi2 ~/projects/spi_test # ls -la /dev/spi* crw------- 1 root root 153, 0 Jan 1 1970 /dev/spidev0.0 crw------- 1 root root 153, 1 Jan 1 1970 /dev/spidev0.</description>
+    </item>
+  </channel>
+</rss>

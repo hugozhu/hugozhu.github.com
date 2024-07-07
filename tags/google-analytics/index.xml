@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Google Analytics on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/tags/google-analytics/</link>
+    <description>Recent content in Google Analytics on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <lastBuildDate>Thu, 10 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.hugozhu.site/tags/google-analytics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Google Analytics 4 简介</title>
+      <link>https://blog.hugozhu.site/post/2022/70-google-analytics-101/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2022/70-google-analytics-101/</guid>
+      <description>Google Analytics 4 简介 Google Analytics（分析）可帮助您了解人们使用您的 Web、Apple 或 Android 应用的方式。SDK 会自动收集大量事件和用户属性，您也可以定义自定义事件，以便衡量对您的业务有特殊影响的因素。收集到数据后，可通过 Firebase 控制台到信息中心中查看。通过此信息中心，您可以深入、详细地了解您的数据，包括摘要数据（如活跃用户和受众特征）和更详细的数据（如识别您最畅销的商品）。&#xA;Analytics 还集成了 Firebase 的一些其他功能。例如，它自动记录与通过通知编辑器发送的通知消息相对应的事件，并就每个广告系列的影响提供报告。&#xA;Analytics 可帮助您了解用户的行为方式，以便您就如何推广您的应用制定明智的决策。您可以查看您的广告系列在自然渠道和付费渠道的效果，以了解哪些方法对于吸引高价值用户最为有效。如果您需要执行自定义分析或者将您的数据与其他源数据联接，您可以将自己的 Analytics 数据关联到 BigQuery，从而进行更复杂的分析，例如查询大型数据集以及联接多个数据源。&#xA;网站和App用户行为跟踪技术的演进 UA （Google Universal Analytics, GA3) -&amp;gt; GA4（Google Analytics 4) https://support.google.com/analytics/answer/10270783?hl=zh-Hans&#xA;GA4是UA（GA3）的一次全新的升级，测量模型从以传统的基于会话（Session）转变为事件（Event）驱动，GA3专注于在一次会话中收集和处理用户的各种行为数据（如页面展现，事件，交易），在GA4中，一次页面展现（Pageview）也被认为是一个事件，而页面的标题（Page Title）和路径（Page Path）则是事件的参数。&#xA;三种实现方案：analytics.js -&amp;gt; gtag.js -&amp;gt; GTM (Google Tag Manager)&#xA;analytics.js已不被推荐使用，GTM是目前的最佳实践。&#xA;GTM的三个优势：&#xA;可以填入第三方追踪代码，例如 Facebook/Tiktok Pixel 追踪事件 (转化) 或其他项目时候，不用工程师改代码 有代码预览，审核发布流程，适合团队协作 UA（GA3）只有一种跟踪代码类型，但GA4有两种代码类型：GA4配置代码和GA4事件代码，其中GA4配置代码的作用域范围是页面全局，用户在页面上所有交互事件共享相同的配置。运行期GA4配置代码要在事件代码触发前执行。&#xA;如果网站页面上既有gtag.js，又有GTM跟踪代码，理论上这并不会产生问题，但要注意GTM重复配置事件触发可能导致多次同一事件多次触发；另外，gtag.js的事件参数如 “cookie_prefix”, or “allow_ad_personalization_signals”会传递到GTM里配置的GA4事件。&#xA;重要概念 Segments（受众） 建立起产品受众分层是产品精准营销的基础。受众分层是使用产品用户的具体分类，可根据地区，访问设备，年龄等用户属性来分类，每一个产品都有一个目标获取的受众群体，具体的营销活动应该根据目标受众的喜好来追求ROI最大化，用户增长首先要找到最易获取的受众群体。&#xA;Segment示例：&#xA;(客层/年龄：18-24)「AND」(客层/性别：女性) 行为：工作阶段 &amp;gt; 1「AND」行为：每位使用者交易次数 &amp;gt; 1 电子商务：每位使用者收益 &amp;gt; 10「AND」电子商务：产品 = T恤 Event（事件） https://support.</description>
+    </item>
+  </channel>
+</rss>

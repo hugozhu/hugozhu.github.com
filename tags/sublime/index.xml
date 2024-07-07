@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sublime on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/tags/sublime/</link>
+    <description>Recent content in Sublime on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <lastBuildDate>Thu, 11 Jul 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.hugozhu.site/tags/sublime/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在Mac上使用Sublime 3写Go代码</title>
+      <link>https://blog.hugozhu.site/post/2013/40-try-out-sublime-3-beta-on-mac/</link>
+      <pubDate>Thu, 11 Jul 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2013/40-try-out-sublime-3-beta-on-mac/</guid>
+      <description>Sublime 是一个相当好用的文本编辑器，界面简洁，功能强大。最近Sublime 3 Beta 出来了, 体验了一下，发现启动速度比之前快了很多。&#xA;下载安装 下载地址： http://www.sublimetext.com/3&#xA;安装Package Control Sublime 支持插件来丰富其功能，package control 本身也是一个插件，可以用来管理其他插件，所以我们要先安装Package Control，Sublime 3需要安装Pacakge Control Alpha.&#xA;cd &amp;#34;Library/Application Support/Sublime Text 3&amp;#34; cd Packages/ git clone https://github.com/wbond/sublime_package_control.git &amp;#34;Package Control&amp;#34; cd &amp;#34;Package Control&amp;#34; git checkout python3 安装GoSublime 重启Sublime后&#xA;按cmd+shift+p (OS X)或press ctrl+shift+p (Windows, Linux) 在弹出的输入框中输入 PacInstall 选择 Package Control: Install Package 在稍后弹出的输入框内输入&amp;quot;Gosublime&amp;quot;，选择安装 好了，就这样可以开始写Go代码了。&#xA;Tips 我的Sublime配置&#xA;{ &amp;#34;font_face&amp;#34;: &amp;#34;Microsoft YaHei&amp;#34;, &amp;#34;font_options&amp;#34;: [ ], &amp;#34;font_size&amp;#34;: 18.0, &amp;#34;line_padding_top&amp;#34;: 0 } 按快捷键Shift + Command + L可以按列编辑</description>
+    </item>
+  </channel>
+</rss>

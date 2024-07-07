@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/page/</link>
+    <description>Recent content in Pages on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <atom:link href="https://blog.hugozhu.site/page/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About me</title>
+      <link>https://blog.hugozhu.site/page/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/page/about/</guid>
+      <description>My name is Hugo Zhu.&#xA;https://www.linkedin.com/in/hugozhu/</description>
+    </item>
+  </channel>
+</rss>

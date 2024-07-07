@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shell Scripting on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/tags/shell-scripting/</link>
+    <description>Recent content in Shell Scripting on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <lastBuildDate>Sat, 01 Jun 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.hugozhu.site/tags/shell-scripting/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用Ping来检查网络连通性</title>
+      <link>https://blog.hugozhu.site/post/2013/36-use-ping-to-check-network-connectivity/</link>
+      <pubDate>Sat, 01 Jun 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2013/36-use-ping-to-check-network-connectivity/</guid>
+      <description>树莓派使用了一个无线网卡连接家里的无线路由器，在实际使用过程中发现连续运行多天后会掉线，而且掉线后基本上就再也连不上网了，需要重启树莓派才能恢复，十分麻烦。&#xA;假设无线路由器IP是192.168.1.1，于是每隔15分钟检查一下，是否能从树莓派上ping通路由器；如果不能则重启无线网络，脚本如下：&#xA;network.sh&#xA;#!/bin/bash export PATH=/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin ping_count() { count=0 `timeout 5 ping 192.168.1.1 | while read LINE; do { if [[ &amp;#34;${LINE}&amp;#34; =~ &amp;#34;64 bytes from&amp;#34; ]]; then let &amp;#34;count = $count + 1&amp;#34; echo &amp;#34;export count=$count&amp;#34; fi } done` echo $count } if [[ $(ping_count) &amp;lt; 1 ]]; then ifconfig wlan0 ifconfig wlan0 down sleep 1 ifconfig wlan0 up sleep 1 netcfg -r wlan0-Hugo-Nas sleep 5 if [[ $(ping_count) &amp;lt; 1 ]]; then echo &amp;#34;Fatal error: wifi is down, rebooting now.</description>
+    </item>
+  </channel>
+</rss>

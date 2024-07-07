@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Concurrency on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/tags/concurrency/</link>
+    <description>Recent content in Concurrency on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <lastBuildDate>Sun, 30 Jun 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.hugozhu.site/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java并发中正确使用volatile</title>
+      <link>https://blog.hugozhu.site/post/2013/38-java-volatile-variable/</link>
+      <pubDate>Sun, 30 Jun 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2013/38-java-volatile-variable/</guid>
+      <description>前几天并发编程群里有同学对volatile的用法提出了疑问，刚好我记得Twitter有关实时搜索的这个PPT对这个问题解释的很清晰并有一个实际的应用场景，于是周末把这个问题摘录了一些和并发相关的内容如下：&#xA;并发 - 定义 悲观锁 - Pressimistic locking 一个线性在执行一个操作时持有对一个资源的独占锁。（互斥） 一般用在冲突比较可能发生的场景下 乐观锁 - Optimistic locking 尝试采用原子操作，而不需要持有锁；冲突可被检测，如果发生冲突，具有相应的重试逻辑 通常用在冲突较少发生的场景下 非阻塞算法 - Non-blocking algorithm 算法确保对线程间竞争共享资源时候，不会因为互斥而使任一线程的执行无限延迟； 无锁算法 - Lock-free algorithm 如果系统整个流程的执行是无阻塞的(系统某一部分可能被短暂阻塞)，这种非阻塞算法就是无锁的。 无锁算法比传统的基于锁的算法对系统的开销更小，且更容易在多核多CPU处理器上扩展； 在实时系统中可以避免锁带来的延迟； CAS (compare and swap)或LL/SC(load linked/store conditional)，以及内存屏障相关的指令经常被用在算法实现中。 无等待算法 - Wait-free algorithm 如果每个线程的执行都是无阻塞的，这种非阻塞算法就是无等待的（比无锁算法更好） Java的并发 Java的内存模型并不保证一个线程可以一直以程序执行的顺序看到另一个线程对变量的修改，除非两个线程都跨越了同一个内存屏障。（Safe publication） Java内存模型 代码顺序规则 一个线程内的每个动作 happens-before 同一个线程内在代码顺序上在其后的所有动作 volatile变量规则 对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量最后的写入 传递性 如果A happens-before B, B happens-before C，那 A happens-before C Safe publication案例 class VolatileExample { int x = 0; volatile int b = 0; private void write() { x = 5; b = 1; } private void read() { int dummy = b; while (x!</description>
+    </item>
+  </channel>
+</rss>

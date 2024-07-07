@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on All about Raspberry Pi</title>
+    <link>https://blog.hugozhu.site/tags/ubuntu/</link>
+    <description>Recent content in Ubuntu on All about Raspberry Pi</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor>
+    <webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster>
+    <lastBuildDate>Tue, 20 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.hugozhu.site/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu 22 Remote Desktop Sharing Without Real Monitor</title>
+      <link>https://blog.hugozhu.site/post/2024/73-ubuntu-22-remote-desktop/</link>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author>
+      <guid>https://blog.hugozhu.site/post/2024/73-ubuntu-22-remote-desktop/</guid>
+      <description>xrdp solution sudo apt-get install xserver-xorg-video-dummy sudo apt-get install xserver-xorg-core Download Microsoft Remote Desktop client /usr/share/X11/xorg.conf.d/xorg.conf&#xA;Section &amp;#34;Device&amp;#34; Identifier &amp;#34;DummyDevice&amp;#34; Driver &amp;#34;dummy&amp;#34; VideoRam 256000 EndSection Section &amp;#34;Screen&amp;#34; Identifier &amp;#34;DummyScreen&amp;#34; Device &amp;#34;DummyDevice&amp;#34; Monitor &amp;#34;DummyMonitor&amp;#34; DefaultDepth 24 SubSection &amp;#34;Display&amp;#34; Depth 24 Modes &amp;#34;1920x1080_60.0&amp;#34; EndSubSection EndSection Section &amp;#34;Monitor&amp;#34; Identifier &amp;#34;DummyMonitor&amp;#34; HorizSync 30-70 VertRefresh 50-75 ModeLine &amp;#34;1920x1080&amp;#34; 148.50 1920 2448 2492 2640 1080 1084 1089 1125 +Hsync +Vsync EndSection ln -s /usr/share/X11/xorg.conf.d/xorg.conf /etc/X11 关掉账号自动登录 非常重要！</description>
+    </item>
+  </channel>
+</rss>
