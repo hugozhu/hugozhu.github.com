@@ -1,4 +1,4 @@
-<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>Docker - All about Raspberry Pi</title>
+<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>Docker - Hugo Zhu's Blog</title>
 <meta name=author content="Hugo Zhu"><script type=application/ld+json>{"@context":"http://schema.org","@type":"WebSite","name":"All about Raspberry Pi","url":"\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Organization","name":"","url":"\/"}</script><meta property="og:title" content="Docker"><meta property="og:image" content="/img/pi.png"><meta property="og:url" content="/tags/docker/"><meta property="og:type" content="website"><meta property="og:site_name" content="All about Raspberry Pi"><meta name=twitter:title content="Docker"><meta name=twitter:image content="/img/pi.png"><meta name=twitter:card content="summary_large_image"><link href=/img/pi.ico rel=icon type=image/x-icon><meta name=generator content="Hugo 0.128.2"><link rel=alternate href=/index.xml type=application/rss+xml title="All about Raspberry Pi"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css integrity=sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.5.0/css/all.css integrity=sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css integrity=sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu crossorigin=anonymous><link rel=stylesheet href=/css/main.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"><link rel=stylesheet href=/css/highlight.min.css><link rel=stylesheet href=/css/codeblock.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css integrity=sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css integrity=sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R crossorigin=anonymous><script async src="https://www.googletagmanager.com/gtag/js?id=GTM-W88HDMN"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","GTM-W88HDMN")}</script></head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#main-navbar>
 <span class=sr-only>Toggle navigation</span>
 <span class=icon-bar></span>
@@ -12,53 +12,15 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=tags-heading><h1>Docker</h1><hr class=small></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=/post/2024/76-acme-docker-auto-uptime/><h2 class=post-title>使用acme_docker自动更新免费域名证书</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 7, 2024
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;75&nbsp;words</span></p><div class=post-entry><h2 id=问题和解决方案>问题和解决方案</h2><ol><li>免费域名证书需要三个月更新一次</li><li>解决方案：apisix, docker, acme.sh, dnspod</li></ol><h2 id=apisix>Apisix</h2><p><a href=https://apisix.org>https://apisix.org</a>
-Apisix是优秀的开源网关，更新证书不需要重启服务，可以作为所有服务的网关</p><h2 id=acme-docker>Acme Docker</h2><p><a href=https://github.com/hugozhu/acme_docker/blob/main/README.md>https://github.com/hugozhu/acme_docker/blob/main/README.md</a>
-项目已配置好使用docker来更新证书并生成apisix的json</p><p>docker-compose.yaml</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>version: &#34;3&#34;
-</span></span><span class=line><span class=cl>services:
-</span></span><span class=line><span class=cl>  acme:
-</span></span><span class=line><span class=cl>    image: neilpang/acme.sh
-</span></span><span class=line><span class=cl>    container_name: acme
-</span></span><span class=line><span class=cl>    #restart: always
-</span></span><span class=line><span class=cl>    command: daemon
-</span></span><span class=line><span class=cl>    env_file:
-</span></span><span class=line><span class=cl>     - .env
-</span></span><span class=line><span class=cl>    volumes:
-</span></span><span class=line><span class=cl>      - ./cert:/acme.sh
-</span></span></code></pre></div><h2 id=重新申请免费证书>重新申请免费证书</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker-compose up -d
-</span></span><span class=line><span class=cl>docker exec acme acme.sh --set-default-ca --server letsencrypt
-</span></span><span class=line><span class=cl>docker exec acme acme.sh --issue --dns dns_dp  -d hugozhu.site -d *.hugozhu.site -d *.go.hugozhu.site
-</span></span><span class=line><span class=cl>docker-compose down
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>cat hugozhu.site.json
-</span></span></code></pre></div><h2 id=apisix上更新证书>apisix上更新证书</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>data=$( cat &#34;hugozhu.site.json&#34; )
-</span></span><span class=line><span class=cl>curl &#39;http://127.0.0.1:9180/apisix/admin/ssls/1&#39; \
-</span></span><span class=line><span class=cl>        -H &#34;X-API-KEY: $API_KEY&#34; -X PUT -d &#34;$data&#34;`
-</span></span></code></pre></div></div><div class=blog-tags><a href=/tags/apisix/>apisix</a>&nbsp;
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;75&nbsp;words</span></p><div class=post-entry><h2 id=问题和解决方案>问题和解决方案</h2><ol><li>免费域名证书需要三个月更新一次</li><li>解决方案：apisix, docker, acme.sh, dnspod</li></ol><a href=/post/2024/76-acme-docker-auto-uptime/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=/tags/apisix/>apisix</a>&nbsp;
 <a href=/tags/docker/>docker</a>&nbsp;
 <a href=/tags/acme.sh/>acme.sh</a>&nbsp;
 <a href=/tags/dnspod/>dnspod</a>&nbsp;</div></article><article class=post-preview><a href=/post/2022/71-gitlab-runner-using-docker-build/><h2 class=post-title>用Gitlab Runner来打包并上传Harbor</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on May 16, 2022
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;93&nbsp;words</span></p><div class=post-entry>https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
-docker-compose.yaml version: '3.6' services: gitlab-runner: image: 'gitlab/gitlab-runner:latest' restart: always volumes: - ./config:/etc/gitlab-runner - /data/gitlab-runner:/home/gitlab-runner ./config/config.toml /root/.docker/config.json 里放docker hub的授权token
-concurrent = 1 check_interval = 0 [session_server] session_timeout = 1800 [[runners]] name = "Dev1 Docker Runner" url = "https://gitlab.xxxx.com/" token = "xxxxxxxxxxxx" executor = "docker" [runners.docker] tls_verify = false image = "docker:20.10.15" privileged = false disable_entrypoint_overwrite = false oom_kill_disable = false disable_cache = false volumes = ["/home/hugo/.docker/config.json:/root/.docker/config.json:ro","/var/run/docker.sock:/var/run/docker.sock", "/data/gitlab-runner/cache:/home/gitlab-runner/cache"] shm_size = 0 cache_dir = "/home/gitlab-runner/cache" .
-<a href=/post/2022/71-gitlab-runner-using-docker-build/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=/tags/gitlab/>Gitlab</a>&nbsp;
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;93&nbsp;words</span></p><div class=post-entry><p><a href=https://docs.gitlab.com/ee/ci/docker/using_docker_build.html>https://docs.gitlab.com/ee/ci/docker/using_docker_build.html</a></p><a href=/post/2022/71-gitlab-runner-using-docker-build/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=/tags/gitlab/>Gitlab</a>&nbsp;
 <a href=/tags/docker/>Docker</a>&nbsp;</div></article><article class=post-preview><a href=/post/2015/60-run-docker-on-raspberry-pi/><h2 class=post-title>在树莓派上运行Docker</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 12, 2015
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;215&nbsp;words</span></p><div class=post-entry>Docker Docker是目前非常流行的代码运行容器，操作系统虚拟化，运维自动化架构和开源的解决方案。
-Docker的基础是Linux容器（LXC）技术，相比传统的VM虚拟化技术, LXC更轻量，性能更好。
-Docker采用Golang语言开发，在LXC基础上Docker进行了封装，简化了容器的管理。
-Docker还提供了一个标准(Dockerile)来实现软件部署环境代码化，全球的开发和运维工程师可以通过官方的Docker Hub仓库分享自己创建的镜像，使用者则可以快速的把系统和应用部署到自己的环境。
-树莓派二代 树莓派二代的CPU有4核，运行速度是第一代的6倍，通过Docker快速部署开发环境，开发应用，再把开发好的系统通过镜像分享和发布出去也是非常有意义的事。因为树莓派的官方操作系统Raspbian并不支持Docker，本文主要介绍下如何在树莓派二代上运行Docker的几种方法。
-Arch Linux ARM Arch Linux ARM 是由开源社区维护专为ARMv6（如树莓派一代）和 ARMv7（如树莓派二代, pcDuino3）等嵌入式硬件提供内核及软件支持的Linux发行版本。
-在树莓派上安装Arch Linux和Raspbian略有不同，详细步骤可以看参考链接4。 总得来说是你需要在SD卡上分两个区并格式化，一个是FAT 32(LBA)格式的引导分区(/boot)，另一个是系统根分区（/root）。然后把下载下来的文件解开来复制到这两个分区就可以了。
-你也可以只在SD卡上放/boot分区（这样可以用较小的如1G的SD卡引导树莓派），在U盘上放根分区，通过USB扩展存储可以允许你存放很多的镜像文件。
-安装好Arch Linux后，参考这篇文章做完基础设置。
-安装docker pacman -S docker 目前安装好的版本是1.5
-开机自动docker systemctl enable docker 把登录用户加到docker组 这样不需要root也能执行docker了
-gpasswd -a &lt;your_login> docker 执行docker Docker Hub上搜索rpi已经可以找到不少适合Raspberry Pi运行的镜像了，热心网友都是棒棒哒。
-[hugo@alarmpi ~]$ docker -v Docker version 1.5.0, build a8a31e [hugo@alarmpi ~]$ docker search rpi NAME DESCRIPTION STARS OFFICIAL AUTOMATED resin/rpi-raspbian Base image for the Raspberry Pi. Contains .
-<a href=/post/2015/60-run-docker-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;215&nbsp;words</span></p><div class=post-entry><h1 id=docker>Docker</h1><p>Docker是目前非常流行的代码运行容器，操作系统虚拟化，运维自动化架构和开源的解决方案。</p><p>Docker的基础是Linux容器（LXC）技术，相比传统的VM虚拟化技术, LXC更轻量，性能更好。</p><p>Docker采用Golang语言开发，在LXC基础上Docker进行了封装，简化了容器的管理。</p><a href=/post/2015/60-run-docker-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;
 <a href=/tags/docker/>docker</a>&nbsp;</div></article></div></div></div></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=mailto:hugozhu@gmail.com title="Email me"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://www.facebook.com/hugozhu title=Facebook><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fab fa-facebook fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://github.com/hugozhu title=GitHub><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
