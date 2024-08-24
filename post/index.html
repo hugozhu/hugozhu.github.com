@@ -16,17 +16,7 @@
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2024/78-airflow-tasks-development/><h2 class=post-title>使用Airflow开发大数据生产任务</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on August 24, 2024
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;199&nbsp;words</span></p><div class=post-entry>{:toc}
-使用Airflow开发大数据生产任务 在大数据领域，任务调度和工作流管理是核心需求。无论是数据的抽取、转化、加载（ETL），还是数据分析任务，管理复杂的任务依赖性、监控任务执行情况并确保任务按时完成都十分重要。Apache Airflow 是一个开源的工作流管理平台，能够帮助你解决这些问题。
-问题和解决方案 在处理大数据任务时，我们常常需要一个灵活且强大的工具来管理复杂的工作流。理想的解决方案应该具备以下特点：
-开源和通用：可以适应各种不同的数据任务场景。 水平扩展：能够随着数据量的增加轻松扩展。 强大的调度和监控功能：能够在任务失败时自动重试，并提供清晰的任务执行日志。 Apache Airflow 满足了这些需求，并且由于其广泛的社区支持和丰富的插件生态系统，已经成为了大数据任务调度的标准选择之一。
-Apache Airflow 简介 Apache Airflow 是一个开源的工作流管理平台，使用 Python 代码来定义任务和依赖关系。Airflow 可以通过调度和监控任务，帮助开发者管理和自动化复杂的工作流。
-Airflow 的主要特点包括：
-动态的任务调度：可以根据任务的执行结果和状态决定后续任务的执行。 丰富的可视化工具：提供了强大的 web 界面，可以清晰地展示任务的依赖关系和执行状态。 可扩展的架构：支持多种执行器（Executor），可以在单机或分布式环境中运行。 本地安装 首先，我们需要在本地环境中安装 Apache Airflow 以进行开发。以下是安装步骤：
-conda create -n airflow conda activate airflow conda install pip pip install google-re2==1.1 pip install apache-airflow pip install pandas 这些步骤将创建一个新的 Conda 环境并安装 Airflow 及其依赖项。确保你使用的是兼容的 Python 版本，以避免兼容性问题。
-启动本地实例 安装完成后，可以通过以下命令启动本地 Airflow 实例：
-airflow standalone 这将启动一个本地的 Airflow 实例，并自动配置数据库、用户、和默认任务队列。你可以通过日志文件或终端中的输出信息来确认 Airflow 实例是否成功启动。
-<a href=https://blog.hugozhu.site/post/2024/78-airflow-tasks-development/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/airflow-python/>airflow, python</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2024/77-migrate-from-gor-to-hugo/><h2 class=post-title>Blog迁移到hugo模版引擎</h2><h3 class=post-subtitle>Using Hugo for my blog, migrated from gor</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 7, 2024
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;198&nbsp;words</span></p><div class=post-entry><h1 id=使用airflow开发大数据生产任务>使用Airflow开发大数据生产任务</h1><p>在大数据领域，任务调度和工作流管理是核心需求。无论是数据的抽取、转化、加载（ETL），还是数据分析任务，管理复杂的任务依赖性、监控任务执行情况并确保任务按时完成都十分重要。Apache Airflow 是一个开源的工作流管理平台，能够帮助你解决这些问题。</p><a href=https://blog.hugozhu.site/post/2024/78-airflow-tasks-development/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/airflow-python/>airflow, python</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2024/77-migrate-from-gor-to-hugo/><h2 class=post-title>Blog迁移到hugo模版引擎</h2><h3 class=post-subtitle>Using Hugo for my blog, migrated from gor</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 7, 2024
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;18&nbsp;words</span></p><div class=post-entry><p>因为Blog的模版太老，不支持手机，花一点时间快速升级下，选用了hugo这个静态网站模板引擎。</p><a href=https://blog.hugozhu.site/post/2024/77-migrate-from-gor-to-hugo/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/blog/>blog</a>&nbsp;
 <a href=https://blog.hugozhu.site/tags/hugo/>hugo</a>&nbsp;
