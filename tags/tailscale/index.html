@@ -14,20 +14,7 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=tags-heading><h1>Tailscale</h1><hr class=small></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2025/82-tailscale-vpn-with-openwrt-in-docker/><h2 class=post-title>使用tailscale+openwrt+docker将异地两机房组成一个局域网</h2><h3 class=post-subtitle>build intranet with tailscale and openwrt</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on January 4, 2025
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;343&nbsp;words</span></p><div class=post-entry>在现代网络环境中，将位于不同地理位置的两个数据中心组成一个虚拟局域网，可以有效提升资源共享和管理效率。本文将介绍如何在 Docker 中使用 macvlan 网络模式安装 OpenWrt，并通过 Tailscale 实现异地数据中心的互联。
-工具简介 Docker：开源的容器化平台，用于自动化应用程序的部署和管理。
-macvlan：Docker 提供的一种网络驱动，使容器能够直接与宿主机的物理网络接口通信，获得独立的 IP 地址。
-OpenWrt：开源的嵌入式操作系统，常用于路由器，提供强大的网络功能和可定制性。
-Tailscale：基于 WireGuard 的虚拟专用网络（VPN）解决方案，能够轻松实现设备间的安全互联，适用于不同网络环境的设备组成虚拟局域网。
-实现步骤 1. 在 Docker 中安装 OpenWrt 并配置 macvlan 网络 确认宿主机网络接口名称：
-使用以下命令查看宿主机的网络接口名称（例如，eth0）：
-ifconfig 设置网卡混杂模式：
-启用宿主机网卡的混杂模式，以允许 macvlan 正常工作：
-ip link set eth0 promisc on 创建 macvlan 网络并启动 OpenWrt 容器：
-使用docker-compose根据下面的配置创建 macvlan 网络并启动 OpenWrt 容器，假设主路由ip: 192.168.1.1 ，openwrt容器ip: 192.168.1.11
-docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=end0 macnet docker-compose.yaml
-version: &lsquo;2.4&rsquo; services: openwrt: container_name: openwrt_2025 image: piaoyizy/openwrt-aarch64:latest privileged: true ports: - 80:80 env_file: - .
-<a href=https://blog.hugozhu.site/post/2025/82-tailscale-vpn-with-openwrt-in-docker/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/tailscale/>tailscale</a>&nbsp;
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;343&nbsp;words</span></p><div class=post-entry><p>在现代网络环境中，将位于不同地理位置的两个数据中心组成一个虚拟局域网，可以有效提升资源共享和管理效率。本文将介绍如何在 Docker 中使用 macvlan 网络模式安装 OpenWrt，并通过 Tailscale 实现异地数据中心的互联。</p><a href=https://blog.hugozhu.site/post/2025/82-tailscale-vpn-with-openwrt-in-docker/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/tailscale/>tailscale</a>&nbsp;
 <a href=https://blog.hugozhu.site/tags/openwrt/>openwrt</a>&nbsp;
 <a href=https://blog.hugozhu.site/tags/docker/>docker</a>&nbsp;</div></article></div></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=mailto:hugozhu@gmail.com title="Email me"><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-envelope fa-stack-1x fa-inverse"></i></span></a></li><li><a href=https://www.facebook.com/hugozhu title=Facebook><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
