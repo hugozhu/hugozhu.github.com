@@ -1,5 +1,5 @@
 <!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>构建可通过IP访问的tailscale的derp relay节点 - Hugo Zhu's Blog</title>
-<meta name=description content="create derp relay node for tailscale"><meta name=author content="Hugo Zhu"><script type=application/ld+json>{"@context":"http://schema.org","@type":"WebSite","name":"All about Raspberry Pi","url":"https:\/\/blog.hugozhu.site\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Organization","name":"","url":"https:\/\/blog.hugozhu.site\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https:\/\/blog.hugozhu.site\/","name":"home"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/blog.hugozhu.site\/post\/2025\/83-tailscale-derp-node-with-ip\/","name":"构建可通过 ip访问的tailscale的derp relay节点"}}]}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Article","author":{"name":"Hugo Zhu"},"headline":"构建可通过IP访问的tailscale的derp relay节点","description":"derp节点可用加速tailscale网络的连通性能\n","inLanguage":"en","wordCount":265,"datePublished":"2025-01-10T00:00:00\u002b00:00","dateModified":"2025-01-10T00:00:00\u002b00:00","image":"https:\/\/blog.hugozhu.site\/img\/pi.png","keywords":["tailscale, docker, derp"],"mainEntityOfPage":"https:\/\/blog.hugozhu.site\/post\/2025\/83-tailscale-derp-node-with-ip\/","publisher":{"@type":"Organization","name":"https:\/\/blog.hugozhu.site\/","logo":{"@type":"ImageObject","url":"https:\/\/blog.hugozhu.site\/img\/pi.png","height":60,"width":60}}}</script><meta property="og:title" content="构建可通过IP访问的tailscale的derp relay节点"><meta property="og:description" content="create derp relay node for tailscale"><meta property="og:image" content="https://blog.hugozhu.site/img/pi.png"><meta property="og:url" content="https://blog.hugozhu.site/post/2025/83-tailscale-derp-node-with-ip/"><meta property="og:type" content="website"><meta property="og:site_name" content="All about Raspberry Pi"><meta name=twitter:title content="构建可通过IP访问的tailscale的derp relay节点"><meta name=twitter:description content="create derp relay node for tailscale"><meta name=twitter:image content="https://blog.hugozhu.site/img/pi.png"><meta name=twitter:card content="summary_large_image"><link href=https://blog.hugozhu.site/img/pi.ico rel=icon type=image/x-icon><meta name=generator content="Hugo 0.128.2"><link rel=alternate href=https://blog.hugozhu.site/index.xml type=application/rss+xml title="All about Raspberry Pi"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css integrity=sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.5.0/css/all.css integrity=sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css integrity=sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu crossorigin=anonymous><link rel=stylesheet href=https://blog.hugozhu.site/css/main.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"><link rel=stylesheet href=https://blog.hugozhu.site/css/highlight.min.css><link rel=stylesheet href=https://blog.hugozhu.site/css/codeblock.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css integrity=sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css integrity=sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R crossorigin=anonymous><script async src="https://www.googletagmanager.com/gtag/js?id=GTM-W88HDMN"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","GTM-W88HDMN")}</script></head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#main-navbar>
+<meta name=description content="create derp relay node for tailscale"><meta name=author content="Hugo Zhu"><script type=application/ld+json>{"@context":"http://schema.org","@type":"WebSite","name":"All about Raspberry Pi","url":"https:\/\/blog.hugozhu.site\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Organization","name":"","url":"https:\/\/blog.hugozhu.site\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https:\/\/blog.hugozhu.site\/","name":"home"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/blog.hugozhu.site\/post\/2025\/83-tailscale-derp-node-with-ip\/","name":"构建可通过 ip访问的tailscale的derp relay节点"}}]}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Article","author":{"name":"Hugo Zhu"},"headline":"构建可通过IP访问的tailscale的derp relay节点","description":"derp节点可用加速tailscale网络的连通性能\n","inLanguage":"en","wordCount":278,"datePublished":"2025-01-10T00:00:00\u002b00:00","dateModified":"2025-01-10T00:00:00\u002b00:00","image":"https:\/\/blog.hugozhu.site\/img\/pi.png","keywords":["tailscale, docker, derp"],"mainEntityOfPage":"https:\/\/blog.hugozhu.site\/post\/2025\/83-tailscale-derp-node-with-ip\/","publisher":{"@type":"Organization","name":"https:\/\/blog.hugozhu.site\/","logo":{"@type":"ImageObject","url":"https:\/\/blog.hugozhu.site\/img\/pi.png","height":60,"width":60}}}</script><meta property="og:title" content="构建可通过IP访问的tailscale的derp relay节点"><meta property="og:description" content="create derp relay node for tailscale"><meta property="og:image" content="https://blog.hugozhu.site/img/pi.png"><meta property="og:url" content="https://blog.hugozhu.site/post/2025/83-tailscale-derp-node-with-ip/"><meta property="og:type" content="website"><meta property="og:site_name" content="All about Raspberry Pi"><meta name=twitter:title content="构建可通过IP访问的tailscale的derp relay节点"><meta name=twitter:description content="create derp relay node for tailscale"><meta name=twitter:image content="https://blog.hugozhu.site/img/pi.png"><meta name=twitter:card content="summary_large_image"><link href=https://blog.hugozhu.site/img/pi.ico rel=icon type=image/x-icon><meta name=generator content="Hugo 0.128.2"><link rel=alternate href=https://blog.hugozhu.site/index.xml type=application/rss+xml title="All about Raspberry Pi"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css integrity=sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.5.0/css/all.css integrity=sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css integrity=sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu crossorigin=anonymous><link rel=stylesheet href=https://blog.hugozhu.site/css/main.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"><link rel=stylesheet href=https://blog.hugozhu.site/css/highlight.min.css><link rel=stylesheet href=https://blog.hugozhu.site/css/codeblock.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css integrity=sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css integrity=sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R crossorigin=anonymous><script async src="https://www.googletagmanager.com/gtag/js?id=GTM-W88HDMN"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","GTM-W88HDMN")}</script></head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#main-navbar>
 <span class=sr-only>Toggle navigation</span>
 <span class=icon-bar></span>
 <span class=icon-bar></span>
@@ -14,99 +14,99 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>构建可通过IP访问的tailscale的derp relay节点</h1><h2 class=post-subheading>create derp relay node for tailscale</h2><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on January 10, 2025
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;265&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><nav id=TableOfContents><ul><li><a href=#实现步骤>实现步骤</a><ul><li><a href=#1-用docker来启动>1. 用docker来启动</a></li><li><a href=#添加新增derp节点到tailscale>添加新增derp节点到Tailscale</a></li></ul></li></ul></nav><p>derp节点可用加速tailscale网络的连通性能</p><h2 id=实现步骤>实现步骤</h2><h3 id=1-用docker来启动>1. 用docker来启动</h3><ol><li><p><strong>docker-compose.yaml</strong>：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash></code></pre></div></li></ol><p>version: &ldquo;3&rdquo;
-services:
-tailscale:
-image: tailscale/tailscale
-container_name: tailscale
-privileged: true
-restart: always
-volumes:
-- &ldquo;./tailscale/data:/var/lib/tailscale&rdquo;
-- &ldquo;./tailscale/tmp:/tmp&rdquo;
-- &ldquo;/dev/net/tun:/dev/net/tun&rdquo;
-cap_add:
-- net_admin
-- sys_module
-environment:
-TS_AUTHKEY: &ldquo;&lt;your_tailscale_auth_key>&rdquo;
-TS_STATE_DIR: &ldquo;/var/lib/tailscale&rdquo;
-TS_USERSPACE: &ldquo;false&rdquo;
-networks:
-- tailscale_network
-dns:
-- 8.8.8.8
-- 8.8.4.4</p><p>derper:
-#image: starudream/derper
-build:
-context: ./build
-dockerfile: Dockerfile
-container_name: derper
-restart: always
-#command: /tailscale/derper -a :80 -verify-clients
-depends_on:
-- tailscale
-ports:
-- &ldquo;3478:3478/udp&rdquo;
-- &ldquo;80:80/tcp&rdquo;
-- &ldquo;443:443/tcp&rdquo;
-volumes:
-- &ldquo;./tailscale/tmp:/var/run/tailscale&rdquo;
-networks:
-- tailscale_network
-dns:
-- 8.8.8.8
-- 8.8.4.4</p><p>networks:
-tailscale_network:
-external: true</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>2. **build/Dockerfile**
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;278&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><nav id=TableOfContents><ul><li><a href=#实现步骤>实现步骤</a><ul><li><a href=#用docker-compose来编排>用docker-compose来编排</a></li><li><a href=#添加新增derp节点到tailscale>添加新增derp节点到Tailscale</a></li></ul></li></ul></nav><p>derp节点可用加速tailscale网络的连通性能</p><h2 id=实现步骤>实现步骤</h2><h3 id=用docker-compose来编排>用docker-compose来编排</h3><ol><li><strong>docker-compose.yaml</strong>：</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>version: <span class=s2>&#34;3&#34;</span>
+</span></span><span class=line><span class=cl>services:
+</span></span><span class=line><span class=cl>  tailscale:
+</span></span><span class=line><span class=cl>    image: tailscale/tailscale
+</span></span><span class=line><span class=cl>    container_name: tailscale
+</span></span><span class=line><span class=cl>    privileged: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>    restart: always
+</span></span><span class=line><span class=cl>    volumes:
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;./tailscale/data:/var/lib/tailscale&#34;</span>
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;./tailscale/tmp:/tmp&#34;</span>
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;/dev/net/tun:/dev/net/tun&#34;</span>
+</span></span><span class=line><span class=cl>    cap_add:
+</span></span><span class=line><span class=cl>      - net_admin
+</span></span><span class=line><span class=cl>      - sys_module
+</span></span><span class=line><span class=cl>    environment:
+</span></span><span class=line><span class=cl>      TS_AUTHKEY: <span class=s2>&#34;&lt;your_tailscale_auth_key&gt;&#34;</span>
+</span></span><span class=line><span class=cl>      TS_STATE_DIR: <span class=s2>&#34;/var/lib/tailscale&#34;</span>
+</span></span><span class=line><span class=cl>      TS_USERSPACE: <span class=s2>&#34;false&#34;</span>
+</span></span><span class=line><span class=cl>    networks:
+</span></span><span class=line><span class=cl>      - tailscale_network
+</span></span><span class=line><span class=cl>    dns:
+</span></span><span class=line><span class=cl>      - 8.8.8.8
+</span></span><span class=line><span class=cl>      - 8.8.4.4
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  derper:
+</span></span><span class=line><span class=cl>    <span class=c1>#image: starudream/derper</span>
+</span></span><span class=line><span class=cl>    build:
+</span></span><span class=line><span class=cl>      context: ./build
+</span></span><span class=line><span class=cl>      dockerfile: Dockerfile
+</span></span><span class=line><span class=cl>    container_name: derper
+</span></span><span class=line><span class=cl>    restart: always
+</span></span><span class=line><span class=cl>      <span class=c1>#command: /tailscale/derper -a :80 -verify-clients</span>
+</span></span><span class=line><span class=cl>    depends_on:
+</span></span><span class=line><span class=cl>      - tailscale
+</span></span><span class=line><span class=cl>    ports:
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;3478:3478/udp&#34;</span>
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;80:80/tcp&#34;</span>
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;443:443/tcp&#34;</span>
+</span></span><span class=line><span class=cl>    volumes:
+</span></span><span class=line><span class=cl>      - <span class=s2>&#34;./tailscale/tmp:/var/run/tailscale&#34;</span>
+</span></span><span class=line><span class=cl>    networks:
+</span></span><span class=line><span class=cl>      - tailscale_network
+</span></span><span class=line><span class=cl>    dns:
+</span></span><span class=line><span class=cl>      - 8.8.8.8
+</span></span><span class=line><span class=cl>      - 8.8.4.4
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>```bash
-</span></span><span class=line><span class=cl># 编译
+</span></span><span class=line><span class=cl>networks:
+</span></span><span class=line><span class=cl>  tailscale_network:
+</span></span><span class=line><span class=cl>    external: <span class=nb>true</span>
+</span></span></code></pre></div><ol start=2><li><strong>build/Dockerfile</strong></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 编译</span>
 </span></span><span class=line><span class=cl>FROM golang:alpine AS builder
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 切换模块源为中国Go模块代理服务器
-</span></span><span class=line><span class=cl>RUN go env -w GOPROXY=https://goproxy.cn,direct
+</span></span><span class=line><span class=cl><span class=c1># 切换模块源为中国Go模块代理服务器</span>
+</span></span><span class=line><span class=cl>RUN go env -w <span class=nv>GOPROXY</span><span class=o>=</span>https://goproxy.cn,direct
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 拉取代码
+</span></span><span class=line><span class=cl><span class=c1># 拉取代码</span>
 </span></span><span class=line><span class=cl>RUN go install tailscale.com/cmd/derper@latest
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 去除域名验证（删除cmd/derper/cert.go文件的91~93行）
-</span></span><span class=line><span class=cl>RUN find /go/pkg/mod/tailscale.com@*/cmd/derper/cert.go -type f -exec sed -i &#39;97,99d&#39; {} +
+</span></span><span class=line><span class=cl><span class=c1># 去除域名验证（删除cmd/derper/cert.go文件的91~93行）</span>
+</span></span><span class=line><span class=cl>RUN find /go/pkg/mod/tailscale.com@*/cmd/derper/cert.go -type f -exec sed -i <span class=s1>&#39;97,99d&#39;</span> <span class=o>{}</span> +
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 编译
-</span></span><span class=line><span class=cl>RUN derper_dir=$(find /go/pkg/mod/tailscale.com@*/cmd/derper -type d) &amp;&amp; \
-</span></span><span class=line><span class=cl> cd $derper_dir &amp;&amp; \
-</span></span><span class=line><span class=cl> go build -o /etc/derp/derper
+</span></span><span class=line><span class=cl><span class=c1># 编译</span>
+</span></span><span class=line><span class=cl>RUN <span class=nv>derper_dir</span><span class=o>=</span><span class=k>$(</span>find /go/pkg/mod/tailscale.com@*/cmd/derper -type d<span class=k>)</span> <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>	<span class=nb>cd</span> <span class=nv>$derper_dir</span> <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    go build -o /etc/derp/derper
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 生成最终镜像
+</span></span><span class=line><span class=cl><span class=c1># 生成最终镜像</span>
 </span></span><span class=line><span class=cl>FROM alpine:latest
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>WORKDIR /apps
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>COPY --from=builder /etc/derp/derper .
+</span></span><span class=line><span class=cl>COPY --from<span class=o>=</span>builder /etc/derp/derper .
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-</span></span><span class=line><span class=cl> &amp;&amp; echo &#39;Asia/Shanghai&#39; &gt; /etc/timezone
+</span></span><span class=line><span class=cl>RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=o>&amp;&amp;</span> <span class=nb>echo</span> <span class=s1>&#39;Asia/Shanghai&#39;</span> &gt; /etc/timezone
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>ENV LANG C.UTF-8
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 创建软链接 解决二进制无法执行问题 Amd架构必须执行，Arm不需要执行
-</span></span><span class=line><span class=cl>RUN mkdir /lib64 &amp;&amp; ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+</span></span><span class=line><span class=cl><span class=c1># 创建软链接 解决二进制无法执行问题 Amd架构必须执行，Arm不需要执行</span>
+</span></span><span class=line><span class=cl>RUN mkdir /lib64 <span class=o>&amp;&amp;</span> ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 添加源
-</span></span><span class=line><span class=cl>RUN sed -i &#39;s/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g&#39; /etc/apk/repositories
+</span></span><span class=line><span class=cl><span class=c1># 添加源</span>
+</span></span><span class=line><span class=cl>RUN sed -i <span class=s1>&#39;s/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g&#39;</span> /etc/apk/repositories
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 安装openssl
-</span></span><span class=line><span class=cl>RUN apk add openssl &amp;&amp; mkdir /ssl
+</span></span><span class=line><span class=cl><span class=c1># 安装openssl</span>
+</span></span><span class=line><span class=cl>RUN apk add openssl <span class=o>&amp;&amp;</span> mkdir /ssl
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl># 生成自签10年证书
-</span></span><span class=line><span class=cl>RUN openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout /ssl/&lt;your_domain&gt;.key -out /ssl/&lt;your_domain&gt;.crt -subj &#34;/CN=&lt;your_domain&gt;&#34; -addext &#34;subjectAltName=DNS:&lt;your_domain&gt;&#34;
+</span></span><span class=line><span class=cl><span class=c1># 生成自签10年证书</span>
+</span></span><span class=line><span class=cl>RUN openssl req -x509 -newkey rsa:4096 -sha256 -days <span class=m>3650</span> -nodes -keyout /ssl/&lt;your_domain&gt;.key -out /ssl/&lt;your_domain&gt;.crt -subj <span class=s2>&#34;/CN=&lt;your_domain&gt;&#34;</span> -addext <span class=s2>&#34;subjectAltName=DNS:&lt;your_domain&gt;&#34;</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>CMD ./derper -hostname &lt;your_domain&gt; -certmode manual -certdir /ssl --verify-clients=false
-</span></span></code></pre></div><pre><code>用 ```curl -k https://&lt;ip&gt;/``` 验证
-</code></pre><h3 id=添加新增derp节点到tailscale>添加新增derp节点到Tailscale</h3><p>Open <strong><a href=https://login.tailscale.com/admin/acls/file>https://login.tailscale.com/admin/acls/file</a></strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> <span class=s2>&#34;derpMap&#34;</span>: <span class=o>{</span>
+</span></span><span class=line><span class=cl>CMD ./derper -hostname &lt;your_domain&gt; -certmode manual -certdir /ssl --verify-clients<span class=o>=</span><span class=nb>false</span>
+</span></span></code></pre></div><ol start=3><li>验证<ol><li>用 <code>curl -k https://&lt;ip>/</code> 验证Derp服务正常</li><li>用 <code>echo "Hello, Server" | nc -u &lt;host> 3478</code> 验证UTUN端口正常，<code>nc -u -l 3478</code> 可以打开一个仿真的UDP Server来验证防火墙是否打开</li></ol></li></ol><h3 id=添加新增derp节点到tailscale>添加新增derp节点到Tailscale</h3><p>Open <strong><a href=https://login.tailscale.com/admin/acls/file>https://login.tailscale.com/admin/acls/file</a></strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> <span class=s2>&#34;derpMap&#34;</span>: <span class=o>{</span>
 </span></span><span class=line><span class=cl> 	// 如果想要所有节点只使用自建中继的话，就启用这条配置
 </span></span><span class=line><span class=cl> 	// <span class=s2>&#34;OmitDefaultRegions&#34;</span>: true,
 </span></span><span class=line><span class=cl> 	<span class=s2>&#34;Regions&#34;</span>: <span class=o>{</span>
