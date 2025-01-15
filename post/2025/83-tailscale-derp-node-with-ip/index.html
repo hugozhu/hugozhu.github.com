@@ -106,7 +106,7 @@
 </span></span><span class=line><span class=cl>RUN openssl req -x509 -newkey rsa:4096 -sha256 -days <span class=m>3650</span> -nodes -keyout /ssl/<span class=nv>$HOST_NAME</span>.key -out /ssl/<span class=nv>$HOST_NAME</span>.crt -subj <span class=s2>&#34;/CN=</span><span class=nv>$HOST_NAME</span><span class=s2>&#34;</span> -addext <span class=s2>&#34;subjectAltName=DNS:</span><span class=nv>$HOST_NAME</span><span class=s2>&#34;</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>CMD ./derper -hostname <span class=nv>$HOST_NAME</span> -certmode manual -certdir /ssl --verify-clients<span class=o>=</span>tru
+</span></span><span class=line><span class=cl>CMD ./derper -hostname <span class=nv>$HOST_NAME</span> -certmode manual -certdir /ssl --verify-clients<span class=o>=</span><span class=nb>true</span>
 </span></span></code></pre></div><ol start=3><li>验证<ol><li>用 <code>curl -k https://&lt;ip>/</code> 验证Derp服务正常</li><li>用 <code>echo "Hello, Server" | nc -u &lt;host> 3478</code> 验证UTUN端口正常，<code>nc -u -l 3478</code> 可以打开一个仿真的UDP Server来验证防火墙是否打开</li></ol></li></ol><h3 id=添加新增derp节点到tailscale>添加新增derp节点到Tailscale</h3><p>Open <strong><a href=https://login.tailscale.com/admin/acls/file>https://login.tailscale.com/admin/acls/file</a></strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> <span class=s2>&#34;derpMap&#34;</span>: <span class=o>{</span>
 </span></span><span class=line><span class=cl> 	// 如果想要所有节点只使用自建中继的话，就启用这条配置
 </span></span><span class=line><span class=cl> 	// <span class=s2>&#34;OmitDefaultRegions&#34;</span>: true,
