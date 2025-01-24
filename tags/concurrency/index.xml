@@ -1,2 +1,82 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Concurrency on All about Raspberry Pi</title><link>https://blog.hugozhu.site/tags/concurrency/</link><description>Recent content in Concurrency on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor><webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster><lastBuildDate>Sun, 30 Jun 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.hugozhu.site/tags/concurrency/index.xml" rel="self" type="application/rss+xml"/><item><title>Java并发中正确使用volatile</title><link>https://blog.hugozhu.site/post/2013/38-java-volatile-variable/</link><pubDate>Sun, 30 Jun 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/38-java-volatile-variable/</guid><description>前几天并发编程群里有同学对volatile的用法提出了疑问，刚好我记得Twitter有关实时搜索的这个PPT对这个问题解释的很清晰并有一个实际的应用场景，于是周末把这个问题摘录了一些和并发相关的内容如下：
-并发 - 定义 悲观锁 - Pressimistic locking 一个线性在执行一个操作时持有对一个资源的独占锁。（互斥） 一般用在冲突比较可能发生的场景下 乐观锁 - Optimistic locking 尝试采用原子操作，而不需要持有锁；冲突可被检测，如果发生冲突，具有相应的重试逻辑 通常用在冲突较少发生的场景下 非阻塞算法 - Non-blocking algorithm 算法确保对线程间竞争共享资源时候，不会因为互斥而使任一线程的执行无限延迟； 无锁算法 - Lock-free algorithm 如果系统整个流程的执行是无阻塞的(系统某一部分可能被短暂阻塞)，这种非阻塞算法就是无锁的。 无锁算法比传统的基于锁的算法对系统的开销更小，且更容易在多核多CPU处理器上扩展； 在实时系统中可以避免锁带来的延迟； CAS (compare and swap)或LL/SC(load linked/store conditional)，以及内存屏障相关的指令经常被用在算法实现中。 无等待算法 - Wait-free algorithm 如果每个线程的执行都是无阻塞的，这种非阻塞算法就是无等待的（比无锁算法更好） Java的并发 Java的内存模型并不保证一个线程可以一直以程序执行的顺序看到另一个线程对变量的修改，除非两个线程都跨越了同一个内存屏障。（Safe publication） Java内存模型 代码顺序规则 一个线程内的每个动作 happens-before 同一个线程内在代码顺序上在其后的所有动作 volatile变量规则 对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量最后的写入 传递性 如果A happens-before B, B happens-before C，那 A happens-before C Safe publication案例 class VolatileExample { int x = 0; volatile int b = 0; private void write() { x = 5; b = 1; } private void read() { int dummy = b; while (x!</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Concurrency on All about Raspberry Pi</title><link>https://blog.hugozhu.site/tags/concurrency/</link><description>Recent content in Concurrency on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 30 Jun 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.hugozhu.site/tags/concurrency/index.xml" rel="self" type="application/rss+xml"/><item><title>Java并发中正确使用volatile</title><link>https://blog.hugozhu.site/post/2013/38-java-volatile-variable/</link><pubDate>Sun, 30 Jun 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/38-java-volatile-variable/</guid><description>&lt;p>前几天并发编程群里有同学对volatile的用法提出了疑问，刚好我记得Twitter有关实时搜索的这个&lt;a href="http://2011.lucene-eurocon.org/attachments/0002/8787/Busch_twitter_realtime_search_eurocon_11.pdf">PPT&lt;/a>对这个问题解释的很清晰并有一个实际的应用场景，于是周末把这个问题摘录了一些和并发相关的内容如下：&lt;/p>
+&lt;h1 id="并发---定义">并发 - 定义&lt;/h1>
+&lt;h2 id="悲观锁---pressimistic-locking">悲观锁 - Pressimistic locking&lt;/h2>
+&lt;ol>
+&lt;li>一个线性在执行一个操作时持有对一个资源的独占锁。（互斥）&lt;/li>
+&lt;li>一般用在冲突比较可能发生的场景下&lt;/li>
+&lt;/ol>
+&lt;h2 id="乐观锁---optimistic-locking">乐观锁 - Optimistic locking&lt;/h2>
+&lt;ol>
+&lt;li>尝试采用原子操作，而不需要持有锁；冲突可被检测，如果发生冲突，具有相应的重试逻辑&lt;/li>
+&lt;li>通常用在冲突较少发生的场景下&lt;/li>
+&lt;/ol>
+&lt;h2 id="非阻塞算法---non-blocking-algorithm">非阻塞算法 - Non-blocking algorithm&lt;/h2>
+&lt;ol>
+&lt;li>算法确保对线程间竞争共享资源时候，不会因为互斥而使任一线程的执行无限延迟；&lt;/li>
+&lt;/ol>
+&lt;h2 id="无锁算法---lock-free-algorithm">无锁算法 - Lock-free algorithm&lt;/h2>
+&lt;ol>
+&lt;li>如果系统整个流程的执行是无阻塞的(系统某一部分可能被短暂阻塞)，这种非阻塞算法就是无锁的。&lt;/li>
+&lt;li>无锁算法比传统的基于锁的算法对系统的开销更小，且更容易在多核多CPU处理器上扩展；&lt;/li>
+&lt;li>在实时系统中可以避免锁带来的延迟；&lt;/li>
+&lt;li>CAS (compare and swap)或LL/SC(load linked/store conditional)，以及内存屏障相关的指令经常被用在算法实现中。&lt;/li>
+&lt;/ol>
+&lt;h2 id="无等待算法---wait-free-algorithm">无等待算法 - Wait-free algorithm&lt;/h2>
+&lt;ol>
+&lt;li>如果每个线程的执行都是无阻塞的，这种非阻塞算法就是无等待的（比无锁算法更好）&lt;/li>
+&lt;/ol>
+&lt;h1 id="java的并发">Java的并发&lt;/h1>
+&lt;ol>
+&lt;li>Java的内存模型并不保证一个线程可以一直以程序执行的顺序看到另一个线程对变量的修改，除非两个线程都跨越了同一个内存屏障。（Safe publication）&lt;/li>
+&lt;/ol>
+&lt;h1 id="java内存模型">Java内存模型&lt;/h1>
+&lt;h2 id="代码顺序规则">代码顺序规则&lt;/h2>
+&lt;ol>
+&lt;li>一个线程内的每个动作 happens-before 同一个线程内在代码顺序上在其后的所有动作&lt;/li>
+&lt;/ol>
+&lt;h2 id="volatile变量规则">volatile变量规则&lt;/h2>
+&lt;ol>
+&lt;li>对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量最后的写入&lt;/li>
+&lt;/ol>
+&lt;h2 id="传递性">传递性&lt;/h2>
+&lt;ol>
+&lt;li>如果A happens-before B, B happens-before C，那 A happens-before C&lt;/li>
+&lt;/ol>
+&lt;h1 id="safe-publication案例">Safe publication案例&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">class VolatileExample {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> int x = 0;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volatile int b = 0;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private void write() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> x = 5;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> b = 1;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> private void read() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> int dummy = b;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> while (x!=5) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public static void main(String[] args) throws Exception {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> final VolatileExample example = new VolatileExample();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Thread thread1 = new Thread(new Runnable() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public void run() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> example.write();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> });
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Thread thread2 = new Thread(new Runnable() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> public void run() {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> example.read();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> });
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> thread1.start();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> thread2.start();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> thread1.join();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> thread2.join();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;img src="https://www.evernote.com/shard/s26/sh/569ae14f-957d-4ca0-97d7-72f66479d298/b4fb554c924ec7c2356d3ca94d7be61a/deep/0/Screenshot%206/30/13%2010:48%20AM.png"/>
+&lt;p>x并不需要定义为&lt;code>volatile&lt;/code>, 程序里可以有需要类似x的变量，我们只需要一个volatile变量b来确保线程a能看到线程1对x的修改：&lt;/p></description></item></channel></rss>

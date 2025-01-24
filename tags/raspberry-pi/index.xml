@@ -1,127 +1,1334 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Raspberry Pi on All about Raspberry Pi</title><link>https://blog.hugozhu.site/tags/raspberry-pi/</link><description>Recent content in Raspberry Pi on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><managingEditor>hugozhu@gmail.com (Hugo Zhu)</managingEditor><webMaster>hugozhu@gmail.com (Hugo Zhu)</webMaster><lastBuildDate>Fri, 03 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.hugozhu.site/tags/raspberry-pi/index.xml" rel="self" type="application/rss+xml"/><item><title>StreamPi - 低成本快速响应系统监控工具</title><link>https://blog.hugozhu.site/post/2025/81-streamdeck-streamdock-with-raspberry-pi/</link><pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2025/81-streamdeck-streamdock-with-raspberry-pi/</guid><description>&lt;p>在云原生时代，应用的稳定性至关重要。本文将介绍如何利用树莓派和国产StreamDeck 这两个低成本的硬件来灵活监控云原生应用的稳定性，提高运维效率。&lt;/p>
-&lt;p>本文介绍如何使用Raspberry Pi和Streamdeck，以及Uptime Kuma监控线上系统的稳定性。&lt;/p></description></item><item><title>把树莓派4设置成路由器和热点</title><link>https://blog.hugozhu.site/post/2020/68-turn-raspberrypi-4-to-a-router-and-wifi-ap/</link><pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2020/68-turn-raspberrypi-4-to-a-router-and-wifi-ap/</guid><description>&lt;p>树莓派4的性能非常好，内置千兆网卡和AC无线，非常合适做路由器和热点，加上USB 3.0的接口，做NAS也绰绰有余。&lt;/p></description></item><item><title>从树莓派上发消息到手机或桌面钉钉</title><link>https://blog.hugozhu.site/post/2016/66-use-dingtalk-golang-sdk-to-send-message-on-pi/</link><pubDate>Mon, 02 May 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2016/66-use-dingtalk-golang-sdk-to-send-message-on-pi/</guid><description>&lt;p>&lt;img src="http://static.dingtalk.com/media/lALOAQ6nfSvM5Q_229_43.png" alt="image">&lt;/p>
-&lt;p>钉钉是阿里巴巴专为中小企业和团队打造的沟通、协同的多端平台，钉钉开放平台旨在为企业提供更为丰富的办公协同解决方案。通过钉钉开放平台，企业或第三方合作伙伴可以帮助企业快速、低成本的实现高质量的移动微应用，实现生产、管理、协作、运营的移动化。&lt;/p></description></item><item><title>用Grafana制作树莓派上的监控大盘</title><link>https://blog.hugozhu.site/post/2016/65-running-grafana-on-raspberry-pi-3/</link><pubDate>Sun, 24 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2016/65-running-grafana-on-raspberry-pi-3/</guid><description>&lt;p>&lt;a href="http://grafana.org">Grafana&lt;/a>是一个优秀的开源图表系统，支持多种数据源，其中包括
-&lt;a href="https://influxdata.com">InfluxDB&lt;/a>和&lt;a href="http://hugozhu.myalert.info/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html">Prometheus&lt;/a>&lt;/p></description></item><item><title>树莓派3变身iBeacon发射器</title><link>https://blog.hugozhu.site/post/2016/63-raspberrypi-as-ibeacon-transmitter/</link><pubDate>Tue, 19 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2016/63-raspberrypi-as-ibeacon-transmitter/</guid><description>&lt;p>iBeacon是apple公司提出的“一种可以让附近手持电子设备检测到的一种新的低功耗、低成本信号传送器”的一套可用于室内定位系统的协议。iBeacon技术通过低功耗蓝牙（BLE），也就是我们所说的智能蓝牙来实现。&lt;/p></description></item><item><title>在树莓派3上搭建监控系统</title><link>https://blog.hugozhu.site/post/2016/64-set-up-monitor-system-with-prometheus-on-raspberry/</link><pubDate>Sun, 17 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2016/64-set-up-monitor-system-with-prometheus-on-raspberry/</guid><description>&lt;p>之前用过&lt;a href="https://github.com/alibaba/tsar">tsar&lt;/a>做监控，但没有基于浏览器的图表展示，而且tsar收集数据很频繁，容易写坏SD卡。后来一直用&lt;a href="https://personal.xively.com">Xively&lt;/a> SaaS服务，但因为服务在国外，访问速度一直不尽人意。直到今天早上读到InfoQ的一篇文章才知道了&lt;a href="https://prometheus.io">Prometheus&lt;/a>，看了一下介绍后发现Prometheus的以下特点非常合适在树莓派上部署：&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Raspberry Pi on All about Raspberry Pi</title><link>https://blog.hugozhu.site/tags/raspberry-pi/</link><description>Recent content in Raspberry Pi on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 03 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.hugozhu.site/tags/raspberry-pi/index.xml" rel="self" type="application/rss+xml"/><item><title>StreamPi - 低成本快速响应系统监控工具</title><link>https://blog.hugozhu.site/post/2025/81-streamdeck-streamdock-with-raspberry-pi/</link><pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2025/81-streamdeck-streamdock-with-raspberry-pi/</guid><description>&lt;p>在云原生时代，应用的稳定性至关重要。本文将介绍如何利用树莓派和国产StreamDeck 这两个低成本的硬件来灵活监控云原生应用的稳定性，提高运维效率。&lt;/p>
+&lt;p>本文介绍如何使用Raspberry Pi和Streamdeck，以及Uptime Kuma监控线上系统的稳定性。&lt;/p></description></item><item><title>把树莓派4设置成路由器和热点</title><link>https://blog.hugozhu.site/post/2020/68-turn-raspberrypi-4-to-a-router-and-wifi-ap/</link><pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2020/68-turn-raspberrypi-4-to-a-router-and-wifi-ap/</guid><description>&lt;p>树莓派4的性能非常好，内置千兆网卡和AC无线，非常合适做路由器和热点，加上USB 3.0的接口，做NAS也绰绰有余。&lt;/p></description></item><item><title>从树莓派上发消息到手机或桌面钉钉</title><link>https://blog.hugozhu.site/post/2016/66-use-dingtalk-golang-sdk-to-send-message-on-pi/</link><pubDate>Mon, 02 May 2016 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2016/66-use-dingtalk-golang-sdk-to-send-message-on-pi/</guid><description>&lt;p>&lt;img src="http://static.dingtalk.com/media/lALOAQ6nfSvM5Q_229_43.png" alt="image">&lt;/p>
+&lt;p>钉钉是阿里巴巴专为中小企业和团队打造的沟通、协同的多端平台，钉钉开放平台旨在为企业提供更为丰富的办公协同解决方案。通过钉钉开放平台，企业或第三方合作伙伴可以帮助企业快速、低成本的实现高质量的移动微应用，实现生产、管理、协作、运营的移动化。&lt;/p></description></item><item><title>用Grafana制作树莓派上的监控大盘</title><link>https://blog.hugozhu.site/post/2016/65-running-grafana-on-raspberry-pi-3/</link><pubDate>Sun, 24 Apr 2016 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2016/65-running-grafana-on-raspberry-pi-3/</guid><description>&lt;p>&lt;a href="http://grafana.org">Grafana&lt;/a>是一个优秀的开源图表系统，支持多种数据源，其中包括
+&lt;a href="https://influxdata.com">InfluxDB&lt;/a>和&lt;a href="http://hugozhu.myalert.info/2016/04/17/64-set-up-monitor-system-with-prometheus-on-raspberry.html">Prometheus&lt;/a>&lt;/p></description></item><item><title>树莓派3变身iBeacon发射器</title><link>https://blog.hugozhu.site/post/2016/63-raspberrypi-as-ibeacon-transmitter/</link><pubDate>Tue, 19 Apr 2016 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2016/63-raspberrypi-as-ibeacon-transmitter/</guid><description>&lt;p>iBeacon是apple公司提出的“一种可以让附近手持电子设备检测到的一种新的低功耗、低成本信号传送器”的一套可用于室内定位系统的协议。iBeacon技术通过低功耗蓝牙（BLE），也就是我们所说的智能蓝牙来实现。&lt;/p></description></item><item><title>在树莓派3上搭建监控系统</title><link>https://blog.hugozhu.site/post/2016/64-set-up-monitor-system-with-prometheus-on-raspberry/</link><pubDate>Sun, 17 Apr 2016 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2016/64-set-up-monitor-system-with-prometheus-on-raspberry/</guid><description>&lt;p>之前用过&lt;a href="https://github.com/alibaba/tsar">tsar&lt;/a>做监控，但没有基于浏览器的图表展示，而且tsar收集数据很频繁，容易写坏SD卡。后来一直用&lt;a href="https://personal.xively.com">Xively&lt;/a> SaaS服务，但因为服务在国外，访问速度一直不尽人意。直到今天早上读到InfoQ的一篇文章才知道了&lt;a href="https://prometheus.io">Prometheus&lt;/a>，看了一下介绍后发现Prometheus的以下特点非常合适在树莓派上部署：&lt;/p>
 &lt;ol>
 &lt;li>采用Go实现支持，天然支持跨平台，配置相当简单，维护和二次开发的成本小；&lt;/li>
 &lt;li>采集数据支持Pull和Push模式，可以自定义不同采集点的采样频率，适合轻量型应用降低能耗；&lt;/li>
 &lt;li>二次计算和查询方式很灵活&lt;/li>
 &lt;li>自带 &lt;code>Grafana&lt;/code>数据可视化工具；&lt;/li>
 &lt;li>可配置的内存+磁盘存储大小，采用的时间序列文件和Level DB做索引效率较高，不会让监控软件本身消耗过多的树莓派计算和存储资源&lt;/li>
-&lt;/ol></description></item><item><title>树莓派3初体验</title><link>https://blog.hugozhu.site/post/2016/62-raspberrypi-3/</link><pubDate>Wed, 13 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2016/62-raspberrypi-3/</guid><description>树莓派基金会今年推出的新品Raspberry Pi 3已经到手，官方宣传性能比树莓派2代快50%，比树莓派1代快10倍，第一次使用的64位四核处理器（博通BCM2837）配备了ARM Cortex-A53处理器，内置了802.11 b/g/n 2.4GHz WIFI和蓝牙4.1，显卡没变，还是双核VideoCore IV（并不支持4K视频）。CPU升级也对能耗有了更高的要求，官方说法最好是使用5V 2.5A的电源输入（iPad充电器），实测在无外设的情况下，2A的电流输出也可以让Pi 3正常运行。价格和树莓派2也一样，官方售价税前35美金，国内可以在淘宝上买到，238元一枚，点此购买
-我深深的认为每个程序员都需要有一块树莓派，24*7的运行在家里的网络上 ，投入成本在300人民币以内（树莓派加电源：250，SD卡：50），每年电费在10元以内。树莓派支持各种编程语言的开发，安装体验各种操作系统非常简单，丰富的外部接口，支持很多类型的传感器和控制器外设，可以让你轻松设计和实现智能硬件，技术让生活更美好~
-外观 树莓派3的规格大小则和树莓派2完全一样，你甚至可以直接用树莓派2的外壳，完全贴合。
-背面看略有不同，中间的芯片是1G内存，树莓派3的内存速度快了1倍，右边是CF卡插槽，树莓派2是回弹式卡槽（取出CF卡时只要往力再摁一下就会弹出），树莓派3可能为了降低成本或是因为板卡空间的问题改成了更紧凑的插入式，装上外壳后取出的时候有点费劲，我需要用瑞士军刀的镊子夹出来。
-（下图是树莓派3）
-安装启动 如果你不需要GUI,推荐安装Raspbian Jessie Lite，大小只有298.3M，下载完成后解压缩成img文件后用dd命令写到CF卡上去。你也可以下载NOOBS完整安装。
-WIFI 编辑无线配置文件/etc/wpa_supplicant/wpa_supplicant.conf
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=&amp;#34;&amp;lt;无线AP的名称&amp;gt;&amp;#34; psk=&amp;#34;&amp;lt;无线密码&amp;gt;&amp;#34; } 如果有多个无线网络可以接入，增加network即可
-修改好后如果没有自动生效连上网络可以通过以下命令强制生效
-ifdown wlan0 ifup wlan0 非常重要的一点是：如果你希望无线网络一直连接，需要关闭掉无线模块的电源管理，否则没有网络流量后，WIFI会自动关闭。。。
-sudo iwconfig wlan0 power off 测试wifi速度：从通过网线连接到极路由2的Mac拷贝文件到树莓派3上，内置网卡的传输速度在4MB/s左右，如果换上300Mbps的USB无线网卡EDUP EP-N1557则可以达到9MB/s左右，速度要快1倍。结论是内置的wifi模块速度只有150Mbps，如果对网络速度要求较高，最稳定的方法还是插根网线。
-安装好nginx后，用ab测试最简单的HTML网页性能，树莓派3可以轻松超过1000 QPS，满足个人网站的性能需求。
-CPU 树莓派3使用的4核Cortex-A53 BCM2837 SoC为了向下兼容，架构上和树莓派2使用的4核Cortex-A7 BCM2836差不多，在32位模式运行下，速度要快50~60%（时钟频率1.2GHz vs 900MHz），尽管CPU已经支持64位，官方的操作系统Raspbian还是32位，当然树莓派3内存只有1G，运行64位操作系统可能会有点累,。 如果要体验真64位系统，目前可以考虑带2G内存，千兆网口的ODROID-C2，可装Ubuntu 16.04和Android 5.1。
-一般情况下，不带散热片的CPU温度在45度左右，我有个脚本会每五分钟上传一下温度：https://personal.xively.com/feeds/1480103458
-Node.js 安装5.0.0
-wget https://nodejs.org/dist/v5.0.0/node-v5.0.0-linux-armv7l.tar.gz tar -xvf node-v5.0.0-linux-armv7l.tar.gz cd node-v5.0.0-linux-armv7l sudo cp -R * /usr/local/ 升级</description></item><item><title>用iptables搭建稳定的加速代理</title><link>https://blog.hugozhu.site/post/2016/61-smart-router-with-iptable/</link><pubDate>Wed, 06 Apr 2016 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2016/61-smart-router-with-iptable/</guid><description>&lt;h1 id="设置步骤">设置步骤&lt;/h1>
-&lt;p>在阿里云中国和美国都购买一个VPS，用同样的操作系统，都安装好 &lt;code>shadowsocks-libev&lt;/code> ( &lt;a href="https://github.com/shadowsocks/shadowsocks-libev">https://github.com/shadowsocks/shadowsocks-libev&lt;/a> )&lt;/p></description></item><item><title>在树莓派上运行Docker</title><link>https://blog.hugozhu.site/post/2015/60-run-docker-on-raspberry-pi/</link><pubDate>Sun, 12 Apr 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/60-run-docker-on-raspberry-pi/</guid><description>&lt;h1 id="docker">Docker&lt;/h1>
+&lt;/ol></description></item><item><title>树莓派3初体验</title><link>https://blog.hugozhu.site/post/2016/62-raspberrypi-3/</link><pubDate>Wed, 13 Apr 2016 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2016/62-raspberrypi-3/</guid><description>&lt;p>树莓派基金会今年推出的新品Raspberry Pi 3已经到手，官方宣传性能比树莓派2代快50%，比树莓派1代快10倍，第一次使用的64位四核处理器（博通BCM2837）配备了ARM Cortex-A53处理器，内置了802.11 b/g/n 2.4GHz WIFI和蓝牙4.1，显卡没变，还是双核VideoCore IV（并不支持4K视频）。CPU升级也对能耗有了更高的要求，官方说法最好是使用5V 2.5A的电源输入（iPad充电器），实测在无外设的情况下，2A的电流输出也可以让Pi 3正常运行。价格和树莓派2也一样，官方售价税前35美金，国内可以在淘宝上买到，238元一枚，&lt;a href="https://item.taobao.com/item.htm?spm=a230r.1.14.19.82ysfy&amp;amp;id=527525039334&amp;amp;ns=1&amp;amp;abbucket=18#detail">点此购买&lt;/a>&lt;/p>
+&lt;p>&lt;img src="http://ww4.sinaimg.cn/bmiddle/6bc40342jw1f1vev06fbij20rs0hkn2a.jpg" alt="image">&lt;/p>
+&lt;p>&lt;strong>我深深的认为每个程序员都需要有一块树莓派，24*7的运行在家里的网络上&lt;/strong> ，投入成本在300人民币以内（树莓派加电源：250，SD卡：50），每年电费在10元以内。树莓派支持各种编程语言的开发，安装体验各种操作系统非常简单，丰富的外部接口，支持很多类型的传感器和控制器外设，可以让你轻松设计和实现智能硬件，技术让生活更美好~&lt;/p>
+&lt;h1 id="外观">外观&lt;/h1>
+&lt;p>树莓派3的规格大小则和树莓派2完全一样，你甚至可以直接用树莓派2的外壳，完全贴合。&lt;/p>
+&lt;p>&lt;img src="http://ww4.sinaimg.cn/bmiddle/6bc40342gw1f1sd7r0iwrj20zk0qodnp.jpg" alt="image">&lt;/p>
+&lt;p>背面看略有不同，中间的芯片是1G内存，树莓派3的内存速度快了1倍，右边是CF卡插槽，树莓派2是回弹式卡槽（取出CF卡时只要往力再摁一下就会弹出），树莓派3可能为了降低成本或是因为板卡空间的问题改成了更紧凑的插入式，装上外壳后取出的时候有点费劲，我需要用瑞士军刀的镊子夹出来。&lt;/p>
+&lt;p>&lt;img src="http://ww2.sinaimg.cn/bmiddle/6bc40342gw1f1sd7pk73sj20qo0zkdpq.jpg" alt="image">&lt;/p>
+&lt;p>（下图是树莓派3）&lt;/p>
+&lt;h1 id="安装启动">安装启动&lt;/h1>
+&lt;p>如果你不需要GUI,推荐安装&lt;a href="https://downloads.raspberrypi.org/raspbian_lite_latest">Raspbian Jessie Lite&lt;/a>，大小只有298.3M，下载完成后解压缩成img文件后用dd命令写到CF卡上去。你也可以下载&lt;a href="https://downloads.raspberrypi.org/NOOBS_latest">NOOBS&lt;/a>完整安装。&lt;/p>
+&lt;h1 id="wifi">WIFI&lt;/h1>
+&lt;p>编辑无线配置文件&lt;code>/etc/wpa_supplicant/wpa_supplicant.conf&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">ctrl_interface&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">DIR&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">run&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">wpa_supplicant&lt;/span> &lt;span class="n">GROUP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">netdev&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">update_config&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">network&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">ssid&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;无线AP的名称&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">psk&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;无线密码&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果有多个无线网络可以接入，增加&lt;code>network&lt;/code>即可&lt;/p>
+&lt;p>修改好后如果没有自动生效连上网络可以通过以下命令强制生效&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ifdown wlan0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ifup wlan0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>非常重要的一点是：如果你希望无线网络一直连接，需要关闭掉无线模块的电源管理，否则没有网络流量后，WIFI会自动关闭。。。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo iwconfig wlan0 power off
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>测试wifi速度：从通过网线连接到极路由2的Mac拷贝文件到树莓派3上，内置网卡的传输速度在4MB/s左右，如果换上300Mbps的USB无线网卡&lt;code>EDUP EP-N1557&lt;/code>则可以达到9MB/s左右，速度要快1倍。结论是内置的wifi模块速度只有150Mbps，如果对网络速度要求较高，最稳定的方法还是插根网线。&lt;/p>
+&lt;p>安装好&lt;code>nginx&lt;/code>后，用&lt;code>ab&lt;/code>测试最简单的HTML网页性能，树莓派3可以轻松超过1000 QPS，满足个人网站的性能需求。&lt;/p>
+&lt;h1 id="cpu">CPU&lt;/h1>
+&lt;p>树莓派3使用的4核Cortex-A53 BCM2837 SoC为了向下兼容，架构上和树莓派2使用的4核Cortex-A7 BCM2836差不多，在32位模式运行下，速度要快50~60%（时钟频率1.2GHz vs 900MHz），尽管CPU已经支持64位，官方的操作系统Raspbian还是32位，当然树莓派3内存只有1G，运行64位操作系统可能会有点累,。
+如果要体验真64位系统，目前可以考虑带2G内存，千兆网口的&lt;a href="https://item.taobao.com/item.htm?spm=a230r.1.14.1.aQSAa0&amp;amp;id=527695599811&amp;amp;ns=1&amp;amp;abbucket=18#detail">ODROID-C2&lt;/a>，可装Ubuntu 16.04和Android 5.1。&lt;/p>
+&lt;p>一般情况下，不带散热片的CPU温度在45度左右，我有个脚本会每五分钟上传一下温度：&lt;a href="https://personal.xively.com/feeds/1480103458">https://personal.xively.com/feeds/1480103458&lt;/a>&lt;/p>
+&lt;h1 id="nodejs">Node.js&lt;/h1>
+&lt;p>安装5.0.0&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">wget https://nodejs.org/dist/v5.0.0/node-v5.0.0-linux-armv7l.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tar -xvf node-v5.0.0-linux-armv7l.tar.gz 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cd node-v5.0.0-linux-armv7l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo cp -R * /usr/local/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>升级&lt;/p></description></item><item><title>用iptables搭建稳定的加速代理</title><link>https://blog.hugozhu.site/post/2016/61-smart-router-with-iptable/</link><pubDate>Wed, 06 Apr 2016 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2016/61-smart-router-with-iptable/</guid><description>&lt;h1 id="设置步骤">设置步骤&lt;/h1>
+&lt;p>在阿里云中国和美国都购买一个VPS，用同样的操作系统，都安装好 &lt;code>shadowsocks-libev&lt;/code> ( &lt;a href="https://github.com/shadowsocks/shadowsocks-libev">https://github.com/shadowsocks/shadowsocks-libev&lt;/a> )&lt;/p></description></item><item><title>在树莓派上运行Docker</title><link>https://blog.hugozhu.site/post/2015/60-run-docker-on-raspberry-pi/</link><pubDate>Sun, 12 Apr 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/60-run-docker-on-raspberry-pi/</guid><description>&lt;h1 id="docker">Docker&lt;/h1>
 &lt;p>Docker是目前非常流行的代码运行容器，操作系统虚拟化，运维自动化架构和开源的解决方案。&lt;/p>
 &lt;p>Docker的基础是Linux容器（LXC）技术，相比传统的VM虚拟化技术, LXC更轻量，性能更好。&lt;/p>
-&lt;p>Docker采用Golang语言开发，在LXC基础上Docker进行了封装，简化了容器的管理。&lt;/p></description></item><item><title>使用树莓派搭建低成本，便携，多用户的弱网模拟器：高效测试手机App在弱网下的可用性</title><link>https://blog.hugozhu.site/post/2015/59-use-raspberrypi-to-build-an-augmented-traffic-control-system/</link><pubDate>Sat, 28 Mar 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/59-use-raspberrypi-to-build-an-augmented-traffic-control-system/</guid><description>&lt;h1 id="背景">背景&lt;/h1>
+&lt;p>Docker采用Golang语言开发，在LXC基础上Docker进行了封装，简化了容器的管理。&lt;/p></description></item><item><title>使用树莓派搭建低成本，便携，多用户的弱网模拟器：高效测试手机App在弱网下的可用性</title><link>https://blog.hugozhu.site/post/2015/59-use-raspberrypi-to-build-an-augmented-traffic-control-system/</link><pubDate>Sat, 28 Mar 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/59-use-raspberrypi-to-build-an-augmented-traffic-control-system/</guid><description>&lt;h1 id="背景">背景&lt;/h1>
 &lt;p>我们的手机经常会处于弱网情况下，电梯里，高铁上，在地铁站，电影院里。。。如果手机应用不针对弱网做优化，就会出现：白屏页面刷不出来，界面卡死，错误提示一堆，菊花转不停，用户抓狂。。。&lt;/p>
-&lt;p>移动应用开发团队应该将App在弱网下的可用性作为一个重要的性能指标，在设计和开发阶段考虑在弱网下的体验。&lt;/p></description></item><item><title>自己搭建Airplay高清音乐播放系统</title><link>https://blog.hugozhu.site/post/2015/58-diy-airplay-hifi-audio-system/</link><pubDate>Sun, 15 Mar 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/58-diy-airplay-hifi-audio-system/</guid><description>&lt;p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：&lt;/p></description></item><item><title>在树莓派上用Node.js监视网页变化并通知手机</title><link>https://blog.hugozhu.site/post/2015/57-use-node-module-phantom-to-monitor-webpage-updates/</link><pubDate>Sat, 07 Mar 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/57-use-node-module-phantom-to-monitor-webpage-updates/</guid><description>Use Node.js module phantom to monitor webpage updates on Raspberry Pi</description></item><item><title>用16M的SD卡启动树莓派，在U盘上安装和运行Linux</title><link>https://blog.hugozhu.site/post/2015/56-boot-raspberrypi-from-16m-sdcard-and-install-raspbian-on-usb-sticker/</link><pubDate>Thu, 05 Mar 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/56-boot-raspberrypi-from-16m-sdcard-and-install-raspbian-on-usb-sticker/</guid><description>树莓派官方的操作系统Raspbian最少需要4G的SDCard，如果你恰好有比较小的SD卡怎么办呢？设计上树莓派只能从SD卡引导启动，但我们可以在SD卡上装一个最小的引导系统，然后把树莓派引导到U盘上启动。SD卡连续运行，读写比较频繁也容易损坏（我已经坏掉3张了。。。），相比之下U盘价格便宜些，读写速度可以比SD卡还高。
-制作引导SD卡 这个引导系统只需要16M容量的SD卡，先把SD卡格式化成FAT（windows），然后拷贝下面的文件到根目录。
-git clone https://github.com/hugozhu/mini_raspbian_boot 修改 cmdline.txt 中的 root=/dev/mmcblk0p2 为 root=/dev/sda2 以指定用U盘启动
-dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait cgroup_enable=memory 安装操作系统Raspbian到U盘 方法和安装到SD卡一样，在Mac上使用 dd 命令安装，在Windows上可以用win32diskimager：
-sudo dd bs=1m if=2015-01-31-raspbian.img of=/dev/disk4 #/dev/disk4 扩展分区 如果你的U盘容量大于4G，那么上一步安装完后，你的U盘只能看到4G空间，大容量的SD卡的这个问题可以通过自带的raspi-config命令来解决。 Linux下可以用fdisk来解决，我的方法是把该U盘插到已经正常启动的树莓派的USB口上，正常识别后，执行sudo fdisk /dev/sda
-按p后打印出分区表： /dev/sda1 8192 122879 57344 c W95 FAT32 (LBA) /dev/sda2 122880 6399999 3138560 83 Linux 记住/dev/sda2的起始点122880'，然后按d，删除掉二个分区，接着按n重新创建一个分区，起始点就设置为122880`，结束点可以设置为最大
-最后按w保存新的分区表
-插上引导SD卡和系统U盘后树莓派就可以愉快的运行起来了，如果U盘的速度足够快，你会发现系统还变快了。
-参考文章 http://www.raspberrypi.org/boot-from-a-16mb-sd-card/</description></item><item><title>用Telegram和树莓派交互</title><link>https://blog.hugozhu.site/post/2015/55-use-telegram-to-chat-with-raspberrypi/</link><pubDate>Fri, 27 Feb 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/55-use-telegram-to-chat-with-raspberrypi/</guid><description>如果你的树莓派不能通过路由器端口转发直接从家庭网络外访问，你还可以用类似聊天App一样的方式来和防火墙后的树莓派轻松交互，通过命令来控制树莓派。
-Telegram Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似微软小冰的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。
-安装telegram-cli Linux的Telegram客户端telegram-cli源代码在 https://github.com/vysheng/tg，按照Readme在树莓派上编译好。telegram-cli支持消息事件对lua脚本中的函数进行回调，支持的函数列表在：https://github.com/vysheng/tg/blob/master/README-LUA，也支持外部程序通过telegram-cli侦听的端口发送交互命令（一次连接只能一个命令）
-Lua交互脚本 脚本命名为：tg_raspberrypi.lua
-now = os.time() chat = &amp;#34;树莓派通知&amp;#34; -- telegram的会话名称 safe_commands = {} safe_commands[&amp;#34;uptime&amp;#34;] = &amp;#34;uptime&amp;#34; safe_commands[&amp;#34;w&amp;#34;] = &amp;#34;w&amp;#34; safe_commands[&amp;#34;ps&amp;#34;] = &amp;#34;ps ax&amp;#34; safe_commands[&amp;#34;netstat&amp;#34;] = &amp;#34;netstat -na&amp;#34; safe_commands[&amp;#34;df&amp;#34;] = &amp;#34;df&amp;#34; safe_commands[&amp;#34;ss&amp;#34;] = &amp;#34;ss&amp;#34; safe_commands[&amp;#34;free&amp;#34;] = &amp;#34;free&amp;#34; function on_msg_receive (msg) if msg.out then return end if msg.text then -- mark_read(msg.from.print_name)	-- vardump(msg) cmd = string.lower(trim(msg.text)) if cmd == &amp;#34;ping&amp;#34; then send_msg (chat, &amp;#39;pong&amp;#39;, ok_cb, false) elseif safe_commands[cmd] ~= nil then send_msg (chat, exec(safe_commands[cmd]), ok_cb, false) end end end function on_our_id (id) end function on_secret_chat_created (peer) end function on_user_update (user) end function on_chat_update (user) end function on_get_difference_end () end function on_binlog_replay_end () end function exec(cmd) local output = &amp;#34;&amp;#34; f = assert (io.</description></item><item><title>用树莓派2代打造智能家庭路由</title><link>https://blog.hugozhu.site/post/2015/54-raspberrypi2-pptp-redsocks2-chinadns/</link><pubDate>Thu, 26 Feb 2015 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2015/54-raspberrypi2-pptp-redsocks2-chinadns/</guid><description>家里的宽带上下行都有10Mbps了吧？除了可以BT下载外还能让你的移动设备在外的时候也能科学上网。
-区别于在海外架设VPN服务：
-国内和大部分国外网站都可以直连而不降低速度；不像海外VPN所有流量（国内和国外网站）都要经过海外服务器，速度有一定的延迟 这个方案代理可以使用免费的Goagent服务；或低成本的ssh帐号；而租用海外VPS服务器自建服务或购买VPN帐号费用较高些； 利用的是家里的宽带，只有树莓派的硬件成本，没有主机托管成本； 假设家里的路由器IP地址为:192.168.1.1，树莓派2的IP地址为:192.168.1.3，以下是需要安装和设置步骤。
-PPTP和L2TP VPN Server 首先在树莓派上安装和设置VPN服务器，移动设备就可以通过运营商网络连接回家里的树莓派（iPhone和Android都内置了PPTP和L2TP客户端），这样移动设备将以树莓派为路由访问网站，通过一些设置我们可以让树莓派提供科学上网服务。
-关于PPTP和L2TP VPN设置和安装可以参考： http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html
-但在树莓派上安装L2TP时不能直接apt-get install openswan，需要手动下载来安装，原因是因为最新的版本在协议上有些不兼容：
-wget http://snapshot.raspbian.org/201403301125/raspbian/pool/main/o/openswan/openswan_2.6.37-3_armhf.deb sudo dpkg -i openswan_2.6.37-3_armhf.deb 假设VPN服务端的local ip我们设置为192.168.3.1，PPTP客户端IP分配区间为：192.168.3.200~192.168.3.210，L2TP 客户端IP分配区间为：192.168.3.100~192.168.3.110，我们可以通过iptables对IP来源为192.168.3.0/24网段的流量做特殊的处理以达到科学上网的目的。
-完成这一步后，需要在路由器上设置端口转发，使得使用运营商网络如移动4G的手机可以通过PPTP或L2TP连到树莓派上。
-PPTP需要设置的端口转发 - tcp: 1723
-L2TP需要设置的端口转发 - tcp: 50, udp: 500,4500,1701
-两种VPN服务相比较：PPTP拨号速度比较快，但是不安全；L2TP有加密，相对安全。
-Redsocks2 redsocks2是一个透明TCP代理，其实现使用了libevent库，性能较好，其最大的特点是如果目标IP可以直连则不会转发流量给加密代理，如果IP不能直连（通过连接超时判断）则会将流量转发给加密代理。这样可以将最少的流量转发到代理上，访问一般的国外网站如yahoo.com也不会经过代理而减速，在配置方面则做到了零配置，不需要手工维护网站名单。代理也能支持很多中类型，如socks5, shadowsocks, goagent, http-proxy等，redsocks2安装和配置可以见链接： http://github.com/hugozhu/redsocks
-这里我们假设redsocks2的端口使用12345
-iptables 使用iptables我们可以将VPN客户端192.168.3.0/24的流量转发到redsocks5的端口12345
-sudo iptables -F sudo iptables -X sudo iptables -t nat -F sudo iptables -t nat -X sudo iptables -t nat -A PREROUTING -s 192.168.3.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 12345 #转发VPN客户端的HTTP流量到端口12345 sudo iptables -t nat -A PREROUTING -s 192.</description></item><item><title>树莓派的GPIO接口输出电流限制</title><link>https://blog.hugozhu.site/post/2013/35-understanding-output/</link><pubDate>Tue, 14 May 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/35-understanding-output/</guid><description>树莓派提供了一个连接头让我们访问CPU的17个GPIO接口，如下图
-这些接口可配置成输入或输出。本文主要讨论GPIO引脚作为输出时电流的限制。
-阻抗 (impendance) 阻抗和和电阻的区别（resistance）在于电阻的阻值是固定的，不会随着电流变化，阻抗则不然，可能随着外部变化，如电流或频率变化。从另一个角度来说，电阻是线性的，但阻抗不是。比如放大器的阻抗会随着输出的信号频率变化。
-树莓派的的每个GPIO引脚都有一个寄存器可以设置引脚的驱动强度，也就是在保持输出电压为逻辑0和1的情况下，可以改变阻抗的大小从而改变GPIO引脚的输出电流大小。
-通过如下电路测量相同电流下不同阻抗对应的GPIO电压输出（其中用到了一个电位器调节电流保持恒定）：
-通过计算后，下表是当输出电流为2，4 … 16mA时，对应的阻抗大小以及如果发生短路时的短路电流大小。
-可以看出短路电流都是超过16mA的。
-一个发光二极管压降约为1.52.0v，工作电流为310v
-GPIO引脚的电流是通过板上的3.3V电压调整器输出的，树莓派是按平均每个引脚3mA来设计的，所以总的电流不能超过17 * 3 = 51mA。
-结论 树莓派引脚电流大小的限制是：每个引脚最大输出电流为16毫安(mA)，且同一时刻所有引脚的总输出电流不超过51毫安
-参考链接 http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html</description></item><item><title>使用8位移位寄存器74HC595扩展树莓派的IO端口</title><link>https://blog.hugozhu.site/post/2013/34-use-74hc595-8-bit-shift-register-with-raspberry-pi/</link><pubDate>Mon, 13 May 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/34-use-74hc595-8-bit-shift-register-with-raspberry-pi/</guid><description>树莓派的GPIO接口数目有限，驱动一个步进电机需要占用4个， 一个Nokia 5110液晶也要占4个， 传感器输入至少需要一个，多玩几个外设后接口就不够用了。如果接口可以复用就可以让树莓派驱动更多的外设了，本文讨论如何使用74HC595集成电路芯片来扩展树莓派的I/O接口。
-芯片介绍 SN74HC595N是德州仪器公司生产的集成电路芯片，是一个8位串行输入变串行输出或并行输出移位寄存器，具有高阻关断，高电平和低电平三态输出。在IO扩充上，可以最多串联15片，也就是高达120个IO扩充。
-（注意到芯片上的小凹槽了吗，拿芯片的时候以这个为参考物就不会搞反了）
-接口的常用命名方式有以下两种：
-接口代号(编号) 说明 接口代号(编号) 说明 Q7&amp;rsquo;(9) serial data output QH&amp;rsquo; (9) serial data output MR (10) Master Reset (Active Low) SRCLR (10) Shift register CLeaR SH_CP (11) shift register clock input SRCLK (11) Shift Register CLocK input ST_CP (12) storage register clock input RCLK (12) storage Register CLocK input OE (13) output enable input (Active Low) OE (13) Output Enable DS (14) serial data input SER (14) SERial data input Qx (15，1-7) data output Qx (15，1-7) data output 控制流程 如果要在8个引脚输出01010101</description></item><item><title>树莓派I2C编程</title><link>https://blog.hugozhu.site/post/2013/30-raspberrypi-i2c-programming/</link><pubDate>Thu, 18 Apr 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/30-raspberrypi-i2c-programming/</guid><description>(！未完！)
-除了SPI协议外，树莓派还支持I2C。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。
-I2C 上图是一个主控使用I2C驱动3个设备的示意图
-参考链接 http://zh.wikipedia.org/wiki/I²C https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</description></item><item><title>使用Go语言在树莓派上编程</title><link>https://blog.hugozhu.site/post/2013/29-use-wiringpi-go-binding/</link><pubDate>Sun, 14 Apr 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/29-use-wiringpi-go-binding/</guid><description>WiringPi是树莓派上比较好的一个开发库，是用C语言写的。使用cgo，我们可以在Go语言里方便的调用WiringPI的函数，于是我包装了一个WiringPi-Go，目前支持wiringPi的基本功能，硬件SPI协议驱动Nokia 5110屏幕，以及中断，未来还会增加PWM和I2C协议的支持。
-下面是一个完整的使用例子，结合了之前的两个电路：链接1，链接2
-通过push button可以切换液晶屏显示不同脚本的输出内容。
-lcd_switch.go
-package main import ( . &amp;#34;github.com/hugozhu/rpi&amp;#34; &amp;#34;github.com/hugozhu/rpi/pcd8544&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os/exec&amp;#34; &amp;#34;time&amp;#34; ) const ( DIN = PIN_MOSI SCLK = PIN_SCLK DC = PIN_GPIO_2 RST = PIN_GPIO_0 CS = PIN_CE0 PUSHBUTTON = PIN_GPIO_6 CONTRAST = 40 //may need tweak for each Nokia 5110 screen ) var screen_chan chan int var TOTAL_MODES = 3 func init() { WiringPiSetup() pcd8544.LCDInit(SCLK, DIN, DC, CS, RST, CONTRAST) screen_chan = make(chan int, 1) } func main() { //a goroutine to check button push event go func() { last_time := time.</description></item><item><title>使用tsar记录和监控树莓派CPU温度</title><link>https://blog.hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/</link><pubDate>Sat, 13 Apr 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/</guid><description>夏天到了，树莓派的CPU温度也开始节节攀升，虽然我们也可以用云服务cosm来监控，但每5分钟采样一次精度不够高，每分钟采样一次则上传次数又太多了点。最好的方法还是使用tsar这样的工具本地高频（如每1分钟）采样，然后再定时将5分钟的均值上传到cosm绘图。
-Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。
-更新 [2013-04-14] mod_rpi已经被合并到了主干代码：https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c 只需要增加文件：/etc/tsar/conf.d/rpi.conf，内容为以下即可开始使用mod_rpi模块：
-mod_rpi on ####add it to tsar default output output_stdio_mod mod_rpi mod_rpi模块开发方法 首先按照安装说明，见https://github.com/alibaba/tsar将tsar和tsardevel安装好。
-首先运行下面的命令生成mod_rpi模块：
-hugo@raspberrypi2 ~/projects/tsardevel $ tsardevel rpi build:make install:make install uninstall:make uninstall hugo@raspberrypi2 ~/projects/tsardevel $ ls rpi Makefile mod_rpi.c mod_rpi.conf 然后修改mod_rpi.c，增加读取CPU温度的逻辑：
-/* * (C) 2010-2011 Alibaba Group Holding Limited * * Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); * you may not use this file except in compliance with the License. * You may obtain a copy of the License at * * http://www.</description></item><item><title>Raspberry Pi的GPIO中断编程</title><link>https://blog.hugozhu.site/post/2013/27-interrupts-with-gpio-pins/</link><pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/27-interrupts-with-gpio-pins/</guid><description>背景介绍 树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。
-GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）上拉电阻相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。
-应用 如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。
-一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加sleep(1000)这样的调用，又很容易错过按键变化。较好的做法则是通过中断来实现。
-最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：
-首先可以通过命令echo 25 &amp;gt; /sys/class/gpio/export导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下一切都是文件的设计理念，GPIO的状态可以通过value文件来获取，这样就可以利用Linux的poll/epoll来获取value文件的变化(这点和Linux高性能网络编程是类似的)。
-root@raspberrypi2 ~/projects/interrupt_test # ls -l /sys/class/gpio/gpio25/ total 0 -rw-r--r-- 1 root root 4096 Apr 8 23:56 active_low -rw-r--r-- 1 root root 4096 Apr 8 22:29 direction -rw-r--r-- 1 root root 4096 Apr 8 22:29 edge drwxr-xr-x 2 root root 0 Apr 8 23:56 power lrwxrwxrwx 1 root root 0 Apr 8 23:56 subsystem -&amp;gt; .</description></item><item><title>升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</title><link>https://blog.hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/</link><pubDate>Sun, 24 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/</guid><description>Nokia 5110屏比前面介绍过的1602液晶屏功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：
-带蓝色背光 使用Philips PCD8544 LCD控制器（通过SPI接口） 84x48点阵，可显示100多个字符 硬件准备 树莓派 Nokia 5110 拆机屏 或 焊好的？ 注意不要买裸屏，需要带电路板的 杜邦线 母对母8条 8P排针 用来焊接5110屏幕PCB板 电烙铁 电路 5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。
-RST —— 复位 接GPIO 0 CE —— 片选 接GPIO 1 或 不接 DC —— 数据/指令选择 接GPIO 2 DIN —— 串行数据线 接GPIO 3 CLK —— 串行时钟线 接GPIO 5 （因为我的GPIO 4已经接了一个DHT11传感器） VCC —— 电源输入 接3.3v BL —— 背光控制端 接3.3v GND —— 地线 接地 PS. 编号规范看这里 VCC, BK, GND可以接在面包板电源上</description></item><item><title>如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</title><link>https://blog.hugozhu.site/post/2013/19-raspberry-pi-drive-1602-lcd/</link><pubDate>Sat, 23 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/19-raspberry-pi-drive-1602-lcd/</guid><description>硬件准备 需要以下硬件：
-树莓派 面包板 1602液晶屏一块 10K电位器 杜邦线 排针 面包板电源 1602 LCD液晶屏 LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&amp;ndash;请参考GPIO命名规则：
-VSS，接地，RPi PIN 6 VDD，接5V电源，PRi PIN 2 VO，液晶对比度调节，接电位器中间的引脚 RS，寄存器选择，接GPIO 14，RPi PIN 8 RW，读写选择，接地，表示写模式，PRi PIN 6 EN，使能信号，接GPIO 15，RPi PIN 10 D0，数据位0，4位工作模式下不用，不接 D1，数据位1，4位工作模式下不用，不接 D2，数据位2，4位工作模式下不用，不接 D3，数据位3，4位工作模式下不用，不接 D4，数据位4，接GPIO 17，RPi PIN 11 D5，数据位5，接GPIO 18，RPi PIN 12 D6，数据位6，接GPIO 27，RPi PIN 13 D7，数据位7，接GPIO 22，RPi PIN 15 A，液晶屏背光+，接5V，RPi PIN 2 K，液晶屏背光-，接地，RPi PIN 6 注意事项 电源VDD最后接上 排针焊接在液晶屏时注意不要虚焊，也可以用万用表测量一下 RW脚注意一定要接地 调节电位器可以调节液晶对比度 电路图 代码 #!/usr/bin/python # # based on code from lrvick and LiquidCrystal # lrvic - https://github.</description></item><item><title>Raspberry Pi GPIO的编号规范</title><link>https://blog.hugozhu.site/post/2013/19-raspberry-pi-gpio-port-naming/</link><pubDate>Fri, 22 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/19-raspberry-pi-gpio-port-naming/</guid><description>树莓派和普通电脑不一样的地方在于它还带了17个可编程的GPIO（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。
-GPIO库 wiringPi C，有Perl, PHP, Ruby, Node.JS和**Golang**的扩展，支持wiringPi Pin和BCM GPIO两种编号 RPi.GPIO Python，支持Board Pin和BCM GPIO两种编号 Webiopi，Python, 使用BCM GPIO编号 WiringPi-Go, Go语言，支持以上三种编号 编号规范 第一列是wiringPi API中的缺省编号，wiringPiSetup()采用这列编号 第二列（Name）往往是转接板的编号 第三列是树莓派板子上的自然编号（左边引脚为1-15，右边引脚为2-26），RPi.GPIO.setmode(GPIO.BOARD)采用这列编号 树莓派主芯片提供商Broadcom的编号方法，相当于调用了WiringPiSetupGpio()或RPi.GPIO.setmode(GPIO.BCM)采用这列编号 wiringPi Pin Name Board Pin BCM GPIO 0 GPIO 0 11 17 1 GPIO 1 12 18 2 GPIO 2 13 21 3 GPIO 3 15 22 4 GPIO 4 16 23 5 GPIO 5 18 24 6 GPIO 6 22 25 7 GPIO 7 7 4 8 SDA 3 0 9 SCL 5 1 10 CE0 24 8 11 CE1 26 7 12 MOSI 19 10 13 MISO 21 9 14 SCLK 23 11 15 TXD 8 14 16 RXD 10 15 Rev.</description></item><item><title>如何使用Raspberry Pi测量室内温度和湿度并绘制曲线</title><link>https://blog.hugozhu.site/post/2013/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi/</link><pubDate>Sun, 17 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi/</guid><description>硬件准备 需要以下硬件：
-可以工作的树莓派一个 面包板和公对母杜邦线 10K 电位器一个 DHT11温度和湿度传感器一个或DHT22 传感器电路及原理 DHT11传感器外观 参数 湿度测量范围：20％～90%RH(0－50℃温度补偿）； 温度测量范围：0～+50℃； 湿度测量精度：±5.0%RH 温度测量精度：±2.0℃ 响应时间：&amp;lt;5s； 电路图 DHT11一共4根引脚，左边第一根接电源5V (Pin 1)，第二根为数据接口，接 Pin 7，第三根不接，第四根接地；在Pin 1和Pin7 之间还需要并联10K的电阻，以保持读数稳定。
-安装好的样子： 读取温度和湿度的代码 数据读取流图：
-#include &amp;lt;wiringPi.h&amp;gt; #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;stdlib.h&amp;gt; #include &amp;lt;stdint.h&amp;gt; #define MAX_TIME 85 #define DHT11PIN 7 int dht11_val[5]={0,0,0,0,0}; int errors=0; void dht11_read_val() { uint8_t lststate=HIGH; uint8_t counter=0; uint8_t j=0,i; float farenheit; for(i=0;i&amp;lt;5;i++) dht11_val[i]=0; pinMode(DHT11PIN,OUTPUT); digitalWrite(DHT11PIN,LOW); delay(18); digitalWrite(DHT11PIN,HIGH); delayMicroseconds(40); pinMode(DHT11PIN,INPUT); for(i=0;i&amp;lt;MAX_TIME;i++) { counter=0; while(digitalRead(DHT11PIN)==lststate){ counter++; delayMicroseconds(1); if(counter==255) break; } lststate=digitalRead(DHT11PIN); if(counter==255) break; // top 3 transistions are ignored if((i&amp;gt;=4)&amp;amp;&amp;amp;(i%2==0)){ dht11_val[j/8]&amp;lt;&amp;lt;=1; if(counter&amp;gt;16) dht11_val[j/8]|=1; j++; } } // verify cheksum and print the verified data if((j&amp;gt;=40)&amp;amp;&amp;amp;(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])&amp;amp; 0xFF))) { //farenheit=dht11_val[2]*9.</description></item><item><title>如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</title><link>https://blog.hugozhu.site/post/2013/03-16-use-raspberry-pi-control-step-motor-rotate-webcam/</link><pubDate>Sat, 16 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/03-16-use-raspberry-pi-control-step-motor-rotate-webcam/</guid><description>硬件准备 需要以下硬件：
-可以工作的树莓派一个 母对母1P杜邦线6根 DC 5V4相28YBJ-48步进电机一个 UL2003芯片步进电机驱动板一块 安装 按下图将步进电机接到驱动板上，也就是白色的接口
-步进电机电源 步进电机需要5V电压驱动，而树莓派的GPIO接口中已有5V输出，将图中的Pin 2（最右上角那个）5V，接到驱动板的5V正极，Pin 6接到5V负级，电源部分则搞定。
-步进电机驱动线路 驱动板上有IN1, IN2, IN3, IN4四个接口，根据资料得知这四个接口依次设置为低电平就可以驱动，我们分别用杜邦线将GPIO 17（Pin 11），GPIO 18（Pin 12）, GPIO 21（Pin 13）, GPIO 22（Pin 15）和IN1，IN2，IN3，IN4一一相连。 注意不同的GPIO驱动程序对端口的编号不一定一样（至少有三种叫法：Board，Broadcom，GPIO）
-驱动原理：（每次将四个GPIO端口按下表依次设置好电平后，可以sleep几十毫秒来控制转速）
-序列 GPIO 17 GPIO 18 GPIO 21 GPIO 22 0 LOW HIGH HIGH HIGH 1 HIGH LOW HIGH HIGH 2 HIGH HIGH LOW HIGH 3 HIGH HIGH HIGH LOW 4 LOW HIGH HIGH HIGH … 安装摄像头 本来是希望用3D打印机来制作齿轮和支架来完成这部分工作的，但因为打印机还没到货，所以先用乐高积木来做了, 刚好乐高积木可以插在步进电机中轴上，而且很牢靠，还不用密封带了。
-摄像头如下图用两根导线固定在乐高积木上：
-然后用各种积木搭个底座把电机固定起来，并留两个洞口可以将驱动线和摄像头的USB线穿出，这样表面上比较整齐，USB线也不会因为牵扯影响转动。</description></item><item><title>如何在Raspberry Pi上用LED闪烁提示网站首页新访客</title><link>https://blog.hugozhu.site/post/2013/vistor-on-homepage-led-indicator/</link><pubDate>Wed, 13 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/vistor-on-homepage-led-indicator/</guid><description>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。
-硬件安装 需要以下硬件：
-可以工作的树莓派一个 1P杜邦线2条 面包板一个 面包板跳线 或 单排针 两根 发光二极管一个 300欧姆的电阻一个 GPIO接口 用杜邦线将上图的3.3V输出和GPIO 23引出（板子正面朝上，GPIO引脚在左上角），将电阻和LED串联起来（电阻防止LED电流过大烧掉），注意二极管的两根脚不一样长，长脚的接正级，这样GPIO 23如果输出高电平，二极管就不发光了，输出低电平就亮啦！
-都接好了后的样子如下：
-GPIO接口编程 WiringPi An implementation of most of the Arduino Wiring functions for the Raspberry Pi。 代码地址在： https://github.com/wiringPi
-安装：
-git clone https://github.com/WiringPi/WiringPi cd WiringPi/wiringPi sudo make install	让二极管闪一下的示例代码：
-#include &amp;lt;wiringPi.h&amp;gt; #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;stdlib.h&amp;gt; int main (int argc, char* argv[]) { int pinNumber = 4; if (-1 == wiringPiSetup()) { printf(&amp;#34;failed to setup wiringPi&amp;#34;); return 1; }	pinMode(pinNumber, OUTPUT); digitalWrite(pinNumber, 1); delay(200); digitalWrite(pinNumber, 0); delay(200); return 0;	} WiringPi也有Python, Perl, PHP, Ruby的接口包装，按这里，怎么没有Go的呢。。。</description></item><item><title>在Raspberry Pi上安装ArchLinux</title><link>https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/</link><pubDate>Sat, 09 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/</guid><description>介绍 之前买的Raspberry Pi因为要跑这个网站，不能经常拔下来玩别的，所以又买了一个，这次安装的是Arch Linux。这个发行版安装好后非常基础，占用的空间也只有600M不到，比较合适已有Linux基础的同学玩。初学者可以玩官方推荐的Raspbian。
-Arch Linux特点：
-启动快，上电后只要3s完成启动 安装完没有图形界面，干净 面向开发者的系统 包管理系统pacman很好用，一个命令就可以完成各种操作 ArchLinux缺省账号和密码是root/root，弄好了后要记得修改root密码 从中国用下载包很快，比Raspbian的源快多了 增加sudo用户 useradd hugo passwd hugo mkdir /home/hugo chown hugo:hugo /home/hugo pacman -S sudo visudo 执行visudo把新用户设置成管理员（增加sudo权限），最后面增加下面一行：
-hugo ALL=(ALL) NOPASSWD: ALL USB盘 插上USB盘后，ArchLinux并不会自动mount，手动mount的过程如下: 插上USB前后执行两次 lsblk -o name,kname,uuid，那么输出上多出的那行就是该USB的设备名，或UUID，找到该行后就可以执行mount命令了（注意sda这个符号不同机器可能不一样）
-[root@raspberrypi2 ~]# lsblk -o name,kname,uuid NAME KNAME UUID sda sda 001B-9622 mmcblk0 mmcblk0 ├─mmcblk0p1 mmcblk0p1 44C8-CEF1 └─mmcblk0p2 mmcblk0p2 fcee8534-f5f0-42ee-83ac-f943f878ee67 mkdir /mnt/usb mount /dev/sda /mnt/usb 或 mount -U 001B-9622 /mnt/usb 格式化整个USB盘可以用mkfs.ext4 /dev/sda 然后在/etc/fstab里增加一行，以后重启就会自动mount了：
-/dev/sda /mnt/usb ext4 defaults,noatime 0 0 还可以测试一下SD卡和USB盘的读写性能：</description></item><item><title>Raspberry Pi做BT下载机+高清播放器</title><link>https://blog.hugozhu.site/post/2013/raspberry-pi-with-xmbc/</link><pubDate>Wed, 06 Mar 2013 00:00:00 +0000</pubDate><author>hugozhu@gmail.com (Hugo Zhu)</author><guid>https://blog.hugozhu.site/post/2013/raspberry-pi-with-xmbc/</guid><description>介绍 首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个山寨的的更简单。。。
-Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了XBMC，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如一搜，优酷，搜狐视频，奇艺等。
-外设 除了Pi单片机外，你还需要以下外设附件：
-5V-1A左右的电源，可以用iPhone或iPad的充电电源，或手机的充电器，电流最少要800毫安 micro USB线一根，和Kindle以及大多数android手机充电USB线一样 HDMI线一根，接电视机 SD卡一张，最少2G Raspbmc Raspbmc 是专为在Raspberry Pi上运行XBMC的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。
-特点： 免费，开源 支持多语言 支持1080P回放 支持直接播放NFS，SMB，FTP,HTTP或USB硬盘的有视频文件，支持大多数格式 支持AirPlay或AirTune功能，可以把iPhone/iPad上的视频或音乐通过Pi投放到电视上，这点和Apple TV功能一样 支持GPIO 基于Debian，可以从Debian的软件源安装其它软件 支持1080P DTS软解，这个不少播放器是不支持的，需要额外License 内置了以下服务: Samba TVHeadend Server FTP Server SSH Server 安装 Windows下载安装程序，运行即可。
-Linux/Mac:
-curl -O http://svn.stmlabs.com/svn/raspbmc/testing/installers/python/install.py chmod +x install.py sudo python install.py 或直接下载安装包安装
-下载 你可以在Pi上外接一个USB移动硬盘，但要注意硬盘要有自己电源，也可以mount网络上的硬盘分区。然后运行transmission软件下载视频。
-Transmission 安装
-sudo apt-get install transmission-daemon sudo /etc/init.d/transmission-daemon stop sudo nano /etc/transmission-daemon/settings.</description></item></channel></rss>
+&lt;p>移动应用开发团队应该将App在弱网下的可用性作为一个重要的性能指标，在设计和开发阶段考虑在弱网下的体验。&lt;/p></description></item><item><title>自己搭建Airplay高清音乐播放系统</title><link>https://blog.hugozhu.site/post/2015/58-diy-airplay-hifi-audio-system/</link><pubDate>Sun, 15 Mar 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/58-diy-airplay-hifi-audio-system/</guid><description>&lt;p>先看一下在iPhone 6 plus上用虾米播放高音质音乐的效果：&lt;/p></description></item><item><title>在树莓派上用Node.js监视网页变化并通知手机</title><link>https://blog.hugozhu.site/post/2015/57-use-node-module-phantom-to-monitor-webpage-updates/</link><pubDate>Sat, 07 Mar 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/57-use-node-module-phantom-to-monitor-webpage-updates/</guid><description>Use Node.js module phantom to monitor webpage updates on Raspberry Pi</description></item><item><title>用16M的SD卡启动树莓派，在U盘上安装和运行Linux</title><link>https://blog.hugozhu.site/post/2015/56-boot-raspberrypi-from-16m-sdcard-and-install-raspbian-on-usb-sticker/</link><pubDate>Thu, 05 Mar 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/56-boot-raspberrypi-from-16m-sdcard-and-install-raspbian-on-usb-sticker/</guid><description>&lt;p>树莓派官方的操作系统Raspbian最少需要4G的SDCard，如果你恰好有比较小的SD卡怎么办呢？设计上树莓派只能从SD卡引导启动，但我们可以在SD卡上装一个最小的引导系统，然后把树莓派引导到U盘上启动。SD卡连续运行，读写比较频繁也容易损坏（我已经坏掉3张了。。。），相比之下U盘价格便宜些，读写速度可以比SD卡还高。&lt;/p>
+&lt;h1 id="制作引导sd卡">制作引导SD卡&lt;/h1>
+&lt;p>这个引导系统只需要16M容量的SD卡，先把SD卡格式化成FAT（windows），然后拷贝下面的文件到根目录。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">git clone https://github.com/hugozhu/mini_raspbian_boot
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改 &lt;code>cmdline.txt&lt;/code> 中的 &lt;code>root=/dev/mmcblk0p2&lt;/code> 为 &lt;code>root=/dev/sda2&lt;/code> 以指定用U盘启动&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait cgroup_enable=memory
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="安装操作系统raspbian到u盘">安装操作系统Raspbian到U盘&lt;/h1>
+&lt;p>方法和安装到SD卡一样，在Mac上使用 &lt;code>dd&lt;/code> 命令安装，在Windows上可以用win32diskimager：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo dd bs=1m if=2015-01-31-raspbian.img of=/dev/disk4 #/dev/disk4
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="扩展分区">扩展分区&lt;/h1>
+&lt;p>如果你的U盘容量大于4G，那么上一步安装完后，你的U盘只能看到4G空间，大容量的SD卡的这个问题可以通过自带的&lt;code>raspi-config&lt;/code>命令来解决。
+Linux下可以用&lt;code>fdisk&lt;/code>来解决，我的方法是把该U盘插到已经正常启动的树莓派的USB口上，正常识别后，执行&lt;code>sudo fdisk /dev/sda&lt;/code>&lt;/p>
+&lt;ol>
+&lt;li>按&lt;code>p&lt;/code>后打印出分区表：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">/dev/sda1 8192 122879 57344 c W95 FAT32 (LBA)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/dev/sda2 122880 6399999 3138560 83 Linux
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>
+&lt;p>记住/dev/sda2的起始点&lt;code>122880'，然后按&lt;/code>d&lt;code>，删除掉二个分区，接着按&lt;/code>n&lt;code>重新创建一个分区，起始点就设置为&lt;/code>122880`，结束点可以设置为最大&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>最后按&lt;code>w&lt;/code>保存新的分区表&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>插上引导SD卡和系统U盘后树莓派就可以愉快的运行起来了，如果U盘的速度足够快，你会发现系统还变快了。&lt;/p>
+&lt;h1 id="参考文章">参考文章&lt;/h1>
+&lt;ol>
+&lt;li>&lt;a href="http://www.raspberrypi.org/boot-from-a-16mb-sd-card/">http://www.raspberrypi.org/boot-from-a-16mb-sd-card/&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>用Telegram和树莓派交互</title><link>https://blog.hugozhu.site/post/2015/55-use-telegram-to-chat-with-raspberrypi/</link><pubDate>Fri, 27 Feb 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/55-use-telegram-to-chat-with-raspberrypi/</guid><description>&lt;p>如果你的树莓派不能通过路由器端口转发直接从家庭网络外访问，你还可以用类似聊天App一样的方式来和防火墙后的树莓派轻松交互，通过命令来控制树莓派。&lt;/p>
+&lt;h1 id="telegram">Telegram&lt;/h1>
+&lt;p>&lt;img src="https://telegram.org/img/t_logo.png" alt="image">&lt;/p>
+&lt;p>Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似&lt;a href="http://www.msxiaoice.com/v2/DesktopLanding">微软小冰&lt;/a>的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。&lt;/p>
+&lt;h2 id="安装telegram-cli">安装telegram-cli&lt;/h2>
+&lt;p>Linux的Telegram客户端telegram-cli源代码在 &lt;a href="https://github.com/vysheng/tg">https://github.com/vysheng/tg&lt;/a>，按照Readme在树莓派上编译好。telegram-cli支持消息事件对lua脚本中的函数进行回调，支持的函数列表在：&lt;a href="https://github.com/vysheng/tg/blob/master/README-LUA">https://github.com/vysheng/tg/blob/master/README-LUA&lt;/a>，也支持外部程序通过telegram-cli侦听的端口发送交互命令（一次连接只能一个命令）&lt;/p>
+&lt;h2 id="lua交互脚本">Lua交互脚本&lt;/h2>
+&lt;p>脚本命名为：&lt;code>tg_raspberrypi.lua&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">now&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">time&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">chat&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;树莓派通知&amp;#34;&lt;/span> &lt;span class="o">--&lt;/span> &lt;span class="n">telegram的会话名称&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;uptime&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;uptime&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;w&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;w&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;ps&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;ps ax&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;netstat&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;netstat -na&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;df&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;df&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;ss&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;ss&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;free&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;free&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_msg_receive&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">msg&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">if&lt;/span> &lt;span class="n">msg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	 &lt;span class="k">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">if&lt;/span> &lt;span class="n">msg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">text&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="o">--&lt;/span> &lt;span class="n">mark_read&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">msg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">print_name&lt;/span>&lt;span class="p">)&lt;/span>	
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="o">--&lt;/span> &lt;span class="n">vardump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">msg&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">cmd&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lower&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">trim&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">msg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">if&lt;/span> &lt;span class="n">cmd&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;ping&amp;#34;&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="n">send_msg&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">chat&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;pong&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ok_cb&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">false&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">elseif&lt;/span> &lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">cmd&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">~=&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="n">send_msg&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">chat&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">exec&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">safe_commands&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">cmd&lt;/span>&lt;span class="p">]),&lt;/span> &lt;span class="n">ok_cb&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">false&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_our_id&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_secret_chat_created&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">peer&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_user_update&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_chat_update&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_get_difference_end&lt;/span> &lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">on_binlog_replay_end&lt;/span> &lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">exec&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cmd&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">local&lt;/span> &lt;span class="n">output&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">assert&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">popen&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">cmd&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">lines&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">output&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">output&lt;/span> &lt;span class="o">..&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">..&lt;/span> &lt;span class="n">line&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">end&lt;/span> &lt;span class="o">--&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">loop&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">f&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">output&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>	
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">trim&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">gsub&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;^&lt;/span>&lt;span class="si">%s&lt;/span>&lt;span class="s2">*(.-)&lt;/span>&lt;span class="si">%s&lt;/span>&lt;span class="s2">*$&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;%1&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">function&lt;/span> &lt;span class="n">vardump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">depth&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">local&lt;/span> &lt;span class="n">linePrefix&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">local&lt;/span> &lt;span class="n">spaces&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">key&lt;/span> &lt;span class="o">~=&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">linePrefix&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;[&amp;#34;&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="n">key&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s2">&amp;#34;] = &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">depth&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">depth&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">depth&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">depth&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">depth&lt;/span> &lt;span class="k">do&lt;/span> &lt;span class="n">spaces&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">spaces&lt;/span> &lt;span class="o">..&lt;/span> &lt;span class="s2">&amp;#34; &amp;#34;&lt;/span> &lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;table&amp;#39;&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mTable&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">getmetatable&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">mTable&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">spaces&lt;/span> &lt;span class="o">..&lt;/span>&lt;span class="n">linePrefix&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s2">&amp;#34;(table) &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">spaces&lt;/span> &lt;span class="o">..&lt;/span>&lt;span class="s2">&amp;#34;(metatable) &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mTable&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">end&lt;/span>		
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">tableKey&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">tableValue&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">pairs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">vardump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">tableValue&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">depth&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">tableKey&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">elseif&lt;/span> &lt;span class="n">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>	&lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;function&amp;#39;&lt;/span> &lt;span class="ow">or&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>	&lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;thread&amp;#39;&lt;/span> &lt;span class="ow">or&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>	&lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;userdata&amp;#39;&lt;/span> &lt;span class="ow">or&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">value&lt;/span>		&lt;span class="o">==&lt;/span> &lt;span class="n">nil&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">spaces&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="n">tostring&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">spaces&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="n">linePrefix&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s2">&amp;#34;(&amp;#34;&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="s2">&amp;#34;) &amp;#34;&lt;/span>&lt;span class="o">..&lt;/span>&lt;span class="n">tostring&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">exec&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;uptime&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="启动telegram-cli">启动telegram-cli&lt;/h1>
+&lt;h2 id="第一次启动">第一次启动&lt;/h2>
+&lt;p>第一次启动telegram-cli会需要你输入手机号码，输入短信验证码后登录，成功登录后会在~/.telegram-cli下保存登录信息，后面就不需要再登录了。&lt;/p></description></item><item><title>用树莓派2代打造智能家庭路由</title><link>https://blog.hugozhu.site/post/2015/54-raspberrypi2-pptp-redsocks2-chinadns/</link><pubDate>Thu, 26 Feb 2015 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2015/54-raspberrypi2-pptp-redsocks2-chinadns/</guid><description>&lt;p>家里的宽带上下行都有10Mbps了吧？除了可以BT下载外还能让你的移动设备在外的时候也能科学上网。&lt;/p>
+&lt;p>区别于在海外架设VPN服务：&lt;/p>
+&lt;ul>
+&lt;li>国内和大部分国外网站都可以直连而不降低速度；不像海外VPN所有流量（国内和国外网站）都要经过海外服务器，速度有一定的延迟&lt;/li>
+&lt;li>这个方案代理可以使用免费的Goagent服务；或低成本的ssh帐号；而租用海外VPS服务器自建服务或购买VPN帐号费用较高些；&lt;/li>
+&lt;li>利用的是家里的宽带，只有树莓派的硬件成本，没有主机托管成本；&lt;/li>
+&lt;/ul>
+&lt;p>假设家里的路由器IP地址为:&lt;strong>192.168.1.1&lt;/strong>，树莓派2的IP地址为:&lt;strong>192.168.1.3&lt;/strong>，以下是需要安装和设置步骤。&lt;/p>
+&lt;h1 id="pptp和l2tp-vpn-server">PPTP和L2TP VPN Server&lt;/h1>
+&lt;p>首先在树莓派上安装和设置VPN服务器，移动设备就可以通过运营商网络连接回家里的树莓派（iPhone和Android都内置了PPTP和L2TP客户端），这样移动设备将以树莓派为路由访问网站，通过一些设置我们可以让树莓派提供科学上网服务。&lt;/p>
+&lt;p>关于PPTP和L2TP VPN设置和安装可以参考： &lt;a href="http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html">http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html&lt;/a>&lt;/p>
+&lt;p>但在树莓派上安装L2TP时不能直接&lt;code>apt-get install openswan&lt;/code>，需要手动下载来安装，原因是因为最新的版本在协议上有些不兼容：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">wget http://snapshot.raspbian.org/201403301125/raspbian/pool/main/o/openswan/openswan_2.6.37-3_armhf.deb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dpkg -i openswan_2.6.37-3_armhf.deb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>假设VPN服务端的local ip我们设置为&lt;code>192.168.3.1&lt;/code>，PPTP客户端IP分配区间为：&lt;code>192.168.3.200~192.168.3.210&lt;/code>，L2TP 客户端IP分配区间为：&lt;code>192.168.3.100~192.168.3.110&lt;/code>，我们可以通过&lt;code>iptables&lt;/code>对IP来源为192.168.3.0/24网段的流量做特殊的处理以达到科学上网的目的。&lt;/p>
+&lt;p>完成这一步后，需要在路由器上设置端口转发，使得使用运营商网络如移动4G的手机可以通过PPTP或L2TP连到树莓派上。&lt;/p>
+&lt;p>PPTP需要设置的端口转发 - tcp: 1723&lt;/p>
+&lt;p>L2TP需要设置的端口转发 - tcp: 50, udp: 500,4500,1701&lt;/p>
+&lt;p>两种VPN服务相比较：PPTP拨号速度比较快，但是不安全；L2TP有加密，相对安全。&lt;/p>
+&lt;h1 id="redsocks2">Redsocks2&lt;/h1>
+&lt;p>&lt;a href="http://github.com/hugozhu/redsocks">redsocks2&lt;/a>是一个透明TCP代理，其实现使用了libevent库，性能较好，其最大的特点是如果目标IP可以直连则不会转发流量给加密代理，如果IP不能直连（通过连接超时判断）则会将流量转发给加密代理。这样可以将最少的流量转发到代理上，访问一般的国外网站如yahoo.com也不会经过代理而减速，在配置方面则做到了零配置，不需要手工维护网站名单。代理也能支持很多中类型，如socks5, shadowsocks, goagent, http-proxy等，redsocks2安装和配置可以见链接： &lt;a href="http://github.com/hugozhu/redsocks">http://github.com/hugozhu/redsocks&lt;/a>&lt;/p>
+&lt;p>这里我们假设redsocks2的端口使用&lt;strong>12345&lt;/strong>&lt;/p>
+&lt;h1 id="iptables">iptables&lt;/h1>
+&lt;p>使用iptables我们可以将VPN客户端&lt;code>192.168.3.0/24&lt;/code>的流量转发到redsocks5的端口&lt;code>12345&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo iptables -F
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo iptables -X
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo iptables -t nat -F
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo iptables -t nat -X
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo iptables -t nat -A PREROUTING -s 192.168.3.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 12345 #转发VPN客户端的HTTP流量到端口12345
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo iptables -t nat -A PREROUTING -s 192.168.3.0/24 -p tcp --dport 443 -j REDIRECT --to-ports 12345 #转发VPN客户端的HTTPS流量到端口12345
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -o eth0 -j MASQUERADE #转发VPN客户端的TCP流量到网络出口，并进行IP伪装；如果树莓派使用无线网卡则将eth0改成wlan0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="dns加固">DNS加固&lt;/h1>
+&lt;p>上面的设置我们解决了VPN拨号到树莓派的客户端通过redsocks2透明代理分流为直连或通过加密代理连接和访问目标网站，我们还需要解决一下DNS查询被纂改为不存在的IP地址的问题。&lt;/p></description></item><item><title>树莓派的GPIO接口输出电流限制</title><link>https://blog.hugozhu.site/post/2013/35-understanding-output/</link><pubDate>Tue, 14 May 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/35-understanding-output/</guid><description>&lt;p>树莓派提供了一个连接头让我们访问CPU的17个GPIO接口，如下图&lt;/p>
+&lt;img src="https://www.evernote.com/shard/s26/sh/92d52938-5bd9-46a7-9b05-478e9f30f5d7/b29dcc510983784a07472c8282330b30/deep/0/Screenshot%205/14/13%208:51%20PM.png"/>
+&lt;p>这些接口可配置成输入或输出。本文主要讨论GPIO引脚作为输出时电流的限制。&lt;/p>
+&lt;h1 id="阻抗-impendance">阻抗 (impendance)&lt;/h1>
+&lt;p>阻抗和和电阻的区别（resistance）在于电阻的阻值是固定的，不会随着电流变化，阻抗则不然，可能随着外部变化，如电流或频率变化。从另一个角度来说，电阻是线性的，但阻抗不是。比如放大器的阻抗会随着输出的信号频率变化。&lt;/p>
+&lt;p>树莓派的的每个GPIO引脚都有一个寄存器可以设置引脚的驱动强度，也就是在保持输出电压为逻辑0和1的情况下，可以改变阻抗的大小从而改变GPIO引脚的输出电流大小。&lt;/p>
+&lt;p>通过如下电路测量相同电流下不同阻抗对应的GPIO电压输出（其中用到了一个电位器调节电流保持恒定）：&lt;/p>
+&lt;img src="https://www.evernote.com/shard/s26/sh/11008332-acac-4625-9b6a-963c97ec7498/1e6d153774b7e95214fe0c2bba9121d8/deep/0/Screenshot%205/14/13%2010:22%20PM.png"/>
+&lt;p>通过计算后，下表是当输出电流为2，4 … 16mA时，对应的阻抗大小以及如果发生短路时的短路电流大小。&lt;/p>
+&lt;img src="https://www.evernote.com/shard/s26/sh/7a411df0-56b1-4f76-bce5-54961bcfcfc7/4e46d9e28d7d01a34eb9e66ee28a5ba8/deep/0/Screenshot%205/14/13%2010:39%20PM.png"/>
+&lt;p>可以看出短路电流都是超过16mA的。&lt;/p>
+&lt;p>一个发光二极管压降约为1.5&lt;del>2.0v，工作电流为3&lt;/del>10v&lt;/p>
+&lt;p>GPIO引脚的电流是通过板上的3.3V电压调整器输出的，树莓派是按平均每个引脚3mA来设计的，所以总的电流不能超过17 * 3 = 51mA。&lt;/p>
+&lt;h1 id="结论">结论&lt;/h1>
+&lt;p>树莓派引脚电流大小的限制是：&lt;strong>每个引脚最大输出电流为16毫安(mA)，且同一时刻所有引脚的总输出电流不超过51毫安&lt;/strong>&lt;/p>
+&lt;h1 id="参考链接">参考链接&lt;/h1>
+&lt;ol>
+&lt;li>&lt;a href="http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html">http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>使用8位移位寄存器74HC595扩展树莓派的IO端口</title><link>https://blog.hugozhu.site/post/2013/34-use-74hc595-8-bit-shift-register-with-raspberry-pi/</link><pubDate>Mon, 13 May 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/34-use-74hc595-8-bit-shift-register-with-raspberry-pi/</guid><description>&lt;p>树莓派的GPIO接口数目有限，驱动一个步进电机需要占用4个， 一个Nokia 5110液晶也要占4个， 传感器输入至少需要一个，多玩几个外设后接口就不够用了。如果接口可以复用就可以让树莓派驱动更多的外设了，本文讨论如何使用74HC595集成电路芯片来扩展树莓派的I/O接口。&lt;/p>
+&lt;h1 id="芯片介绍">芯片介绍&lt;/h1>
+&lt;p>SN74HC595N是德州仪器公司生产的集成电路芯片，是一个8位串行输入变串行输出或并行输出移位寄存器，具有高阻关断，高电平和低电平三态输出。在IO扩充上，可以最多串联15片，也就是高达120个IO扩充。&lt;/p>
+&lt;img src="https://www.evernote.com/shard/s26/sh/b90034cc-cdf8-426d-a79d-16bbbcbb49b2/0ba3371f3039afa71a17bad845eede7a/deep/0/Screenshot%205/12/13%2010:42%20PM.png"/>
+&lt;p>（注意到芯片上的小凹槽了吗，拿芯片的时候以这个为参考物就不会搞反了）&lt;/p>
+&lt;p>接口的常用命名方式有以下两种：&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>接口代号(编号)&lt;/th>
+ &lt;th>说明&lt;/th>
+ &lt;th>接口代号(编号)&lt;/th>
+ &lt;th>说明&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>Q7&amp;rsquo;(9)&lt;/td>
+ &lt;td>serial data output&lt;/td>
+ &lt;td>QH&amp;rsquo; (9)&lt;/td>
+ &lt;td>serial data output&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>MR (10)&lt;/td>
+ &lt;td>Master Reset (Active Low)&lt;/td>
+ &lt;td>SRCLR (10)&lt;/td>
+ &lt;td>Shift register CLeaR&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>SH_CP (11)&lt;/td>
+ &lt;td>shift register clock input&lt;/td>
+ &lt;td>SRCLK (11)&lt;/td>
+ &lt;td>Shift Register CLocK input&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>ST_CP (12)&lt;/td>
+ &lt;td>storage register clock input&lt;/td>
+ &lt;td>RCLK (12)&lt;/td>
+ &lt;td>storage Register CLocK input&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>OE (13)&lt;/td>
+ &lt;td>output enable input (Active Low)&lt;/td>
+ &lt;td>OE (13)&lt;/td>
+ &lt;td>Output Enable&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>DS (14)&lt;/td>
+ &lt;td>serial data input&lt;/td>
+ &lt;td>SER (14)&lt;/td>
+ &lt;td>SERial data input&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>Qx (15，1-7)&lt;/td>
+ &lt;td>data output&lt;/td>
+ &lt;td>Qx (15，1-7)&lt;/td>
+ &lt;td>data output&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h1 id="控制流程">控制流程&lt;/h1>
+&lt;p>如果要在8个引脚输出01010101&lt;/p></description></item><item><title>树莓派I2C编程</title><link>https://blog.hugozhu.site/post/2013/30-raspberrypi-i2c-programming/</link><pubDate>Thu, 18 Apr 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/30-raspberrypi-i2c-programming/</guid><description>&lt;p>(！未完！)&lt;/p>
+&lt;p>除了&lt;a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">SPI&lt;/a>协议外，树莓派还支持&lt;a href="http://zh.wikipedia.org/wiki/I%C2%B2C">I2C&lt;/a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。&lt;/p>
+&lt;h1 id="i2c">I2C&lt;/h1>
+&lt;img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png"/>
+&lt;p>上图是一个主控使用I2C驱动3个设备的示意图&lt;/p>
+&lt;h1 id="参考链接">参考链接&lt;/h1>
+&lt;ol>
+&lt;li>&lt;a href="http://zh.wikipedia.org/wiki/I">http://zh.wikipedia.org/wiki/I&lt;/a>²C&lt;/li>
+&lt;li>&lt;a href="https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/">https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>使用Go语言在树莓派上编程</title><link>https://blog.hugozhu.site/post/2013/29-use-wiringpi-go-binding/</link><pubDate>Sun, 14 Apr 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/29-use-wiringpi-go-binding/</guid><description>&lt;p>&lt;a href="https://projects.drogon.net/raspberry-pi/wiringpi/">WiringPi&lt;/a>是树莓派上比较好的一个开发库，是用C语言写的。使用cgo，我们可以在Go语言里方便的调用WiringPI的函数，于是我包装了一个&lt;a href="https://github.com/hugozhu/rpi">WiringPi-Go&lt;/a>，目前支持wiringPi的基本功能，硬件SPI协议驱动Nokia 5110屏幕，以及中断，未来还会增加PWM和I2C协议的支持。&lt;/p>
+&lt;p>下面是一个完整的使用例子，结合了之前的两个电路：&lt;a href="http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html">链接1&lt;/a>，&lt;a href="http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html">链接2&lt;/a>&lt;/p>
+&lt;p>通过push button可以切换液晶屏显示不同脚本的输出内容。&lt;/p>
+&lt;p>lcd_switch.go&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">package&lt;/span> &lt;span class="n">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">import&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="o">.&lt;/span> &lt;span class="s2">&amp;#34;github.com/hugozhu/rpi&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="s2">&amp;#34;github.com/hugozhu/rpi/pcd8544&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="s2">&amp;#34;log&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="s2">&amp;#34;os/exec&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="s2">&amp;#34;time&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">const&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">DIN&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PIN_MOSI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">SCLK&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PIN_SCLK&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">DC&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PIN_GPIO_2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">RST&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PIN_GPIO_0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">CS&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PIN_CE0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">PUSHBUTTON&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">PIN_GPIO_6&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">CONTRAST&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">40&lt;/span> &lt;span class="o">//&lt;/span>&lt;span class="n">may&lt;/span> &lt;span class="n">need&lt;/span> &lt;span class="n">tweak&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">each&lt;/span> &lt;span class="n">Nokia&lt;/span> &lt;span class="mi">5110&lt;/span> &lt;span class="n">screen&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">var&lt;/span> &lt;span class="n">screen_chan&lt;/span> &lt;span class="n">chan&lt;/span> &lt;span class="ne">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">var&lt;/span> &lt;span class="n">TOTAL_MODES&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">init&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">WiringPiSetup&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDInit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SCLK&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">DIN&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">DC&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CS&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">RST&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">CONTRAST&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">screen_chan&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">make&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">chan&lt;/span> &lt;span class="ne">int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="o">//&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="n">goroutine&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">check&lt;/span> &lt;span class="n">button&lt;/span> &lt;span class="n">push&lt;/span> &lt;span class="n">event&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">go&lt;/span> &lt;span class="k">func&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">last_time&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Now&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UnixNano&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">1000000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">btn_pushed&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">for&lt;/span> &lt;span class="n">pin&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="nb">range&lt;/span> &lt;span class="n">WiringPiISR&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">PUSHBUTTON&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">INT_EDGE_FALLING&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="k">if&lt;/span> &lt;span class="n">pin&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="n">n&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Now&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UnixNano&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="mi">1000000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="n">delta&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">last_time&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="k">if&lt;/span> &lt;span class="n">delta&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="o">//&lt;/span>&lt;span class="n">software&lt;/span> &lt;span class="n">debouncing&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">					&lt;span class="nb">log&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;btn pushed&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">					&lt;span class="n">last_time&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">n&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">					&lt;span class="n">btn_pushed&lt;/span>&lt;span class="o">++&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">					&lt;span class="n">screen_chan&lt;/span> &lt;span class="o">&amp;lt;-&lt;/span> &lt;span class="n">btn_pushed&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">TOTAL_MODES&lt;/span> &lt;span class="o">//&lt;/span>&lt;span class="k">switch&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">screen&lt;/span> &lt;span class="n">display&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="o">//&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="n">groutine&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">update&lt;/span> &lt;span class="n">display&lt;/span> &lt;span class="n">every&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="n">seconds&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">go&lt;/span> &lt;span class="n">loop_update_display&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="o">//&lt;/span>&lt;span class="n">set&lt;/span> &lt;span class="n">screen&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">be&lt;/span> &lt;span class="n">default&lt;/span> &lt;span class="n">display&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">screen_chan&lt;/span> &lt;span class="o">&amp;lt;-&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">ticker&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">NewTicker&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Second&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">for&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="o">&amp;lt;-&lt;/span>&lt;span class="n">ticker&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">C&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">screen_chan&lt;/span> &lt;span class="o">&amp;lt;-&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">//&lt;/span>&lt;span class="n">refresh&lt;/span> &lt;span class="n">current&lt;/span> &lt;span class="n">screen&lt;/span> &lt;span class="n">every&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="n">seconds&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">loop_update_display&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">current_screen&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">for&lt;/span> &lt;span class="n">screen&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="nb">range&lt;/span> &lt;span class="n">screen_chan&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">if&lt;/span> &lt;span class="n">screen&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="k">if&lt;/span> &lt;span class="n">screen&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">current_screen&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="o">//&lt;/span>&lt;span class="n">btn&lt;/span> &lt;span class="n">pushed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="n">current_screen&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">screen&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">				&lt;span class="n">display_loading&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">switch&lt;/span> &lt;span class="n">current_screen&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">case&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="n">display_screen0&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">case&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="n">display_screen1&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">case&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			&lt;span class="n">display_screen2&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">display_loading&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDclear&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdrawstring&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">20&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Loading ...&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdisplay&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">display_screen0&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">out&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">err&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">exec&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Command&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/bin/screen_0.sh&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CombinedOutput&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">if&lt;/span> &lt;span class="n">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>&lt;span class="n">byte&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">err&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Error&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDclear&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdrawstring&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdisplay&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">display_screen1&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">out&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">err&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">exec&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Command&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/bin/screen_1.sh&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CombinedOutput&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">if&lt;/span> &lt;span class="n">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>&lt;span class="n">byte&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">err&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Error&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDclear&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdrawstring&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdisplay&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">func&lt;/span> &lt;span class="n">display_screen2&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">out&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">err&lt;/span> &lt;span class="p">:&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="n">exec&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Command&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/bin/screen_2.sh&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CombinedOutput&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">if&lt;/span> &lt;span class="n">err&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">nil&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="n">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>&lt;span class="n">byte&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">err&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Error&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDclear&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdrawstring&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="n">pcd8544&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">LCDdisplay&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>/bin/screen_2.sh&lt;/p></description></item><item><title>使用tsar记录和监控树莓派CPU温度</title><link>https://blog.hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/</link><pubDate>Sat, 13 Apr 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/</guid><description>&lt;p>夏天到了，树莓派的CPU温度也开始节节攀升，虽然我们也可以用云服务&lt;a href="https://cosm.com">cosm&lt;/a>来监控，但每5分钟采样一次精度不够高，每分钟采样一次则上传次数又太多了点。最好的方法还是使用&lt;a href="http://github.com/alibaba/tsar">tsar&lt;/a>这样的工具本地高频（如每1分钟）采样，然后再定时将5分钟的均值上传到cosm绘图。&lt;/p>
+&lt;p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。&lt;/p>
+&lt;h1 id="更新">&lt;strong>更新&lt;/strong>&lt;/h1>
+&lt;p>[2013-04-14] mod_rpi已经被合并到了主干代码：&lt;a href="https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c">https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c&lt;/a> 只需要增加文件：&lt;code>/etc/tsar/conf.d/rpi.conf&lt;/code>，内容为以下即可开始使用mod_rpi模块：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">mod_rpi on
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">####add it to tsar default output
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">output_stdio_mod mod_rpi
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="mod_rpi模块开发方法">mod_rpi模块开发方法&lt;/h1>
+&lt;p>首先按照安装说明，见&lt;a href="https://github.com/alibaba/tsar">https://github.com/alibaba/tsar&lt;/a>将tsar和tsardevel安装好。&lt;/p>
+&lt;p>首先运行下面的命令生成mod_rpi模块：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">hugo@raspberrypi2 ~/projects/tsardevel $ tsardevel rpi 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">build:make
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">install:make install
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uninstall:make uninstall
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hugo@raspberrypi2 ~/projects/tsardevel $ ls rpi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Makefile mod_rpi.c mod_rpi.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后修改mod_rpi.c，增加读取CPU温度的逻辑：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * (C) 2010-2011 Alibaba Group Holding Limited
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * you may not use this file except in compliance with the License.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * You may obtain a copy of the License at
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * http://www.apache.org/licenses/LICENSE-2.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * Unless required by applicable law or agreed to in writing, software
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * See the License for the specific language governing permissions and
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * limitations under the License.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> */
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#include &amp;#34;tsar.h&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * Structure for rpi infomation.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> */
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">struct stats_rpi {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	unsigned int cpu_temp;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#define STATS_TEST_SIZE (sizeof(struct stats_rpi))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">static char *rpi_usage = &amp;#34; --rpi Rapsberry Pi information (CPU temprature ...)&amp;#34;;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">static void read_rpi_stats(struct module *mod, char *parameter)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	FILE *fp;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	char buf[64];
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	memset(buf, 0, sizeof(buf));
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	struct stats_rpi st_rpi;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	memset(&amp;amp;st_rpi, 0, sizeof(struct stats_rpi));
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	if ((fp = fopen(&amp;#34;/sys/class/thermal/thermal_zone0/temp&amp;#34;, &amp;#34;r&amp;#34;)) == NULL) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		return;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	int cpu_temp;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	fscanf(fp, &amp;#34;%d&amp;#34;, &amp;amp;cpu_temp);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	st_rpi.cpu_temp = cpu_temp;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	int pos = sprintf(buf, &amp;#34;%u&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			/* the store order is not same as read procedure */
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">			st_rpi.cpu_temp);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	buf[pos] = &amp;#39;\0&amp;#39;;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	set_mod_record(mod, buf);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	fclose(fp);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	return;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">static struct mod_info rpi_info[] = {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	{&amp;#34; temp&amp;#34;, SUMMARY_BIT, 0, STATS_NULL}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">static void set_rpi_record(struct module *mod, double st_array[],
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		U_64 pre_array[], U_64 cur_array[], int inter)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	st_array[0] = cur_array[0]/1000.0;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">void mod_register(struct module *mod)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{	
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	register_mod_fileds(mod, &amp;#34;--rpi&amp;#34;, rpi_usage, rpi_info, 1, read_rpi_stats, set_rpi_record);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>最后&lt;code>make &amp;amp;&amp;amp; sudo make install&lt;/code>将mod_rpi自定义tsar模块安装好。&lt;/p></description></item><item><title>Raspberry Pi的GPIO中断编程</title><link>https://blog.hugozhu.site/post/2013/27-interrupts-with-gpio-pins/</link><pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/27-interrupts-with-gpio-pins/</guid><description>&lt;h1 id="背景介绍">背景介绍&lt;/h1>
+&lt;p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。&lt;/p>
+&lt;img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&amp;suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&amp;noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"/>
+&lt;p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）&lt;a href="https://zh.wikipedia.org/zh/%E4%B8%8A%E6%8B%89%E7%94%B5%E9%98%BB">上拉电阻&lt;/a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。&lt;/p>
+&lt;h1 id="应用">应用&lt;/h1>
+&lt;p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。&lt;/p>
+&lt;p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加&lt;code>sleep(1000)&lt;/code>这样的调用，又很容易错过按键变化。较好的做法则是通过&lt;a href="http://zh.wikipedia.org/wiki/%E4%B8%AD%E6%96%AD">中断&lt;/a>来实现。&lt;/p>
+&lt;p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：&lt;/p>
+&lt;p>首先可以通过命令&lt;code>echo 25 &amp;gt; /sys/class/gpio/export&lt;/code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下&lt;strong>一切都是文件&lt;/strong>的设计理念，GPIO的状态可以通过&lt;code>value&lt;/code>文件来获取，这样就可以利用Linux的poll/epoll来获取&lt;code>value&lt;/code>文件的变化(这点和Linux高性能网络编程是类似的)。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">root@raspberrypi2 ~/projects/interrupt_test # ls -l /sys/class/gpio/gpio25/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- 1 root root 4096 Apr 8 23:56 active_low
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- 1 root root 4096 Apr 8 22:29 direction
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- 1 root root 4096 Apr 8 22:29 edge
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x 2 root root 0 Apr 8 23:56 power
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">lrwxrwxrwx 1 root root 0 Apr 8 23:56 subsystem -&amp;gt; ../../../../class/gpio
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- 1 root root 4096 Apr 8 22:08 uevent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- 1 root root 4096 Apr 8 22:29 value
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@raspberrypi2 ~/projects/interrupt_test # 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="wiringpi">wiringPi&lt;/h1>
+&lt;p>&lt;a href="https://projects.drogon.net/raspberry-pi/wiringpi/functions/">wiringPi&lt;/a>库封装了一个简单的接口，传入一个回调函数，当事件发生时传入的函数将被调用。&lt;/p></description></item><item><title>升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</title><link>https://blog.hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/</link><pubDate>Sun, 24 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/</guid><description>&lt;p>Nokia 5110屏比前面介绍过的&lt;a href="http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html">1602液晶屏&lt;/a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：&lt;/p>
+&lt;ol>
+&lt;li>带蓝色背光&lt;/li>
+&lt;li>使用Philips PCD8544 LCD控制器（通过SPI接口）&lt;/li>
+&lt;li>84x48点阵，可显示100多个字符&lt;/li>
+&lt;/ol>
+&lt;h1 id="硬件准备">硬件准备&lt;/h1>
+&lt;ol>
+&lt;li>&lt;a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;amp;id=17337394004&amp;amp;is_b=1&amp;amp;cat_id=2&amp;amp;q=%CA%F7%DD%AE%C5%C9&amp;amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://item.taobao.com/item.htm?id=3125173573&amp;amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118594_4k1_653822857&amp;amp;clk1=0b755dfca67112cd1b605914b40146e7&amp;amp;spm=a230z.1.5634029.2.foR1Yu">Nokia 5110 拆机屏&lt;/a> 或 &lt;a href="http://item.taobao.com/item.htm?spm=a230r.1.10.154.SdjftL&amp;amp;id=13361097288&amp;amp;_u=oqa31997">焊好的？&lt;/a> 注意不要买裸屏，需要带电路板的&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;amp;user_action=initiative&amp;amp;at_topsearch=1&amp;amp;sort=st&amp;amp;type=p&amp;amp;cat=&amp;amp;style=">杜邦线&lt;/a> 母对母8条&lt;/li>
+&lt;li>8P排针 用来焊接5110屏幕PCB板&lt;/li>
+&lt;li>&lt;a href="http://detail.tmall.com/item.htm?id=22096296909&amp;amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h1 id="电路">电路&lt;/h1>
+&lt;p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。&lt;/p>
+&lt;img src="http://img01.taobaocdn.com/bao/uploaded/i1/13130028971464406/T1v5oAXd0XXXXXXXXX_!!0-item_pic.jpg_600x600.jpg"/>
+&lt;ol>
+&lt;li>RST —— 复位 接GPIO 0&lt;/li>
+&lt;li>CE —— 片选 接GPIO 1 或 不接&lt;/li>
+&lt;li>DC —— 数据/指令选择 接GPIO 2&lt;/li>
+&lt;li>DIN —— 串行数据线 接GPIO 3&lt;/li>
+&lt;li>CLK —— 串行时钟线 接GPIO 5 （因为我的GPIO 4已经接了一个DHT11传感器）&lt;/li>
+&lt;li>VCC —— 电源输入 接3.3v&lt;/li>
+&lt;li>BL —— 背光控制端 接3.3v&lt;/li>
+&lt;li>GND —— 地线 接地&lt;/li>
+&lt;/ol>
+&lt;p>PS. 编号规范看&lt;a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">这里&lt;/a> VCC, BK, GND可以接在面包板电源上&lt;/p></description></item><item><title>如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</title><link>https://blog.hugozhu.site/post/2013/19-raspberry-pi-drive-1602-lcd/</link><pubDate>Sat, 23 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/19-raspberry-pi-drive-1602-lcd/</guid><description>&lt;h1 id="硬件准备">硬件准备&lt;/h1>
+&lt;p>需要以下硬件：&lt;/p>
+&lt;ol>
+&lt;li>&lt;a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;amp;id=17337394004&amp;amp;is_b=1&amp;amp;cat_id=2&amp;amp;q=%CA%F7%DD%AE%C5%C9&amp;amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5&amp;amp;type=p&amp;amp;style=&amp;amp;cat=all">面包板&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://s.taobao.com/search?spm=a230r.1.8.2.RvXL2p&amp;amp;q=1602+%D2%BA%BE%A7&amp;amp;commend=all&amp;amp;source=haiwaigou&amp;amp;ssid=s5-e&amp;amp;pid=mm_14507416_2297358_8935934&amp;amp;newpre=null&amp;amp;tab=mall">1602液晶屏&lt;/a>一块&lt;/li>
+&lt;li>&lt;a href="http://s.taobao.com/search?source=suggest&amp;amp;haiwaifrom=1&amp;amp;q=%B5%E7%CE%BB%C6%F7+10k&amp;amp;initiative_id=staobaoz_20130323&amp;amp;suggest_query=%B5%E7%CE%BB%C6%F7+10k&amp;amp;sb_id=10&amp;amp;suggest=0_2&amp;amp;wq=%B5%E7%CE%BB%C6%F7&amp;amp;tab=mall">10K电位器&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;amp;user_action=initiative&amp;amp;at_topsearch=1&amp;amp;sort=st&amp;amp;type=p&amp;amp;cat=&amp;amp;style=">杜邦线&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://s.taobao.com/search?source=haiwaigou&amp;amp;haiwaifrom=1&amp;amp;q=%C5%C5%D5%EB&amp;amp;initiative_id=staobaoz_20130323&amp;amp;tab=mall">排针&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5+%B5%E7%D4%B4&amp;amp;type=p&amp;amp;style=&amp;amp;cat=all">面包板电源&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h1 id="1602-lcd液晶屏">1602 LCD液晶屏&lt;/h1>
+&lt;p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&amp;ndash;请参考&lt;a href="http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html">GPIO命名规则&lt;/a>：&lt;/p>
+&lt;ol>
+&lt;li>VSS，接地，RPi PIN 6&lt;/li>
+&lt;li>VDD，接5V电源，PRi PIN 2&lt;/li>
+&lt;li>VO，液晶对比度调节，接电位器中间的引脚&lt;/li>
+&lt;li>RS，寄存器选择，接GPIO 14，RPi PIN 8&lt;/li>
+&lt;li>RW，读写选择，接地，表示写模式，PRi PIN 6&lt;/li>
+&lt;li>EN，使能信号，接GPIO 15，RPi PIN 10&lt;/li>
+&lt;li>D0，数据位0，4位工作模式下不用，不接&lt;/li>
+&lt;li>D1，数据位1，4位工作模式下不用，不接&lt;/li>
+&lt;li>D2，数据位2，4位工作模式下不用，不接&lt;/li>
+&lt;li>D3，数据位3，4位工作模式下不用，不接&lt;/li>
+&lt;li>D4，数据位4，接GPIO 17，RPi PIN 11&lt;/li>
+&lt;li>D5，数据位5，接GPIO 18，RPi PIN 12&lt;/li>
+&lt;li>D6，数据位6，接GPIO 27，RPi PIN 13&lt;/li>
+&lt;li>D7，数据位7，接GPIO 22，RPi PIN 15&lt;/li>
+&lt;li>A，液晶屏背光+，接5V，RPi PIN 2&lt;/li>
+&lt;li>K，液晶屏背光-，接地，RPi PIN 6&lt;/li>
+&lt;/ol>
+&lt;h1 id="注意事项">注意事项&lt;/h1>
+&lt;ol>
+&lt;li>电源VDD最后接上&lt;/li>
+&lt;li>排针焊接在液晶屏时注意不要虚焊，也可以用万用表测量一下&lt;/li>
+&lt;li>RW脚注意一定要接地&lt;/li>
+&lt;li>调节电位器可以调节液晶对比度&lt;/li>
+&lt;/ol>
+&lt;h1 id="电路图">电路图&lt;/h1>
+&lt;img src="http://learn.adafruit.com/system/assets/assets/000/001/729/medium640/pi-char-lcd.gif?1345220594"/>
+&lt;h1 id="代码">代码&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">#!/usr/bin/python
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># based on code from lrvick and LiquidCrystal
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># lrvic - https://github.com/lrvick/raspi-hd44780/blob/master/hd44780.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># LiquidCrystal - https://github.com/arduino/Arduino/blob/master/libraries/LiquidCrystal/LiquidCrystal.cpp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">#
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">from time import sleep
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">from datetime import datetime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">from time import sleep
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">class Adafruit_CharLCD:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # commands
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_CLEARDISPLAY 		= 0x01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_RETURNHOME 		 = 0x02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_ENTRYMODESET 		= 0x04
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_DISPLAYCONTROL 		= 0x08
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_CURSORSHIFT 		= 0x10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_FUNCTIONSET 		= 0x20
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_SETCGRAMADDR 		= 0x40
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_SETDDRAMADDR 		= 0x80
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # flags for display entry mode
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_ENTRYRIGHT 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_ENTRYLEFT 		= 0x02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_ENTRYSHIFTINCREMENT 	= 0x01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_ENTRYSHIFTDECREMENT 	= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # flags for display on/off control
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_DISPLAYON 		= 0x04
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_DISPLAYOFF 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_CURSORON 		= 0x02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_CURSOROFF 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_BLINKON 		= 0x01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_BLINKOFF 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # flags for display/cursor shift
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_DISPLAYMOVE 		= 0x08
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_CURSORMOVE 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # flags for display/cursor shift
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_DISPLAYMOVE 		= 0x08
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_CURSORMOVE 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_MOVERIGHT 		= 0x04
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_MOVELEFT 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # flags for function set
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_8BITMODE 		= 0x10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_4BITMODE 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_2LINE 			= 0x08
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_1LINE 			= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_5x10DOTS 		= 0x04
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LCD_5x8DOTS 		= 0x00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def __init__(self, pin_rs=8, pin_e=10, pins_db=[11,12,13,15], GPIO = None):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	# Emulate the old behavior of using RPi.GPIO if we haven&amp;#39;t been given
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	# an explicit GPIO interface to use
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	if not GPIO:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	 import RPi.GPIO as GPIO
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> GPIO.setwarnings(False)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 	self.GPIO = GPIO
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.pin_rs = pin_rs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.pin_e = pin_e
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.pins_db = pins_db
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.setmode(GPIO.BOARD)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.setup(self.pin_e, GPIO.OUT)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.setup(self.pin_rs, GPIO.OUT)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for pin in self.pins_db:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.setup(pin, GPIO.OUT)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(0x33) # initialization
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(0x32) # initialization
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(0x28) # 2 line 5x7 matrix
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(0x0C) # turn cursor off 0x0E to enable cursor
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(0x06) # shift cursor right
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displayfunction |= self.LCD_2LINE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Initialize to default text direction (for romance languages) &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaymode = self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) # set the entry mode
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.clear()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def begin(self, cols, lines):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	if (lines &amp;gt; 1):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		self.numlines = lines
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 		self.displayfunction |= self.LCD_2LINE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		self.currline = 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def home(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_RETURNHOME) # set cursor position to zero
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.delayMicroseconds(3000) # this command takes a long time!
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def clear(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_CLEARDISPLAY) # command to clear display
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.delayMicroseconds(3000)	# 3000 microsecond sleep, clearing the display takes a long time
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def setCursor(self, col, row):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.row_offsets = [ 0x00, 0x40, 0x14, 0x54 ]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	if ( row &amp;gt; self.numlines ): 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		row = self.numlines - 1 # we count rows starting w/0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_SETDDRAMADDR | (col + self.row_offsets[row]))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def noDisplay(self): 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Turn the display off (quickly) &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol &amp;amp;= ~self.LCD_DISPLAYON
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def display(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Turn the display on (quickly) &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol |= self.LCD_DISPLAYON
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def noCursor(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Turns the underline cursor on/off &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol &amp;amp;= ~self.LCD_CURSORON
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def cursor(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Cursor On &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol |= self.LCD_CURSORON
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def noBlink(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Turn on and off the blinking cursor &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol &amp;amp;= ~self.LCD_BLINKON
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def noBlink(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; Turn on and off the blinking cursor &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaycontrol &amp;amp;= ~self.LCD_BLINKON
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def DisplayLeft(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; These commands scroll the display without changing the RAM &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVELEFT)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def scrollDisplayRight(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; These commands scroll the display without changing the RAM &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVERIGHT);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def leftToRight(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; This is for text that flows Left to Right &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaymode |= self.LCD_ENTRYLEFT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def rightToLeft(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; This is for text that flows Right to Left &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaymode &amp;amp;= ~self.LCD_ENTRYLEFT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def autoscroll(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; This will &amp;#39;right justify&amp;#39; text from the cursor &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaymode |= self.LCD_ENTRYSHIFTINCREMENT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def noAutoscroll(self): 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&amp;#34;&amp;#34;&amp;#34; This will &amp;#39;left justify&amp;#39; text from the cursor &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.displaymode &amp;amp;= ~self.LCD_ENTRYSHIFTINCREMENT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def write4bits(self, bits, char_mode=False):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;&amp;#34;&amp;#34; Send command to LCD &amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.delayMicroseconds(1000) # 1000 microsecond sleep
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bits=bin(bits)[2:].zfill(8)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.output(self.pin_rs, char_mode)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for pin in self.pins_db:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.output(pin, False)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for i in range(4):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if bits[i] == &amp;#34;1&amp;#34;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.output(self.pins_db[::-1][i], True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.pulseEnable()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for pin in self.pins_db:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.output(pin, False)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for i in range(4,8):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if bits[i] == &amp;#34;1&amp;#34;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.GPIO.output(self.pins_db[::-1][i-4], True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.pulseEnable()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def delayMicroseconds(self, microseconds):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	seconds = microseconds / float(1000000)	# divide microseconds by 1 million for seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	sleep(seconds)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def pulseEnable(self):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.GPIO.output(self.pin_e, False)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be &amp;gt; 450ns 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.GPIO.output(self.pin_e, True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be &amp;gt; 450ns 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.GPIO.output(self.pin_e, False)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	self.delayMicroseconds(1)		# commands need &amp;gt; 37us to settle
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> def message(self, text):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;&amp;#34;&amp;#34; Send string to LCD. Newline wraps to second line&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for char in text:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if char == &amp;#39;\n&amp;#39;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.write4bits(0xC0) # next line
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> else:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> self.write4bits(ord(char),True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">if __name__ == &amp;#39;__main__&amp;#39;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> lcd = Adafruit_CharLCD()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> lcd.noBlink()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> while True:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep(1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> lcd.clear() 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> lcd.message(datetime.now().strftime(&amp;#39; %I : %M : %S \n%a %b %d %Y&amp;#39;))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="完成后的效果">完成后的效果&lt;/h1>
+&lt;img src="http://ww3.sinaimg.cn/mw690/6bc40342jw1e2xngyc634j.jpg"/>
+&lt;h1 id="参考链接">参考链接&lt;/h1>
+&lt;ol>
+&lt;li>&lt;a href="http://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/wiring">http://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/wiring&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://www.freemindworld.com/blog/tag/">http://www.freemindworld.com/blog/tag/&lt;/a>树莓派&lt;/li>
+&lt;/ol></description></item><item><title>Raspberry Pi GPIO的编号规范</title><link>https://blog.hugozhu.site/post/2013/19-raspberry-pi-gpio-port-naming/</link><pubDate>Fri, 22 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/19-raspberry-pi-gpio-port-naming/</guid><description>&lt;p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的&lt;a href="http://en.wikipedia.org/wiki/General_Purpose_Input/Output">GPIO&lt;/a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。&lt;/p>
+&lt;h1 id="gpio库">GPIO库&lt;/h1>
+&lt;ol>
+&lt;li>&lt;a href="https://github.com/WiringPi/WiringPi">wiringPi&lt;/a> C，有Perl, PHP, Ruby, Node.JS和**&lt;a href="http://github.com/hugozhu/rpi">Golang&lt;/a>**的扩展，支持wiringPi Pin和BCM GPIO两种编号&lt;/li>
+&lt;li>&lt;a href="https://pypi.python.org/pypi/RPi.GPIO">RPi.GPIO&lt;/a> Python，支持Board Pin和BCM GPIO两种编号&lt;/li>
+&lt;li>&lt;a href="http://code.google.com/p/webiopi/">Webiopi&lt;/a>，Python, 使用BCM GPIO编号&lt;/li>
+&lt;li>&lt;a href="http://github.com/hugozhu/rpi">WiringPi-Go&lt;/a>, Go语言，支持以上三种编号&lt;/li>
+&lt;/ol>
+&lt;h1 id="编号规范">编号规范&lt;/h1>
+&lt;ol>
+&lt;li>第一列是wiringPi API中的缺省编号，&lt;code>wiringPiSetup()&lt;/code>采用这列编号&lt;/li>
+&lt;li>第二列（Name）往往是转接板的编号&lt;/li>
+&lt;li>第三列是树莓派板子上的自然编号（左边引脚为1-15，右边引脚为2-26），&lt;code>RPi.GPIO.setmode(GPIO.BOARD)&lt;/code>采用这列编号&lt;/li>
+&lt;li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了&lt;code>WiringPiSetupGpio()&lt;/code>或&lt;code>RPi.GPIO.setmode(GPIO.BCM)&lt;/code>采用这列编号&lt;/li>
+&lt;/ol>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>wiringPi Pin&lt;/th>
+ &lt;th>Name&lt;/th>
+ &lt;th>Board Pin&lt;/th>
+ &lt;th>BCM GPIO&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>0&lt;/td>
+ &lt;td>GPIO 0&lt;/td>
+ &lt;td>11&lt;/td>
+ &lt;td>17&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>1&lt;/td>
+ &lt;td>GPIO 1&lt;/td>
+ &lt;td>12&lt;/td>
+ &lt;td>18&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>2&lt;/td>
+ &lt;td>GPIO 2&lt;/td>
+ &lt;td>13&lt;/td>
+ &lt;td>21&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>3&lt;/td>
+ &lt;td>GPIO 3&lt;/td>
+ &lt;td>15&lt;/td>
+ &lt;td>22&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>4&lt;/td>
+ &lt;td>GPIO 4&lt;/td>
+ &lt;td>16&lt;/td>
+ &lt;td>23&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>5&lt;/td>
+ &lt;td>GPIO 5&lt;/td>
+ &lt;td>18&lt;/td>
+ &lt;td>24&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>6&lt;/td>
+ &lt;td>GPIO 6&lt;/td>
+ &lt;td>22&lt;/td>
+ &lt;td>25&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>7&lt;/td>
+ &lt;td>GPIO 7&lt;/td>
+ &lt;td>7&lt;/td>
+ &lt;td>4&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>8&lt;/td>
+ &lt;td>SDA&lt;/td>
+ &lt;td>3&lt;/td>
+ &lt;td>0&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>9&lt;/td>
+ &lt;td>SCL&lt;/td>
+ &lt;td>5&lt;/td>
+ &lt;td>1&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>10&lt;/td>
+ &lt;td>CE0&lt;/td>
+ &lt;td>24&lt;/td>
+ &lt;td>8&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>11&lt;/td>
+ &lt;td>CE1&lt;/td>
+ &lt;td>26&lt;/td>
+ &lt;td>7&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>12&lt;/td>
+ &lt;td>MOSI&lt;/td>
+ &lt;td>19&lt;/td>
+ &lt;td>10&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>13&lt;/td>
+ &lt;td>MISO&lt;/td>
+ &lt;td>21&lt;/td>
+ &lt;td>9&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>14&lt;/td>
+ &lt;td>SCLK&lt;/td>
+ &lt;td>23&lt;/td>
+ &lt;td>11&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>15&lt;/td>
+ &lt;td>TXD&lt;/td>
+ &lt;td>8&lt;/td>
+ &lt;td>14&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>16&lt;/td>
+ &lt;td>RXD&lt;/td>
+ &lt;td>10&lt;/td>
+ &lt;td>15&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;p>Rev.2 新增的引脚：&lt;/p></description></item><item><title>如何使用Raspberry Pi测量室内温度和湿度并绘制曲线</title><link>https://blog.hugozhu.site/post/2013/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi/</link><pubDate>Sun, 17 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/03-17-interfacing-temperature-and-humidity-sensor-with-raspberry-pi/</guid><description>&lt;h1 id="硬件准备">硬件准备&lt;/h1>
+&lt;p>需要以下硬件：&lt;/p>
+&lt;ol>
+&lt;li>可以工作的&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派&lt;/a>一个&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com/search_product.htm?q=%C3%E6%B0%FC%B0%E5&amp;amp;type=p&amp;amp;style=&amp;amp;cat=all&amp;amp;ali_trackid=2:mm_12926928_3484851_11423971:1364041941_4k1_1171281511&amp;amp;upsid=8daf4a561f161cd669d949c6bf367733&amp;amp;clk1=8daf4a561f161cd669d949c6bf367733">面包板&lt;/a>和&lt;a href="http://list.tmall.com//search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;amp;type=p&amp;amp;style=&amp;amp;cat=all">公对母杜邦线&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com/search_product.htm?q=10K+%B5%E7%CE%BB%C6%F7&amp;amp;user_action=initiative&amp;amp;at_topsearch=1&amp;amp;sort=st&amp;amp;type=p&amp;amp;cat=&amp;amp;style=">10K 电位器&lt;/a>一个&lt;/li>
+&lt;li>&lt;a href="http://list.tmall.com//search_product.htm?q=DHT11&amp;amp;type=p&amp;amp;style=&amp;amp;cat=all">DHT11&lt;/a>温度和湿度传感器一个或&lt;a href="http://s.taobao.com/search?q=DHT22&amp;amp;keyword=&amp;amp;commend=all&amp;amp;ssid=s5-e&amp;amp;search_type=item&amp;amp;atype=&amp;amp;tracelog=&amp;amp;sourceId=tb.index&amp;amp;rt=1364041904459&amp;amp;source=haiwaigou&amp;amp;pid=mm_14507416_2297358_8935934&amp;amp;unid=">DHT22&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h1 id="传感器电路及原理">传感器电路及原理&lt;/h1>
+&lt;h2 id="dht11传感器外观">DHT11传感器外观&lt;/h2>
+&lt;img src="http://learn.adafruit.com/system/products/images/000/000/386/medium225/dht11_MED.jpg?1342023044"/>
+&lt;h2 id="参数">参数&lt;/h2>
+&lt;ol>
+&lt;li>湿度测量范围：20％～90%RH(0－50℃温度补偿）；&lt;/li>
+&lt;li>温度测量范围：0～+50℃；&lt;/li>
+&lt;li>湿度测量精度：±5.0%RH&lt;/li>
+&lt;li>温度测量精度：±2.0℃&lt;/li>
+&lt;li>响应时间：&amp;lt;5s；&lt;/li>
+&lt;/ol>
+&lt;h2 id="电路图">电路图&lt;/h2>
+&lt;p>DHT11一共4根引脚，左边第一根接电源5V (Pin 1)，第二根为数据接口，接 Pin 7，第三根不接，第四根接地；在Pin 1和Pin7 之间还需要并联10K的电阻，以保持读数稳定。&lt;/p>
+&lt;img src="http://learn.adafruit.com/system/assets/assets/000/001/860/original/dht11wiring.gif?1345831788"/>
+&lt;h2 id="安装好的样子">安装好的样子：&lt;/h2>
+&lt;img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2rx17tlckj.jpg"/>
+&lt;h1 id="读取温度和湿度的代码">读取温度和湿度的代码&lt;/h1>
+&lt;p>数据读取流图：&lt;/p>
+&lt;img src="http://1.bp.blogspot.com/-_sMwYSZMGLw/UJpY2RYIA9I/AAAAAAAAAS0/rJ9ZQwZ3IfM/s640/DHT11+timing+diagram.jpg"/>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;wiringPi.h&amp;gt; &lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt; &lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt; &lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdint.h&amp;gt; &lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define MAX_TIME 85 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#define DHT11PIN 7 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">};&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">errors&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">dht11_read_val&lt;/span>&lt;span class="p">()&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">uint8_t&lt;/span> &lt;span class="n">lststate&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">HIGH&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">uint8_t&lt;/span> &lt;span class="n">counter&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">uint8_t&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">float&lt;/span> &lt;span class="n">farenheit&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">pinMode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DHT11PIN&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">OUTPUT&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">digitalWrite&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DHT11PIN&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">LOW&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">18&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">digitalWrite&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DHT11PIN&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">HIGH&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">delayMicroseconds&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">pinMode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DHT11PIN&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">INPUT&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">MAX_TIME&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">counter&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nf">digitalRead&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DHT11PIN&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="n">lststate&lt;/span>&lt;span class="p">){&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">counter&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">delayMicroseconds&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">counter&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="mi">255&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lststate&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nf">digitalRead&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DHT11PIN&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">counter&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="mi">255&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// top 3 transistions are ignored 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">&amp;gt;=&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">)){&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">&amp;lt;&amp;lt;=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">counter&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="mi">16&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">|=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">j&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// verify cheksum and print the verified data 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">&amp;gt;=&lt;/span>&lt;span class="mi">40&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">])&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="mh">0xFF&lt;/span>&lt;span class="p">)))&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//farenheit=dht11_val[2]*9./5.+32; 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nf">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%d.%d&lt;/span>&lt;span class="se">\t&lt;/span>&lt;span class="s">%d.%d&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="n">dht11_val&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">errors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">errors&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">errors&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;0.0&lt;/span>&lt;span class="se">\t&lt;/span>&lt;span class="s">0.0&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">void&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nf">wiringPiSetup&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">==-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">dht11_read_val&lt;/span>&lt;span class="p">();&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3000&lt;/span>&lt;span class="p">);&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行&lt;code>gcc sensor.c -o sensor -lwiringPi&lt;/code> ，运行&lt;code>sensor&lt;/code>后输出：&lt;/p></description></item><item><title>如何使用Raspberry Pi控制步进电机旋转高清摄像头并拍照</title><link>https://blog.hugozhu.site/post/2013/03-16-use-raspberry-pi-control-step-motor-rotate-webcam/</link><pubDate>Sat, 16 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/03-16-use-raspberry-pi-control-step-motor-rotate-webcam/</guid><description>&lt;h1 id="硬件准备">硬件准备&lt;/h1>
+&lt;p>需要以下硬件：&lt;/p>
+&lt;ol>
+&lt;li>可以工作的&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派&lt;/a>一个&lt;/li>
+&lt;li>&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">母对母1P杜邦线&lt;/a>6根&lt;/li>
+&lt;li>&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLt%2BsmFEpvY8zQ4WXjoTHsLWTKD4gnL0sndE3qVPXd4UC6NUEZOQAryYUWhO7gt10i%2FUQ%3D%3D">DC 5V4相28YBJ-48步进电机&lt;/a>一个&lt;/li>
+&lt;li>&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxjSLuXQmw2TUIlWTNRCvS2wo483pjZyXspPuvkTH5pg4vQUqrztOAoNz2Gfp8MmwKPg%2FbQb8%3D">UL2003芯片步进电机驱动板&lt;/a>一块&lt;/li>
+&lt;/ol>
+&lt;h1 id="安装">安装&lt;/h1>
+&lt;p>按下图将步进电机接到驱动板上，也就是白色的接口&lt;/p>
+&lt;img src="http://img04.taobaocdn.com/bao/uploaded/i4/T10lS4XnXfXXaZhKrX_115008.jpg_310x310.jpg"/>
+&lt;img src="http://img02.taobaocdn.com/imgextra/i2/49873130/T2534HXoBXXXXXXXXX_!!49873130.jpg" width="600"/>
+&lt;h2 id="步进电机电源">步进电机电源&lt;/h2>
+&lt;p>步进电机需要5V电压驱动，而树莓派的&lt;a href="http://elinux.org/RPi_Low-level_peripherals">GPIO接口&lt;/a>中已有5V输出，将图中的Pin 2（最右上角那个）5V，接到驱动板的5V正极，Pin 6接到5V负级，电源部分则搞定。&lt;/p>
+&lt;img src="http://trouch.com/wp-content/uploads/2012/08/webiopi-chrome.png" width="600"/>
+&lt;h2 id="步进电机驱动线路">步进电机驱动线路&lt;/h2>
+&lt;p>驱动板上有IN1, IN2, IN3, IN4四个接口，根据资料得知这四个接口依次设置为低电平就可以驱动，我们分别用杜邦线将GPIO 17（Pin 11），GPIO 18（Pin 12）, GPIO 21（Pin 13）, GPIO 22（Pin 15）和IN1，IN2，IN3，IN4一一相连。 &lt;strong>注意不同的GPIO驱动程序对端口的编号不一定一样（至少有三种叫法：Board，Broadcom，GPIO）&lt;/strong>&lt;/p>
+&lt;p>驱动原理：（每次将四个GPIO端口按下表依次设置好电平后，可以sleep几十毫秒来控制转速）&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>&lt;strong>序列&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>GPIO 17&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>GPIO 18&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>GPIO 21&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>GPIO 22&lt;/strong>&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>0&lt;/td>
+ &lt;td>&lt;strong>LOW&lt;/strong>&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>1&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>&lt;strong>LOW&lt;/strong>&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>2&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>&lt;strong>LOW&lt;/strong>&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>3&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>&lt;strong>LOW&lt;/strong>&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>4&lt;/td>
+ &lt;td>&lt;strong>LOW&lt;/strong>&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;td>HIGH&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>…&lt;/td>
+ &lt;td>&lt;/td>
+ &lt;td>&lt;/td>
+ &lt;td>&lt;/td>
+ &lt;td>&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="安装摄像头">安装摄像头&lt;/h2>
+&lt;p>本来是希望用3D打印机来制作齿轮和支架来完成这部分工作的，但因为打印机还没到货，所以先用乐高积木来做了, 刚好乐高积木可以插在步进电机中轴上，而且很牢靠，还不用密封带了。&lt;/p></description></item><item><title>如何在Raspberry Pi上用LED闪烁提示网站首页新访客</title><link>https://blog.hugozhu.site/post/2013/vistor-on-homepage-led-indicator/</link><pubDate>Wed, 13 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/vistor-on-homepage-led-indicator/</guid><description>&lt;p>本方法只适合小网站，主要是好玩。Raspberry Pi不是很合适需要实时控制的系统（比如，飞行器，遥控小车），因为Linux内核要多任务，应用程序的优先级不能保持最高，会带来延时，但做些实时性要求不高的系统还是可以的。&lt;/p>
+&lt;h1 id="硬件安装">硬件安装&lt;/h1>
+&lt;p>需要以下硬件：&lt;/p>
+&lt;ol>
+&lt;li>可以工作的&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHo44Chb01aWIu4ho12MwdcCLV6ff8kJMg0iz0FTGXaJAqMvt94sTe0NIrCAdd8LW">树莓派&lt;/a>一个&lt;/li>
+&lt;li>&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHoWKV0kwS8Wy16Cg6qBM%2BZAOnJCqNG%2BPJAy9U15g8TwJiq5U3GGcJ8eTvC7%2F6APShw%3D%3D">1P杜邦线2条&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm9RKSkRargJCPYP6KVEIQUWKzMUFn1hvlcbkMSKk3m2pVJo%2BqQDYKVz%2Bt1%2FjL7Iywe7g%3D%3D">面包板&lt;/a>一个&lt;/li>
+&lt;li>&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CITy7klxxrJ35Nnc0iO6niAHKxVk7v382jKYSyD7qi5ltcqvLWmWBL7lxLB2%2BsaWLuet8Ik65QHyGWV5mRTheUA">面包板跳线&lt;/a> 或 &lt;a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.166.XlEzyw&amp;amp;id=15208013820&amp;amp;_u=nqa35596&amp;amp;is_b=1&amp;amp;cat_id=2&amp;amp;q=%C5%C5%D5%EB&amp;amp;rn=bb53adf333ca7517208da34346ac3ffb">单排针&lt;/a> 两根&lt;/li>
+&lt;li>&lt;a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.30.wnPTNf&amp;amp;id=14576731464&amp;amp;_u=nqa35af3&amp;amp;is_b=1&amp;amp;cat_id=2&amp;amp;q=%B7%A2%B9%E2%B6%FE%BC%AB%B9%DC&amp;amp;rn=b12ffd48699547ed9cb982a88014a0aa">发光二极管&lt;/a>一个&lt;/li>
+&lt;li>300欧姆的&lt;a href="http://s.click.taobao.com/t?e=zGU34CA7K%2BPkqB07S4%2FK0CFcRfH0GoT805sipKjxiNm80QgaIDkojjQIBhc4L8WmRpaGVVBVD9DpAt8wKPZTmbzvVp4EIdCD2Ow2DOQmdPtlV8g%3D">电阻&lt;/a>一个&lt;/li>
+&lt;/ol>
+&lt;h2 id="gpio接口">GPIO接口&lt;/h2>
+&lt;img src="http://ww1.sinaimg.cn/large/6bc40342gw1e2o2uls7wlj.jpg" width="630"/>
+&lt;p>用杜邦线将上图的3.3V输出和GPIO 23引出（板子正面朝上，GPIO引脚在左上角），将电阻和LED串联起来（电阻防止LED电流过大烧掉），注意二极管的两根脚不一样长，长脚的接正级，这样GPIO 23如果输出高电平，二极管就不发光了，输出低电平就亮啦！&lt;/p>
+&lt;p>都接好了后的样子如下：&lt;/p>
+&lt;img src="http://ww3.sinaimg.cn/bmiddle/6bc40342jw1e2ni9esb2uj.jpg"/>
+&lt;h1 id="gpio接口编程">GPIO接口编程&lt;/h1>
+&lt;h2 id="wiringpi">WiringPi&lt;/h2>
+&lt;p>An implementation of most of the Arduino Wiring functions for the Raspberry Pi。
+代码地址在： &lt;a href="https://github.com/wiringPi">https://github.com/wiringPi&lt;/a>&lt;/p>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">git clone https://github.com/WiringPi/WiringPi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cd WiringPi/wiringPi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo make install	
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>让二极管闪一下的示例代码：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;wiringPi.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">argv&lt;/span>&lt;span class="p">[])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="kt">int&lt;/span> &lt;span class="n">pinNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nf">wiringPiSetup&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="nf">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;failed to setup wiringPi&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="k">return&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">}&lt;/span>	
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="nf">pinMode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pinNumber&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">OUTPUT&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="nf">digitalWrite&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pinNumber&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="nf">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">200&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="nf">digitalWrite&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pinNumber&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="nf">delay&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">200&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>	
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>WiringPi也有Python, Perl, PHP, Ruby的接口包装，按&lt;a href="https://github.com/wiringPi">这里&lt;/a>，怎么没有Go的呢。。。&lt;/p>
+&lt;h2 id="rpigpio">RPi.GPIO&lt;/h2>
+&lt;p>这是GPIO的Python库，地址在：&lt;a href="https://pypi.python.org/pypi/RPi.GPIO">https://pypi.python.org/pypi/RPi.GPIO&lt;/a>
+这里建议用python2，原因是web.py还不支持python 3 &amp;hellip;&lt;/p></description></item><item><title>在Raspberry Pi上安装ArchLinux</title><link>https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/</link><pubDate>Sat, 09 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/</guid><description>&lt;h1 id="介绍">介绍&lt;/h1>
+&lt;p>之前买的Raspberry Pi因为要跑&lt;a href="http://hugozhu.myalert.info">这个网站&lt;/a>，不能经常拔下来玩别的，所以又买了一个，这次安装的是&lt;a href="https://www.archlinux.org">Arch Linux&lt;/a>。这个发行版安装好后非常基础，占用的空间也只有600M不到，比较合适已有Linux基础的同学玩。初学者可以玩官方推荐的&lt;a href="http://www.raspbian.org">Raspbian&lt;/a>。&lt;/p>
+&lt;p>Arch Linux特点：&lt;/p>
+&lt;ol>
+&lt;li>启动快，上电后只要3s完成启动&lt;/li>
+&lt;li>安装完没有图形界面，干净&lt;/li>
+&lt;li>面向开发者的系统&lt;/li>
+&lt;li>包管理系统pacman很好用，一个命令就可以完成各种操作&lt;/li>
+&lt;li>ArchLinux缺省账号和密码是root/root，弄好了后要记得修改root密码&lt;/li>
+&lt;li>从中国用下载包很快，比Raspbian的源快多了&lt;/li>
+&lt;/ol>
+&lt;h1 id="增加sudo用户">增加sudo用户&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> useradd hugo
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> passwd hugo
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mkdir /home/hugo
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> chown hugo:hugo /home/hugo 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pacman -S sudo
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> visudo 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行&lt;code>visudo&lt;/code>把新用户设置成管理员（增加sudo权限），最后面增加下面一行：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> hugo ALL=(ALL) NOPASSWD: ALL
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="usb盘">USB盘&lt;/h1>
+&lt;p>插上USB盘后，ArchLinux并不会自动mount，手动mount的过程如下:
+插上USB前后执行两次 &lt;code>lsblk -o name,kname,uuid&lt;/code>，那么输出上多出的那行就是该USB的设备名，或UUID，找到该行后就可以执行mount命令了（注意sda这个符号不同机器可能不一样）&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> [root@raspberrypi2 ~]# lsblk -o name,kname,uuid 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> NAME KNAME UUID
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sda sda 001B-9622
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mmcblk0 mmcblk0 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├─mmcblk0p1 mmcblk0p1 44C8-CEF1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └─mmcblk0p2 mmcblk0p2 fcee8534-f5f0-42ee-83ac-f943f878ee67
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mkdir /mnt/usb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mount /dev/sda /mnt/usb 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 或 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mount -U 001B-9622 /mnt/usb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>格式化整个USB盘可以用&lt;code>mkfs.ext4 /dev/sda&lt;/code>
+然后在/etc/fstab里增加一行，以后重启就会自动mount了：&lt;/p></description></item><item><title>Raspberry Pi做BT下载机+高清播放器</title><link>https://blog.hugozhu.site/post/2013/raspberry-pi-with-xmbc/</link><pubDate>Wed, 06 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/raspberry-pi-with-xmbc/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
+&lt;p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个&lt;a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;amp;commend=all&amp;amp;ssid=s5-e&amp;amp;search_type=item&amp;amp;sourceId=tb.index&amp;amp;initiative_id=tbindexz_20130306">山寨的&lt;/a>的更简单。。。&lt;/p>
+&lt;p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了&lt;a href="http://xbmc.org">XBMC&lt;/a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如&lt;a href="http://yisou.com">一搜&lt;/a>，优酷，搜狐视频，奇艺等。&lt;/p>
+&lt;h2 id="外设">外设&lt;/h2>
+&lt;p>除了Pi单片机外，你还需要以下外设附件：&lt;/p>
+&lt;ol>
+&lt;li>5V-1A左右的电源，可以用iPhone或iPad的充电电源，或手机的充电器，电流最少要800毫安&lt;/li>
+&lt;li>micro USB线一根，和Kindle以及大多数android手机充电USB线一样&lt;/li>
+&lt;li>HDMI线一根，接电视机&lt;/li>
+&lt;li>SD卡一张，最少2G&lt;/li>
+&lt;/ol>
+&lt;h2 id="raspbmc">Raspbmc&lt;/h2>
+&lt;p>&lt;a href="http://www.raspbmc.com/">Raspbmc&lt;/a> 是专为在Raspberry Pi上运行&lt;a href="http://xbmc.org">XBMC&lt;/a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。&lt;/p>
+&lt;h3 id="特点">特点：&lt;/h3>
+&lt;ol>
+&lt;li>免费，开源&lt;/li>
+&lt;li>支持多语言&lt;/li>
+&lt;li>支持1080P回放&lt;/li>
+&lt;li>支持直接播放NFS，SMB，FTP,HTTP或USB硬盘的有视频文件，支持大多数格式&lt;/li>
+&lt;li>支持AirPlay或AirTune功能，可以把iPhone/iPad上的视频或音乐通过Pi投放到电视上，这点和Apple TV功能一样&lt;/li>
+&lt;li>支持GPIO&lt;/li>
+&lt;li>基于Debian，可以从Debian的软件源安装其它软件&lt;/li>
+&lt;li>支持1080P DTS软解，这个不少播放器是不支持的，需要额外License&lt;/li>
+&lt;li>内置了以下服务:
+&lt;ol>
+&lt;li>Samba&lt;/li>
+&lt;li>TVHeadend Server&lt;/li>
+&lt;li>FTP Server&lt;/li>
+&lt;li>SSH Server&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="安装">安装&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>Windows下载&lt;a href="http://download.raspbmc.com/downloads/bin/installers/raspbmc-win32.zip">安装程序&lt;/a>，运行即可。&lt;/p>
+&lt;p>&lt;img src="http://www.raspbmc.com/wp-content/uploads/2012/06/ins-300x165.jpg" alt="image">&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Linux/Mac:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">curl -O http://svn.stmlabs.com/svn/raspbmc/testing/installers/python/install.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x install.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo python install.py
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="http://www.raspbmc.com/wp-content/uploads/2012/06/installPython.png" alt="image">&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>或直接下载&lt;a href="http://download.raspbmc.com/downloads/bin/ramdistribution/installer.img.gz">安装包&lt;/a>安装&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="下载">下载&lt;/h3>
+&lt;p>你可以在Pi上外接一个USB移动硬盘，但要注意硬盘要有自己电源，也可以mount网络上的硬盘分区。然后运行transmission软件下载视频。&lt;/p>
+&lt;h4 id="transmission">Transmission&lt;/h4>
+&lt;ol>
+&lt;li>
+&lt;p>安装&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">sudo apt-get install transmission-daemon
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo /etc/init.d/transmission-daemon stop
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo nano /etc/transmission-daemon/settings.json
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>配置&lt;/p></description></item></channel></rss>
