@@ -5,5 +5,6 @@
 &lt;h1 id="friend-links">Friend Links:&lt;/h1>
 &lt;ol>
 &lt;li>7sGood: &lt;a href="https://www.7sgood.com">https://www.7sgood.com&lt;/a>&lt;/li>
+&lt;li>1688Japan: &lt;a href="https://1688japan.co.jp">https://1688japan.co.jp&lt;/a>&lt;/li>
 &lt;li>VidHub: &lt;a href="https://apps.apple.com/app/apple-store/id1659622164?pt=118612019&amp;amp;ct=hugo&amp;amp;mt=8">https://apps.apple.com/app/apple-store/id1659622164?pt=118612019&amp;amp;ct=hugo&amp;amp;mt=8&lt;/a>&lt;/li>
 &lt;/ol></description></item><item><title>Big Image Sample</title><link>https://blog.hugozhu.site/page/tools/</link><pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/page/tools/</guid><description>&lt;p>The image banners at the top of the page are refered to as &amp;ldquo;bigimg&amp;rdquo; in this theme. They are optional, and one more more can be specified. If more than one is specified, the images rotate every 10 seconds. In the front matter, bigimgs are specified using an array of hashes.&lt;/p></description></item></channel></rss>

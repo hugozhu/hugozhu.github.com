@@ -6,6 +6,7 @@
 &lt;h1 id="friend-links">Friend Links:&lt;/h1>
 &lt;ol>
 &lt;li>7sGood: &lt;a href="https://www.7sgood.com">https://www.7sgood.com&lt;/a>&lt;/li>
+&lt;li>1688Japan: &lt;a href="https://1688japan.co.jp">https://1688japan.co.jp&lt;/a>&lt;/li>
 &lt;li>VidHub: &lt;a href="https://apps.apple.com/app/apple-store/id1659622164?pt=118612019&amp;amp;ct=hugo&amp;amp;mt=8">https://apps.apple.com/app/apple-store/id1659622164?pt=118612019&amp;amp;ct=hugo&amp;amp;mt=8&lt;/a>&lt;/li>
 &lt;/ol></description></item><item><title>使用Apache Seatunnel跨境（低带宽丢包率高网络）同步postgres数据表</title><link>https://blog.hugozhu.site/post/2024/80-postgres-to-postgres/</link><pubDate>Fri, 13 Sep 2024 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2024/80-postgres-to-postgres/</guid><description>&lt;p>将杭州的一张表每天定时增量同步一次到新加坡的同一张表，如何稳定可靠的解决问题呢？&lt;/p>
 &lt;p>首先这个场景不需要准时同步，所以并不考虑CDC方案，postgres内置的复制功能对网络要求比较高，容错性不够好。查阅资料后决定尝试下 Seatunnel: &lt;a href="https://seatunnel.apache.org/">https://seatunnel.apache.org/&lt;/a> 过程比较简单，2个小时内完成了任务，中间遇到了字段格式的问题，花了点时间找解决方案， 但最终达到了预期的效果。&lt;/p></description></item><item><title>使用clickhouse来关联查询postgres数据库</title><link>https://blog.hugozhu.site/post/2024/79-postgres-to-clickhouse/</link><pubDate>Fri, 13 Sep 2024 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2024/79-postgres-to-clickhouse/</guid><description>&lt;p>在现代数据分析领域，不同的数据库系统各有优点。PostgreSQL（Postgres）因其强大的事务处理和灵活的查询功能而备受欢迎，而ClickHouse则以其超高速的OLAP查询性能著称。虽然Postgres擅长处理关系型数据并提供强大的ACID支持，但在大规模分析查询场景中，ClickHouse显然更具优势。如果我们能在分析过程中将两者结合起来，就能同时利用Postgres的数据管理和ClickHouse的查询性能。&lt;/p>
