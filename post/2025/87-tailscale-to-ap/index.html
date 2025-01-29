@@ -14,8 +14,8 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>通过wifi热点接入tailscale网络</h1><h2 class=post-subheading>tailscale to ap</h2><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on January 27, 2025
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;351&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><h4><i>目录:</i></h4><nav id=TableOfContents><ul><li><a href=#启动脚本startupsh>启动脚本：startup.sh</a><ul><li><a href=#容器编排文件-docker-composeyaml>容器编排文件： docker-compose.yaml：</a></li><li><a href=#环境变量定义-env>环境变量定义： .env</a></li></ul></li></ul></nav><p>tailscale docker容器做为局域网的网关，可以让局域网内的设备无需安装tailscale客户端即可访问tailscale网络内的其他设备。
-提升了便利性，安全性通过局域网访问控制来保障。</p><p>适用场景：</p><ul><li>你的 Tailscale 容器充当 VPN 代理，让设备通过它访问互联网。</li><li>你希望本机（或其他 Docker 容器）能够访问 Tailscale 网络中的设备。</li></ul><h2 id=启动脚本startupsh>启动脚本：startup.sh</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;351&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><h4><i>目录:</i></h4><nav id=TableOfContents><ul><li><a href=#启动脚本和配置文件>启动脚本和配置文件</a><ul><li><a href=#启动脚本startupsh>启动脚本：startup.sh</a></li><li><a href=#容器编排文件-docker-composeyaml>容器编排文件： docker-compose.yaml：</a></li><li><a href=#环境变量文件-env>环境变量文件： .env</a></li></ul></li></ul></nav><p>tailscale docker容器做为局域网的网关，可以让局域网内的设备无需安装tailscale客户端即可访问tailscale网络内的其他设备。
+提升了便利性，安全性通过局域网访问控制来保障。</p><p>适用场景：</p><ul><li>你的 Tailscale 容器充当 VPN 代理，让设备通过它访问互联网。</li><li>你希望本机（或其他 Docker 容器）能够访问 Tailscale 网络中的设备。</li></ul><h2 id=启动脚本和配置文件>启动脚本和配置文件</h2><p>这里不展开hostapd的配置，有需要可以翻看前面的文章。</p><h3 id=启动脚本startupsh>启动脚本：startup.sh</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> -f .env <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
 </span></span><span class=line><span class=cl>    <span class=nb>export</span> <span class=k>$(</span>cat .env <span class=p>|</span> xargs<span class=k>)</span>
@@ -60,8 +60,10 @@
 </span></span><span class=line><span class=cl><span class=c1># 让本机或其他 Docker 容器访问 Tailscale 网络</span>
 </span></span><span class=line><span class=cl>docker <span class=nb>exec</span> -it tailscale iptables -t nat -A POSTROUTING -o tailscale0 -j MASQUERADE
 </span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 列出所有出口节点</span>
 </span></span><span class=line><span class=cl>docker <span class=nb>exec</span> -it tailscale tailscale status <span class=p>|</span> grep <span class=s2>&#34;exit node&#34;</span>
 </span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 选择其中一个出口节点，除局域网流量外，所有流量将通过这个出口节点</span>
 </span></span><span class=line><span class=cl>docker <span class=nb>exec</span> -it tailscale tailscale <span class=nb>set</span> --exit-node<span class=o>=</span>&lt;your-exit-node-host&gt; --exit-node-allow-lan-access
 </span></span></code></pre></div><h3 id=容器编排文件-docker-composeyaml>容器编排文件： docker-compose.yaml：</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>---
 </span></span><span class=line><span class=cl>services: 
@@ -111,7 +113,7 @@
 </span></span><span class=line><span class=cl>      options:
 </span></span><span class=line><span class=cl>        max-size: <span class=s2>&#34;20m&#34;</span>
 </span></span><span class=line><span class=cl>        max-file: <span class=s2>&#34;2&#34;</span>        
-</span></span><span class=line><span class=cl><span class=c1># ip link set end0 promisc on          </span>
+</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>networks:
 </span></span><span class=line><span class=cl>  macnet:
 </span></span><span class=line><span class=cl>    name: macnet
@@ -124,18 +126,21 @@
 </span></span><span class=line><span class=cl>    driver_opts:
 </span></span><span class=line><span class=cl>      parent: end0   
 </span></span><span class=line><span class=cl>      macvlan_mode: bridge
-</span></span></code></pre></div><h3 id=环境变量定义-env>环境变量定义： .env</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
+</span></span></code></pre></div><h3 id=环境变量文件-env>环境变量文件： .env</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=nv>OUTGOING_INTERFACE</span><span class=o>=</span>end0
 </span></span><span class=line><span class=cl><span class=nv>WLAN_INTERFACE</span><span class=o>=</span>wlxe84e066f6aa3
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nv>TS_HOSTNAME</span><span class=o>=</span>hugo-tailscale-vpn
+</span></span><span class=line><span class=cl><span class=nv>TS_HOSTNAME</span><span class=o>=</span>hugo-tailscale-01
 </span></span><span class=line><span class=cl><span class=c1>#TS_ROUTES=192.168.1.0/24</span>
 </span></span><span class=line><span class=cl><span class=nv>TS_AUTHKEY</span><span class=o>=</span>&lt;your_tskey-auth&gt;
 </span></span><span class=line><span class=cl><span class=nv>TS_ACCEPT_DNS</span><span class=o>=</span><span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#socks5代理端口，方便使用代理访问tailscale网络</span>
 </span></span><span class=line><span class=cl><span class=nv>TS_SOCKS5_SERVER</span><span class=o>=</span>:1080
 </span></span><span class=line><span class=cl><span class=nv>TS_EXTRA_ARGS</span><span class=o>=</span>--accept-routes --reset
-</span></span><span class=line><span class=cl><span class=nv>TS_USERSPACE</span><span class=o>=</span><span class=nb>false</span> <span class=c1>#使用内核网络，性能较好，兼容性差一些</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#使用内核网络，性能较好，兼容性差一些</span>
+</span></span><span class=line><span class=cl><span class=nv>TS_USERSPACE</span><span class=o>=</span><span class=nb>false</span>
 </span></span></code></pre></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/tailscale/>tailscale</a>&nbsp;
 <a href=https://blog.hugozhu.site/tags/docker/>docker</a>&nbsp;
 <a href=https://blog.hugozhu.site/tags/wifi/>wifi</a>&nbsp;</div><hr><section id=social-share><div class="list-inline footer-links"><div class=share-box aria-hidden=true><ul class=share><li><a href="//twitter.com/share?url=https%3a%2f%2fblog.hugozhu.site%2fpost%2f2025%2f87-tailscale-to-ap%2f&amp;text=%e9%80%9a%e8%bf%87wifi%e7%83%ad%e7%82%b9%e6%8e%a5%e5%85%a5tailscale%e7%bd%91%e7%bb%9c&amp;via=" target=_blank title="Share on Twitter"><i class="fab fa-twitter"></i></a></li><li><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.hugozhu.site%2fpost%2f2025%2f87-tailscale-to-ap%2f" target=_blank title="Share on Facebook"><i class="fab fa-facebook"></i></a></li><li><a href="//reddit.com/submit?url=https%3a%2f%2fblog.hugozhu.site%2fpost%2f2025%2f87-tailscale-to-ap%2f&amp;title=%e9%80%9a%e8%bf%87wifi%e7%83%ad%e7%82%b9%e6%8e%a5%e5%85%a5tailscale%e7%bd%91%e7%bb%9c" target=_blank title="Share on Reddit"><i class="fab fa-reddit"></i></a></li><li><a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.hugozhu.site%2fpost%2f2025%2f87-tailscale-to-ap%2f&amp;title=%e9%80%9a%e8%bf%87wifi%e7%83%ad%e7%82%b9%e6%8e%a5%e5%85%a5tailscale%e7%bd%91%e7%bb%9c" target=_blank title="Share on LinkedIn"><i class="fab fa-linkedin"></i></a></li><li><a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fblog.hugozhu.site%2fpost%2f2025%2f87-tailscale-to-ap%2f&amp;title=%e9%80%9a%e8%bf%87wifi%e7%83%ad%e7%82%b9%e6%8e%a5%e5%85%a5tailscale%e7%bd%91%e7%bb%9c" target=_blank title="Share on StumbleUpon"><i class="fab fa-stumbleupon"></i></a></li><li><a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fblog.hugozhu.site%2fpost%2f2025%2f87-tailscale-to-ap%2f&amp;description=%e9%80%9a%e8%bf%87wifi%e7%83%ad%e7%82%b9%e6%8e%a5%e5%85%a5tailscale%e7%bd%91%e7%bb%9c" target=_blank title="Share on Pinterest"><i class="fab fa-pinterest"></i></a></li></ul></div></div></section><h4 class=see-also>See also</h4><ul><li><a href=/post/2025/86-tailscale-docker/>简化版本的异地组网</a></li><li><a href=/post/2025/84-use-route-rules-to-redirect-traffic/>通过主路由的路由分流策略将异地内网流量转发到docker里的openwrt</a></li><li><a href=/post/2025/83-tailscale-derp-node-with-ip/>构建可通过IP访问的tailscale的derp relay节点</a></li><li><a href=/post/2025/82-tailscale-vpn-with-openwrt-in-docker/>使用tailscale+openwrt+docker+macvlan将异地两机房组成一个局域网</a></li><li><a href=/post/2024/76-acme-docker-auto-uptime/>使用acme_docker自动更新免费域名证书</a></li></ul></article><ul class="pager blog-pager"><li class=previous><a href=https://blog.hugozhu.site/post/2025/86-tailscale-docker/ data-toggle=tooltip data-placement=top title=简化版本的异地组网>&larr; Previous Post</a></li></ul><div class=disqus-comments><button id=show-comments class="btn btn-default" type=button>Show <span class=disqus-comment-count data-disqus-url=https://blog.hugozhu.site/post/2025/87-tailscale-to-ap>comments</span></button><div id=disqus_thread></div><script type=text/javascript>var disqus_config=function(){this.page.url="https://blog.hugozhu.site/post/2025/87-tailscale-to-ap"}</script></div></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
