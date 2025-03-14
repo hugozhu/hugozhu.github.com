@@ -3002,4 +3002,6 @@ do
  trimmed_val=$(trim $(get_prop $property_file &amp;quot;$key&amp;quot;)
  echo &amp;quot;export $trimmed_key=\&amp;quot;$trimmed_val\&amp;quot;)&amp;quot;
 done`
-&lt;/code>&lt;/pre></description></item></channel></rss>
+&lt;/code>&lt;/pre></description></item><item><title>Tailscale Exit Node</title><link>https://blog.hugozhu.site/post/2025/88-tailscale-exit-node-on-docker/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2025/88-tailscale-exit-node-on-docker/</guid><description>&lt;h1 id="tailscale-exit-node">Tailscale Exit Node&lt;/h1>
+&lt;h2 id="什么是-tailscale-exit-node">什么是 Tailscale Exit Node？&lt;/h2>
+&lt;p>&lt;a href="https://tailscale.com/">Tailscale&lt;/a> 是基于 WireGuard 的零配置 VPN 解决方案，可以轻松创建私有网络，让设备之间实现安全连接。而 &lt;strong>Exit Node（出口节点）&lt;/strong> 功能允许你将某台设备作为所有流量的出口，就像 VPN 一样，帮助你绕过网络限制或访问受地理位置限制的内容。&lt;/p></description></item></channel></rss>
