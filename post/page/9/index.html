@@ -12,9 +12,38 @@
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 18, 2025
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 24, 2025
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/openvpn-multiple-ports/><h2 class=post-title>OpenVPN使用多个端口</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 2, 2013
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/java-synchronousqueue-notes/><h2 class=post-title>Java并发包中的同步队列SynchronousQueue实现原理</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 5, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;834&nbsp;words</span></p><div class=post-entry><h2 id=介绍>介绍</h2><p>Java 6的并发编程包中的<a href=http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/SynchronousQueue.html>SynchronousQueue</a>是一个没有数据缓冲的<a href=http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html>BlockingQueue</a>，生产者线程对其的插入操作put必须等待消费者的移除操作take，反过来也一样。</p><p>不像ArrayBlockingQueue或LinkedListBlockingQueue，SynchronousQueue内部并没有数据缓存空间，你不能调用peek()方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。队列头元素是第一个排队要插入数据的<strong>线程</strong>，而不是要交换的数据。数据是在配对的生产者和消费者线程之间直接传递的，并不会将数据缓冲数据到队列中。可以这样来理解：生产者和消费者互相等待对方，握手，然后<strong>一起</strong>离开。</p><p>SynchronousQueue的一个使用场景是在线程池里。Executors.newCachedThreadPool()就使用了SynchronousQueue，这个线程池根据需要（新任务到来时）创建新的线程，如果有空闲线程则会重复使用，线程空闲了60秒后会被回收。</p><h2 id=实现原理>实现原理</h2><p>同步队列的实现方法有许多：</p><h3 id=阻塞算法实现>阻塞算法实现</h3><p>阻塞算法实现通常在内部采用一个锁来保证多个线程中的put()和take()方法是串行执行的。采用锁的开销是比较大的，还会存在一种情况是线程A持有线程B需要的锁，B必须一直等待A释放锁，即使A可能一段时间内因为B的优先级比较高而得不到时间片运行。所以在高性能的应用中我们常常希望规避锁的使用。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>public class NativeSynchronousQueue&lt;E&gt; {
+</span></span><span class=line><span class=cl>    boolean putting = false;
+</span></span><span class=line><span class=cl>    E item = null;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    public synchronized E take() throws InterruptedException {
+</span></span><span class=line><span class=cl>        while (item == null)
+</span></span><span class=line><span class=cl>            wait();
+</span></span><span class=line><span class=cl>        E e = item;
+</span></span><span class=line><span class=cl>        item = null;
+</span></span><span class=line><span class=cl>        notifyAll();
+</span></span><span class=line><span class=cl>        return e;
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    public synchronized void put(E e) throws InterruptedException {
+</span></span><span class=line><span class=cl>        if (e==null) return;
+</span></span><span class=line><span class=cl>        while (putting)
+</span></span><span class=line><span class=cl>            wait();
+</span></span><span class=line><span class=cl>        putting = true;
+</span></span><span class=line><span class=cl>        item = e;
+</span></span><span class=line><span class=cl>        notifyAll();
+</span></span><span class=line><span class=cl>        while (item!=null)
+</span></span><span class=line><span class=cl>            wait();
+</span></span><span class=line><span class=cl>        putting = false;
+</span></span><span class=line><span class=cl>        notifyAll();
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></div><h3 id=信号量实现>信号量实现</h3><p>经典同步队列实现采用了三个信号量，代码很简单，比较容易理解：</p><a href=https://blog.hugozhu.site/post/2013/java-synchronousqueue-notes/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/java/>Java</a>&nbsp;
+<a href=https://blog.hugozhu.site/tags/concurrent-programming/>Concurrent Programming</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/openvpn-multiple-ports/><h2 class=post-title>OpenVPN使用多个端口</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 2, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;23&nbsp;words</span></p><div class=post-entry><p>Openvpn本身不能设置多个端口，使用iptables可以解决这个问题 （假设openvpn本来56788端口）：</p><pre><code>for port in {56780..56787}
 do 
@@ -136,39 +165,7 @@ git push -u origin master
 </code></pre><script src=https://gist.github.com/hugozhu/6506189.js></script></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/linux/>Linux</a>&nbsp;
 <a href=https://blog.hugozhu.site/tags/network/>Network</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/linux_perf_tools/><h2 class=post-title>系统调试和分析工具</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 26, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1&nbsp;words</span></p><div class=post-entry><p>Linux下的调试和分析工具集</p><hr><img src=/assets/media/tools.jpg width=600></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/linux/>Linux</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/java-properties-to-enviorment-variables/><h2 class=post-title>将Java的Properties文件转换成环境变量</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 25, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;71&nbsp;words</span></p><div class=post-entry><h2 id=overview>Overview</h2><p>在Java程序中使用properties文件很方便，但有时候需要和脚本配合使用时，需要把properties文件内的多个变量转换成环境变量，本文提供一个转换脚本示范：</p><p>比如env.properties如下（=附近可以有空格，也可以有空行）</p><pre><code>MYSQL_URL = jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk
-MYSQL_USER = root
-MYSQL_PASS = 
-</code></pre><p>执行下面的脚本后就相当于</p><pre><code>export MYSQL_URL=&quot;//localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk&quot;
-export MYSQL_USER=&quot;root&quot;
-export MYSQL_PASS=&quot;&quot; 
-</code></pre><p>env.sh脚本代码</p><pre><code>#!/bin/bash
-
-property_file=env.properties
-
-get_prop(){
-    propfile=$1
-    key=$2
-    grep  &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=\(.*\)%\1%&quot;
-}
-
-trim() {
-    trimmed=$1
-    trimmed=${trimmed%% }
-    trimmed=${trimmed## }
-    echo &quot;$trimmed&quot;
-}
-
-`grep -v &quot;^#&quot; $property_file | sed -e '/^$/d' | while read line
-do
-    key=$(echo $line | awk -F &quot;=&quot; '{print $1}')
-    trimmed_key=$(trim $key)
-    trimmed_val=$(trim $(get_prop $property_file &quot;$key&quot;)
-    echo &quot;export $trimmed_key=\&quot;$trimmed_val\&quot;)&quot;
-done`
-</code></pre></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/java/>Java</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/post/page/8/>&larr; Newer Posts</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1&nbsp;words</span></p><div class=post-entry><p>Linux下的调试和分析工具集</p><hr><img src=/assets/media/tools.jpg width=600></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/linux/>Linux</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/post/page/8/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/post/page/10/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2025
 &nbsp;&bull;&nbsp;
