@@ -106,7 +106,7 @@
 }
 &lt;/code>&lt;/pre>
 &lt;p>一眼看上去，代码挺整齐的，逻辑也容易理解。但其中有一个很大的问题是，如果out.write调用失败（比如磁盘空间满了）方法异常退出，in.close()和out.close()就不会被调用，而in和out对象内部都引用了系统资源-&lt;a href="http://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">文件描述符&lt;/a>，这样会导致文件描述符没有关闭，不能被重新使用而直到整个Java进程退出。&lt;/p>
-&lt;h4 id="file-descriptorhttpenwikipediaorgwikifile_descriptor">&lt;a href="http://en.wikipedia.org/wiki/File_descriptor">File descriptor&lt;/a>&lt;/h4>
+&lt;h4 id="file-descriptor">&lt;a href="http://en.wikipedia.org/wiki/File_descriptor">File descriptor&lt;/a>&lt;/h4>
 &lt;p>Linux的每个进程（如：Java进程）都有一个文件描述符表管理当前进程访问的所有的文件，文件描述符关联了系统文件表中的file entry，系统能容纳多少file entry是有限制的，如果超过限制系统会拒绝访问，抛出Too many opened files错误。&lt;/p>
 &lt;img src="https://pbs.twimg.com/media/BEUt3v3CEAAeP-m.jpg:large"/>
 &lt;p>较为正确的代码应该是：&lt;/p>
