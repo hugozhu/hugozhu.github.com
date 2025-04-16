@@ -22,7 +22,34 @@ StreamPi - StreamDeck with Raspberry Pi
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=page-heading><h1>Hugo Zhu's Blog</h1><hr class=small></div></div></div></div></div></header><div role=main class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=well><div align=center><a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/><img src=https://blog.hugozhu.site/img/streampi_demo.jpg></a>
-<a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/>StreamPi - StreamDeck with Raspberry Pi</a></div><div><h3><a href=https://cloud.siliconflow.cn/i/1FHXo5D4>注册就送2000万deepseek R1 tokens，手慢无，支持国产算力 [Chuckle]"></a></h3></div></div><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/22-memory-barriers-or-fences/><h2 class=post-title>并发编程之内存屏障</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 28, 2013
+<a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/>StreamPi - StreamDeck with Raspberry Pi</a></div><div><h3><a href=https://cloud.siliconflow.cn/i/1FHXo5D4>注册就送2000万deepseek R1 tokens，手慢无，支持国产算力 [Chuckle]"></a></h3></div></div><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/23-arduino-1st-day/><h2 class=post-title>Arduino初试</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 28, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;142&nbsp;words</span></p><div class=post-entry><p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p><p>Arduino特点:</p><ol><li>开源，硬件标准化，配套传感器等模块很多；</li><li>结构简单</li><li>实时系统，稳定，启动只要0.5秒</li></ol><h1 id=arduino-ide>Arduino IDE</h1><p><a href=http://arduino.cc/en/Main/Software>下载Arduino IDE</a></p><h1 id=上电测试>上电测试</h1><p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
+<img src=http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg></p><p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p><h1 id=上传代码>上传代码</h1><p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>/*
+</span></span><span class=line><span class=cl>  Blink
+</span></span><span class=line><span class=cl>  Turns on an LED on for one second, then off for one second, repeatedly.
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  This example code is in the public domain.
+</span></span><span class=line><span class=cl> */
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>// Pin 13 has an LED connected on most Arduino boards.
+</span></span><span class=line><span class=cl>// give it a name:
+</span></span><span class=line><span class=cl>int led = 13;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// the setup routine runs once when you press reset:
+</span></span><span class=line><span class=cl>void setup() {                
+</span></span><span class=line><span class=cl>  // initialize the digital pin as an output.
+</span></span><span class=line><span class=cl>  pinMode(led, OUTPUT);     
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// the loop routine runs over and over again forever:
+</span></span><span class=line><span class=cl>void loop() {
+</span></span><span class=line><span class=cl>  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+</span></span><span class=line><span class=cl>  delay(1000);               // wait for a second
+</span></span><span class=line><span class=cl>  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+</span></span><span class=line><span class=cl>  delay(1000);               // wait for a second
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></div><h1 id=参考链接>参考链接</h1><ol><li><a href=http://arduino.cc/en/Tutorial/Blink>http://arduino.cc/en/Tutorial/Blink</a></li></ol></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/arduino/>Arduino</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/22-memory-barriers-or-fences/><h2 class=post-title>并发编程之内存屏障</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 28, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;149&nbsp;words</span></p><div class=post-entry><p>原文地址：<a href=http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href=http://ifeve.com/memory-barriersfences/><code>http://ifeve.com/memory-barriersfences/</code></a></p><p>关键词：Load Barrier, Store Barrier, Full Barrier</p><p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p><p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &ldquo;Write Combing - 合并写"中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。</p><p>当一个程序执行时指令是否被重排并不重要，只要最终的结果是一样的。例如，在一个循环里，如果循环体内没用到这个计数器，循环的计数器什么时候更新（在循环开始，中间还是最后）并不重要。编译器和CPU可以自由的重排指令以最佳的利用CPU，只要下一次循环前更新该计数器即可。并且在循环执行中，这个变量可能一直存在寄存器上，并没有被推到缓存或主存，这样这个变量对其他CPU来说一直都是不可见的。</p><p>CPU核内部包含了多个执行单元。例如，现代Intel CPU包含了6个执行单元，可以组合进行算术运算，逻辑条件判断及内存操作。每个执行单元可以执行上述任务的某种组合。这些执行单元是并行执行的，这样指令也就是在并行执行。但如果站在另一个CPU角度看，这也就产生了程序顺序的另一种不确定性。</p><p>最后，当一个缓存失效发生时，现代CPU可以先假设一个内存载入的值并根据这个假设值继续执行，直到内存载入返回确切的值。</p><img src=http://ifeve.com/wp-content/uploads/2013/03/cpu.png><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>CPU核
 </span></span><span class=line><span class=cl>  |
@@ -469,31 +496,7 @@ StreamPi - StreamDeck with Raspberry Pi
 </span></span><span class=line><span class=cl>    或 
 </span></span><span class=line><span class=cl>    mount -U 001B-9622 /mnt/usb
 </span></span></code></pre></div><p>格式化整个USB盘可以用<code>mkfs.ext4 /dev/sda</code>
-然后在/etc/fstab里增加一行，以后重启就会自动mount了：</p><a href=https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/block_failed_ssh_attempts_with_iptable/><h2 class=post-title>如何封杀尝试Raspberry Pi SSH密码的来源IP</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 8, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;131&nbsp;words</span></p><div class=post-entry><p>Raspberry Pi整天开着，如果用缺省SSH端口对外开放，就会经常遇到扫描SSH密码的肉鸡。虽然密码不是很简单，但还是感觉很不安全的。</p><p>系统的ssh登录日志文件在：/var/log/auth.log，登录失败时会记录以下格式的日志：</p><pre><code>Mar  7 10:31:51 raspberrypi sshd[24510]: Failed password for root from 221.8.19.129 port 4066 ssh2
-Mar  7 10:31:55 raspberrypi sshd[24514]: Failed password for root from 221.8.19.129 port 4079 ssh2
-Mar  7 10:31:56 raspberrypi sshd[24518]: Failed password for sshd from 221.8.19.129 port 4080 ssh2
-Mar  7 10:32:26 raspberrypi sshd[24522]: Failed password for sshd from 221.8.19.129 port 4149 ssh2
-</code></pre><p>用最简单的Shell脚本来解决这个问题：</p><h3 id=guardsh>guard.sh</h3><pre><code>#!/bin/bash
-
-last_ip=&quot;&quot;
-tail -f /var/log/auth | while read LINE; do
-{
-    if [[ &quot;${LINE}&quot; =~ &quot;Failed&quot; ]]; then            
-        ip=&quot;$(echo ${LINE} | awk '{print $(NF-3)}')&quot;
-        if [[ &quot;$last_ip&quot; == &quot;$ip&quot; ]]; then
-             echo &quot;block $ip&quot;
-             #curl -s --data-ascii &quot;uuid=&lt;my iphone's uuid&gt;&quot; --data &quot;body=${LINE}&quot; http://raspberrypi/pushme                 
-             iptables -A INPUT -s &quot;$ip&quot; -j DROP
-        fi
-        last_ip=$ip
-        echo $LINE
-    fi
-}
-done
-</code></pre><p>用root用户执行以下命令，也可以放到启动脚本里：/etc/rc.local</p><a href=https://blog.hugozhu.site/post/2013/block_failed_ssh_attempts_with_iptable/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/linux/>Linux</a>&nbsp;
-<a href=https://blog.hugozhu.site/tags/network/>Network</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/page/7/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/page/9/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+然后在/etc/fstab里增加一行，以后重启就会自动mount了：</p><a href=https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/page/7/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/page/9/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2025
 &nbsp;&bull;&nbsp;
