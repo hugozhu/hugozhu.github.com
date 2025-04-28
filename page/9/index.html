@@ -22,7 +22,30 @@ StreamPi - StreamDeck with Raspberry Pi
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=page-heading><h1>Hugo Zhu's Blog</h1><hr class=small></div></div></div></div></div></header><div role=main class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=well><div align=center><a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/><img src=https://blog.hugozhu.site/img/streampi_demo.jpg></a>
-<a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/>StreamPi - StreamDeck with Raspberry Pi</a></div><div><h3><a href=https://cloud.siliconflow.cn/i/1FHXo5D4>注册就送2000万deepseek R1 tokens，手慢无，支持国产算力 [Chuckle]"></a></h3></div></div><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/block_failed_ssh_attempts_with_iptable/><h2 class=post-title>如何封杀尝试Raspberry Pi SSH密码的来源IP</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 8, 2013
+<a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/>StreamPi - StreamDeck with Raspberry Pi</a></div><div><h3><a href=https://cloud.siliconflow.cn/i/1FHXo5D4>注册就送2000万deepseek R1 tokens，手慢无，支持国产算力 [Chuckle]"></a></h3></div></div><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/><h2 class=post-title>在Raspberry Pi上安装ArchLinux</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 9, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;812&nbsp;words</span></p><div class=post-entry><h1 id=介绍>介绍</h1><p>之前买的Raspberry Pi因为要跑<a href=http://hugozhu.myalert.info>这个网站</a>，不能经常拔下来玩别的，所以又买了一个，这次安装的是<a href=https://www.archlinux.org>Arch Linux</a>。这个发行版安装好后非常基础，占用的空间也只有600M不到，比较合适已有Linux基础的同学玩。初学者可以玩官方推荐的<a href=http://www.raspbian.org>Raspbian</a>。</p><p>Arch Linux特点：</p><ol><li>启动快，上电后只要3s完成启动</li><li>安装完没有图形界面，干净</li><li>面向开发者的系统</li><li>包管理系统pacman很好用，一个命令就可以完成各种操作</li><li>ArchLinux缺省账号和密码是root/root，弄好了后要记得修改root密码</li><li>从中国用下载包很快，比Raspbian的源快多了</li></ol><h1 id=增加sudo用户>增加sudo用户</h1><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>   useradd hugo
+</span></span><span class=line><span class=cl>   passwd hugo
+</span></span><span class=line><span class=cl>   mkdir /home/hugo
+</span></span><span class=line><span class=cl>   chown hugo:hugo /home/hugo   
+</span></span><span class=line><span class=cl>   pacman -S sudo
+</span></span><span class=line><span class=cl>   visudo   
+</span></span><span class=line><span class=cl>   
+</span></span></code></pre></div><p>执行<code>visudo</code>把新用户设置成管理员（增加sudo权限），最后面增加下面一行：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    hugo ALL=(ALL) NOPASSWD: ALL
+</span></span></code></pre></div><h1 id=usb盘>USB盘</h1><p>插上USB盘后，ArchLinux并不会自动mount，手动mount的过程如下:
+插上USB前后执行两次 <code>lsblk -o name,kname,uuid</code>，那么输出上多出的那行就是该USB的设备名，或UUID，找到该行后就可以执行mount命令了（注意sda这个符号不同机器可能不一样）</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    [root@raspberrypi2 ~]# lsblk -o name,kname,uuid   
+</span></span><span class=line><span class=cl>    NAME        KNAME     UUID
+</span></span><span class=line><span class=cl>    sda         sda       001B-9622
+</span></span><span class=line><span class=cl>    mmcblk0     mmcblk0   
+</span></span><span class=line><span class=cl>    ├─mmcblk0p1 mmcblk0p1 44C8-CEF1
+</span></span><span class=line><span class=cl>    └─mmcblk0p2 mmcblk0p2 fcee8534-f5f0-42ee-83ac-f943f878ee67
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    mkdir /mnt/usb
+</span></span><span class=line><span class=cl>    mount /dev/sda /mnt/usb 
+</span></span><span class=line><span class=cl>    或 
+</span></span><span class=line><span class=cl>    mount -U 001B-9622 /mnt/usb
+</span></span></code></pre></div><p>格式化整个USB盘可以用<code>mkfs.ext4 /dev/sda</code>
+然后在/etc/fstab里增加一行，以后重启就会自动mount了：</p><a href=https://blog.hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/block_failed_ssh_attempts_with_iptable/><h2 class=post-title>如何封杀尝试Raspberry Pi SSH密码的来源IP</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 8, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;131&nbsp;words</span></p><div class=post-entry><p>Raspberry Pi整天开着，如果用缺省SSH端口对外开放，就会经常遇到扫描SSH密码的肉鸡。虽然密码不是很简单，但还是感觉很不安全的。</p><p>系统的ssh登录日志文件在：/var/log/auth.log，登录失败时会记录以下格式的日志：</p><pre><code>Mar  7 10:31:51 raspberrypi sshd[24510]: Failed password for root from 221.8.19.129 port 4066 ssh2
 Mar  7 10:31:55 raspberrypi sshd[24514]: Failed password for root from 221.8.19.129 port 4079 ssh2
@@ -171,34 +194,7 @@ ms-dns 8.8.4.4
 git fetch upstream
 git checkout master
 git merge upstream/master 
-</code></pre><p>到此为止就完成了一次合作开发。</p><a href=https://blog.hugozhu.site/post/2013/collaborating-development-with-github/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/github/>Github</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/how-to-host-personal-blog-on-github/><h2 class=post-title>在Pi和Github上搭建自己的个人博客</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 27, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;205&nbsp;words</span></p><div class=post-entry><h1 id=方法如下>方法如下：</h1><p>本站同时托管在家里的<a href=http://www.raspberrypi.org>Raspberry Pi</a>和<a href=http://pages.github.com/>Github Pages</a>上，并同步保持更新，海外用户会访问Github，国内用户则会访问Pi，不同线路解析域名<strong>hugozhu.myalert.info</strong>到不同的服务器是通过<a href=http://dnspod.cn>DnsPod</a>的服务实现的，这么好的服务还是免费的，这里推荐一下。</p><p>因为Github Pages只能支持静态网页，你需要一个能生成静态网页的博客生成引擎。我使用的是<a href=http://github.com/wendal/gor>gor</a> ， 也可以使用<a href=http://ruhoh.com>ruhoh</a>，<a href="https://www.google.com/search?q=static+blog+generator&amp;hl=en&amp;newwindow=1&amp;client=safari&amp;rls=en&amp;biw=1238&amp;bih=868&amp;ei=msAuUY-vDMKO2AWQ7IHoBQ&amp;sqi=2&amp;start=10&amp;sa=N">Google一下还有很多</a>。</p><h2 id=静态页面博客的好处>静态页面博客的好处：</h2><ol><li>性能是最好的，很合适用Raspberry Pi来做服务器，节省资源；</li><li>文章可以用Markdown格式来编写，采用Github来做版本控制，我的Blog仓库在 <a href=http://github.com/hugozhu/blog>http://github.com/hugozhu/blog</a> ，数据安全很好，误删除也不担心了；</li><li>很容易找到托管环境，方便迁移；</li><li>用Gor在Pi上生成速度很快；再用Nginx提供Web服务，可以直接在Pi上写Blog；</li><li>大繁至简</li></ol><h2 id=github设置>Github设置</h2><ol><li>在你的仓库里增加一个your_github_id.github.com，比如我的github ID是hugozhu，相应的仓库名就是<a href=https://github.com/hugozhu/hugozhu.github.com>hugozhu.github.com</a>，这个仓库也就是网站的根目录了，在这里放生成好的静态文件</li><li>如果你需要用自己的域名，而不是Github提供的，可以在根目录下增加一个<a href=https://github.com/hugozhu/hugozhu.github.com/blob/master/CNAME>CNAME</a>文件,文件内容则是你的域名，在DnsPod上需要建一个CNAME记录，将你的域名指向your_github_id.github.com. 也就是github原来分配给你的，完成这个设置后，访问your_github_id.github.com会跳转到你的域名；</li><li>每次更新后，Github会在10分钟内生效。</li></ol><h2 id=更新博客>更新博客</h2><ol><li>Gor的使用详细说明可见 <a href=https://github.com/wendal/gor>https://github.com/wendal/gor</a></li><li>我的整个网站的内容也通过Github开源了: <a href=https://github.com/hugozhu/blog>https://github.com/hugozhu/blog</a></li></ol><p>以我的网站为例：</p><pre><code>git clone https://github.com/hugozhu/blog
-    Cloning into 'blog'...
-    remote: Counting objects: 190, done.
-    remote: Compressing objects: 100% (146/146), done.
-    remote: Total 190 (delta 81), reused 132 (delta 23)
-    Receiving objects: 100% (190/190), 155.48 KiB | 171 KiB/s, done.
-    Resolving deltas: 100% (81/81), done.
-cd blog
-gor compile
-    2013/02/27 13:17:19 gor.go:21: gor ver 2.1
-    2013/02/27 13:17:19 payload.go:572: Load Layout : default
-    2013/02/27 13:17:19 payload.go:572: Load Layout : page
-    2013/02/27 13:17:19 payload.go:572: Load Layout : post
-    2013/02/27 13:17:19 config.go:61: Look lile a Json, try it
-    2013/02/27 13:17:19 config.go:64: It is Json Map
-    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/analytics/config.yml
-    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/comments/config.yml
-    2013/02/27 13:17:19 widgets.go:111: Load widget from  widgets/google_prettify/config.yml
-    2013/02/27 13:17:19 compile.go:125: Done
-cd compiled
-git init
-git add -A 
-git commit -m &quot;update website&quot; .
-git remote add origin hugozhu@github.com:hugozhu/hugozhu.github.com
-git push -u origin master
-</code></pre><p>最后等待10分钟，再打开 <a href=http://hugozhu.github.com>http://hugozhu.github.com</a> 就好了。。。</p><a href=https://blog.hugozhu.site/post/2013/how-to-host-personal-blog-on-github/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/github/>Github</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/page/8/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/page/10/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+</code></pre><p>到此为止就完成了一次合作开发。</p><a href=https://blog.hugozhu.site/post/2013/collaborating-development-with-github/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/github/>Github</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/page/8/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/page/10/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2025
 &nbsp;&bull;&nbsp;
