@@ -14,7 +14,35 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on December 19, 2025
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/logging-in-java/><h2 class=post-title>Java程序的日志</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 28, 2013
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/setup-l2tp-pptp-openvpn-on-ubuntu/><h2 class=post-title>在Ubuntu上配置L2TP，PPTP和OpenVPN服务</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 1, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;510&nbsp;words</span></p><div class=post-entry><h2 id=overview>Overview</h2><p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p><p>先打开内核的IP转发，修改 /etc/sysctl.conf</p><pre><code>net.ipv4.ip_forward=1
+</code></pre><p>执行下面命令以生效</p><pre><code>sudo sysctl -p
+</code></pre><h2 id=pptp>PPTP</h2><p>安装pptpd</p><pre><code>apt-get install pptpd
+</code></pre><p>编辑 /etc/pptpd.conf，下面两行取消注释</p><pre><code>localip 192.168.0.1
+remoteip 192.168.0.234-238,192.168.0.245
+</code></pre><p>这行注释掉</p><pre><code>#logwtmp 
+</code></pre><p>从文件 /etc/pptpd.conf 中找到配置选项文件，如下为：/etc/ppp/pptpd-options</p><pre><code>grep options /etc/pptpd.conf
+#       Specifies the location of the PPP options file.
+#       By default PPP looks in '/etc/ppp/options'
+option /etc/ppp/pptpd-options
+#       option in the pppd options file, or run bcrelay.
+</code></pre><p>编辑 /etc/ppp/pptpd-options，增加以下内容，最后两项为推给VPN客户端的DNS服务器IP</p><pre><code>mtu 1492
+name pptpd
+refuse-pap
+refuse-chap
+refuse-mschap
+require-mschap-v2
+require-mppe-128
+proxyarp
+lock
+nobsdcomp
+novj
+novjccomp
+nologfd 
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+</code></pre><p>修改 /etc/ppp/chap-secrets， 增加一个VPN用户: foo ，密码设置为: bar</p><a href=https://blog.hugozhu.site/post/2013/setup-l2tp-pptp-openvpn-on-ubuntu/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/vpn/>VPN</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2013/logging-in-java/><h2 class=post-title>Java程序的日志</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 28, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;265&nbsp;words</span></p><div class=post-entry><h2 id=overview>Overview</h2><p>一个在生产环境里运行的程序如果没有日志是很让维护者提心吊胆的，有太多杂乱又无意义的日志也是令人伤神。程序出现问题时候，从日志里如果发现不了问题可能的原因是很令人受挫的。本文想讨论的是如何在Java程序里写好日志。大多数的Web服务器（如Apache，Nginx）都有access日志和error日志，分别记录在不同的文件内；我们使用的服务器操作系统Linux有Syslog日志, /var/log目录下也有很多基础应用和服务的日志文件；桌面Windows有事件查看器, Mac有Console应用可以查看和管理日志；这些成熟的系统及工具方法都值得我们学习并在自己的项目中应用。</p><p>一般来说日志分为两种：业务日志和异常日志。使用日志我们希望能达到以下目标：</p><ol><li>对程序运行情况的记录和监控；</li><li>在必要时可详细了解程序内部的运行状态；</li><li>对系统性能的影响尽量小；</li></ol><h2 id=日志规范>日志规范</h2><p>程序框架应该提供统一的日志记录接口，日志格式也需要有一定的规范，方便利用日志工具来分析日志。
 首先我们有必要了解一下Linux普遍使用的<a href=http://en.wikipedia.org/wiki/Syslog>Syslog</a>标准协议，协议规定日志中应包含产生日志的模块(Facility)，严重性（Severity Level），时间，主机名或IP，进程名，进程ID和日志内容，根据模块和严重性可以配置相应的动作：是否需要记录，日志存储路径（文件或网络）。</p><p>下面是部分常见的Syslog模块类型：</p><table><thead><tr><th><strong>模块ID</strong></th><th><strong>关键词</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td>0</td><td>kern</td><td>内核消息</td></tr><tr><td>1</td><td>user</td><td>用户级别消息</td></tr><tr><td>2</td><td>mail</td><td>邮件系统</td></tr><tr><td>3</td><td>daemon</td><td>系统后台守护程序</td></tr><tr><td>4</td><td>auth</td><td>安全/鉴权消息</td></tr><tr><td>5</td><td>syslog</td><td>syslogd内部产生的日志消息</td></tr><tr><td>…</td><td></td><td></td></tr></tbody></table><p>以及Syslog严重程度划分：</p><table><thead><tr><th><strong>代码</strong></th><th><strong>严重程度</strong></th><th><strong>关键词</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td>0</td><td>Emergency</td><td>emerg(panic)</td><td>紧急，系统已经不稳定了</td></tr><tr><td>1</td><td>Alert</td><td>alert</td><td>需要立刻采取措施</td></tr><tr><td>2</td><td>Critical</td><td>crit</td><td>严重情况</td></tr><tr><td>3</td><td>Error</td><td>err (error)</td><td>系统出错</td></tr><tr><td>4</td><td>Warning</td><td>warning(warn)</td><td>系统警告</td></tr><tr><td>5</td><td>Notice</td><td>notice</td><td>系统仍然正常，但值得注意</td></tr><tr><td>6</td><td>Informational</td><td>info</td><td>正常系统通告</td></tr><tr><td>7</td><td>Debug</td><td>debug</td><td>系统调试信息</td></tr></tbody></table><p>在你的Java程序里日志也可以参考Syslog的设计，根据业务对程序的模块和日志级别做一定的规划和设计。</p><a href=https://blog.hugozhu.site/post/2013/logging-in-java/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/java/>Java</a>&nbsp;
