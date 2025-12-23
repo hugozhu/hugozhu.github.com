@@ -12,9 +12,110 @@
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on December 20, 2025
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on December 23, 2025
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2015/54-raspberrypi2-pptp-redsocks2-chinadns/><h2 class=post-title>用树莓派2代打造智能家庭路由</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 26, 2015
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://blog.hugozhu.site/post/2015/55-use-telegram-to-chat-with-raspberrypi/><h2 class=post-title>用Telegram和树莓派交互</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 27, 2015
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;285&nbsp;words</span></p><div class=post-entry><p>如果你的树莓派不能通过路由器端口转发直接从家庭网络外访问，你还可以用类似聊天App一样的方式来和防火墙后的树莓派轻松交互，通过命令来控制树莓派。</p><h1 id=telegram>Telegram</h1><p><img src=https://telegram.org/img/t_logo.png alt=image></p><p>Telegram是一个跨平台的即时通讯软件，客户端和通讯及加密协议完全公开且开源。官方有正式发布Android，iOS，Mac OS X， Web等客户端版本；Telegram允许多端同时登录。我们在手机上安装Telegram客户端，同时在树莓派上用同一个帐号或另一个帐号也登录Telegram，那么就可以用手机和树莓派聊天了，更高级的一些用法可以是把树莓派帐号加到群聊中，实现类似<a href=http://www.msxiaoice.com/v2/DesktopLanding>微软小冰</a>的功能；也可以由树莓派主动向你的手机Push消息实现提醒功能。</p><h2 id=安装telegram-cli>安装telegram-cli</h2><p>Linux的Telegram客户端telegram-cli源代码在 <a href=https://github.com/vysheng/tg>https://github.com/vysheng/tg</a>，按照Readme在树莓派上编译好。telegram-cli支持消息事件对lua脚本中的函数进行回调，支持的函数列表在：<a href=https://github.com/vysheng/tg/blob/master/README-LUA>https://github.com/vysheng/tg/blob/master/README-LUA</a>，也支持外部程序通过telegram-cli侦听的端口发送交互命令（一次连接只能一个命令）</p><h2 id=lua交互脚本>Lua交互脚本</h2><p>脚本命名为：<code>tg_raspberrypi.lua</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>now</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>chat</span> <span class=o>=</span> <span class=s2>&#34;树莓派通知&#34;</span> <span class=o>--</span> <span class=n>telegram的会话名称</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;uptime&#34;</span><span class=p>]</span>  <span class=o>=</span> <span class=s2>&#34;uptime&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;w&#34;</span><span class=p>]</span>       <span class=o>=</span> <span class=s2>&#34;w&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;ps&#34;</span><span class=p>]</span>      <span class=o>=</span> <span class=s2>&#34;ps ax&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;netstat&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;netstat -na&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;df&#34;</span><span class=p>]</span>      <span class=o>=</span> <span class=s2>&#34;df&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;ss&#34;</span><span class=p>]</span>      <span class=o>=</span> <span class=s2>&#34;ss&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>safe_commands</span><span class=p>[</span><span class=s2>&#34;free&#34;</span><span class=p>]</span>    <span class=o>=</span> <span class=s2>&#34;free&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_msg_receive</span> <span class=p>(</span><span class=n>msg</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>msg</span><span class=o>.</span><span class=n>out</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>	    <span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=n>end</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>msg</span><span class=o>.</span><span class=n>text</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>		<span class=o>--</span> <span class=n>mark_read</span><span class=p>(</span><span class=n>msg</span><span class=o>.</span><span class=n>from</span><span class=o>.</span><span class=n>print_name</span><span class=p>)</span>	
+</span></span><span class=line><span class=cl>		<span class=o>--</span> <span class=n>vardump</span><span class=p>(</span><span class=n>msg</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>cmd</span> <span class=o>=</span> <span class=n>string</span><span class=o>.</span><span class=n>lower</span><span class=p>(</span><span class=n>trim</span><span class=p>(</span><span class=n>msg</span><span class=o>.</span><span class=n>text</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=n>cmd</span> <span class=o>==</span> <span class=s2>&#34;ping&#34;</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>			<span class=n>send_msg</span> <span class=p>(</span><span class=n>chat</span><span class=p>,</span> <span class=s1>&#39;pong&#39;</span><span class=p>,</span> <span class=n>ok_cb</span><span class=p>,</span> <span class=bp>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>elseif</span> <span class=n>safe_commands</span><span class=p>[</span><span class=n>cmd</span><span class=p>]</span> <span class=o>~=</span> <span class=n>nil</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>			<span class=n>send_msg</span> <span class=p>(</span><span class=n>chat</span><span class=p>,</span> <span class=n>exec</span><span class=p>(</span><span class=n>safe_commands</span><span class=p>[</span><span class=n>cmd</span><span class=p>]),</span> <span class=n>ok_cb</span><span class=p>,</span> <span class=bp>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>end</span>
+</span></span><span class=line><span class=cl>	<span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_our_id</span> <span class=p>(</span><span class=n>id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_secret_chat_created</span> <span class=p>(</span><span class=n>peer</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_user_update</span> <span class=p>(</span><span class=n>user</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_chat_update</span> <span class=p>(</span><span class=n>user</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_get_difference_end</span> <span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>on_binlog_replay_end</span> <span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>exec</span><span class=p>(</span><span class=n>cmd</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>   <span class=n>local</span> <span class=n>output</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>   <span class=n>f</span> <span class=o>=</span> <span class=nb>assert</span> <span class=p>(</span><span class=n>io</span><span class=o>.</span><span class=n>popen</span> <span class=p>(</span><span class=n>cmd</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>   <span class=k>for</span> <span class=n>line</span> <span class=ow>in</span> <span class=n>f</span><span class=p>:</span><span class=n>lines</span><span class=p>()</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>     <span class=n>output</span> <span class=o>=</span> <span class=n>output</span> <span class=o>..</span> <span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span> <span class=o>..</span> <span class=n>line</span>
+</span></span><span class=line><span class=cl>   <span class=n>end</span> <span class=o>--</span> <span class=k>for</span> <span class=n>loop</span>
+</span></span><span class=line><span class=cl>   <span class=n>f</span><span class=p>:</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>   <span class=k>return</span> <span class=n>output</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>	
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>trim</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span><span class=n>s</span><span class=p>:</span><span class=n>gsub</span><span class=p>(</span><span class=s2>&#34;^</span><span class=si>%s</span><span class=s2>*(.-)</span><span class=si>%s</span><span class=s2>*$&#34;</span><span class=p>,</span> <span class=s2>&#34;%1&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>function</span> <span class=n>vardump</span><span class=p>(</span><span class=n>value</span><span class=p>,</span> <span class=n>depth</span><span class=p>,</span> <span class=n>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=n>local</span> <span class=n>linePrefix</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=n>local</span> <span class=n>spaces</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=n>key</span> <span class=o>~=</span> <span class=n>nil</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>    <span class=n>linePrefix</span> <span class=o>=</span> <span class=s2>&#34;[&#34;</span><span class=o>..</span><span class=n>key</span><span class=o>..</span><span class=s2>&#34;] = &#34;</span>
+</span></span><span class=line><span class=cl>  <span class=n>end</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=n>depth</span> <span class=o>==</span> <span class=n>nil</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>    <span class=n>depth</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>  <span class=k>else</span>
+</span></span><span class=line><span class=cl>    <span class=n>depth</span> <span class=o>=</span> <span class=n>depth</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>depth</span> <span class=k>do</span> <span class=n>spaces</span> <span class=o>=</span> <span class=n>spaces</span> <span class=o>..</span> <span class=s2>&#34;  &#34;</span> <span class=n>end</span>
+</span></span><span class=line><span class=cl>  <span class=n>end</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=n>type</span><span class=p>(</span><span class=n>value</span><span class=p>)</span> <span class=o>==</span> <span class=s1>&#39;table&#39;</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>    <span class=n>mTable</span> <span class=o>=</span> <span class=n>getmetatable</span><span class=p>(</span><span class=n>value</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>mTable</span> <span class=o>==</span> <span class=n>nil</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>      <span class=nb>print</span><span class=p>(</span><span class=n>spaces</span> <span class=o>..</span><span class=n>linePrefix</span><span class=o>..</span><span class=s2>&#34;(table) &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span>
+</span></span><span class=line><span class=cl>      <span class=nb>print</span><span class=p>(</span><span class=n>spaces</span> <span class=o>..</span><span class=s2>&#34;(metatable) &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>value</span> <span class=o>=</span> <span class=n>mTable</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span>		
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>tableKey</span><span class=p>,</span> <span class=n>tableValue</span> <span class=ow>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>value</span><span class=p>)</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>      <span class=n>vardump</span><span class=p>(</span><span class=n>tableValue</span><span class=p>,</span> <span class=n>depth</span><span class=p>,</span> <span class=n>tableKey</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span>
+</span></span><span class=line><span class=cl>  <span class=n>elseif</span> <span class=n>type</span><span class=p>(</span><span class=n>value</span><span class=p>)</span>	<span class=o>==</span> <span class=s1>&#39;function&#39;</span> <span class=ow>or</span> 
+</span></span><span class=line><span class=cl>      <span class=n>type</span><span class=p>(</span><span class=n>value</span><span class=p>)</span>	<span class=o>==</span> <span class=s1>&#39;thread&#39;</span> <span class=ow>or</span> 
+</span></span><span class=line><span class=cl>      <span class=n>type</span><span class=p>(</span><span class=n>value</span><span class=p>)</span>	<span class=o>==</span> <span class=s1>&#39;userdata&#39;</span> <span class=ow>or</span>
+</span></span><span class=line><span class=cl>      <span class=n>value</span>		<span class=o>==</span> <span class=n>nil</span>
+</span></span><span class=line><span class=cl>  <span class=n>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>spaces</span><span class=o>..</span><span class=n>tostring</span><span class=p>(</span><span class=n>value</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=k>else</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>spaces</span><span class=o>..</span><span class=n>linePrefix</span><span class=o>..</span><span class=s2>&#34;(&#34;</span><span class=o>..</span><span class=n>type</span><span class=p>(</span><span class=n>value</span><span class=p>)</span><span class=o>..</span><span class=s2>&#34;) &#34;</span><span class=o>..</span><span class=n>tostring</span><span class=p>(</span><span class=n>value</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>exec</span><span class=p>(</span><span class=s2>&#34;uptime&#34;</span><span class=p>))</span>
+</span></span></code></pre></div><h1 id=启动telegram-cli>启动telegram-cli</h1><h2 id=第一次启动>第一次启动</h2><p>第一次启动telegram-cli会需要你输入手机号码，输入短信验证码后登录，成功登录后会在~/.telegram-cli下保存登录信息，后面就不需要再登录了。</p><a href=https://blog.hugozhu.site/post/2015/55-use-telegram-to-chat-with-raspberrypi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2015/54-raspberrypi2-pptp-redsocks2-chinadns/><h2 class=post-title>用树莓派2代打造智能家庭路由</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 26, 2015
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;128&nbsp;words</span></p><div class=post-entry><p>家里的宽带上下行都有10Mbps了吧？除了可以BT下载外还能让你的移动设备在外的时候也能科学上网。</p><p>区别于在海外架设VPN服务：</p><ul><li>国内和大部分国外网站都可以直连而不降低速度；不像海外VPN所有流量（国内和国外网站）都要经过海外服务器，速度有一定的延迟</li><li>这个方案代理可以使用免费的Goagent服务；或低成本的ssh帐号；而租用海外VPS服务器自建服务或购买VPN帐号费用较高些；</li><li>利用的是家里的宽带，只有树莓派的硬件成本，没有主机托管成本；</li></ul><p>假设家里的路由器IP地址为:<strong>192.168.1.1</strong>，树莓派2的IP地址为:<strong>192.168.1.3</strong>，以下是需要安装和设置步骤。</p><h1 id=pptp和l2tp-vpn-server>PPTP和L2TP VPN Server</h1><p>首先在树莓派上安装和设置VPN服务器，移动设备就可以通过运营商网络连接回家里的树莓派（iPhone和Android都内置了PPTP和L2TP客户端），这样移动设备将以树莓派为路由访问网站，通过一些设置我们可以让树莓派提供科学上网服务。</p><p>关于PPTP和L2TP VPN设置和安装可以参考： <a href=http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html>http://hugozhu.myalert.info/2013/03/01/setup-l2tp-pptp-openvpn-on-ubuntu.html</a></p><p>但在树莓派上安装L2TP时不能直接<code>apt-get install openswan</code>，需要手动下载来安装，原因是因为最新的版本在协议上有些不兼容：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>wget http://snapshot.raspbian.org/201403301125/raspbian/pool/main/o/openswan/openswan_2.6.37-3_armhf.deb
 </span></span><span class=line><span class=cl>sudo dpkg -i openswan_2.6.37-3_armhf.deb
@@ -190,18 +291,7 @@
 </span></span><span class=line><span class=cl><span class=n>Intent</span> <span class=n>intent</span> <span class=o>=</span> <span class=n>new</span> <span class=n>Intent</span><span class=p>(</span><span class=n>context</span><span class=p>,</span> <span class=n>MyIntentService</span><span class=o>.</span><span class=k>class</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=n>intent</span><span class=o>.</span><span class=n>setData</span><span class=p>(</span><span class=n>uri</span><span class=p>);</span> <span class=n>intent</span><span class=o>.</span><span class=n>putExtra</span><span class=p>(</span><span class=s2>&#34;param&#34;</span><span class=p>,</span> <span class=s2>&#34;some value&#34;</span><span class=p>);</span> 
 </span></span><span class=line><span class=cl><span class=n>startService</span><span class=p>(</span><span class=n>intent</span><span class=p>);</span>
-</span></span></code></pre></div><p>IntentService返回任务结果给Activity可以有下面几种方法（Service和Activity的通信方法）：</p><a href=https://blog.hugozhu.site/post/2014/46-async-android/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/android/>Android</a>&nbsp;</div></article><article class=post-preview><a href=https://blog.hugozhu.site/post/2014/45-android-development-productivity-tips/><h2 class=post-title>提高Android开发效率的小贴士</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 10, 2014
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;47&nbsp;words</span></p><div class=post-entry><h1 id=查看日志-adb-logcat>查看日志 adb logcat</h1><p>下面命令将只显示错误日志，和所有Tag＝mytag的调试日志，-C 会用不同颜色区分不同级别的日志，但只有Android 4.3以后才支持。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>adb logcat [-C] *:E &lt;mytag&gt;:D
-</span></span></code></pre></div><h1 id=远程调试-adb-over-tcp>远程调试 adb over TCP</h1><p>首先在手机或Pad上执行以下命令（要求root）</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>su
-</span></span><span class=line><span class=cl>setprop service.adb.tcp.port 5555
-</span></span><span class=line><span class=cl>stop adbd
-</span></span><span class=line><span class=cl>start adbd
-</span></span></code></pre></div><p>再执行下面命令则可以看到手机的网络地址</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>netcfg | grep wlan
-</span></span></code></pre></div><p>在电脑上则执行</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>adb connect &lt;mobile_phone_ip&gt; 5555
-</span></span><span class=line><span class=cl>adb shell
-</span></span></code></pre></div><p>安装运行</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>gradle installDebug &amp;&amp; adb shell am start -n com.laiwang.protocol.android/.MainActivity
-</span></span></code></pre></div><h1 id=over>Over</h1></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/android/>Android</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/post/page/5/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/post/page/7/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+</span></span></code></pre></div><p>IntentService返回任务结果给Activity可以有下面几种方法（Service和Activity的通信方法）：</p><a href=https://blog.hugozhu.site/post/2014/46-async-android/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://blog.hugozhu.site/tags/android/>Android</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://blog.hugozhu.site/post/page/5/>&larr; Newer Posts</a></li><li class=next><a href=https://blog.hugozhu.site/post/page/7/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2025
 &nbsp;&bull;&nbsp;
