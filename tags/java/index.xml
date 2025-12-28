@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on All about Raspberry Pi</title><link>https://blog.hugozhu.site/tags/java/</link><description>Recent content in Java on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 28 Mar 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.hugozhu.site/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>并发编程之内存屏障</title><link>https://blog.hugozhu.site/post/2013/22-memory-barriers-or-fences/</link><pubDate>Thu, 28 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/22-memory-barriers-or-fences/</guid><description>&lt;p>原文地址：&lt;a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html">&lt;code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html&lt;/code>&lt;/a> 或 &lt;a href="http://ifeve.com/memory-barriersfences/">&lt;code>http://ifeve.com/memory-barriersfences/&lt;/code>&lt;/a>&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on All about Raspberry Pi</title><link>https://hugozhu.site/tags/java/</link><description>Recent content in Java on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 28 Mar 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>并发编程之内存屏障</title><link>https://hugozhu.site/post/2013/22-memory-barriers-or-fences/</link><pubDate>Thu, 28 Mar 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/22-memory-barriers-or-fences/</guid><description>&lt;p>原文地址：&lt;a href="http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html">&lt;code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html&lt;/code>&lt;/a> 或 &lt;a href="http://ifeve.com/memory-barriersfences/">&lt;code>http://ifeve.com/memory-barriersfences/&lt;/code>&lt;/a>&lt;/p>
 &lt;p>关键词：Load Barrier, Store Barrier, Full Barrier&lt;/p>
 &lt;p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。&lt;/p>
 &lt;p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &amp;ldquo;Write Combing - 合并写&amp;quot;中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。&lt;/p>
@@ -53,7 +53,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="load-barrier">Load Barrier&lt;/h1>
-&lt;p>Load屏障，是x86上的&amp;rdquo;&lt;strong>ifence&lt;/strong>&amp;ldquo;指令，强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。这使得从其它CPU暴露出来的程序状态对该CPU可见，这之后CPU可以进行后续处理。一个好例子是上面的BatchEventProcessor的sequence对象是放在屏障后被生产者或消费者使用。&lt;/p></description></item><item><title>Java并发包中的同步队列SynchronousQueue实现原理</title><link>https://blog.hugozhu.site/post/2013/java-synchronousqueue-notes/</link><pubDate>Tue, 05 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/java-synchronousqueue-notes/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
+&lt;p>Load屏障，是x86上的&amp;rdquo;&lt;strong>ifence&lt;/strong>&amp;ldquo;指令，强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。这使得从其它CPU暴露出来的程序状态对该CPU可见，这之后CPU可以进行后续处理。一个好例子是上面的BatchEventProcessor的sequence对象是放在屏障后被生产者或消费者使用。&lt;/p></description></item><item><title>Java并发包中的同步队列SynchronousQueue实现原理</title><link>https://hugozhu.site/post/2013/java-synchronousqueue-notes/</link><pubDate>Tue, 05 Mar 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/java-synchronousqueue-notes/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
 &lt;p>Java 6的并发编程包中的&lt;a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/SynchronousQueue.html">SynchronousQueue&lt;/a>是一个没有数据缓冲的&lt;a href="http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html">BlockingQueue&lt;/a>，生产者线程对其的插入操作put必须等待消费者的移除操作take，反过来也一样。&lt;/p>
 &lt;p>不像ArrayBlockingQueue或LinkedListBlockingQueue，SynchronousQueue内部并没有数据缓存空间，你不能调用peek()方法来看队列中是否有数据元素，因为数据元素只有当你试着取走的时候才可能存在，不取走而只想偷窥一下是不行的，当然遍历这个队列的操作也是不允许的。队列头元素是第一个排队要插入数据的&lt;strong>线程&lt;/strong>，而不是要交换的数据。数据是在配对的生产者和消费者线程之间直接传递的，并不会将数据缓冲数据到队列中。可以这样来理解：生产者和消费者互相等待对方，握手，然后&lt;strong>一起&lt;/strong>离开。&lt;/p>
 &lt;p>SynchronousQueue的一个使用场景是在线程池里。Executors.newCachedThreadPool()就使用了SynchronousQueue，这个线程池根据需要（新任务到来时）创建新的线程，如果有空闲线程则会重复使用，线程空闲了60秒后会被回收。&lt;/p>
@@ -88,7 +88,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="信号量实现">信号量实现&lt;/h3>
-&lt;p>经典同步队列实现采用了三个信号量，代码很简单，比较容易理解：&lt;/p></description></item><item><title>Java的资源管理</title><link>https://blog.hugozhu.site/post/2013/resource-management-in-java/</link><pubDate>Fri, 01 Mar 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/resource-management-in-java/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>经典同步队列实现采用了三个信号量，代码很简单，比较容易理解：&lt;/p></description></item><item><title>Java的资源管理</title><link>https://hugozhu.site/post/2013/resource-management-in-java/</link><pubDate>Fri, 01 Mar 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/resource-management-in-java/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。&lt;/p>
 &lt;h2 id="try-catch-finally">try-catch-finally&lt;/h2>
 &lt;p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &amp;ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如&lt;a href="http://findbugs.sourceforge.net">&lt;strong>FindBugs&lt;/strong>&lt;/a>可以帮助发现此类问题。&lt;/p>
@@ -133,7 +133,7 @@
 }
 &lt;/code>&lt;/pre>
 &lt;p>但是这样的代码写起来是不是让人有点沮丧？这样写代码犯错的可能性确实比较大。
-改良过后的代码阅读性好一些：&lt;/p></description></item><item><title>Java程序的日志</title><link>https://blog.hugozhu.site/post/2013/logging-in-java/</link><pubDate>Thu, 28 Feb 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/logging-in-java/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+改良过后的代码阅读性好一些：&lt;/p></description></item><item><title>Java程序的日志</title><link>https://hugozhu.site/post/2013/logging-in-java/</link><pubDate>Thu, 28 Feb 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/logging-in-java/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>一个在生产环境里运行的程序如果没有日志是很让维护者提心吊胆的，有太多杂乱又无意义的日志也是令人伤神。程序出现问题时候，从日志里如果发现不了问题可能的原因是很令人受挫的。本文想讨论的是如何在Java程序里写好日志。大多数的Web服务器（如Apache，Nginx）都有access日志和error日志，分别记录在不同的文件内；我们使用的服务器操作系统Linux有Syslog日志, /var/log目录下也有很多基础应用和服务的日志文件；桌面Windows有事件查看器, Mac有Console应用可以查看和管理日志；这些成熟的系统及工具方法都值得我们学习并在自己的项目中应用。&lt;/p>
 &lt;p>一般来说日志分为两种：业务日志和异常日志。使用日志我们希望能达到以下目标：&lt;/p>
 &lt;ol>
@@ -252,7 +252,7 @@
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
-&lt;p>在你的Java程序里日志也可以参考Syslog的设计，根据业务对程序的模块和日志级别做一定的规划和设计。&lt;/p></description></item><item><title>将Java的Properties文件转换成环境变量</title><link>https://blog.hugozhu.site/post/2013/java-properties-to-enviorment-variables/</link><pubDate>Mon, 25 Feb 2013 00:00:00 +0000</pubDate><guid>https://blog.hugozhu.site/post/2013/java-properties-to-enviorment-variables/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>在你的Java程序里日志也可以参考Syslog的设计，根据业务对程序的模块和日志级别做一定的规划和设计。&lt;/p></description></item><item><title>将Java的Properties文件转换成环境变量</title><link>https://hugozhu.site/post/2013/java-properties-to-enviorment-variables/</link><pubDate>Mon, 25 Feb 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/java-properties-to-enviorment-variables/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>在Java程序中使用properties文件很方便，但有时候需要和脚本配合使用时，需要把properties文件内的多个变量转换成环境变量，本文提供一个转换脚本示范：&lt;/p>
 &lt;p>比如env.properties如下（=附近可以有空格，也可以有空行）&lt;/p>
 &lt;pre>&lt;code>MYSQL_URL = jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=gbk
