@@ -17,15 +17,15 @@
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1107&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><h4><i>目录:</i></h4><nav id=TableOfContents><ul><li><a href=#什么是agent-loop>什么是Agent Loop？</a><ul><li><a href=#agent-loop的基本结构>Agent Loop的基本结构</a></li></ul></li><li><a href=#claude-code的自动修正原理>Claude Code的自动修正原理</a><ul><li><a href=#场景生成一个python函数>场景：生成一个Python函数</a></li><li><a href=#工具驱动的反馈循环>工具驱动的反馈循环</a></li></ul></li><li><a href=#agent-loop的最佳实践>Agent Loop的最佳实践</a><ul><li><a href=#1-设计多层次的反馈机制>1. <strong>设计多层次的反馈机制</strong></a></li><li><a href=#2-实现智能的循环终止条件>2. <strong>实现智能的循环终止条件</strong></a></li><li><a href=#3-上下文保持与记忆管理>3. <strong>上下文保持与记忆管理</strong></a></li><li><a href=#4-分层错误处理策略>4. <strong>分层错误处理策略</strong></a></li><li><a href=#5-实现渐进式改进>5. <strong>实现渐进式改进</strong></a></li><li><a href=#6-工具选择与组合策略>6. <strong>工具选择与组合策略</strong></a></li><li><a href=#7-并行化与性能优化>7. <strong>并行化与性能优化</strong></a></li></ul></li><li><a href=#claude-code的高级技巧>Claude Code的高级技巧</a><ul><li><a href=#hook机制自定义反馈注入>Hook机制：自定义反馈注入</a></li><li><a href=#多模态反馈>多模态反馈</a></li><li><a href=#记忆与学习>记忆与学习</a></li></ul></li><li><a href=#实战案例完整的agent-loop流程>实战案例：完整的Agent Loop流程</a></li><li><a href=#总结与最佳实践清单>总结与最佳实践清单</a><ul><li><a href=#核心原则>核心原则</a></li><li><a href=#技术实践>技术实践</a></li><li><a href=#避免的陷阱>避免的陷阱</a></li></ul></li><li><a href=#展望未来>展望未来</a></li></ul></nav><p>在AI辅助编程的时代，Claude Code等智能代码助手已经成为开发者的得力助手。但你是否好奇过：为什么Claude Code能够自动发现并修正生成代码中的错误？这背后的"Agent Loop"机制究竟是如何工作的？本文将深入剖析Claude Code的自动修正原理，并分享Agent Loop的最佳实践。</p><h2 id=什么是agent-loop>什么是Agent Loop？</h2><p>Agent Loop（代理循环）是AI系统中的一个核心设计模式，它允许AI代理通过<strong>感知-思考-行动-反馈</strong>的循环过程，不断优化自己的输出结果。与传统的"一次性生成"模式不同，Agent Loop引入了<strong>反馈机制</strong>和<strong>迭代优化</strong>能力。</p><h3 id=agent-loop的基本结构>Agent Loop的基本结构</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>┌─────────────────────────────────────────────┐
 </span></span><span class=line><span class=cl>│                Agent Loop                   │
 </span></span><span class=line><span class=cl>│                                             │
-</span></span><span class=line><span class=cl>│  ┌──────────┐      ┌──────────┐           │
-</span></span><span class=line><span class=cl>│  │  Observe │─────▶│  Think   │           │
-</span></span><span class=line><span class=cl>│  │ (感知)   │      │ (思考)   │           │
-</span></span><span class=line><span class=cl>│  └──────────┘      └─────┬────┘           │
+</span></span><span class=line><span class=cl>│  ┌──────────┐      ┌──────────┐             │
+</span></span><span class=line><span class=cl>│  │  Observe │─────▶│  Think   │             │
+</span></span><span class=line><span class=cl>│  │ (感知)   │      │ (思考)    │             │
+</span></span><span class=line><span class=cl>│  └──────────┘      └─────┬────┘             │
 </span></span><span class=line><span class=cl>│       ▲                   │                │
 </span></span><span class=line><span class=cl>│       │                   ▼                │
 </span></span><span class=line><span class=cl>│  ┌────┴─────┐      ┌──────────┐           │
 </span></span><span class=line><span class=cl>│  │ Feedback │◀─────│   Act    │           │
-</span></span><span class=line><span class=cl>│  │ (反馈)   │      │ (行动)   │           │
+</span></span><span class=line><span class=cl>│  │ (反馈)   │      │ (行动)   │            │
 </span></span><span class=line><span class=cl>│  └──────────┘      └──────────┘           │
 </span></span><span class=line><span class=cl>│                                             │
 </span></span><span class=line><span class=cl>└─────────────────────────────────────────────┘
