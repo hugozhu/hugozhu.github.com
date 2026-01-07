@@ -12,9 +12,216 @@
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on January 3, 2026
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on January 7, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/27-interrupts-with-gpio-pins/><h2 class=post-title>Raspberry Pi的GPIO中断编程</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 8, 2013
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/29-use-wiringpi-go-binding/><h2 class=post-title>使用Go语言在树莓派上编程</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 14, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;316&nbsp;words</span></p><div class=post-entry><p><a href=https://projects.drogon.net/raspberry-pi/wiringpi/>WiringPi</a>是树莓派上比较好的一个开发库，是用C语言写的。使用cgo，我们可以在Go语言里方便的调用WiringPI的函数，于是我包装了一个<a href=https://github.com/hugozhu/rpi>WiringPi-Go</a>，目前支持wiringPi的基本功能，硬件SPI协议驱动Nokia 5110屏幕，以及中断，未来还会增加PWM和I2C协议的支持。</p><p>下面是一个完整的使用例子，结合了之前的两个电路：<a href=http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html>链接1</a>，<a href=http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html>链接2</a></p><p>通过push button可以切换液晶屏显示不同脚本的输出内容。</p><p>lcd_switch.go</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>package</span> <span class=n>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=o>.</span> <span class=s2>&#34;github.com/hugozhu/rpi&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;github.com/hugozhu/rpi/pcd8544&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;log&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;os/exec&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=n>DIN</span>        <span class=o>=</span> <span class=n>PIN_MOSI</span>
+</span></span><span class=line><span class=cl>	<span class=n>SCLK</span>       <span class=o>=</span> <span class=n>PIN_SCLK</span>
+</span></span><span class=line><span class=cl>	<span class=n>DC</span>         <span class=o>=</span> <span class=n>PIN_GPIO_2</span>
+</span></span><span class=line><span class=cl>	<span class=n>RST</span>        <span class=o>=</span> <span class=n>PIN_GPIO_0</span>
+</span></span><span class=line><span class=cl>	<span class=n>CS</span>         <span class=o>=</span> <span class=n>PIN_CE0</span>
+</span></span><span class=line><span class=cl>	<span class=n>PUSHBUTTON</span> <span class=o>=</span> <span class=n>PIN_GPIO_6</span>
+</span></span><span class=line><span class=cl>	<span class=n>CONTRAST</span>   <span class=o>=</span> <span class=mi>40</span> <span class=o>//</span><span class=n>may</span> <span class=n>need</span> <span class=n>tweak</span> <span class=k>for</span> <span class=n>each</span> <span class=n>Nokia</span> <span class=mi>5110</span> <span class=n>screen</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>var</span> <span class=n>screen_chan</span> <span class=n>chan</span> <span class=ne>int</span>
+</span></span><span class=line><span class=cl><span class=k>var</span> <span class=n>TOTAL_MODES</span> <span class=o>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>init</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>WiringPiSetup</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDInit</span><span class=p>(</span><span class=n>SCLK</span><span class=p>,</span> <span class=n>DIN</span><span class=p>,</span> <span class=n>DC</span><span class=p>,</span> <span class=n>CS</span><span class=p>,</span> <span class=n>RST</span><span class=p>,</span> <span class=n>CONTRAST</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>screen_chan</span> <span class=o>=</span> <span class=n>make</span><span class=p>(</span><span class=n>chan</span> <span class=ne>int</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=o>//</span><span class=n>a</span> <span class=n>goroutine</span> <span class=n>to</span> <span class=n>check</span> <span class=n>button</span> <span class=n>push</span> <span class=n>event</span>
+</span></span><span class=line><span class=cl>	<span class=n>go</span> <span class=k>func</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>last_time</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>Now</span><span class=p>()</span><span class=o>.</span><span class=n>UnixNano</span><span class=p>()</span> <span class=o>/</span> <span class=mi>1000000</span>
+</span></span><span class=line><span class=cl>		<span class=n>btn_pushed</span> <span class=p>:</span><span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=n>pin</span> <span class=p>:</span><span class=o>=</span> <span class=nb>range</span> <span class=n>WiringPiISR</span><span class=p>(</span><span class=n>PUSHBUTTON</span><span class=p>,</span> <span class=n>INT_EDGE_FALLING</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=n>pin</span> <span class=o>&gt;</span> <span class=o>-</span><span class=mi>1</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>				<span class=n>n</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>Now</span><span class=p>()</span><span class=o>.</span><span class=n>UnixNano</span><span class=p>()</span> <span class=o>/</span> <span class=mi>1000000</span>
+</span></span><span class=line><span class=cl>				<span class=n>delta</span> <span class=p>:</span><span class=o>=</span> <span class=n>n</span> <span class=o>-</span> <span class=n>last_time</span>
+</span></span><span class=line><span class=cl>				<span class=k>if</span> <span class=n>delta</span> <span class=o>&gt;</span> <span class=mi>300</span> <span class=p>{</span> <span class=o>//</span><span class=n>software</span> <span class=n>debouncing</span>
+</span></span><span class=line><span class=cl>					<span class=nb>log</span><span class=o>.</span><span class=n>Println</span><span class=p>(</span><span class=s2>&#34;btn pushed&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>					<span class=n>last_time</span> <span class=o>=</span> <span class=n>n</span>
+</span></span><span class=line><span class=cl>					<span class=n>btn_pushed</span><span class=o>++</span>
+</span></span><span class=line><span class=cl>					<span class=n>screen_chan</span> <span class=o>&lt;-</span> <span class=n>btn_pushed</span> <span class=o>%</span> <span class=n>TOTAL_MODES</span> <span class=o>//</span><span class=k>switch</span> <span class=n>the</span> <span class=n>screen</span> <span class=n>display</span>
+</span></span><span class=line><span class=cl>				<span class=p>}</span>
+</span></span><span class=line><span class=cl>			<span class=p>}</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=o>//</span><span class=n>a</span> <span class=n>groutine</span> <span class=n>to</span> <span class=n>update</span> <span class=n>display</span> <span class=n>every</span> <span class=mi>5</span> <span class=n>seconds</span>
+</span></span><span class=line><span class=cl>	<span class=n>go</span> <span class=n>loop_update_display</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=o>//</span><span class=n>set</span> <span class=n>screen</span> <span class=mi>0</span> <span class=n>to</span> <span class=n>be</span> <span class=n>default</span> <span class=n>display</span>
+</span></span><span class=line><span class=cl>	<span class=n>screen_chan</span> <span class=o>&lt;-</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>ticker</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>NewTicker</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=n>time</span><span class=o>.</span><span class=n>Second</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=o>&lt;-</span><span class=n>ticker</span><span class=o>.</span><span class=n>C</span>
+</span></span><span class=line><span class=cl>		<span class=n>screen_chan</span> <span class=o>&lt;-</span> <span class=o>-</span><span class=mi>1</span> <span class=o>//</span><span class=n>refresh</span> <span class=n>current</span> <span class=n>screen</span> <span class=n>every</span> <span class=mi>5</span> <span class=n>seconds</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>loop_update_display</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>current_screen</span> <span class=p>:</span><span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=n>screen</span> <span class=p>:</span><span class=o>=</span> <span class=nb>range</span> <span class=n>screen_chan</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=n>screen</span> <span class=o>&gt;=</span> <span class=mi>0</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=n>screen</span> <span class=o>!=</span> <span class=n>current_screen</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>				<span class=o>//</span><span class=n>btn</span> <span class=n>pushed</span>
+</span></span><span class=line><span class=cl>				<span class=n>current_screen</span> <span class=o>=</span> <span class=n>screen</span>
+</span></span><span class=line><span class=cl>				<span class=n>display_loading</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>			<span class=p>}</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>		<span class=k>switch</span> <span class=n>current_screen</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=n>display_screen0</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=mi>1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=n>display_screen1</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=mi>2</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=n>display_screen2</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_loading</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>20</span><span class=p>,</span> <span class=s2>&#34;Loading ...&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_screen0</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>out</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>exec</span><span class=o>.</span><span class=n>Command</span><span class=p>(</span><span class=s2>&#34;/bin/screen_0.sh&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>CombinedOutput</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>out</span> <span class=o>=</span> <span class=p>[]</span><span class=n>byte</span><span class=p>(</span><span class=n>err</span><span class=o>.</span><span class=n>Error</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>string</span><span class=p>(</span><span class=n>out</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_screen1</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>out</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>exec</span><span class=o>.</span><span class=n>Command</span><span class=p>(</span><span class=s2>&#34;/bin/screen_1.sh&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>CombinedOutput</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>out</span> <span class=o>=</span> <span class=p>[]</span><span class=n>byte</span><span class=p>(</span><span class=n>err</span><span class=o>.</span><span class=n>Error</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>string</span><span class=p>(</span><span class=n>out</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_screen2</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>out</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>exec</span><span class=o>.</span><span class=n>Command</span><span class=p>(</span><span class=s2>&#34;/bin/screen_2.sh&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>CombinedOutput</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>out</span> <span class=o>=</span> <span class=p>[]</span><span class=n>byte</span><span class=p>(</span><span class=n>err</span><span class=o>.</span><span class=n>Error</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>string</span><span class=p>(</span><span class=n>out</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>/bin/screen_2.sh</p><a href=https://hugozhu.site/post/2013/29-use-wiringpi-go-binding/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/><h2 class=post-title>使用tsar记录和监控树莓派CPU温度</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 13, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;509&nbsp;words</span></p><div class=post-entry><p>夏天到了，树莓派的CPU温度也开始节节攀升，虽然我们也可以用云服务<a href=https://cosm.com>cosm</a>来监控，但每5分钟采样一次精度不够高，每分钟采样一次则上传次数又太多了点。最好的方法还是使用<a href=http://github.com/alibaba/tsar>tsar</a>这样的工具本地高频（如每1分钟）采样，然后再定时将5分钟的均值上传到cosm绘图。</p><p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。</p><h1 id=更新><strong>更新</strong></h1><p>[2013-04-14] mod_rpi已经被合并到了主干代码：<a href=https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c>https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c</a> 只需要增加文件：<code>/etc/tsar/conf.d/rpi.conf</code>，内容为以下即可开始使用mod_rpi模块：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>mod_rpi on
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>####add it to tsar default output
+</span></span><span class=line><span class=cl>output_stdio_mod mod_rpi
+</span></span></code></pre></div><h1 id=mod_rpi模块开发方法>mod_rpi模块开发方法</h1><p>首先按照安装说明，见<a href=https://github.com/alibaba/tsar>https://github.com/alibaba/tsar</a>将tsar和tsardevel安装好。</p><p>首先运行下面的命令生成mod_rpi模块：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>hugo@raspberrypi2 ~/projects/tsardevel $ tsardevel rpi 
+</span></span><span class=line><span class=cl>build:make
+</span></span><span class=line><span class=cl>install:make install
+</span></span><span class=line><span class=cl>uninstall:make uninstall
+</span></span><span class=line><span class=cl>hugo@raspberrypi2 ~/projects/tsardevel $ ls rpi
+</span></span><span class=line><span class=cl>Makefile  mod_rpi.c  mod_rpi.conf
+</span></span></code></pre></div><p>然后修改mod_rpi.c，增加读取CPU温度的逻辑：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>/*
+</span></span><span class=line><span class=cl> * (C) 2010-2011 Alibaba Group Holding Limited
+</span></span><span class=line><span class=cl> *
+</span></span><span class=line><span class=cl> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span></span><span class=line><span class=cl> * you may not use this file except in compliance with the License.
+</span></span><span class=line><span class=cl> * You may obtain a copy of the License at
+</span></span><span class=line><span class=cl> *
+</span></span><span class=line><span class=cl> *     http://www.apache.org/licenses/LICENSE-2.0
+</span></span><span class=line><span class=cl> *
+</span></span><span class=line><span class=cl> * Unless required by applicable law or agreed to in writing, software
+</span></span><span class=line><span class=cl> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span></span><span class=line><span class=cl> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span></span><span class=line><span class=cl> * See the License for the specific language governing permissions and
+</span></span><span class=line><span class=cl> * limitations under the License.
+</span></span><span class=line><span class=cl> *
+</span></span><span class=line><span class=cl> */
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>#include &#34;tsar.h&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/*
+</span></span><span class=line><span class=cl> * Structure for rpi infomation.
+</span></span><span class=line><span class=cl> */
+</span></span><span class=line><span class=cl>struct stats_rpi {
+</span></span><span class=line><span class=cl>	unsigned int cpu_temp;
+</span></span><span class=line><span class=cl>};
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>#define STATS_TEST_SIZE (sizeof(struct stats_rpi))
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>static char *rpi_usage = &#34;    --rpi               Rapsberry Pi information (CPU temprature ...)&#34;;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>static void read_rpi_stats(struct module *mod, char *parameter)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>	FILE *fp;
+</span></span><span class=line><span class=cl>	char buf[64];
+</span></span><span class=line><span class=cl>	memset(buf, 0, sizeof(buf));
+</span></span><span class=line><span class=cl>	struct stats_rpi st_rpi;
+</span></span><span class=line><span class=cl>	memset(&amp;st_rpi, 0, sizeof(struct stats_rpi));
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	if ((fp = fopen(&#34;/sys/class/thermal/thermal_zone0/temp&#34;, &#34;r&#34;)) == NULL) {
+</span></span><span class=line><span class=cl>		return;
+</span></span><span class=line><span class=cl>	}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	int cpu_temp;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	fscanf(fp, &#34;%d&#34;, &amp;cpu_temp);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	st_rpi.cpu_temp = cpu_temp;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	int pos = sprintf(buf, &#34;%u&#34;,
+</span></span><span class=line><span class=cl>			/* the store order is not same as read procedure */
+</span></span><span class=line><span class=cl>			st_rpi.cpu_temp);
+</span></span><span class=line><span class=cl>	buf[pos] = &#39;\0&#39;;
+</span></span><span class=line><span class=cl>	set_mod_record(mod, buf);
+</span></span><span class=line><span class=cl>	fclose(fp);
+</span></span><span class=line><span class=cl>	return;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>static struct mod_info rpi_info[] = {
+</span></span><span class=line><span class=cl>	{&#34;  temp&#34;, SUMMARY_BIT,  0,  STATS_NULL}
+</span></span><span class=line><span class=cl>};
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>static void set_rpi_record(struct module *mod, double st_array[],
+</span></span><span class=line><span class=cl>		U_64 pre_array[], U_64 cur_array[], int inter)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>	st_array[0] = cur_array[0]/1000.0;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>void mod_register(struct module *mod)
+</span></span><span class=line><span class=cl>{	
+</span></span><span class=line><span class=cl>	register_mod_fileds(mod, &#34;--rpi&#34;, rpi_usage, rpi_info, 1, read_rpi_stats, set_rpi_record);
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></div><p>最后<code>make && sudo make install</code>将mod_rpi自定义tsar模块安装好。</p><a href=https://hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/27-interrupts-with-gpio-pins/><h2 class=post-title>Raspberry Pi的GPIO中断编程</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 8, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;503&nbsp;words</span></p><div class=post-entry><h1 id=背景介绍>背景介绍</h1><p>树莓派的GPIO引脚不仅可以输出高低电平，也可以当做输入端口（可以想象成键盘输入），当GPIO接入的是高电平，GPIO的值可以认为是1，如果是低电平则是0。如下图所示，可以使用一个Push Button开关按键来控制GPIO 25（BCM Numbering）的高低电平以达到控制的目的。</p><img src="https://www.evernote.com/shard/s26/sh/bd720803-1b71-454d-98a2-cf0e907df688/649d6eb30376f8a378ef3e8a7cc3c552/deep/0/Screenshot%204/8/13%2011:25%20PM.jpg?noteKey=649d6eb30376f8a378ef3e8a7cc3c552&suffix=deep%2F0%2FScreenshot+4%2F8%2F13+11%3A25+PM.jpg&noteGuid=bd720803-1b71-454d-98a2-cf0e907df688"><p>GPIO 25和VCC（3.3V）之间通过R1（10K欧姆）和R2（1K欧姆）<a href=https://zh.wikipedia.org/zh/%E4%B8%8A%E6%8B%89%E7%94%B5%E9%98%BB>上拉电阻</a>相连，当按键未被按下时，GPIO 25上拉到VCC，程序可以读到1，当按键按下时，GPIO 25被下拉电阻R2拉到GND（0V），程序可以读到0。如果不加R1，而GPIO 25不小心被设置成输出低电平时，将直接和VCC相连而造成短路，这样可能会烧掉这个引脚，所以加上限流电阻R1后，即使发生这样的情况，也不会出现短路情况。</p><h1 id=应用>应用</h1><p>如果我们需要根据GPIO 25的值来控制树莓派，比如按下按钮时希望点亮某个LED或在液晶上显示当前时间，就需要通过程序来获取状态的变化。</p><p>一种常见的做法是在循环里不断读取该引脚的状态，当发生对应的变化的时执行控制逻辑，但显而易见，这种做法很消耗CPU，如果在循环增加<code>sleep(1000)</code>这样的调用，又很容易错过按键变化。较好的做法则是通过<a href=http://zh.wikipedia.org/wiki/%E4%B8%AD%E6%96%AD>中断</a>来实现。</p><p>最新的树莓派Raspbian和Arch Linux内核都已经包含了GPIO的中断处理支持。但使用前需要将指定GPIO引脚输出，方法如下：</p><p>首先可以通过命令<code>echo 25 > /sys/class/gpio/export</code>导出GPIO 25端口，执行成功后在相应的目录下看到以下文件，得益于Linux下<strong>一切都是文件</strong>的设计理念，GPIO的状态可以通过<code>value</code>文件来获取，这样就可以利用Linux的poll/epoll来获取<code>value</code>文件的变化(这点和Linux高性能网络编程是类似的)。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>root@raspberrypi2 ~/projects/interrupt_test # ls -l /sys/class/gpio/gpio25/
 </span></span><span class=line><span class=cl>total 0
@@ -201,279 +408,7 @@
 但多个用户可能通过一个IP过来，这种做法肯定不精确。一般我们可以通过在页面上部署Javascript脚本，由Javascript为每一个浏览器产生一个独特的持久化Cookie，用这个Cookie代替IP来统计。但用Raspberry Pi来做这件事情会拖慢网站，于是一种方案是采用免费的Google App Engine来实现，打算有空来实现一个。</p><h2 id=cnzz>CNZZ</h2><p>CNZZ也提供了15分钟内的在线人数统计功能。分析CNZZ的计数器代码后发现如下方法可以提取到在线人数:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>curl -s &#34;http://online.cnzz.com/online/online.php?id=[your_cnzz_id]&amp;h=[your_cnzz_server_id].cnzz.com&amp;on=1&amp;s=line&#34; | sed -e &#39;s/.*当前在线\[\([0-9]\).*/\1/g&#39;
 </span></span></code></pre></div><p>于是先通过上面的脚本提取在线人数并上传到<a href=https://cosm.com/feeds/92372>Cosm</a>，Cosm有个触发器功能可以当在线人数超过某个值后发Twitter或HTTP Post到指定URL，并通过程序显示在液晶屏上。</p></div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/><h2 class=post-title>升级版电子钟 - 如何使用Raspberry Pi驱动Nokia 5110液晶屏</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 24, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;620&nbsp;words</span></p><div class=post-entry><p>Nokia 5110屏比前面介绍过的<a href=http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html>1602液晶屏</a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：</p><ol><li>带蓝色背光</li><li>使用Philips PCD8544 LCD控制器（通过SPI接口）</li><li>84x48点阵，可显示100多个字符</li></ol><h1 id=硬件准备>硬件准备</h1><ol><li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li><li><a href="http://item.taobao.com/item.htm?id=3125173573&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118594_4k1_653822857&amp;clk1=0b755dfca67112cd1b605914b40146e7&amp;spm=a230z.1.5634029.2.foR1Yu">Nokia 5110 拆机屏</a> 或 <a href="http://item.taobao.com/item.htm?spm=a230r.1.10.154.SdjftL&amp;id=13361097288&_u=oqa31997">焊好的？</a> 注意不要买裸屏，需要带电路板的</li><li><a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">杜邦线</a> 母对母8条</li><li>8P排针 用来焊接5110屏幕PCB板</li><li><a href="http://detail.tmall.com/item.htm?id=22096296909&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁</a></li></ol><h1 id=电路>电路</h1><p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。</p><img src=http://img01.taobaocdn.com/bao/uploaded/i1/13130028971464406/T1v5oAXd0XXXXXXXXX_!!0-item_pic.jpg_600x600.jpg><ol><li>RST —— 复位 接GPIO 0</li><li>CE —— 片选 接GPIO 1 或 不接</li><li>DC —— 数据/指令选择 接GPIO 2</li><li>DIN —— 串行数据线 接GPIO 3</li><li>CLK —— 串行时钟线 接GPIO 5 （因为我的GPIO 4已经接了一个DHT11传感器）</li><li>VCC —— 电源输入 接3.3v</li><li>BL —— 背光控制端 接3.3v</li><li>GND —— 地线 接地</li></ol><p>PS. 编号规范看<a href=http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html>这里</a> VCC, BK, GND可以接在面包板电源上</p><a href=https://hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/19-raspberry-pi-drive-1602-lcd/><h2 class=post-title>如何使用Raspberry Pi在1602液晶屏上显示当前时间--电子钟</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 23, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;793&nbsp;words</span></p><div class=post-entry><h1 id=硬件准备>硬件准备</h1><p>需要以下硬件：</p><ol><li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li><li><a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5&amp;type=p&amp;style=&amp;cat=all">面包板</a></li><li><a href="http://s.taobao.com/search?spm=a230r.1.8.2.RvXL2p&amp;q=1602+%D2%BA%BE%A7&amp;commend=all&amp;source=haiwaigou&amp;ssid=s5-e&amp;pid=mm_14507416_2297358_8935934&amp;newpre=null&amp;tab=mall">1602液晶屏</a>一块</li><li><a href="http://s.taobao.com/search?source=suggest&amp;haiwaifrom=1&amp;q=%B5%E7%CE%BB%C6%F7+10k&amp;initiative_id=staobaoz_20130323&amp;suggest_query=%B5%E7%CE%BB%C6%F7+10k&amp;sb_id=10&amp;suggest=0_2&amp;wq=%B5%E7%CE%BB%C6%F7&amp;tab=mall">10K电位器</a></li><li><a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">杜邦线</a></li><li><a href="http://s.taobao.com/search?source=haiwaigou&amp;haiwaifrom=1&amp;q=%C5%C5%D5%EB&amp;initiative_id=staobaoz_20130323&amp;tab=mall">排针</a></li><li><a href="http://list.tmall.com//search_product.htm?q=%C3%E6%B0%FC%B0%E5+%B5%E7%D4%B4&amp;type=p&amp;style=&amp;cat=all">面包板电源</a></li></ol><h1 id=1602-lcd液晶屏>1602 LCD液晶屏</h1><p>LCD1602液晶屏提供了16列x2行的ASCII字符显示能力，工作电压5V，提供4位数据与8位数据两种工作模式，因为Raspberry Pi的GPIO口数量很有限，所以使用4位数据模式。LCD1602液晶屏模块提供了16个引脚，我们只需接其中的12个即可&ndash;请参考<a href=http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html>GPIO命名规则</a>：</p><ol><li>VSS，接地，RPi PIN 6</li><li>VDD，接5V电源，PRi PIN 2</li><li>VO，液晶对比度调节，接电位器中间的引脚</li><li>RS，寄存器选择，接GPIO 14，RPi PIN 8</li><li>RW，读写选择，接地，表示写模式，PRi PIN 6</li><li>EN，使能信号，接GPIO 15，RPi PIN 10</li><li>D0，数据位0，4位工作模式下不用，不接</li><li>D1，数据位1，4位工作模式下不用，不接</li><li>D2，数据位2，4位工作模式下不用，不接</li><li>D3，数据位3，4位工作模式下不用，不接</li><li>D4，数据位4，接GPIO 17，RPi PIN 11</li><li>D5，数据位5，接GPIO 18，RPi PIN 12</li><li>D6，数据位6，接GPIO 27，RPi PIN 13</li><li>D7，数据位7，接GPIO 22，RPi PIN 15</li><li>A，液晶屏背光+，接5V，RPi PIN 2</li><li>K，液晶屏背光-，接地，RPi PIN 6</li></ol><h1 id=注意事项>注意事项</h1><ol><li>电源VDD最后接上</li><li>排针焊接在液晶屏时注意不要虚焊，也可以用万用表测量一下</li><li>RW脚注意一定要接地</li><li>调节电位器可以调节液晶对比度</li></ol><h1 id=电路图>电路图</h1><img src=http://learn.adafruit.com/system/assets/assets/000/001/729/medium640/pi-char-lcd.gif?1345220594><h1 id=代码>代码</h1><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>#!/usr/bin/python
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>#
-</span></span><span class=line><span class=cl># based on code from lrvick and LiquidCrystal
-</span></span><span class=line><span class=cl># lrvic - https://github.com/lrvick/raspi-hd44780/blob/master/hd44780.py
-</span></span><span class=line><span class=cl># LiquidCrystal - https://github.com/arduino/Arduino/blob/master/libraries/LiquidCrystal/LiquidCrystal.cpp
-</span></span><span class=line><span class=cl>#
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>from time import sleep
-</span></span><span class=line><span class=cl>from datetime import datetime
-</span></span><span class=line><span class=cl>from time import sleep
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>class Adafruit_CharLCD:
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    # commands
-</span></span><span class=line><span class=cl>    LCD_CLEARDISPLAY 		= 0x01
-</span></span><span class=line><span class=cl>    LCD_RETURNHOME 		    = 0x02
-</span></span><span class=line><span class=cl>    LCD_ENTRYMODESET 		= 0x04
-</span></span><span class=line><span class=cl>    LCD_DISPLAYCONTROL 		= 0x08
-</span></span><span class=line><span class=cl>    LCD_CURSORSHIFT 		= 0x10
-</span></span><span class=line><span class=cl>    LCD_FUNCTIONSET 		= 0x20
-</span></span><span class=line><span class=cl>    LCD_SETCGRAMADDR 		= 0x40
-</span></span><span class=line><span class=cl>    LCD_SETDDRAMADDR 		= 0x80
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    # flags for display entry mode
-</span></span><span class=line><span class=cl>    LCD_ENTRYRIGHT 		= 0x00
-</span></span><span class=line><span class=cl>    LCD_ENTRYLEFT 		= 0x02
-</span></span><span class=line><span class=cl>    LCD_ENTRYSHIFTINCREMENT 	= 0x01
-</span></span><span class=line><span class=cl>    LCD_ENTRYSHIFTDECREMENT 	= 0x00
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    # flags for display on/off control
-</span></span><span class=line><span class=cl>    LCD_DISPLAYON 		= 0x04
-</span></span><span class=line><span class=cl>    LCD_DISPLAYOFF 		= 0x00
-</span></span><span class=line><span class=cl>    LCD_CURSORON 		= 0x02
-</span></span><span class=line><span class=cl>    LCD_CURSOROFF 		= 0x00
-</span></span><span class=line><span class=cl>    LCD_BLINKON 		= 0x01
-</span></span><span class=line><span class=cl>    LCD_BLINKOFF 		= 0x00
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    # flags for display/cursor shift
-</span></span><span class=line><span class=cl>    LCD_DISPLAYMOVE 		= 0x08
-</span></span><span class=line><span class=cl>    LCD_CURSORMOVE 		= 0x00
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    # flags for display/cursor shift
-</span></span><span class=line><span class=cl>    LCD_DISPLAYMOVE 		= 0x08
-</span></span><span class=line><span class=cl>    LCD_CURSORMOVE 		= 0x00
-</span></span><span class=line><span class=cl>    LCD_MOVERIGHT 		= 0x04
-</span></span><span class=line><span class=cl>    LCD_MOVELEFT 		= 0x00
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    # flags for function set
-</span></span><span class=line><span class=cl>    LCD_8BITMODE 		= 0x10
-</span></span><span class=line><span class=cl>    LCD_4BITMODE 		= 0x00
-</span></span><span class=line><span class=cl>    LCD_2LINE 			= 0x08
-</span></span><span class=line><span class=cl>    LCD_1LINE 			= 0x00
-</span></span><span class=line><span class=cl>    LCD_5x10DOTS 		= 0x04
-</span></span><span class=line><span class=cl>    LCD_5x8DOTS 		= 0x00
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def __init__(self, pin_rs=8, pin_e=10, pins_db=[11,12,13,15], GPIO = None):
-</span></span><span class=line><span class=cl>	# Emulate the old behavior of using RPi.GPIO if we haven&#39;t been given
-</span></span><span class=line><span class=cl>	# an explicit GPIO interface to use
-</span></span><span class=line><span class=cl>	if not GPIO:
-</span></span><span class=line><span class=cl>	    import RPi.GPIO as GPIO
-</span></span><span class=line><span class=cl>        GPIO.setwarnings(False)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>   	self.GPIO = GPIO
-</span></span><span class=line><span class=cl>        self.pin_rs = pin_rs
-</span></span><span class=line><span class=cl>        self.pin_e = pin_e
-</span></span><span class=line><span class=cl>        self.pins_db = pins_db
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        self.GPIO.setmode(GPIO.BOARD)
-</span></span><span class=line><span class=cl>        self.GPIO.setup(self.pin_e, GPIO.OUT)
-</span></span><span class=line><span class=cl>        self.GPIO.setup(self.pin_rs, GPIO.OUT)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        for pin in self.pins_db:
-</span></span><span class=line><span class=cl>            self.GPIO.setup(pin, GPIO.OUT)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.write4bits(0x33) # initialization
-</span></span><span class=line><span class=cl>	self.write4bits(0x32) # initialization
-</span></span><span class=line><span class=cl>	self.write4bits(0x28) # 2 line 5x7 matrix
-</span></span><span class=line><span class=cl>	self.write4bits(0x0C) # turn cursor off 0x0E to enable cursor
-</span></span><span class=line><span class=cl>	self.write4bits(0x06) # shift cursor right
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
-</span></span><span class=line><span class=cl>	self.displayfunction |= self.LCD_2LINE
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Initialize to default text direction (for romance languages) &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>	self.displaymode =  self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        self.clear()
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def begin(self, cols, lines):
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	if (lines &gt; 1):
-</span></span><span class=line><span class=cl>		self.numlines = lines
-</span></span><span class=line><span class=cl>    		self.displayfunction |= self.LCD_2LINE
-</span></span><span class=line><span class=cl>		self.currline = 0
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def home(self):
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_RETURNHOME) # set cursor position to zero
-</span></span><span class=line><span class=cl>	self.delayMicroseconds(3000) # this command takes a long time!
-</span></span><span class=line><span class=cl>	
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def clear(self):
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_CLEARDISPLAY) # command to clear display
-</span></span><span class=line><span class=cl>	self.delayMicroseconds(3000)	# 3000 microsecond sleep, clearing the display takes a long time
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def setCursor(self, col, row):
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.row_offsets = [ 0x00, 0x40, 0x14, 0x54 ]
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	if ( row &gt; self.numlines ): 
-</span></span><span class=line><span class=cl>		row = self.numlines - 1 # we count rows starting w/0
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_SETDDRAMADDR | (col + self.row_offsets[row]))
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def noDisplay(self): 
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Turn the display off (quickly) &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol &amp;= ~self.LCD_DISPLAYON
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def display(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Turn the display on (quickly) &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol |= self.LCD_DISPLAYON
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def noCursor(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Turns the underline cursor on/off &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol &amp;= ~self.LCD_CURSORON
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def cursor(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Cursor On &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol |= self.LCD_CURSORON
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def noBlink(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Turn on and off the blinking cursor &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol &amp;= ~self.LCD_BLINKON
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def noBlink(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; Turn on and off the blinking cursor &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaycontrol &amp;= ~self.LCD_BLINKON
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def DisplayLeft(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; These commands scroll the display without changing the RAM &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVELEFT)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def scrollDisplayRight(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; These commands scroll the display without changing the RAM &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_CURSORSHIFT | self.LCD_DISPLAYMOVE | self.LCD_MOVERIGHT);
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def leftToRight(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; This is for text that flows Left to Right &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaymode |= self.LCD_ENTRYLEFT
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode);
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def rightToLeft(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; This is for text that flows Right to Left &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>	self.displaymode &amp;= ~self.LCD_ENTRYLEFT
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def autoscroll(self):
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; This will &#39;right justify&#39; text from the cursor &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaymode |= self.LCD_ENTRYSHIFTINCREMENT
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def noAutoscroll(self): 
-</span></span><span class=line><span class=cl>	&#34;&#34;&#34; This will &#39;left justify&#39; text from the cursor &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.displaymode &amp;= ~self.LCD_ENTRYSHIFTINCREMENT
-</span></span><span class=line><span class=cl>	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def write4bits(self, bits, char_mode=False):
-</span></span><span class=line><span class=cl>        &#34;&#34;&#34; Send command to LCD &#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.delayMicroseconds(1000) # 1000 microsecond sleep
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        bits=bin(bits)[2:].zfill(8)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        self.GPIO.output(self.pin_rs, char_mode)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        for pin in self.pins_db:
-</span></span><span class=line><span class=cl>            self.GPIO.output(pin, False)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        for i in range(4):
-</span></span><span class=line><span class=cl>            if bits[i] == &#34;1&#34;:
-</span></span><span class=line><span class=cl>                self.GPIO.output(self.pins_db[::-1][i], True)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.pulseEnable()
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        for pin in self.pins_db:
-</span></span><span class=line><span class=cl>            self.GPIO.output(pin, False)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        for i in range(4,8):
-</span></span><span class=line><span class=cl>            if bits[i] == &#34;1&#34;:
-</span></span><span class=line><span class=cl>                self.GPIO.output(self.pins_db[::-1][i-4], True)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	self.pulseEnable()
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def delayMicroseconds(self, microseconds):
-</span></span><span class=line><span class=cl>	seconds = microseconds / float(1000000)	# divide microseconds by 1 million for seconds
-</span></span><span class=line><span class=cl>	sleep(seconds)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def pulseEnable(self):
-</span></span><span class=line><span class=cl>	self.GPIO.output(self.pin_e, False)
-</span></span><span class=line><span class=cl>	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be &gt; 450ns 
-</span></span><span class=line><span class=cl>	self.GPIO.output(self.pin_e, True)
-</span></span><span class=line><span class=cl>	self.delayMicroseconds(1)		# 1 microsecond pause - enable pulse must be &gt; 450ns 
-</span></span><span class=line><span class=cl>	self.GPIO.output(self.pin_e, False)
-</span></span><span class=line><span class=cl>	self.delayMicroseconds(1)		# commands need &gt; 37us to settle
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    def message(self, text):
-</span></span><span class=line><span class=cl>        &#34;&#34;&#34; Send string to LCD. Newline wraps to second line&#34;&#34;&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        for char in text:
-</span></span><span class=line><span class=cl>            if char == &#39;\n&#39;:
-</span></span><span class=line><span class=cl>                self.write4bits(0xC0) # next line
-</span></span><span class=line><span class=cl>            else:
-</span></span><span class=line><span class=cl>                self.write4bits(ord(char),True)
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>if __name__ == &#39;__main__&#39;:
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    lcd = Adafruit_CharLCD()
-</span></span><span class=line><span class=cl>    lcd.noBlink()
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    while True:
-</span></span><span class=line><span class=cl>        sleep(1)
-</span></span><span class=line><span class=cl>        lcd.clear()        
-</span></span><span class=line><span class=cl>        lcd.message(datetime.now().strftime(&#39;  %I : %M : %S \n%a %b %d %Y&#39;))
-</span></span><span class=line><span class=cl>        
-</span></span></code></pre></div><h1 id=完成后的效果>完成后的效果</h1><img src=http://ww3.sinaimg.cn/mw690/6bc40342jw1e2xngyc634j.jpg><h1 id=参考链接>参考链接</h1><ol><li><a href=http://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/wiring>http://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/wiring</a></li><li><a href=http://www.freemindworld.com/blog/tag/>http://www.freemindworld.com/blog/tag/</a>树莓派</li></ol></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/19-raspberry-pi-gpio-port-naming/><h2 class=post-title>Raspberry Pi GPIO的编号规范</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 22, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;281&nbsp;words</span></p><div class=post-entry><p>树莓派和普通电脑不一样的地方在于它还带了17个可编程的<a href=http://en.wikipedia.org/wiki/General_Purpose_Input/Output>GPIO</a>（General Purpose Input/Output），可以用来驱动各种外设（如传感器，步进电机等）。但GPIO的编号方法有些混乱，不同的API（如wiringPi，RPi.GPIO等）对GPIO的端口号编号并不一样，下面则用图表标明了对应的叫法，这样在看程序例子的时候可以确定物理是哪个接口。</p><h1 id=gpio库>GPIO库</h1><ol><li><a href=https://github.com/WiringPi/WiringPi>wiringPi</a> C，有Perl, PHP, Ruby, Node.JS和**<a href=http://github.com/hugozhu/rpi>Golang</a>**的扩展，支持wiringPi Pin和BCM GPIO两种编号</li><li><a href=https://pypi.python.org/pypi/RPi.GPIO>RPi.GPIO</a> Python，支持Board Pin和BCM GPIO两种编号</li><li><a href=http://code.google.com/p/webiopi/>Webiopi</a>，Python, 使用BCM GPIO编号</li><li><a href=http://github.com/hugozhu/rpi>WiringPi-Go</a>, Go语言，支持以上三种编号</li></ol><h1 id=编号规范>编号规范</h1><ol><li>第一列是wiringPi API中的缺省编号，<code>wiringPiSetup()</code>采用这列编号</li><li>第二列（Name）往往是转接板的编号</li><li>第三列是树莓派板子上的自然编号（左边引脚为1-15，右边引脚为2-26），<code>RPi.GPIO.setmode(GPIO.BOARD)</code>采用这列编号</li><li>树莓派主芯片提供商Broadcom的编号方法，相当于调用了<code>WiringPiSetupGpio()</code>或<code>RPi.GPIO.setmode(GPIO.BCM)</code>采用这列编号</li></ol><table><thead><tr><th>wiringPi Pin</th><th>Name</th><th>Board Pin</th><th>BCM GPIO</th></tr></thead><tbody><tr><td>0</td><td>GPIO 0</td><td>11</td><td>17</td></tr><tr><td>1</td><td>GPIO 1</td><td>12</td><td>18</td></tr><tr><td>2</td><td>GPIO 2</td><td>13</td><td>21</td></tr><tr><td>3</td><td>GPIO 3</td><td>15</td><td>22</td></tr><tr><td>4</td><td>GPIO 4</td><td>16</td><td>23</td></tr><tr><td>5</td><td>GPIO 5</td><td>18</td><td>24</td></tr><tr><td>6</td><td>GPIO 6</td><td>22</td><td>25</td></tr><tr><td>7</td><td>GPIO 7</td><td>7</td><td>4</td></tr><tr><td>8</td><td>SDA</td><td>3</td><td>0</td></tr><tr><td>9</td><td>SCL</td><td>5</td><td>1</td></tr><tr><td>10</td><td>CE0</td><td>24</td><td>8</td></tr><tr><td>11</td><td>CE1</td><td>26</td><td>7</td></tr><tr><td>12</td><td>MOSI</td><td>19</td><td>10</td></tr><tr><td>13</td><td>MISO</td><td>21</td><td>9</td></tr><tr><td>14</td><td>SCLK</td><td>23</td><td>11</td></tr><tr><td>15</td><td>TXD</td><td>8</td><td>14</td></tr><tr><td>16</td><td>RXD</td><td>10</td><td>15</td></tr></tbody></table><p>Rev.2 新增的引脚：</p><a href=https://hugozhu.site/post/2013/19-raspberry-pi-gpio-port-naming/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/post/page/8/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/post/page/10/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;620&nbsp;words</span></p><div class=post-entry><p>Nokia 5110屏比前面介绍过的<a href=http://hugozhu.myalert.info/2013/03/23/19-raspberry-pi-drive-1602-lcd.html>1602液晶屏</a>功能好很多，淘宝上买价格相差不大（二手5110 12块左右, 全新1602 8块左右），Nokia 5110最少只需要占用4个GPIO引脚：</p><ol><li>带蓝色背光</li><li>使用Philips PCD8544 LCD控制器（通过SPI接口）</li><li>84x48点阵，可显示100多个字符</li></ol><h1 id=硬件准备>硬件准备</h1><ol><li><a href="http://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.nGxekg&amp;id=17337394004&amp;is_b=1&amp;cat_id=2&amp;q=%CA%F7%DD%AE%C5%C9&amp;rn=4004716f9ba818c1d69b5eb7818891b5">树莓派</a></li><li><a href="http://item.taobao.com/item.htm?id=3125173573&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118594_4k1_653822857&amp;clk1=0b755dfca67112cd1b605914b40146e7&amp;spm=a230z.1.5634029.2.foR1Yu">Nokia 5110 拆机屏</a> 或 <a href="http://item.taobao.com/item.htm?spm=a230r.1.10.154.SdjftL&amp;id=13361097288&_u=oqa31997">焊好的？</a> 注意不要买裸屏，需要带电路板的</li><li><a href="http://list.tmall.com/search_product.htm?q=%B6%C5%B0%EE%CF%DF&amp;user_action=initiative&amp;at_topsearch=1&amp;sort=st&amp;type=p&amp;cat=&amp;style=">杜邦线</a> 母对母8条</li><li>8P排针 用来焊接5110屏幕PCB板</li><li><a href="http://detail.tmall.com/item.htm?id=22096296909&amp;ali_trackid=2:mm_12926928_3484851_11423954:1364118800_4k4_1229281314&amp;clk1=c7335b2dcbad93f47eaf5cd4d1cc140b&amp;spm=a230z.1.5634029.66.6xxdfN">电烙铁</a></li></ol><h1 id=电路>电路</h1><p>5110电路板有8个引脚，使用排针（如下图）将其焊上，方便后面用杜邦线连接，如果不会焊也可以买焊接好的。</p><img src=http://img01.taobaocdn.com/bao/uploaded/i1/13130028971464406/T1v5oAXd0XXXXXXXXX_!!0-item_pic.jpg_600x600.jpg><ol><li>RST —— 复位 接GPIO 0</li><li>CE —— 片选 接GPIO 1 或 不接</li><li>DC —— 数据/指令选择 接GPIO 2</li><li>DIN —— 串行数据线 接GPIO 3</li><li>CLK —— 串行时钟线 接GPIO 5 （因为我的GPIO 4已经接了一个DHT11传感器）</li><li>VCC —— 电源输入 接3.3v</li><li>BL —— 背光控制端 接3.3v</li><li>GND —— 地线 接地</li></ol><p>PS. 编号规范看<a href=http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html>这里</a> VCC, BK, GND可以接在面包板电源上</p><a href=https://hugozhu.site/post/2013/20-raspberry-pi-drive-nokia-5110/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/post/page/8/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/post/page/10/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;

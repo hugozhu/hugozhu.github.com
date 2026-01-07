@@ -19,7 +19,58 @@ StreamPi - StreamDeck with Raspberry Pi
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=page-heading><h1>Hugo Zhu's Blog</h1><hr class=small></div></div></div></div></div></header><div role=main class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=well><div align=center><a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/><img src=https://blog.hugozhu.site/img/streampi_demo.jpg></a>
-<a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/>StreamPi - StreamDeck with Raspberry Pi</a></div></div><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/37-tcpdump_on_android/><h2 class=post-title>在Android上使用tcpdump</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 24, 2013
+<a href=/post/2025/81-streamdeck-streamdock-with-raspberry-pi/>StreamPi - StreamDeck with Raspberry Pi</a></div></div><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/39-replace-usb-disk-on-raspberry-pi/><h2 class=post-title>替换树莓派的U盘</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 11, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;66&nbsp;words</span></p><div class=post-entry><p>除了SD卡上的存储，树莓派还可以使用U盘来做存储，有时候我们可能需要替换已有的U盘为更大容量的。在Mac上可以采用下面的方法：</p><ol><li><p>备份已有的U盘，把U盘从树莓派上拔下来插在Mac上，找出U盘对应的盘符（下例为<code>/dev/disk2</code>）</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>20:51:19 hugozhu-mac-mini ~ $ diskutil list
+</span></span><span class=line><span class=cl>/dev/disk0
+</span></span><span class=line><span class=cl>   #:                       TYPE NAME                    SIZE       IDENTIFIER
+</span></span><span class=line><span class=cl>   0:      GUID_partition_scheme                        *500.1 GB   disk0
+</span></span><span class=line><span class=cl>   1:                        EFI                         209.7 MB   disk0s1
+</span></span><span class=line><span class=cl>   2:                  Apple_HFS Macintosh HD            499.2 GB   disk0s2
+</span></span><span class=line><span class=cl>   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+</span></span><span class=line><span class=cl>/dev/disk2
+</span></span><span class=line><span class=cl>   #:                       TYPE NAME                    SIZE       IDENTIFIER
+</span></span><span class=line><span class=cl>   0:     FDisk_partition_scheme                        *2.1 GB     disk2
+</span></span></code></pre></div><p>使用 dd 命令把U盘拷贝到<code>raspberrypi.img</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo dd if=/dev/disk2 of=raspberrypi.img conv=notrunc
+</span></span></code></pre></div></li><li><p>从Mac上取下旧U盘，把新的U盘插入同一个USB口，注意新U盘容量要大于旧的</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo dd of=/dev/disk2 if=raspberrypi.img conv=notrunc
+</span></span></code></pre></div></li><li><p>把新U盘插入树莓派，并mount上，用以下命令把U盘的多余空间用起来</p><a href=https://hugozhu.site/post/2013/39-replace-usb-disk-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/linux/>Linux</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/38-java-volatile-variable/><h2 class=post-title>Java并发中正确使用volatile</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 30, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;197&nbsp;words</span></p><div class=post-entry><p>前几天并发编程群里有同学对volatile的用法提出了疑问，刚好我记得Twitter有关实时搜索的这个<a href=http://2011.lucene-eurocon.org/attachments/0002/8787/Busch_twitter_realtime_search_eurocon_11.pdf>PPT</a>对这个问题解释的很清晰并有一个实际的应用场景，于是周末把这个问题摘录了一些和并发相关的内容如下：</p><h1 id=并发---定义>并发 - 定义</h1><h2 id=悲观锁---pressimistic-locking>悲观锁 - Pressimistic locking</h2><ol><li>一个线性在执行一个操作时持有对一个资源的独占锁。（互斥）</li><li>一般用在冲突比较可能发生的场景下</li></ol><h2 id=乐观锁---optimistic-locking>乐观锁 - Optimistic locking</h2><ol><li>尝试采用原子操作，而不需要持有锁；冲突可被检测，如果发生冲突，具有相应的重试逻辑</li><li>通常用在冲突较少发生的场景下</li></ol><h2 id=非阻塞算法---non-blocking-algorithm>非阻塞算法 - Non-blocking algorithm</h2><ol><li>算法确保对线程间竞争共享资源时候，不会因为互斥而使任一线程的执行无限延迟；</li></ol><h2 id=无锁算法---lock-free-algorithm>无锁算法 - Lock-free algorithm</h2><ol><li>如果系统整个流程的执行是无阻塞的(系统某一部分可能被短暂阻塞)，这种非阻塞算法就是无锁的。</li><li>无锁算法比传统的基于锁的算法对系统的开销更小，且更容易在多核多CPU处理器上扩展；</li><li>在实时系统中可以避免锁带来的延迟；</li><li>CAS (compare and swap)或LL/SC(load linked/store conditional)，以及内存屏障相关的指令经常被用在算法实现中。</li></ol><h2 id=无等待算法---wait-free-algorithm>无等待算法 - Wait-free algorithm</h2><ol><li>如果每个线程的执行都是无阻塞的，这种非阻塞算法就是无等待的（比无锁算法更好）</li></ol><h1 id=java的并发>Java的并发</h1><ol><li>Java的内存模型并不保证一个线程可以一直以程序执行的顺序看到另一个线程对变量的修改，除非两个线程都跨越了同一个内存屏障。（Safe publication）</li></ol><h1 id=java内存模型>Java内存模型</h1><h2 id=代码顺序规则>代码顺序规则</h2><ol><li>一个线程内的每个动作 happens-before 同一个线程内在代码顺序上在其后的所有动作</li></ol><h2 id=volatile变量规则>volatile变量规则</h2><ol><li>对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量最后的写入</li></ol><h2 id=传递性>传递性</h2><ol><li>如果A happens-before B, B happens-before C，那 A happens-before C</li></ol><h1 id=safe-publication案例>Safe publication案例</h1><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>class VolatileExample {
+</span></span><span class=line><span class=cl>    int x = 0;
+</span></span><span class=line><span class=cl>    volatile int b = 0;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    private void write() {
+</span></span><span class=line><span class=cl>        x = 5;
+</span></span><span class=line><span class=cl>        b = 1;
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    private void read() {
+</span></span><span class=line><span class=cl>        int dummy = b;
+</span></span><span class=line><span class=cl>        while (x!=5) {
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    public static void main(String[] args) throws Exception {
+</span></span><span class=line><span class=cl>        final VolatileExample example = new VolatileExample();
+</span></span><span class=line><span class=cl>        Thread thread1 = new Thread(new Runnable() {
+</span></span><span class=line><span class=cl>            public void run() {
+</span></span><span class=line><span class=cl>                example.write();
+</span></span><span class=line><span class=cl>            }
+</span></span><span class=line><span class=cl>        });
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        Thread thread2 = new Thread(new Runnable() {
+</span></span><span class=line><span class=cl>            public void run() {
+</span></span><span class=line><span class=cl>                example.read();
+</span></span><span class=line><span class=cl>            }
+</span></span><span class=line><span class=cl>        });
+</span></span><span class=line><span class=cl>        thread1.start();
+</span></span><span class=line><span class=cl>        thread2.start();
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        thread1.join();
+</span></span><span class=line><span class=cl>        thread2.join();
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></div><img src=https://www.evernote.com/shard/s26/sh/569ae14f-957d-4ca0-97d7-72f66479d298/b4fb554c924ec7c2356d3ca94d7be61a/deep/0/Screenshot%206/30/13%2010:48%20AM.png><p>x并不需要定义为<code>volatile</code>, 程序里可以有需要类似x的变量，我们只需要一个volatile变量b来确保线程a能看到线程1对x的修改：</p><a href=https://hugozhu.site/post/2013/38-java-volatile-variable/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/concurrency/>Concurrency</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/37-tcpdump_on_android/><h2 class=post-title>在Android上使用tcpdump</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 24, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;100&nbsp;words</span></p><div class=post-entry><p>tcpdump工具是分析网络协议和数据包的利器，也可以在Android上使用（需要root）。</p><p>首先在android上安装tcpdump</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>wget http://www.strazzere.com/android/tcpdump
 </span></span><span class=line><span class=cl>adb push tcpdump /data/local/tmp/tcpdump
@@ -242,214 +293,7 @@ StreamPi - StreamDeck with Raspberry Pi
 </span></span></code></pre></div><h2 id=happens-before-定义>Happens-before 定义</h2><p>Happens-before用来指明Go程序里的内存操作的局部顺序。如果一个内存操作事件e1 happens-before e2，则e2 happens-after e1也成立；如果e1不是happens-before e2,也不是happens-after e2，则e1和e2是并发的。</p><a href=https://hugozhu.site/post/2013/31-golang-memory-model/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/golang/>Golang</a>&nbsp;
 <a href=https://hugozhu.site/tags/concurrent-programming/>Concurrent Programming</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/30-raspberrypi-i2c-programming/><h2 class=post-title>树莓派I2C编程</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 18, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;7&nbsp;words</span></p><div class=post-entry><p>(！未完！)</p><p>除了<a href=http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html>SPI</a>协议外，树莓派还支持<a href=http://zh.wikipedia.org/wiki/I%C2%B2C>I2C</a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。</p><h1 id=i2c>I2C</h1><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png><p>上图是一个主控使用I2C驱动3个设备的示意图</p><h1 id=参考链接>参考链接</h1><ol><li><a href=http://zh.wikipedia.org/wiki/I>http://zh.wikipedia.org/wiki/I</a>²C</li><li><a href=https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/>https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</a></li></ol></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/29-use-wiringpi-go-binding/><h2 class=post-title>使用Go语言在树莓派上编程</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 14, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;316&nbsp;words</span></p><div class=post-entry><p><a href=https://projects.drogon.net/raspberry-pi/wiringpi/>WiringPi</a>是树莓派上比较好的一个开发库，是用C语言写的。使用cgo，我们可以在Go语言里方便的调用WiringPI的函数，于是我包装了一个<a href=https://github.com/hugozhu/rpi>WiringPi-Go</a>，目前支持wiringPi的基本功能，硬件SPI协议驱动Nokia 5110屏幕，以及中断，未来还会增加PWM和I2C协议的支持。</p><p>下面是一个完整的使用例子，结合了之前的两个电路：<a href=http://hugozhu.myalert.info/2013/04/08/27-interrupts-with-gpio-pins.html>链接1</a>，<a href=http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html>链接2</a></p><p>通过push button可以切换液晶屏显示不同脚本的输出内容。</p><p>lcd_switch.go</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>package</span> <span class=n>main</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>(</span>
-</span></span><span class=line><span class=cl>	<span class=o>.</span> <span class=s2>&#34;github.com/hugozhu/rpi&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s2>&#34;github.com/hugozhu/rpi/pcd8544&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s2>&#34;log&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s2>&#34;os/exec&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s2>&#34;time&#34;</span>
-</span></span><span class=line><span class=cl><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>const</span> <span class=p>(</span>
-</span></span><span class=line><span class=cl>	<span class=n>DIN</span>        <span class=o>=</span> <span class=n>PIN_MOSI</span>
-</span></span><span class=line><span class=cl>	<span class=n>SCLK</span>       <span class=o>=</span> <span class=n>PIN_SCLK</span>
-</span></span><span class=line><span class=cl>	<span class=n>DC</span>         <span class=o>=</span> <span class=n>PIN_GPIO_2</span>
-</span></span><span class=line><span class=cl>	<span class=n>RST</span>        <span class=o>=</span> <span class=n>PIN_GPIO_0</span>
-</span></span><span class=line><span class=cl>	<span class=n>CS</span>         <span class=o>=</span> <span class=n>PIN_CE0</span>
-</span></span><span class=line><span class=cl>	<span class=n>PUSHBUTTON</span> <span class=o>=</span> <span class=n>PIN_GPIO_6</span>
-</span></span><span class=line><span class=cl>	<span class=n>CONTRAST</span>   <span class=o>=</span> <span class=mi>40</span> <span class=o>//</span><span class=n>may</span> <span class=n>need</span> <span class=n>tweak</span> <span class=k>for</span> <span class=n>each</span> <span class=n>Nokia</span> <span class=mi>5110</span> <span class=n>screen</span>
-</span></span><span class=line><span class=cl><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>var</span> <span class=n>screen_chan</span> <span class=n>chan</span> <span class=ne>int</span>
-</span></span><span class=line><span class=cl><span class=k>var</span> <span class=n>TOTAL_MODES</span> <span class=o>=</span> <span class=mi>3</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>init</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>WiringPiSetup</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDInit</span><span class=p>(</span><span class=n>SCLK</span><span class=p>,</span> <span class=n>DIN</span><span class=p>,</span> <span class=n>DC</span><span class=p>,</span> <span class=n>CS</span><span class=p>,</span> <span class=n>RST</span><span class=p>,</span> <span class=n>CONTRAST</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>screen_chan</span> <span class=o>=</span> <span class=n>make</span><span class=p>(</span><span class=n>chan</span> <span class=ne>int</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=o>//</span><span class=n>a</span> <span class=n>goroutine</span> <span class=n>to</span> <span class=n>check</span> <span class=n>button</span> <span class=n>push</span> <span class=n>event</span>
-</span></span><span class=line><span class=cl>	<span class=n>go</span> <span class=k>func</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=n>last_time</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>Now</span><span class=p>()</span><span class=o>.</span><span class=n>UnixNano</span><span class=p>()</span> <span class=o>/</span> <span class=mi>1000000</span>
-</span></span><span class=line><span class=cl>		<span class=n>btn_pushed</span> <span class=p>:</span><span class=o>=</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=n>pin</span> <span class=p>:</span><span class=o>=</span> <span class=nb>range</span> <span class=n>WiringPiISR</span><span class=p>(</span><span class=n>PUSHBUTTON</span><span class=p>,</span> <span class=n>INT_EDGE_FALLING</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=n>pin</span> <span class=o>&gt;</span> <span class=o>-</span><span class=mi>1</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>				<span class=n>n</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>Now</span><span class=p>()</span><span class=o>.</span><span class=n>UnixNano</span><span class=p>()</span> <span class=o>/</span> <span class=mi>1000000</span>
-</span></span><span class=line><span class=cl>				<span class=n>delta</span> <span class=p>:</span><span class=o>=</span> <span class=n>n</span> <span class=o>-</span> <span class=n>last_time</span>
-</span></span><span class=line><span class=cl>				<span class=k>if</span> <span class=n>delta</span> <span class=o>&gt;</span> <span class=mi>300</span> <span class=p>{</span> <span class=o>//</span><span class=n>software</span> <span class=n>debouncing</span>
-</span></span><span class=line><span class=cl>					<span class=nb>log</span><span class=o>.</span><span class=n>Println</span><span class=p>(</span><span class=s2>&#34;btn pushed&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>					<span class=n>last_time</span> <span class=o>=</span> <span class=n>n</span>
-</span></span><span class=line><span class=cl>					<span class=n>btn_pushed</span><span class=o>++</span>
-</span></span><span class=line><span class=cl>					<span class=n>screen_chan</span> <span class=o>&lt;-</span> <span class=n>btn_pushed</span> <span class=o>%</span> <span class=n>TOTAL_MODES</span> <span class=o>//</span><span class=k>switch</span> <span class=n>the</span> <span class=n>screen</span> <span class=n>display</span>
-</span></span><span class=line><span class=cl>				<span class=p>}</span>
-</span></span><span class=line><span class=cl>			<span class=p>}</span>
-</span></span><span class=line><span class=cl>		<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=p>}()</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=o>//</span><span class=n>a</span> <span class=n>groutine</span> <span class=n>to</span> <span class=n>update</span> <span class=n>display</span> <span class=n>every</span> <span class=mi>5</span> <span class=n>seconds</span>
-</span></span><span class=line><span class=cl>	<span class=n>go</span> <span class=n>loop_update_display</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=o>//</span><span class=n>set</span> <span class=n>screen</span> <span class=mi>0</span> <span class=n>to</span> <span class=n>be</span> <span class=n>default</span> <span class=n>display</span>
-</span></span><span class=line><span class=cl>	<span class=n>screen_chan</span> <span class=o>&lt;-</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>ticker</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>NewTicker</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=n>time</span><span class=o>.</span><span class=n>Second</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=o>&lt;-</span><span class=n>ticker</span><span class=o>.</span><span class=n>C</span>
-</span></span><span class=line><span class=cl>		<span class=n>screen_chan</span> <span class=o>&lt;-</span> <span class=o>-</span><span class=mi>1</span> <span class=o>//</span><span class=n>refresh</span> <span class=n>current</span> <span class=n>screen</span> <span class=n>every</span> <span class=mi>5</span> <span class=n>seconds</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>loop_update_display</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>current_screen</span> <span class=p>:</span><span class=o>=</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=n>screen</span> <span class=p>:</span><span class=o>=</span> <span class=nb>range</span> <span class=n>screen_chan</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=n>screen</span> <span class=o>&gt;=</span> <span class=mi>0</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=n>screen</span> <span class=o>!=</span> <span class=n>current_screen</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>				<span class=o>//</span><span class=n>btn</span> <span class=n>pushed</span>
-</span></span><span class=line><span class=cl>				<span class=n>current_screen</span> <span class=o>=</span> <span class=n>screen</span>
-</span></span><span class=line><span class=cl>				<span class=n>display_loading</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>			<span class=p>}</span>
-</span></span><span class=line><span class=cl>		<span class=p>}</span>
-</span></span><span class=line><span class=cl>		<span class=k>switch</span> <span class=n>current_screen</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=mi>0</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>			<span class=n>display_screen0</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=mi>1</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>			<span class=n>display_screen1</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=mi>2</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>			<span class=n>display_screen2</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_loading</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>20</span><span class=p>,</span> <span class=s2>&#34;Loading ...&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_screen0</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>out</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>exec</span><span class=o>.</span><span class=n>Command</span><span class=p>(</span><span class=s2>&#34;/bin/screen_0.sh&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>CombinedOutput</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=n>out</span> <span class=o>=</span> <span class=p>[]</span><span class=n>byte</span><span class=p>(</span><span class=n>err</span><span class=o>.</span><span class=n>Error</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>string</span><span class=p>(</span><span class=n>out</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_screen1</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>out</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>exec</span><span class=o>.</span><span class=n>Command</span><span class=p>(</span><span class=s2>&#34;/bin/screen_1.sh&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>CombinedOutput</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=n>out</span> <span class=o>=</span> <span class=p>[]</span><span class=n>byte</span><span class=p>(</span><span class=n>err</span><span class=o>.</span><span class=n>Error</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>string</span><span class=p>(</span><span class=n>out</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>display_screen2</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>out</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>exec</span><span class=o>.</span><span class=n>Command</span><span class=p>(</span><span class=s2>&#34;/bin/screen_2.sh&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>CombinedOutput</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=n>out</span> <span class=o>=</span> <span class=p>[]</span><span class=n>byte</span><span class=p>(</span><span class=n>err</span><span class=o>.</span><span class=n>Error</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDclear</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdrawstring</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>string</span><span class=p>(</span><span class=n>out</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>	<span class=n>pcd8544</span><span class=o>.</span><span class=n>LCDdisplay</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div><p>/bin/screen_2.sh</p><a href=https://hugozhu.site/post/2013/29-use-wiringpi-go-binding/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/><h2 class=post-title>使用tsar记录和监控树莓派CPU温度</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 13, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;509&nbsp;words</span></p><div class=post-entry><p>夏天到了，树莓派的CPU温度也开始节节攀升，虽然我们也可以用云服务<a href=https://cosm.com>cosm</a>来监控，但每5分钟采样一次精度不够高，每分钟采样一次则上传次数又太多了点。最好的方法还是使用<a href=http://github.com/alibaba/tsar>tsar</a>这样的工具本地高频（如每1分钟）采样，然后再定时将5分钟的均值上传到cosm绘图。</p><p>Tsar是淘宝的一个用来收集服务器系统和应用信息的采集报告工具，如收集服务器的系统信息（cpu，mem等），以及应用数据（nginx、swift等），收集到的数据存储在服务器磁盘上，可以随时查询历史信息，也可以将数据发送到nagios报警。Tsar能够比较方便的增加模块，只需要按照tsar的要求编写数据的采集函数和展现函数，就可以把自定义的模块加入到tsar中。</p><h1 id=更新><strong>更新</strong></h1><p>[2013-04-14] mod_rpi已经被合并到了主干代码：<a href=https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c>https://github.com/alibaba/tsar/blob/master/modules/mod_rpi.c</a> 只需要增加文件：<code>/etc/tsar/conf.d/rpi.conf</code>，内容为以下即可开始使用mod_rpi模块：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>mod_rpi on
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>####add it to tsar default output
-</span></span><span class=line><span class=cl>output_stdio_mod mod_rpi
-</span></span></code></pre></div><h1 id=mod_rpi模块开发方法>mod_rpi模块开发方法</h1><p>首先按照安装说明，见<a href=https://github.com/alibaba/tsar>https://github.com/alibaba/tsar</a>将tsar和tsardevel安装好。</p><p>首先运行下面的命令生成mod_rpi模块：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>hugo@raspberrypi2 ~/projects/tsardevel $ tsardevel rpi 
-</span></span><span class=line><span class=cl>build:make
-</span></span><span class=line><span class=cl>install:make install
-</span></span><span class=line><span class=cl>uninstall:make uninstall
-</span></span><span class=line><span class=cl>hugo@raspberrypi2 ~/projects/tsardevel $ ls rpi
-</span></span><span class=line><span class=cl>Makefile  mod_rpi.c  mod_rpi.conf
-</span></span></code></pre></div><p>然后修改mod_rpi.c，增加读取CPU温度的逻辑：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>/*
-</span></span><span class=line><span class=cl> * (C) 2010-2011 Alibaba Group Holding Limited
-</span></span><span class=line><span class=cl> *
-</span></span><span class=line><span class=cl> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
-</span></span><span class=line><span class=cl> * you may not use this file except in compliance with the License.
-</span></span><span class=line><span class=cl> * You may obtain a copy of the License at
-</span></span><span class=line><span class=cl> *
-</span></span><span class=line><span class=cl> *     http://www.apache.org/licenses/LICENSE-2.0
-</span></span><span class=line><span class=cl> *
-</span></span><span class=line><span class=cl> * Unless required by applicable law or agreed to in writing, software
-</span></span><span class=line><span class=cl> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
-</span></span><span class=line><span class=cl> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-</span></span><span class=line><span class=cl> * See the License for the specific language governing permissions and
-</span></span><span class=line><span class=cl> * limitations under the License.
-</span></span><span class=line><span class=cl> *
-</span></span><span class=line><span class=cl> */
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>#include &#34;tsar.h&#34;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>/*
-</span></span><span class=line><span class=cl> * Structure for rpi infomation.
-</span></span><span class=line><span class=cl> */
-</span></span><span class=line><span class=cl>struct stats_rpi {
-</span></span><span class=line><span class=cl>	unsigned int cpu_temp;
-</span></span><span class=line><span class=cl>};
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>#define STATS_TEST_SIZE (sizeof(struct stats_rpi))
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>static char *rpi_usage = &#34;    --rpi               Rapsberry Pi information (CPU temprature ...)&#34;;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>static void read_rpi_stats(struct module *mod, char *parameter)
-</span></span><span class=line><span class=cl>{
-</span></span><span class=line><span class=cl>	FILE *fp;
-</span></span><span class=line><span class=cl>	char buf[64];
-</span></span><span class=line><span class=cl>	memset(buf, 0, sizeof(buf));
-</span></span><span class=line><span class=cl>	struct stats_rpi st_rpi;
-</span></span><span class=line><span class=cl>	memset(&amp;st_rpi, 0, sizeof(struct stats_rpi));
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	if ((fp = fopen(&#34;/sys/class/thermal/thermal_zone0/temp&#34;, &#34;r&#34;)) == NULL) {
-</span></span><span class=line><span class=cl>		return;
-</span></span><span class=line><span class=cl>	}
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	int cpu_temp;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	fscanf(fp, &#34;%d&#34;, &amp;cpu_temp);
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	st_rpi.cpu_temp = cpu_temp;
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	int pos = sprintf(buf, &#34;%u&#34;,
-</span></span><span class=line><span class=cl>			/* the store order is not same as read procedure */
-</span></span><span class=line><span class=cl>			st_rpi.cpu_temp);
-</span></span><span class=line><span class=cl>	buf[pos] = &#39;\0&#39;;
-</span></span><span class=line><span class=cl>	set_mod_record(mod, buf);
-</span></span><span class=line><span class=cl>	fclose(fp);
-</span></span><span class=line><span class=cl>	return;
-</span></span><span class=line><span class=cl>}
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>static struct mod_info rpi_info[] = {
-</span></span><span class=line><span class=cl>	{&#34;  temp&#34;, SUMMARY_BIT,  0,  STATS_NULL}
-</span></span><span class=line><span class=cl>};
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>static void set_rpi_record(struct module *mod, double st_array[],
-</span></span><span class=line><span class=cl>		U_64 pre_array[], U_64 cur_array[], int inter)
-</span></span><span class=line><span class=cl>{
-</span></span><span class=line><span class=cl>	st_array[0] = cur_array[0]/1000.0;
-</span></span><span class=line><span class=cl>}
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>void mod_register(struct module *mod)
-</span></span><span class=line><span class=cl>{	
-</span></span><span class=line><span class=cl>	register_mod_fileds(mod, &#34;--rpi&#34;, rpi_usage, rpi_info, 1, read_rpi_stats, set_rpi_record);
-</span></span><span class=line><span class=cl>}
-</span></span></code></pre></div><p>最后<code>make && sudo make install</code>将mod_rpi自定义tsar模块安装好。</p><a href=https://hugozhu.site/post/2013/28-use-tsar-to-monitor-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/page/7/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/page/9/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;7&nbsp;words</span></p><div class=post-entry><p>(！未完！)</p><p>除了<a href=http://hugozhu.myalert.info/2013/04/05/25-get-spi-working-on-raspberry-pi-spi.html>SPI</a>协议外，树莓派还支持<a href=http://zh.wikipedia.org/wiki/I%C2%B2C>I2C</a>。I2C是为了连接低速周边装置设计的，只需要用两根线（SDA和SCL，也就是树莓派的端口8和9-wiringPi编号）。</p><h1 id=i2c>I2C</h1><img src=http://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/350px-I2C.svg.png><p>上图是一个主控使用I2C驱动3个设备的示意图</p><h1 id=参考链接>参考链接</h1><ol><li><a href=http://zh.wikipedia.org/wiki/I>http://zh.wikipedia.org/wiki/I</a>²C</li><li><a href=https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/>https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/</a></li></ol></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/page/7/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/page/9/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;
