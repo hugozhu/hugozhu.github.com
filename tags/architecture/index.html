@@ -20,6 +20,15 @@
 <a href=https://hugozhu.site/tags/architecture/>architecture</a>&nbsp;
 <a href=https://hugozhu.site/tags/cli/>CLI</a>&nbsp;
 <a href=https://hugozhu.site/tags/workspace/>workspace</a>&nbsp;
+<a href=https://hugozhu.site/tags/best-practices/>best-practices</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/139-enterprise-agent-runtime-sandbox-security/><h2 class=post-title>企业级 Agent Runtime 的第一道防线：安全沙箱</h2><h3 class=post-subtitle>文件系统隔离 + 网络访问隔离——从 macOS Seatbelt 到 Windows AppContainer 的操作系统级安全实践</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 15, 2026
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1159&nbsp;words</span></p><div class=post-entry><p>当我们谈论企业级 AI Agent Runtime 时，第一个需要解决的问题不是"模型有多聪明"，而是"Agent 执行的代码有多安全"。一个能读写文件、执行命令、访问网络的 Agent，如果没有安全边界，就是一颗不知道什么时候会爆炸的定时炸弹。</p><p><strong>企业级的 Agent Runtime 首先需要一个安全沙箱：文件系统隔离 + 网络访问隔离。</strong></p><a href=https://hugozhu.site/post/2026/139-enterprise-agent-runtime-sandbox-security/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>AI</a>&nbsp;
+<a href=https://hugozhu.site/tags/ai-agents/>AI-agents</a>&nbsp;
+<a href=https://hugozhu.site/tags/security/>security</a>&nbsp;
+<a href=https://hugozhu.site/tags/sandbox/>sandbox</a>&nbsp;
+<a href=https://hugozhu.site/tags/macos/>macOS</a>&nbsp;
+<a href=https://hugozhu.site/tags/windows/>Windows</a>&nbsp;
+<a href=https://hugozhu.site/tags/architecture/>architecture</a>&nbsp;
 <a href=https://hugozhu.site/tags/best-practices/>best-practices</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/136-openclaw-long-running-task-progress-reporting/><h2 class=post-title>Agent 执行耗时任务时如何主动汇报进度？四种方案的实战选型</h2><h3 class=post-subtitle>从后台进程到多 Agent 协作，为不同场景选择最合适的进度上报机制</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 10, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;765&nbsp;words</span></p><div class=post-entry><p>你让 AI Agent 帮你跑一个需要 30 分钟的数据迁移脚本，然后就没了下文——它在干嘛？卡住了？还是已经跑完了？你不知道，因为 Agent 只会在任务彻底完成或彻底失败时才告诉你结果。</p><p>这是 Agent 系统中一个普遍的痛点：<strong>耗时任务的进度黑洞</strong>。用户发出指令后陷入等待，没有进度条，没有中间反馈，只有最终的成功或失败。在 OpenClaw 的实际使用中，我总结了四种适用于不同场景的进度上报方案，每种都有其最佳适用场景。</p><a href=https://hugozhu.site/post/2026/136-openclaw-long-running-task-progress-reporting/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>AI</a>&nbsp;
