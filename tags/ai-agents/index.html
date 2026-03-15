@@ -29,6 +29,15 @@
 <a href=https://hugozhu.site/tags/macos/>macOS</a>&nbsp;
 <a href=https://hugozhu.site/tags/windows/>Windows</a>&nbsp;
 <a href=https://hugozhu.site/tags/architecture/>architecture</a>&nbsp;
+<a href=https://hugozhu.site/tags/best-practices/>best-practices</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/140-agent-session-isolation-multi-group-security/><h2 class=post-title>当 AI Agent 被拉进多个群：会话隔离与 Agent 隔离的生死线</h2><h3 class=post-subtitle>企业级 Agent Runtime 接入 IM 多群场景下的安全架构设计</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 15, 2026
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1059&nbsp;words</span></p><div class=post-entry><p>把一个 AI Agent 拉进钉钉的多个群，是一件非常容易的事情——群管理员点一下"添加机器人"就完成了。但这也是一件<strong>极其危险的事情</strong>——如果 Agent Runtime 没有做好隔离，你可能正在制造一个企业级的安全事故。</p><p>想象这个场景：你的 AI Agent 同时服务于"核心技术架构群"和"外部合作伙伴群"。有人在合作伙伴群里问了一个问题，Agent 的回答中不小心带出了它在架构群里学到的技术方案细节。<strong>信息就这样泄露了，而且没有任何人会收到告警。</strong></p><p>这不是假设。这是没有隔离的 Agent Runtime 的默认行为。</p><a href=https://hugozhu.site/post/2026/140-agent-session-isolation-multi-group-security/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>AI</a>&nbsp;
+<a href=https://hugozhu.site/tags/ai-agents/>AI-agents</a>&nbsp;
+<a href=https://hugozhu.site/tags/security/>security</a>&nbsp;
+<a href=https://hugozhu.site/tags/openclaw/>OpenClaw</a>&nbsp;
+<a href=https://hugozhu.site/tags/architecture/>architecture</a>&nbsp;
+<a href=https://hugozhu.site/tags/im/>IM</a>&nbsp;
+<a href=https://hugozhu.site/tags/session-management/>session-management</a>&nbsp;
 <a href=https://hugozhu.site/tags/best-practices/>best-practices</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/137-enterprise-digitalization-in-ai-era/><h2 class=post-title>AI 时代的企业数字化 = 工作 Agent 化 + 知识 AI Ready 化 + 软件 CLI 化</h2><h3 class=post-subtitle>一个简洁的公式，三个可落地的方向，重新定义企业的 AI 转型路径</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 11, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;678&nbsp;words</span></p><div class=post-entry><p>过去两年，几乎每家企业都在谈"拥抱 AI"。但你去看看大多数企业的 AI 落地项目，会发现一个尴尬的现实：<strong>聊天机器人做了一堆，效率提升约等于零。</strong> 问题出在哪？不是 AI 不够强，而是企业的数字化基座根本不是为 AI 设计的。</p><p>我越来越确信一个判断：AI 时代的企业数字化，可以浓缩成一个公式——</p><blockquote><p><strong>企业数字化 = 工作 Agent 化 + 知识 AI Ready 化 + 软件 CLI 化</strong></p></blockquote><p>这三项缺一不可，而且顺序很重要。</p><a href=https://hugozhu.site/post/2026/137-enterprise-digitalization-in-ai-era/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>AI</a>&nbsp;
@@ -83,16 +92,7 @@
 <a href=https://hugozhu.site/tags/cli/>CLI</a>&nbsp;
 <a href=https://hugozhu.site/tags/ai-agents/>AI-agents</a>&nbsp;
 <a href=https://hugozhu.site/tags/architecture/>architecture</a>&nbsp;
-<a href=https://hugozhu.site/tags/best-practices/>best-practices</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/129-openclaw-memory-design-best-practices/><h2 class=post-title>Agent 设计最佳实践：Memory</h2><h3 class=post-subtitle>从每日日志到向量检索，深入解析 OpenClaw 如何让 AI 真正「记住」你</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on February 28, 2026
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;minutes
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;700&nbsp;words</span></p><div class=post-entry><p>想象这样一个场景：你花了半小时向 AI 助手解释你的项目架构、编码偏好和团队规范，得到了一次满意的协作体验。第二天再打开对话——它全忘了。你又得从头来一遍。这不是 AI 不够聪明的问题，而是<strong>记忆架构缺失</strong>的问题。OpenClaw 的 Memory 系统试图从根本上解决这个痛点：让 AI Agent 拥有持久、可检索、可自维护的记忆能力。</p><a href=https://hugozhu.site/post/2026/129-openclaw-memory-design-best-practices/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>AI</a>&nbsp;
-<a href=https://hugozhu.site/tags/ai-agents/>AI-agents</a>&nbsp;
-<a href=https://hugozhu.site/tags/openclaw/>OpenClaw</a>&nbsp;
-<a href=https://hugozhu.site/tags/memory/>memory</a>&nbsp;
-<a href=https://hugozhu.site/tags/rag/>RAG</a>&nbsp;
-<a href=https://hugozhu.site/tags/embeddings/>embeddings</a>&nbsp;
-<a href=https://hugozhu.site/tags/vector-database/>vector-database</a>&nbsp;
-<a href=https://hugozhu.site/tags/architecture/>architecture</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=next><a href=https://hugozhu.site/tags/ai-agents/page/2/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/tags/ai-agents/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<a href=https://hugozhu.site/tags/best-practices/>best-practices</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=next><a href=https://hugozhu.site/tags/ai-agents/page/2/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/tags/ai-agents/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;
