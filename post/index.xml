@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on All about Raspberry Pi</title><link>https://hugozhu.site/post/</link><description>Recent content in Posts on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 30 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/post/index.xml" rel="self" type="application/rss+xml"/><item><title>同一个生意做了四遍：从搜索到Agent，万物皆排序</title><link>https://hugozhu.site/post/2026/162-same-business-four-times-search-ads-rec-agent/</link><pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/162-same-business-four-times-search-ads-rec-agent/</guid><description>&lt;p>如果你在过去二十年里分别做过搜索引擎、广告系统、推荐系统，再到今天做AI Agent，你可能会有一个越来越强烈的感觉：&lt;strong>这不就是同一个生意吗？&lt;/strong>&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on All about Raspberry Pi</title><link>https://hugozhu.site/post/</link><description>Recent content in Posts on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 31 Mar 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://hugozhu.site/post/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 原生的工作方式：不能被 Token 解决的问题，才配叫问题</title><link>https://hugozhu.site/post/2026/163-ai-native-work-token-problem-paradigm/</link><pubDate>Tue, 31 Mar 2026 12:00:00 +0800</pubDate><guid>https://hugozhu.site/post/2026/163-ai-native-work-token-problem-paradigm/</guid><description>&lt;h2 id="引言">引言&lt;/h2>
+&lt;p>在 AI 原生工作流逐渐成为主流的今天，我们面临一个根本性的问题：什么才是真正的&amp;quot;问题&amp;quot;？&lt;/p>
+&lt;p>经过大量实践，我发现了一个简单却深刻的判断标准：&lt;strong>不能被 Token 解决的问题，才配叫问题。&lt;/strong>&lt;/p>
+&lt;p>这句话听起来有些极端，但它揭示了 AI 时代工作方式的本质变化。&lt;/p>
+&lt;h2 id="什么是能被-token-解决的问题">什么是&amp;quot;能被 Token 解决的问题&amp;quot;&lt;/h2>
+&lt;p>让我先定义一下什么是&amp;quot;能被 Token 解决的问题&amp;quot;。这类问题通常具有以下特征：&lt;/p>
+&lt;h3 id="1-信息处理类任务">1. 信息处理类任务&lt;/h3>
+&lt;ul>
+&lt;li>代码生成、重构、调试&lt;/li>
+&lt;li>文档写作、翻译、润色&lt;/li>
+&lt;li>数据分析、报表生成&lt;/li>
+&lt;li>知识检索、总结、归纳&lt;/li>
+&lt;/ul>
+&lt;p>这些任务的共同点是：&lt;strong>输入和输出都可以被清晰地表述为文本（Token）&lt;/strong>。你给 AI 一个明确的 prompt，它给你一个可预期的结果。&lt;/p>
+&lt;h3 id="2-模式识别类任务">2. 模式识别类任务&lt;/h3>
+&lt;ul>
+&lt;li>图像描述、分类&lt;/li>
+&lt;li>语音转文字&lt;/li>
+&lt;li>情感分析&lt;/li>
+&lt;li>异常检测&lt;/li>
+&lt;/ul>
+&lt;p>这类任务虽然涉及多模态，但本质上仍然是&lt;strong>模式匹配&lt;/strong>——AI 在训练数据中学到的模式可以覆盖这类问题的解空间。&lt;/p>
+&lt;h3 id="3-规则执行类任务">3. 规则执行类任务&lt;/h3>
+&lt;ul>
+&lt;li>按照模板生成内容&lt;/li>
+&lt;li>遵循固定流程的操作&lt;/li>
+&lt;li>基于明确规则的决策&lt;/li>
+&lt;/ul>
+&lt;p>这类问题的特点是&lt;strong>规则可以被形式化&lt;/strong>，AI 可以可靠地执行。&lt;/p>
+&lt;p>对于这些问题，AI 已经表现得足够好，甚至超越人类。它们不再是&amp;quot;问题&amp;quot;，而是&amp;quot;操作&amp;quot;——就像计算器出现后，算术不再是问题一样。&lt;/p>
+&lt;h2 id="什么是不能被-token-解决的问题">什么是&amp;quot;不能被 Token 解决的问题&amp;quot;&lt;/h2>
+&lt;p>那么，什么才是真正的问题？&lt;/p>
+&lt;h3 id="1-系统架构设计">1. 系统架构设计&lt;/h3>
+&lt;p>你可以让 AI 生成代码，但&lt;strong>无法让它设计一个演进的架构&lt;/strong>。架构设计需要：&lt;/p>
+&lt;ul>
+&lt;li>理解业务的长期演进方向&lt;/li>
+&lt;li>权衡短期交付和长期可维护性&lt;/li>
+&lt;li>预判未来可能的变化点&lt;/li>
+&lt;li>在多个互相冲突的目标之间找到平衡&lt;/li>
+&lt;/ul>
+&lt;p>这些决策依赖的是&lt;strong>经验和直觉&lt;/strong>，而不是模式匹配。&lt;/p>
+&lt;h3 id="2-复杂决策">2. 复杂决策&lt;/h3>
+&lt;p>当面临以下情况时，Token 就无能为力了：&lt;/p>
+&lt;ul>
+&lt;li>信息不完整，需要猜测&lt;/li>
+&lt;li>多个利益相关方有冲突的目标&lt;/li>
+&lt;li>决策后果不可逆且影响深远&lt;/li>
+&lt;li>没有历史数据可以参考&lt;/li>
+&lt;/ul>
+&lt;p>比如：是否应该进入一个新市场？是否应该重构整个系统？是否应该接受一个 offer？&lt;/p>
+&lt;p>这些问题没有&amp;quot;正确答案&amp;quot;，只有&amp;quot;你的答案&amp;quot;。&lt;/p>
+&lt;h3 id="3-跨领域整合">3. 跨领域整合&lt;/h3>
+&lt;p>AI 擅长在单一领域内工作，但&lt;strong>真正的创新往往发生在领域的交叉点&lt;/strong>：&lt;/p></description></item><item><title>同一个生意做了四遍：从搜索到Agent，万物皆排序</title><link>https://hugozhu.site/post/2026/162-same-business-four-times-search-ads-rec-agent/</link><pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/162-same-business-four-times-search-ads-rec-agent/</guid><description>&lt;p>如果你在过去二十年里分别做过搜索引擎、广告系统、推荐系统，再到今天做AI Agent，你可能会有一个越来越强烈的感觉：&lt;strong>这不就是同一个生意吗？&lt;/strong>&lt;/p>
 &lt;p>表面上看，Google做搜索、Meta做广告、抖音做推荐、OpenAI做Agent，四个完全不同的产品形态，四个不同的技术栈，甚至四个不同的行业叙事。但如果你把外壳剥掉，盯着底层看，会发现一个令人不安的事实：&lt;strong>这四代系统的核心逻辑，从来没有变过。&lt;/strong>&lt;/p>
 &lt;p>它们都在做同一件事——&lt;strong>在信息过载的世界里，帮用户匹配到最相关的东西，然后从匹配效率的提升中抽税。&lt;/strong>&lt;/p></description></item><item><title>Agent的架构之战：从Desktop到AI时代，架构决定平台的生死</title><link>https://hugozhu.site/post/2026/160-agent-architecture-platform-competition/</link><pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/160-agent-architecture-platform-competition/</guid><description>&lt;p>每一代平台级产品的竞争，最终都不是功能之争，而是&lt;strong>架构之争&lt;/strong>。Windows赢了OS/2，不是因为功能更多，而是因为它的架构让第三方开发者能更容易地构建应用。iOS赢了Symbian，不是因为初期功能更强，而是因为它的架构从第一天就为触控交互和应用生态设计。Chrome赢了IE，不是因为它一开始更快，而是因为多进程架构让它在页面崩溃时不会拖垮整个浏览器。&lt;/p>
 &lt;p>现在，AI Agent正在成为从Desktop、Web、Mobile之后的第四代平台级产品。而历史正在重演：&lt;strong>决定谁能赢的，不是谁的模型更强、谁的功能更多，而是谁的架构更对。&lt;/strong>&lt;/p></description></item><item><title>企业级 AI 必须设计成出错后可以追责到人</title><link>https://hugozhu.site/post/2026/161-enterprise-ai-accountability-by-design/</link><pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/161-enterprise-ai-accountability-by-design/</guid><description>&lt;p>上周一个真实案例：某电商公司的 AI Agent 自动调整了 2000 个 SKU 的定价策略，导致部分商品以成本价以下售出，一天亏了 80 万。复盘会上，所有人面面相觑——&lt;/p>

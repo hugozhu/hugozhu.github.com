@@ -1,0 +1,135 @@
+<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>AI 原生的工作方式：不能被 Token 解决的问题，才配叫问题 - Hugo Zhu's Blog</title>
+<meta name=description content='引言
+在 AI 原生工作流逐渐成为主流的今天，我们面临一个根本性的问题：什么才是真正的"问题"？
+经过大量实践，我发现了一个简单却深刻的判断标准：不能被 Token 解决的问题，才配叫问题。
+这句话听起来有些极端，但它揭示了 AI 时代工作方式的本质变化。
+什么是"能被 Token 解决的问题"
+让我先定义一下什么是"能被 Token 解决的问题"。这类问题通常具有以下特征：
+1. 信息处理类任务
+
+代码生成、重构、调试
+文档写作、翻译、润色
+数据分析、报表生成
+知识检索、总结、归纳
+
+这些任务的共同点是：输入和输出都可以被清晰地表述为文本（Token）。你给 AI 一个明确的 prompt，它给你一个可预期的结果。
+2. 模式识别类任务
+
+图像描述、分类
+语音转文字
+情感分析
+异常检测
+
+这类任务虽然涉及多模态，但本质上仍然是模式匹配——AI 在训练数据中学到的模式可以覆盖这类问题的解空间。
+3. 规则执行类任务
+
+按照模板生成内容
+遵循固定流程的操作
+基于明确规则的决策
+
+这类问题的特点是规则可以被形式化，AI 可以可靠地执行。
+对于这些问题，AI 已经表现得足够好，甚至超越人类。它们不再是"问题"，而是"操作"——就像计算器出现后，算术不再是问题一样。
+什么是"不能被 Token 解决的问题"
+那么，什么才是真正的问题？
+1. 系统架构设计
+你可以让 AI 生成代码，但无法让它设计一个演进的架构。架构设计需要：
+
+理解业务的长期演进方向
+权衡短期交付和长期可维护性
+预判未来可能的变化点
+在多个互相冲突的目标之间找到平衡
+
+这些决策依赖的是经验和直觉，而不是模式匹配。
+2. 复杂决策
+当面临以下情况时，Token 就无能为力了：
+
+信息不完整，需要猜测
+多个利益相关方有冲突的目标
+决策后果不可逆且影响深远
+没有历史数据可以参考
+
+比如：是否应该进入一个新市场？是否应该重构整个系统？是否应该接受一个 offer？
+这些问题没有"正确答案"，只有"你的答案"。
+3. 跨领域整合
+AI 擅长在单一领域内工作，但真正的创新往往发生在领域的交叉点：'><script type=application/ld+json>{"@context":"http://schema.org","@type":"WebSite","name":"All about Raspberry Pi","url":"https:\/\/hugozhu.site\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Organization","name":"","url":"https:\/\/hugozhu.site\/"}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https:\/\/hugozhu.site\/","name":"home"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/hugozhu.site\/post\/2026\/163-ai-native-work-token-problem-paradigm\/","name":"Ai 原生的工作方式：不能被 token 解决的问题，才配叫问题"}}]}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"Article","author":{"name":""},"headline":"AI 原生的工作方式：不能被 Token 解决的问题，才配叫问题","description":"引言 在 AI 原生工作流逐渐成为主流的今天，我们面临一个根本性的问题：什么才是真正的\u0026quot;问题\u0026quot;？\n经过大量实践，我发现了一个简单却深刻的判断标准：不能被 Token 解决的问题，才配叫问题。\n这句话听起来有些极端，但它揭示了 AI 时代工作方式的本质变化。\n什么是\u0026quot;能被 Token 解决的问题\u0026quot; 让我先定义一下什么是\u0026quot;能被 Token 解决的问题\u0026quot;。这类问题通常具有以下特征：\n1. 信息处理类任务 代码生成、重构、调试 文档写作、翻译、润色 数据分析、报表生成 知识检索、总结、归纳 这些任务的共同点是：输入和输出都可以被清晰地表述为文本（Token）。你给 AI 一个明确的 prompt，它给你一个可预期的结果。\n2. 模式识别类任务 图像描述、分类 语音转文字 情感分析 异常检测 这类任务虽然涉及多模态，但本质上仍然是模式匹配——AI 在训练数据中学到的模式可以覆盖这类问题的解空间。\n3. 规则执行类任务 按照模板生成内容 遵循固定流程的操作 基于明确规则的决策 这类问题的特点是规则可以被形式化，AI 可以可靠地执行。\n对于这些问题，AI 已经表现得足够好，甚至超越人类。它们不再是\u0026quot;问题\u0026quot;，而是\u0026quot;操作\u0026quot;——就像计算器出现后，算术不再是问题一样。\n什么是\u0026quot;不能被 Token 解决的问题\u0026quot; 那么，什么才是真正的问题？\n1. 系统架构设计 你可以让 AI 生成代码，但无法让它设计一个演进的架构。架构设计需要：\n理解业务的长期演进方向 权衡短期交付和长期可维护性 预判未来可能的变化点 在多个互相冲突的目标之间找到平衡 这些决策依赖的是经验和直觉，而不是模式匹配。\n2. 复杂决策 当面临以下情况时，Token 就无能为力了：\n信息不完整，需要猜测 多个利益相关方有冲突的目标 决策后果不可逆且影响深远 没有历史数据可以参考 比如：是否应该进入一个新市场？是否应该重构整个系统？是否应该接受一个 offer？\n这些问题没有\u0026quot;正确答案\u0026quot;，只有\u0026quot;你的答案\u0026quot;。\n3. 跨领域整合 AI 擅长在单一领域内工作，但真正的创新往往发生在领域的交叉点：\n","inLanguage":"en","wordCount":169,"datePublished":"2026-03-31T12:00:00\u002b08:00","dateModified":"2026-03-31T12:00:00\u002b08:00","image":"https:\/\/hugozhu.site\/img\/pi.png","keywords":["AI, Agent, Engineering, Productivity"],"mainEntityOfPage":"https:\/\/hugozhu.site\/post\/2026\/163-ai-native-work-token-problem-paradigm\/","publisher":{"@type":"Organization","name":"https:\/\/hugozhu.site\/","logo":{"@type":"ImageObject","url":"https:\/\/hugozhu.site\/img\/pi.png","height":60,"width":60}}}</script><meta property="og:title" content="AI 原生的工作方式：不能被 Token 解决的问题，才配叫问题"><meta property="og:description" content='引言
+在 AI 原生工作流逐渐成为主流的今天，我们面临一个根本性的问题：什么才是真正的"问题"？
+经过大量实践，我发现了一个简单却深刻的判断标准：不能被 Token 解决的问题，才配叫问题。
+这句话听起来有些极端，但它揭示了 AI 时代工作方式的本质变化。
+什么是"能被 Token 解决的问题"
+让我先定义一下什么是"能被 Token 解决的问题"。这类问题通常具有以下特征：
+1. 信息处理类任务
+
+代码生成、重构、调试
+文档写作、翻译、润色
+数据分析、报表生成
+知识检索、总结、归纳
+
+这些任务的共同点是：输入和输出都可以被清晰地表述为文本（Token）。你给 AI 一个明确的 prompt，它给你一个可预期的结果。
+2. 模式识别类任务
+
+图像描述、分类
+语音转文字
+情感分析
+异常检测
+
+这类任务虽然涉及多模态，但本质上仍然是模式匹配——AI 在训练数据中学到的模式可以覆盖这类问题的解空间。
+3. 规则执行类任务
+
+按照模板生成内容
+遵循固定流程的操作
+基于明确规则的决策
+
+这类问题的特点是规则可以被形式化，AI 可以可靠地执行。
+对于这些问题，AI 已经表现得足够好，甚至超越人类。它们不再是"问题"，而是"操作"——就像计算器出现后，算术不再是问题一样。
+什么是"不能被 Token 解决的问题"
+那么，什么才是真正的问题？
+1. 系统架构设计
+你可以让 AI 生成代码，但无法让它设计一个演进的架构。架构设计需要：
+
+理解业务的长期演进方向
+权衡短期交付和长期可维护性
+预判未来可能的变化点
+在多个互相冲突的目标之间找到平衡
+
+这些决策依赖的是经验和直觉，而不是模式匹配。
+2. 复杂决策
+当面临以下情况时，Token 就无能为力了：
+
+信息不完整，需要猜测
+多个利益相关方有冲突的目标
+决策后果不可逆且影响深远
+没有历史数据可以参考
+
+比如：是否应该进入一个新市场？是否应该重构整个系统？是否应该接受一个 offer？
+这些问题没有"正确答案"，只有"你的答案"。
+3. 跨领域整合
+AI 擅长在单一领域内工作，但真正的创新往往发生在领域的交叉点：'><meta property="og:image" content="https://hugozhu.site/img/pi.png"><meta property="og:url" content="https://hugozhu.site/post/2026/163-ai-native-work-token-problem-paradigm/"><meta property="og:type" content="website"><meta property="og:site_name" content="All about Raspberry Pi"><meta name=twitter:title content="AI 原生的工作方式：不能被 Token 解决的问题，才配叫问题"><meta name=twitter:description content='引言
+在 AI 原生工作流逐渐成为主流的今天，我们面临一个根本性的问题：什么才是真正的"问题"？
+经过大量实践，我发现了一个简单却深刻的判断标准：不能被 Token 解决的问题，才配叫问题。
+这句话听起来有些极端，但它揭示了 AI 时代工作方式的本质变化。
+什么是"能被 Token 解决的问题"
+让我先定义一下什么是"能被 Token 解决的问 …'><meta name=twitter:image content="https://hugozhu.site/img/pi.png"><meta name=twitter:card content="summary_large_image"><link href=https://hugozhu.site/img/pi.ico rel=icon type=image/x-icon><meta name=generator content="Hugo 0.145.0"><link rel=alternate href=https://hugozhu.site/index.xml type=application/rss+xml title="All about Raspberry Pi"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css integrity=sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v6.6.0/css/all.css integrity=sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css integrity=sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu crossorigin=anonymous><link rel=stylesheet href=https://hugozhu.site/css/main.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"><link rel=stylesheet href=https://hugozhu.site/css/highlight.min.css><link rel=stylesheet href=https://hugozhu.site/css/codeblock.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css integrity=sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css integrity=sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R crossorigin=anonymous><script async src="https://www.googletagmanager.com/gtag/js?id=GTM-W88HDMN"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","GTM-W88HDMN")}</script></head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#main-navbar>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+</button>
+<a class=navbar-brand href=https://hugozhu.site/>All about Raspberry Pi</a></div><div class="collapse navbar-collapse" id=main-navbar><ul class="nav navbar-nav navbar-right"><li><a title=Blog href=/>Blog</a></li><li class=navlinks-container><a class=navlinks-parent role=button tabindex=0>Tools</a><div class=navlinks-children><a href=https://nddapp.com/json-encoder.html>HTML Tools</a>
+<a href=https://www.birme.net/>Imaeg Resizing</a>
+<a href=https://jwt.io/>JWT Token Tool</a></div></li><li><a title=About href=/page/about/>About</a></li><li><a title=Tags href=/tags>Tags</a></li><li><a href=#modalSearch data-toggle=modal data-target=#modalSearch style=outline:none><span class="hidden-sm hidden-md hidden-lg">Search</span> <span id=searchGlyph class="glyphicon glyphicon-search"></span></a></li></ul></div><div class=avatar-container><div class=avatar-img-border><a title="All about Raspberry Pi" href=https://hugozhu.site/><img class=avatar-img src=https://hugozhu.site/img/pi.png alt="All about Raspberry Pi"></a></div></div></div></nav><div id=modalSearch class="modal fade" role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal>&#215;</button><h4 class=modal-title>Search All about Raspberry Pi</h4></div><div class=modal-body><gcse:search></gcse:search></div><div class=modal-footer><button type=button class="btn btn-default" data-dismiss=modal>Close</button></div></div></div></div><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>AI 原生的工作方式：不能被 Token 解决的问题，才配叫问题</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 31, 2026
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;minutes
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;169&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><h4><i>目录:</i></h4><nav id=TableOfContents><ul><li><a href=#引言>引言</a></li><li><a href=#什么是能被-token-解决的问题>什么是"能被 Token 解决的问题"</a><ul><li><a href=#1-信息处理类任务>1. 信息处理类任务</a></li><li><a href=#2-模式识别类任务>2. 模式识别类任务</a></li><li><a href=#3-规则执行类任务>3. 规则执行类任务</a></li></ul></li><li><a href=#什么是不能被-token-解决的问题>什么是"不能被 Token 解决的问题"</a><ul><li><a href=#1-系统架构设计>1. 系统架构设计</a></li><li><a href=#2-复杂决策>2. 复杂决策</a></li><li><a href=#3-跨领域整合>3. 跨领域整合</a></li><li><a href=#4-定义问题本身>4. 定义问题本身</a></li></ul></li><li><a href=#ai-原生的工作方式>AI 原生的工作方式</a><ul><li><a href=#1-把操作交给-ai>1. 把"操作"交给 AI</a></li><li><a href=#2-聚焦真正的问题>2. 聚焦"真正的问题"</a></li><li><a href=#3-建立人机协作的闭环>3. 建立人机协作的闭环</a></li></ul></li><li><a href=#实践建议>实践建议</a><ul><li><a href=#对于个人>对于个人</a></li><li><a href=#对于组织>对于组织</a></li></ul></li><li><a href=#结语>结语</a></li></ul></nav><h2 id=引言>引言</h2><p>在 AI 原生工作流逐渐成为主流的今天，我们面临一个根本性的问题：什么才是真正的"问题"？</p><p>经过大量实践，我发现了一个简单却深刻的判断标准：<strong>不能被 Token 解决的问题，才配叫问题。</strong></p><p>这句话听起来有些极端，但它揭示了 AI 时代工作方式的本质变化。</p><h2 id=什么是能被-token-解决的问题>什么是"能被 Token 解决的问题"</h2><p>让我先定义一下什么是"能被 Token 解决的问题"。这类问题通常具有以下特征：</p><h3 id=1-信息处理类任务>1. 信息处理类任务</h3><ul><li>代码生成、重构、调试</li><li>文档写作、翻译、润色</li><li>数据分析、报表生成</li><li>知识检索、总结、归纳</li></ul><p>这些任务的共同点是：<strong>输入和输出都可以被清晰地表述为文本（Token）</strong>。你给 AI 一个明确的 prompt，它给你一个可预期的结果。</p><h3 id=2-模式识别类任务>2. 模式识别类任务</h3><ul><li>图像描述、分类</li><li>语音转文字</li><li>情感分析</li><li>异常检测</li></ul><p>这类任务虽然涉及多模态，但本质上仍然是<strong>模式匹配</strong>——AI 在训练数据中学到的模式可以覆盖这类问题的解空间。</p><h3 id=3-规则执行类任务>3. 规则执行类任务</h3><ul><li>按照模板生成内容</li><li>遵循固定流程的操作</li><li>基于明确规则的决策</li></ul><p>这类问题的特点是<strong>规则可以被形式化</strong>，AI 可以可靠地执行。</p><p>对于这些问题，AI 已经表现得足够好，甚至超越人类。它们不再是"问题"，而是"操作"——就像计算器出现后，算术不再是问题一样。</p><h2 id=什么是不能被-token-解决的问题>什么是"不能被 Token 解决的问题"</h2><p>那么，什么才是真正的问题？</p><h3 id=1-系统架构设计>1. 系统架构设计</h3><p>你可以让 AI 生成代码，但<strong>无法让它设计一个演进的架构</strong>。架构设计需要：</p><ul><li>理解业务的长期演进方向</li><li>权衡短期交付和长期可维护性</li><li>预判未来可能的变化点</li><li>在多个互相冲突的目标之间找到平衡</li></ul><p>这些决策依赖的是<strong>经验和直觉</strong>，而不是模式匹配。</p><h3 id=2-复杂决策>2. 复杂决策</h3><p>当面临以下情况时，Token 就无能为力了：</p><ul><li>信息不完整，需要猜测</li><li>多个利益相关方有冲突的目标</li><li>决策后果不可逆且影响深远</li><li>没有历史数据可以参考</li></ul><p>比如：是否应该进入一个新市场？是否应该重构整个系统？是否应该接受一个 offer？</p><p>这些问题没有"正确答案"，只有"你的答案"。</p><h3 id=3-跨领域整合>3. 跨领域整合</h3><p>AI 擅长在单一领域内工作，但<strong>真正的创新往往发生在领域的交叉点</strong>：</p><ul><li>技术 + 商业 + 人性的综合判断</li><li>不同技术栈的选型和整合</li><li>组织变革中的技术和人的协调</li></ul><p>这类问题需要<strong>通才的视野</strong>，而不是专才的深度。</p><h3 id=4-定义问题本身>4. 定义问题本身</h3><p>最容易被忽视的是：<strong>很多时候，真正的问题是"问题是什么"</strong>。</p><p>客户说"系统太慢"——是真的慢，还是体验不好？
+老板说"需要 AI"——是需要效率，还是需要创新？
+用户说"功能太少"——是功能问题，还是定位问题？</p><p><strong>定义问题的能力，比解决问题的能力更稀缺。</strong></p><h2 id=ai-原生的工作方式>AI 原生的工作方式</h2><p>基于以上分析，AI 原生的工作方式应该是：</p><h3 id=1-把操作交给-ai>1. 把"操作"交给 AI</h3><p>所有能被 Token 解决的问题，都应该自动化：</p><ul><li>代码生成、测试、文档</li><li>数据分析、报表</li><li>日常沟通、会议记录</li><li>知识检索、整理</li></ul><p>这不是"偷懒"，而是<strong>把人类从重复劳动中解放出来</strong>。</p><h3 id=2-聚焦真正的问题>2. 聚焦"真正的问题"</h3><p>人类应该专注于：</p><ul><li>定义问题</li><li>设计系统</li><li>做出决策</li><li>整合资源</li><li>建立关系</li></ul><p>这些是 AI 无法替代的。</p><h3 id=3-建立人机协作的闭环>3. 建立人机协作的闭环</h3><p>AI 不是替代人类，而是<strong>增强人类</strong>：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>人类定义问题 → AI 执行操作 → 人类验证结果 → AI 学习改进
+</span></span></code></pre></div><p>这个闭环中，人类负责<strong>方向和判断</strong>，AI 负责<strong>执行和效率</strong>。</p><h2 id=实践建议>实践建议</h2><h3 id=对于个人>对于个人</h3><ol><li><p><strong>识别你的工作中哪些是"操作"</strong>：如果你在做能被 Token 解决的事，考虑自动化。</p></li><li><p><strong>培养"问题定义"能力</strong>：练习从模糊的需求中提炼出清晰的问题。</p></li><li><p><strong>成为"T 型人才"</strong>：在一个领域有深度，在多个领域有广度。</p></li></ol><h3 id=对于组织>对于组织</h3><ol><li><p><strong>重新设计工作流程</strong>：不是"AI 辅助人类"，而是"人类指导 AI"。</p></li><li><p><strong>重新定义岗位</strong>：从"执行者"转向"定义者"和"决策者"。</p></li><li><p><strong>建立新的评估体系</strong>：不再以"做了多少事"为标准，而是以"解决了多少真正的问题"为标准。</p></li></ol><h2 id=结语>结语</h2><p>AI 不是魔法，它有自己的边界。认清这个边界，不是为了限制 AI，而是为了<strong>更好地使用 AI</strong>。</p><p>当你能清晰地区分"能被 Token 解决的问题"和"不能被 Token 解决的问题"时，你就掌握了 AI 原生工作方式的精髓。</p><p>前者交给 AI，后者留给自己。</p><p>这就是 AI 时代的分工。</p><hr><p><em>本文是 Hugo 博客第 163 篇，继续探讨 AI 工程化和 Agent 架构的实践思考。</em></p><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>AI</a>&nbsp;
+<a href=https://hugozhu.site/tags/agent/>Agent</a>&nbsp;
+<a href=https://hugozhu.site/tags/engineering/>Engineering</a>&nbsp;
+<a href=https://hugozhu.site/tags/productivity/>Productivity</a>&nbsp;</div><hr><section id=social-share><div class="list-inline footer-links"><div class=share-box aria-hidden=true><ul class=share><li><a href="//twitter.com/share?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f163-ai-native-work-token-problem-paradigm%2f&amp;text=AI%20%e5%8e%9f%e7%94%9f%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f%ef%bc%9a%e4%b8%8d%e8%83%bd%e8%a2%ab%20Token%20%e8%a7%a3%e5%86%b3%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e6%89%8d%e9%85%8d%e5%8f%ab%e9%97%ae%e9%a2%98&amp;via=" target=_blank title="Share on Twitter"><i class="fab fa-twitter"></i></a></li><li><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f163-ai-native-work-token-problem-paradigm%2f" target=_blank title="Share on Facebook"><i class="fab fa-facebook"></i></a></li><li><a href="//reddit.com/submit?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f163-ai-native-work-token-problem-paradigm%2f&amp;title=AI%20%e5%8e%9f%e7%94%9f%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f%ef%bc%9a%e4%b8%8d%e8%83%bd%e8%a2%ab%20Token%20%e8%a7%a3%e5%86%b3%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e6%89%8d%e9%85%8d%e5%8f%ab%e9%97%ae%e9%a2%98" target=_blank title="Share on Reddit"><i class="fab fa-reddit"></i></a></li><li><a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f163-ai-native-work-token-problem-paradigm%2f&amp;title=AI%20%e5%8e%9f%e7%94%9f%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f%ef%bc%9a%e4%b8%8d%e8%83%bd%e8%a2%ab%20Token%20%e8%a7%a3%e5%86%b3%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e6%89%8d%e9%85%8d%e5%8f%ab%e9%97%ae%e9%a2%98" target=_blank title="Share on LinkedIn"><i class="fab fa-linkedin"></i></a></li><li><a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f163-ai-native-work-token-problem-paradigm%2f&amp;title=AI%20%e5%8e%9f%e7%94%9f%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f%ef%bc%9a%e4%b8%8d%e8%83%bd%e8%a2%ab%20Token%20%e8%a7%a3%e5%86%b3%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e6%89%8d%e9%85%8d%e5%8f%ab%e9%97%ae%e9%a2%98" target=_blank title="Share on StumbleUpon"><i class="fab fa-stumbleupon"></i></a></li><li><a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f163-ai-native-work-token-problem-paradigm%2f&amp;description=AI%20%e5%8e%9f%e7%94%9f%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f%ef%bc%9a%e4%b8%8d%e8%83%bd%e8%a2%ab%20Token%20%e8%a7%a3%e5%86%b3%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e6%89%8d%e9%85%8d%e5%8f%ab%e9%97%ae%e9%a2%98" target=_blank title="Share on Pinterest"><i class="fab fa-pinterest"></i></a></li></ul></div></div></section><h4 class=see-also>See also</h4><ul><li><a href=/post/2026/162-same-business-four-times-search-ads-rec-agent/>同一个生意做了四遍：从搜索到Agent，万物皆排序</a></li><li><a href=/post/2026/160-agent-architecture-platform-competition/>Agent的架构之战：从Desktop到AI时代，架构决定平台的生死</a></li><li><a href=/post/2026/158-maas-core-capabilities/>AI的MaaS层最核心的能力：把一个不稳定的概率接口，变成一个可运营的服务</a></li><li><a href=/post/2026/157-openclaw-claude-code-progress-sync/>OpenClaw + Claude Code 协同：用 Sub-Agent 执行编程任务并实时同步进度</a></li><li><a href=/post/2026/159-language-math-ai-education-foundation/>素质之外，语言和数学仍然是教育的基础，是驾驭AI的底层能力</a></li></ul></article><ul class="pager blog-pager"><li class=previous><a href=https://hugozhu.site/post/2026/162-same-business-four-times-search-ads-rec-agent/ data-toggle=tooltip data-placement=top title=同一个生意做了四遍：从搜索到Agent，万物皆排序>&larr; Previous Post</a></li></ul><div class=disqus-comments><button id=show-comments class="btn btn-default" type=button>Show <span class=disqus-comment-count data-disqus-url=https://hugozhu.site/post/2026/163-ai-native-work-token-problem-paradigm>comments</span></button><div id=disqus_thread></div><script type=text/javascript>var disqus_config=function(){this.page.url="https://hugozhu.site/post/2026/163-ai-native-work-token-problem-paradigm"}</script></div></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
+2026
+&nbsp;&bull;&nbsp;
+<a href=https://hugozhu.site/>All about Raspberry Pi</a></p><p class="credits theme-by text-muted"><a href=https://gohugo.io>Hugo v0.145.0</a> powered &nbsp;&bull;&nbsp; Theme <a href=https://github.com/halogenica/beautifulhugo>Beautiful Hugo</a> adapted from <a href=https://deanattali.com/beautiful-jekyll/>Beautiful Jekyll</a></p></div></div></div></footer><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js integrity=sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous onload=renderMathInElement(document.body)></script><script src=https://code.jquery.com/jquery-3.7.0.slim.min.js integrity=sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js integrity=sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd crossorigin=anonymous></script><script src=https://hugozhu.site/js/main.js></script><script src=https://hugozhu.site/js/highlight.min.js></script><script>hljs.initHighlightingOnLoad()</script><script>$(document).ready(function(){$("pre.chroma").css("padding","0")})</script><script src=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js integrity=sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js integrity=sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q crossorigin=anonymous></script><script src=https://hugozhu.site/js/load-photoswipe.js></script><script>(function(){var t,n="617d351a633194d48",e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="https://cse.google.com/cse.js?cx="+n,t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script><script type=text/javascript>$(function(){$("#show-comments").on("click",function(){var e="hugozhu";(function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="//"+e+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(t)})(),$(this).hide()})})</script><script id=dsq-count-scr src=//hugozhu.disqus.com/count.js async></script></body></html>
