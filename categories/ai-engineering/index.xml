@@ -50,4 +50,6 @@
 &lt;p>比如：是否应该进入一个新市场？是否应该重构整个系统？是否应该接受一个 offer？&lt;/p>
 &lt;p>这些问题没有&amp;quot;正确答案&amp;quot;，只有&amp;quot;你的答案&amp;quot;。&lt;/p>
 &lt;h3 id="3-跨领域整合">3. 跨领域整合&lt;/h3>
-&lt;p>AI 擅长在单一领域内工作，但&lt;strong>真正的创新往往发生在领域的交叉点&lt;/strong>：&lt;/p></description></item></channel></rss>
+&lt;p>AI 擅长在单一领域内工作，但&lt;strong>真正的创新往往发生在领域的交叉点&lt;/strong>：&lt;/p></description></item><item><title>别再手动整理用户反馈了：把 VOC 变成一条自动化生产线</title><link>https://hugozhu.site/post/2026/164-voc-to-automated-pipeline/</link><pubDate>Tue, 31 Mar 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/164-voc-to-automated-pipeline/</guid><description>&lt;p>每家公司都说&amp;quot;以用户为中心&amp;quot;，但 90% 的用户声音（Voice of Customer, VOC）最终的归宿是——躺在某个 Excel 表里，等着某个产品经理&amp;quot;有空的时候&amp;quot;去翻一翻。&lt;/p>
+&lt;p>问题不是团队不重视用户反馈。问题是：&lt;strong>从原始反馈到可执行的产品动作之间，隔着太多手工活。&lt;/strong> 收集、清洗、分类、归因、优先级排序、写进 Backlog——每一步都在消耗人的精力，而人的精力是有限的。&lt;/p>
+&lt;p>这篇文章是一个完整的教程：&lt;strong>如何用 AI + 自动化工具，把 VOC 变成一条可执行的生产线&lt;/strong>——从原始数据采集，到最终输出结构化的产品需求，全程自动。&lt;/p></description></item></channel></rss>
