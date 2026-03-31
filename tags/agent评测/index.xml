@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Agent评测 on All about Raspberry Pi</title><link>https://hugozhu.site/tags/agent%E8%AF%84%E6%B5%8B/</link><description>Recent content in Agent评测 on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 31 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/agent%E8%AF%84%E6%B5%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>别用同一把尺子量所有 Agent：按行业和岗位设计评测体系才是正经事</title><link>https://hugozhu.site/post/2026/165-agent-eval-by-industry-and-role/</link><pubDate>Tue, 31 Mar 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/165-agent-eval-by-industry-and-role/</guid><description>&lt;p>上个月参加一个 Agent 产品的内部评审，产品经理拿出一张 benchmark 表格：准确率 92%、响应时间 1.2 秒、幻觉率 3%。数字很漂亮，领导很满意。&lt;/p>
+&lt;p>然后我问了一个问题：&lt;strong>&amp;ldquo;这个 92% 的准确率，是在什么任务上测的？&amp;rdquo;&lt;/strong>&lt;/p>
+&lt;p>回答是一组通用 QA 数据集。&lt;/p>
+&lt;p>我又问：&lt;strong>&amp;ldquo;你的目标用户是电商运营，你有没有用电商运营真实工作场景的任务来测？&amp;rdquo;&lt;/strong>&lt;/p>
+&lt;p>会议室安静了五秒钟。&lt;/p>
+&lt;p>这就是今天 Agent 评测的核心矛盾：&lt;strong>我们在用&amp;quot;通用考试&amp;quot;的成绩来预测&amp;quot;专业岗位&amp;quot;的表现。&lt;/strong> 这就像用高考数学成绩来判断一个人能不能当好外科医生——逻辑上不成立，但大家都在这么干。&lt;/p></description></item></channel></rss>
