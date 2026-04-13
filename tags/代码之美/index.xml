@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>代码之美 on All about Raspberry Pi</title><link>https://hugozhu.site/tags/%E4%BB%A3%E7%A0%81%E4%B9%8B%E7%BE%8E/</link><description>Recent content in 代码之美 on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 01 Mar 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/%E4%BB%A3%E7%A0%81%E4%B9%8B%E7%BE%8E/index.xml" rel="self" type="application/rss+xml"/><item><title>Java的资源管理</title><link>https://hugozhu.site/post/2013/resource-management-in-java/</link><pubDate>Fri, 01 Mar 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/resource-management-in-java/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。&lt;/p>
-&lt;h2 id="try-catch-finally">try-catch-finally&lt;/h2>
-&lt;p>Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &amp;ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如&lt;a href="http://findbugs.sourceforge.net">&lt;strong>FindBugs&lt;/strong>&lt;/a>可以帮助发现此类问题。&lt;/p>
-&lt;p>首先我们来看一段文件操作代码：&lt;/p>
-&lt;pre>&lt;code>private void copy(String from, String to) throws IOException {
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>代码之美 on All about Raspberry Pi</title><link>https://hugozhu.site/tags/%E4%BB%A3%E7%A0%81%E4%B9%8B%E7%BE%8E/</link><description>Recent content in 代码之美 on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 01 Mar 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/%E4%BB%A3%E7%A0%81%E4%B9%8B%E7%BE%8E/index.xml" rel="self" type="application/rss+xml"/><item><title>Java的资源管理</title><link>https://hugozhu.site/post/2013/resource-management-in-java/</link><pubDate>Fri, 01 Mar 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/resource-management-in-java/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Java程序中的常见的资源有：文件，Socket，数据库连接。在使用这些资源时候要分外小心，因为操作系统可同时操作的资源是有限的，比如默认情况下系统允许同时打开的文件数为1024个，Mysql服务器默认允许的最大连接数是100，所以操作这些资源时候要注意即使在遇到错误时也要让系统能正确回收资源。如果发生错误时候，打开的文件描述符没关闭或数据库连接没关闭，积累到一定程度后，应用将会变得不可用，只能重启。&lt;/p&gt;
+&lt;h2 id="try-catch-finally"&gt;try-catch-finally&lt;/h2&gt;
+&lt;p&gt;Java提供了try-catch-finally来保证程序遇到异常时总是有机会可以处理资源的关闭 &amp;ndash; 调用资源对象的close()方法。但经验不足的Java程序员还是会错误的管理资源，而造成资源的泄露，静态代码分析工具，如&lt;a href="http://findbugs.sourceforge.net"&gt;&lt;strong&gt;FindBugs&lt;/strong&gt;&lt;/a&gt;可以帮助发现此类问题。&lt;/p&gt;
+&lt;p&gt;首先我们来看一段文件操作代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private void copy(String from, String to) throws IOException {
  FileInputStream in = null; 
  FileOutputStream out = null; 
  in = new FileInputStream(from); 
@@ -14,13 +14,13 @@
  in.close();
  out.close();
 }
-&lt;/code>&lt;/pre>
-&lt;p>一眼看上去，代码挺整齐的，逻辑也容易理解。但其中有一个很大的问题是，如果out.write调用失败（比如磁盘空间满了）方法异常退出，in.close()和out.close()就不会被调用，而in和out对象内部都引用了系统资源-&lt;a href="http://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">文件描述符&lt;/a>，这样会导致文件描述符没有关闭，不能被重新使用而直到整个Java进程退出。&lt;/p>
-&lt;h4 id="file-descriptor">&lt;a href="http://en.wikipedia.org/wiki/File_descriptor">File descriptor&lt;/a>&lt;/h4>
-&lt;p>Linux的每个进程（如：Java进程）都有一个文件描述符表管理当前进程访问的所有的文件，文件描述符关联了系统文件表中的file entry，系统能容纳多少file entry是有限制的，如果超过限制系统会拒绝访问，抛出Too many opened files错误。&lt;/p>
-&lt;img src="https://pbs.twimg.com/media/BEUt3v3CEAAeP-m.jpg:large"/>
-&lt;p>较为正确的代码应该是：&lt;/p>
-&lt;pre>&lt;code>private void copy(String src, String dest) throws IOException {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一眼看上去，代码挺整齐的，逻辑也容易理解。但其中有一个很大的问题是，如果out.write调用失败（比如磁盘空间满了）方法异常退出，in.close()和out.close()就不会被调用，而in和out对象内部都引用了系统资源-&lt;a href="http://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"&gt;文件描述符&lt;/a&gt;，这样会导致文件描述符没有关闭，不能被重新使用而直到整个Java进程退出。&lt;/p&gt;
+&lt;h4 id="file-descriptor"&gt;&lt;a href="http://en.wikipedia.org/wiki/File_descriptor"&gt;File descriptor&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Linux的每个进程（如：Java进程）都有一个文件描述符表管理当前进程访问的所有的文件，文件描述符关联了系统文件表中的file entry，系统能容纳多少file entry是有限制的，如果超过限制系统会拒绝访问，抛出Too many opened files错误。&lt;/p&gt;
+&lt;img src="https://pbs.twimg.com/media/BEUt3v3CEAAeP-m.jpg:large"/&gt;
+&lt;p&gt;较为正确的代码应该是：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private void copy(String src, String dest) throws IOException {
  FileInputStream in = null; 
  FileOutputStream out = null; 
  try {
@@ -41,125 +41,125 @@
  }
  }
 }
-&lt;/code>&lt;/pre>
-&lt;p>但是这样的代码写起来是不是让人有点沮丧？这样写代码犯错的可能性确实比较大。
-改良过后的代码阅读性好一些：&lt;/p></description></item><item><title>Java程序的日志</title><link>https://hugozhu.site/post/2013/logging-in-java/</link><pubDate>Thu, 28 Feb 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/logging-in-java/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>一个在生产环境里运行的程序如果没有日志是很让维护者提心吊胆的，有太多杂乱又无意义的日志也是令人伤神。程序出现问题时候，从日志里如果发现不了问题可能的原因是很令人受挫的。本文想讨论的是如何在Java程序里写好日志。大多数的Web服务器（如Apache，Nginx）都有access日志和error日志，分别记录在不同的文件内；我们使用的服务器操作系统Linux有Syslog日志, /var/log目录下也有很多基础应用和服务的日志文件；桌面Windows有事件查看器, Mac有Console应用可以查看和管理日志；这些成熟的系统及工具方法都值得我们学习并在自己的项目中应用。&lt;/p>
-&lt;p>一般来说日志分为两种：业务日志和异常日志。使用日志我们希望能达到以下目标：&lt;/p>
-&lt;ol>
-&lt;li>对程序运行情况的记录和监控；&lt;/li>
-&lt;li>在必要时可详细了解程序内部的运行状态；&lt;/li>
-&lt;li>对系统性能的影响尽量小；&lt;/li>
-&lt;/ol>
-&lt;h2 id="日志规范">日志规范&lt;/h2>
-&lt;p>程序框架应该提供统一的日志记录接口，日志格式也需要有一定的规范，方便利用日志工具来分析日志。
-首先我们有必要了解一下Linux普遍使用的&lt;a href="http://en.wikipedia.org/wiki/Syslog">Syslog&lt;/a>标准协议，协议规定日志中应包含产生日志的模块(Facility)，严重性（Severity Level），时间，主机名或IP，进程名，进程ID和日志内容，根据模块和严重性可以配置相应的动作：是否需要记录，日志存储路径（文件或网络）。&lt;/p>
-&lt;p>下面是部分常见的Syslog模块类型：&lt;/p>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>&lt;strong>模块ID&lt;/strong>&lt;/th>
- &lt;th>&lt;strong>关键词&lt;/strong>&lt;/th>
- &lt;th>&lt;strong>描述&lt;/strong>&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>0&lt;/td>
- &lt;td>kern&lt;/td>
- &lt;td>内核消息&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>1&lt;/td>
- &lt;td>user&lt;/td>
- &lt;td>用户级别消息&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>2&lt;/td>
- &lt;td>mail&lt;/td>
- &lt;td>邮件系统&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>3&lt;/td>
- &lt;td>daemon&lt;/td>
- &lt;td>系统后台守护程序&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>4&lt;/td>
- &lt;td>auth&lt;/td>
- &lt;td>安全/鉴权消息&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>5&lt;/td>
- &lt;td>syslog&lt;/td>
- &lt;td>syslogd内部产生的日志消息&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>…&lt;/td>
- &lt;td>&lt;/td>
- &lt;td>&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;p>以及Syslog严重程度划分：&lt;/p>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>&lt;strong>代码&lt;/strong>&lt;/th>
- &lt;th>&lt;strong>严重程度&lt;/strong>&lt;/th>
- &lt;th>&lt;strong>关键词&lt;/strong>&lt;/th>
- &lt;th>&lt;strong>描述&lt;/strong>&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>0&lt;/td>
- &lt;td>Emergency&lt;/td>
- &lt;td>emerg(panic)&lt;/td>
- &lt;td>紧急，系统已经不稳定了&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>1&lt;/td>
- &lt;td>Alert&lt;/td>
- &lt;td>alert&lt;/td>
- &lt;td>需要立刻采取措施&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>2&lt;/td>
- &lt;td>Critical&lt;/td>
- &lt;td>crit&lt;/td>
- &lt;td>严重情况&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>3&lt;/td>
- &lt;td>Error&lt;/td>
- &lt;td>err (error)&lt;/td>
- &lt;td>系统出错&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>4&lt;/td>
- &lt;td>Warning&lt;/td>
- &lt;td>warning(warn)&lt;/td>
- &lt;td>系统警告&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>5&lt;/td>
- &lt;td>Notice&lt;/td>
- &lt;td>notice&lt;/td>
- &lt;td>系统仍然正常，但值得注意&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>6&lt;/td>
- &lt;td>Informational&lt;/td>
- &lt;td>info&lt;/td>
- &lt;td>正常系统通告&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>7&lt;/td>
- &lt;td>Debug&lt;/td>
- &lt;td>debug&lt;/td>
- &lt;td>系统调试信息&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;p>在你的Java程序里日志也可以参考Syslog的设计，根据业务对程序的模块和日志级别做一定的规划和设计。&lt;/p></description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是这样的代码写起来是不是让人有点沮丧？这样写代码犯错的可能性确实比较大。
+改良过后的代码阅读性好一些：&lt;/p&gt;</description></item><item><title>Java程序的日志</title><link>https://hugozhu.site/post/2013/logging-in-java/</link><pubDate>Thu, 28 Feb 2013 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2013/logging-in-java/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;一个在生产环境里运行的程序如果没有日志是很让维护者提心吊胆的，有太多杂乱又无意义的日志也是令人伤神。程序出现问题时候，从日志里如果发现不了问题可能的原因是很令人受挫的。本文想讨论的是如何在Java程序里写好日志。大多数的Web服务器（如Apache，Nginx）都有access日志和error日志，分别记录在不同的文件内；我们使用的服务器操作系统Linux有Syslog日志, /var/log目录下也有很多基础应用和服务的日志文件；桌面Windows有事件查看器, Mac有Console应用可以查看和管理日志；这些成熟的系统及工具方法都值得我们学习并在自己的项目中应用。&lt;/p&gt;
+&lt;p&gt;一般来说日志分为两种：业务日志和异常日志。使用日志我们希望能达到以下目标：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对程序运行情况的记录和监控；&lt;/li&gt;
+&lt;li&gt;在必要时可详细了解程序内部的运行状态；&lt;/li&gt;
+&lt;li&gt;对系统性能的影响尽量小；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="日志规范"&gt;日志规范&lt;/h2&gt;
+&lt;p&gt;程序框架应该提供统一的日志记录接口，日志格式也需要有一定的规范，方便利用日志工具来分析日志。
+首先我们有必要了解一下Linux普遍使用的&lt;a href="http://en.wikipedia.org/wiki/Syslog"&gt;Syslog&lt;/a&gt;标准协议，协议规定日志中应包含产生日志的模块(Facility)，严重性（Severity Level），时间，主机名或IP，进程名，进程ID和日志内容，根据模块和严重性可以配置相应的动作：是否需要记录，日志存储路径（文件或网络）。&lt;/p&gt;
+&lt;p&gt;下面是部分常见的Syslog模块类型：&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;&lt;strong&gt;模块ID&lt;/strong&gt;&lt;/th&gt;
+ &lt;th&gt;&lt;strong&gt;关键词&lt;/strong&gt;&lt;/th&gt;
+ &lt;th&gt;&lt;strong&gt;描述&lt;/strong&gt;&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;0&lt;/td&gt;
+ &lt;td&gt;kern&lt;/td&gt;
+ &lt;td&gt;内核消息&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;1&lt;/td&gt;
+ &lt;td&gt;user&lt;/td&gt;
+ &lt;td&gt;用户级别消息&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;2&lt;/td&gt;
+ &lt;td&gt;mail&lt;/td&gt;
+ &lt;td&gt;邮件系统&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;3&lt;/td&gt;
+ &lt;td&gt;daemon&lt;/td&gt;
+ &lt;td&gt;系统后台守护程序&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;4&lt;/td&gt;
+ &lt;td&gt;auth&lt;/td&gt;
+ &lt;td&gt;安全/鉴权消息&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;5&lt;/td&gt;
+ &lt;td&gt;syslog&lt;/td&gt;
+ &lt;td&gt;syslogd内部产生的日志消息&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;…&lt;/td&gt;
+ &lt;td&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;以及Syslog严重程度划分：&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;&lt;strong&gt;代码&lt;/strong&gt;&lt;/th&gt;
+ &lt;th&gt;&lt;strong&gt;严重程度&lt;/strong&gt;&lt;/th&gt;
+ &lt;th&gt;&lt;strong&gt;关键词&lt;/strong&gt;&lt;/th&gt;
+ &lt;th&gt;&lt;strong&gt;描述&lt;/strong&gt;&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;0&lt;/td&gt;
+ &lt;td&gt;Emergency&lt;/td&gt;
+ &lt;td&gt;emerg(panic)&lt;/td&gt;
+ &lt;td&gt;紧急，系统已经不稳定了&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;1&lt;/td&gt;
+ &lt;td&gt;Alert&lt;/td&gt;
+ &lt;td&gt;alert&lt;/td&gt;
+ &lt;td&gt;需要立刻采取措施&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;2&lt;/td&gt;
+ &lt;td&gt;Critical&lt;/td&gt;
+ &lt;td&gt;crit&lt;/td&gt;
+ &lt;td&gt;严重情况&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;3&lt;/td&gt;
+ &lt;td&gt;Error&lt;/td&gt;
+ &lt;td&gt;err (error)&lt;/td&gt;
+ &lt;td&gt;系统出错&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;4&lt;/td&gt;
+ &lt;td&gt;Warning&lt;/td&gt;
+ &lt;td&gt;warning(warn)&lt;/td&gt;
+ &lt;td&gt;系统警告&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;5&lt;/td&gt;
+ &lt;td&gt;Notice&lt;/td&gt;
+ &lt;td&gt;notice&lt;/td&gt;
+ &lt;td&gt;系统仍然正常，但值得注意&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;6&lt;/td&gt;
+ &lt;td&gt;Informational&lt;/td&gt;
+ &lt;td&gt;info&lt;/td&gt;
+ &lt;td&gt;正常系统通告&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;7&lt;/td&gt;
+ &lt;td&gt;Debug&lt;/td&gt;
+ &lt;td&gt;debug&lt;/td&gt;
+ &lt;td&gt;系统调试信息&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;在你的Java程序里日志也可以参考Syslog的设计，根据业务对程序的模块和日志级别做一定的规划和设计。&lt;/p&gt;</description></item></channel></rss>
