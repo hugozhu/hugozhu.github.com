@@ -1,0 +1,422 @@
+<!doctype html><html lang=en itemscope itemtype=http://schema.org/WebPage><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理 - Hugo Zhu's Blog</title><meta name=description content="Cloud-Scale Agent Sandbox Architecture: Isolation, Persistence, Elasticity, and Compliance"><script type=application/ld+json>{"@context":"https://schema.org","@type":"WebSite","name":"All about Raspberry Pi","url":"https://hugozhu.site/","@id":"https://hugozhu.site/#website"}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"Organization","name":null,"@id":"https://hugozhu.site/#organization","url":"https://hugozhu.site/"}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"WebPage","name":"云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理","@id":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/","url":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/","breadcrumb":{"@id":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/#breadcrumb"}}</script><script type=application/ld+json>{"@context":"https://schema.org","@id":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/#breadcrumb","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://hugozhu.site/","name":"Home","position":1},{"@type":"ListItem","item":"https://hugozhu.site/post/","name":"Posts","position":2},{"@type":"ListItem","item":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/","name":"云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理","position":3}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","@id":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/#article","isPartOf":{"@id":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/"},"author":{"name":"","url":"https://hugozhu.site/","@id":"https://hugozhu.site/#author"},"headline":"云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理","description":"上周，一个做 AI 编程助手平台的架构师朋友找我喝咖啡。他们的产品增长很快，企业客户越来越多，但工程团队正被四个问题折磨得焦头烂额：\n\u0026ldquo;我们最初用 Docker 给每个用户起一个容器做代码执行沙箱，几十个人跑没问题。现在上千并发，问题全暴露了——\n隔离：有客户的 Agent 在容器里 cat \/proc\/1\/environ 读到了其他租户的 API Key； 持久化：客户抱怨上次会话写的代码，下次进来全没了； 弹性：一个大客户做代码审查把 GPU 配额全占满了，其他客户的 Agent 全部超时； 合规：法务要求支持 GDPR 数据删除，但我们连 Agent 的记忆散落在哪些存储里都说不清。\u0026rdquo;\n他问：\u0026ldquo;你们做大规模 Agent 平台的时候，沙箱到底应该怎么设计？\u0026rdquo;\n这不是他一个人的问题。2026 年，Agent 从 demo 走向生产，几乎所有做 Agent 平台的团队都会在这四个维度上踩坑。传统 SaaS 的多租户隔离只关心\u0026quot;数据别串\u0026quot;，但 Agent 沙箱要解决的是一个更复杂的问题：一个自主执行代码、持久化状态、调用外部工具的 AI 工作空间，如何在共享基础设施上安全、弹性、合规地运行？\n本文从四个工程维度系统性地拆解云端大规模 Agent 沙箱的架构方案：多租户隔离、状态持久化、弹性调度、合规治理。\n","inLanguage":"en","wordCount":1992,"timeRequired":"PT10M","dateCreated":"2026-04-24T00:00:00+00:00","datePublished":"2026-04-24T00:00:00+00:00","dateModified":"2026-04-24T00:00:00+00:00","image":"https://hugozhu.site/img/pi.png","keywords":["agent-sandbox, multi-tenant, system-design, cloud-native, security"],"mainEntityOfPage":{"@id":"https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/"},"publisher":{"@type":"Organization","name":"https://hugozhu.site/","logo":{"@type":"ImageObject","url":"https://hugozhu.site/img/pi.png","height":60,"width":60}}}</script><meta property="og:title" content="云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理"><meta property="og:description" content="Cloud-Scale Agent Sandbox Architecture: Isolation, Persistence, Elasticity, and Compliance"><meta property="og:image" content="https://hugozhu.site/img/pi.png"><meta property="og:url" content="https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture/"><meta property="og:type" content="website"><meta property="og:site_name" content="All about Raspberry Pi"><meta name=twitter:title content="云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理"><meta name=twitter:description content="Cloud-Scale Agent Sandbox Architecture: Isolation, Persistence, Elasticity, and Compliance"><meta name=twitter:image content="https://hugozhu.site/img/pi.png"><meta name=twitter:card content="summary_large_image"><link href=https://hugozhu.site/img/pi.ico rel=icon type=image/x-icon><meta name=generator content="Hugo 0.160.1"><link rel=alternate href=https://hugozhu.site/index.xml type=application/rss+xml title="All about Raspberry Pi"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css integrity=sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/brands.css integrity=sha384-+eXGm6TmVoCZR1gX03US+L++L2mJIfOvp2X0+luTuEktXaF5F+e3zn0sO0HBvOyT crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/fontawesome.css integrity=sha384-B5nyPZa7e84uCJEYHtevCdVYtQosWsbDSRtq3cy/jeSVtQW05GL8CKXO7waXsjPK crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/regular.css integrity=sha384-V71z/A/p/DGaZAryHhiSXRQj8HdQmK2nBgL2bX23MGD+h6ZKpyxOO76f5eSXmIaj crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/solid.css integrity=sha384-1IIShlrK5iYgvS7OAgIH3prz4RAFP7hHZ2MaLIb9l3+trFwwnw/NdCWcUHlymZDU crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/svg.css integrity=sha384-iBa7uugTOHXqQ2ngvDYJyKrPPQbd9n2P3EQe+o/0+HZe5TNvV+LO5X0lLLUrXLHP crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/svg-with-js.css integrity=sha384-STWnS5AGz6M2YxsnGAd536EqcE2y+ktGovMMuhtXLsCBtl7lujeQj2eN4eDxa57x crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/v4-font-face.css integrity=sha384-fH83IkgQi7kturzlxpXfNdsR8aUOcqj5HUORRVnSvJgObZkIw6aqKAaQx20IWyB/ crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/v4-shims.css integrity=sha384-cCODJHSivNBsaHei/8LC0HUD58kToSbDU+xT7Rs51BO1v/IvgT/uM0W6xMoUqKfn crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v7.0.1/css/v5-font-face.css integrity=sha384-atSdF89mIn15dv+o2LKkDM6mCh3hwh6A7mwZ6F2it/kenqZbMu+QW/ye1OG4XSWV crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css integrity=sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu crossorigin=anonymous><link rel=stylesheet href=https://hugozhu.site/css/main.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"><link rel=stylesheet href=https://hugozhu.site/css/highlight.min.css><link rel=stylesheet href=https://hugozhu.site/css/codeblock.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css integrity=sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css integrity=sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R crossorigin=anonymous><link rel=stylesheet crossorgin href=/assets/index-C1z1vz3D.css><script async src="https://www.googletagmanager.com/gtag/js?id=GTM-W88HDMN"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","GTM-W88HDMN")}</script></head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class=container-fluid><div class=navbar-header><button type=button class=navbar-toggle data-toggle=collapse data-target=#main-navbar>
+<span class=sr-only>Toggle navigation</span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+<span class=icon-bar></span>
+</button>
+<a class=navbar-brand href=https://hugozhu.site/>All about Raspberry Pi</a></div><div class="collapse navbar-collapse" id=main-navbar><ul class="nav navbar-nav navbar-right"><li><a title=Blog href=/>Blog</a></li><li class=navlinks-container><a class=navlinks-parent role=button tabindex=0>Tools</a><div class=navlinks-children><a href=https://nddapp.com/json-encoder.html>HTML Tools</a>
+<a href=https://www.birme.net/>Imaeg Resizing</a>
+<a href=https://jwt.io/>JWT Token Tool</a></div></li><li><a title=Tags href=/tags>Tags</a></li><li><a title=About href=/page/about/>About</a></li><li style=padding-top:8px><style>.docsearch-modal-container{z-index:9999}</style><div id=docsearch></div></li></ul></div><div class=avatar-container><div class=avatar-img-border><a title="All about Raspberry Pi" href=https://hugozhu.site/><img class=avatar-img src=https://hugozhu.site/img/pi.png alt="All about Raspberry Pi"></a></div></div></div></nav><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>云端大规模 Agent 沙箱：多租户隔离、持久化、弹性调度与合规治理</h1><h2 class=post-subheading>Cloud-Scale Agent Sandbox Architecture: Isolation, Persistence, Elasticity, and Compliance</h2><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 24, 2026
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;10&nbsp;min
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1992&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role=main class=blog-post><p>上周，一个做 AI 编程助手平台的架构师朋友找我喝咖啡。他们的产品增长很快，企业客户越来越多，但工程团队正被四个问题折磨得焦头烂额：</p><blockquote><p>&ldquo;我们最初用 Docker 给每个用户起一个容器做代码执行沙箱，几十个人跑没问题。现在上千并发，问题全暴露了——</p><p><strong>隔离</strong>：有客户的 Agent 在容器里 <code>cat /proc/1/environ</code> 读到了其他租户的 API Key；
+<strong>持久化</strong>：客户抱怨上次会话写的代码，下次进来全没了；
+<strong>弹性</strong>：一个大客户做代码审查把 GPU 配额全占满了，其他客户的 Agent 全部超时；
+<strong>合规</strong>：法务要求支持 GDPR 数据删除，但我们连 Agent 的记忆散落在哪些存储里都说不清。&rdquo;</p></blockquote><p>他问：&ldquo;你们做大规模 Agent 平台的时候，沙箱到底应该怎么设计？&rdquo;</p><p>这不是他一个人的问题。2026 年，Agent 从 demo 走向生产，几乎所有做 Agent 平台的团队都会在这四个维度上踩坑。传统 SaaS 的多租户隔离只关心"数据别串"，但 Agent 沙箱要解决的是一个更复杂的问题：<strong>一个自主执行代码、持久化状态、调用外部工具的 AI 工作空间，如何在共享基础设施上安全、弹性、合规地运行？</strong></p><p>本文从四个工程维度系统性地拆解云端大规模 Agent 沙箱的架构方案：<strong>多租户隔离、状态持久化、弹性调度、合规治理</strong>。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Agent 沙箱架构全景图：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>┌─────────────────────────────────────────────────────────────┐
+</span></span><span class=line><span class=cl>│                    Agent Sandbox Platform                   │
+</span></span><span class=line><span class=cl>├──────────┬──────────┬──────────┬────────────────────────────┤
+</span></span><span class=line><span class=cl>│ 多租户隔离│ 状态持久化│ 弹性调度 │       合规治理             │
+</span></span><span class=line><span class=cl>│          │          │          │                            │
+</span></span><span class=line><span class=cl>│ • 计算   │ • 会话   │ • K8s    │ • 审计日志                 │
+</span></span><span class=line><span class=cl>│   隔离   │   状态   │   CRD    │ • PII 脱敏                 │
+</span></span><span class=line><span class=cl>│ • 数据   │ • 文件   │ • Warm   │ • Crypto-                  │
+</span></span><span class=line><span class=cl>│   隔离   │   系统   │   Pool   │   Shredding                │
+</span></span><span class=line><span class=cl>│ • 身份   │ • 向量   │ • HPA    │ • 数据主权                 │
+</span></span><span class=line><span class=cl>│   权限   │   索引   │ • 预测   │ • OWASP/MITRE              │
+</span></span><span class=line><span class=cl>│ • 速率   │ • 长期   │   伸缩   │                            │
+</span></span><span class=line><span class=cl>│   限制   │   记忆   │          │                            │
+</span></span><span class=line><span class=cl>└──────────┴──────────┴──────────┴────────────────────────────┘
+</span></span></code></pre></div><h2 id=一多租户隔离>一、多租户隔离</h2><p>多租户隔离是 Agent 沙箱的第一道防线。它需要解决三个层面的问题：<strong>计算隔离</strong>（代码不能逃逸）、<strong>数据隔离</strong>（数据不能串）、<strong>权限隔离</strong>（Agent 不能越权）。</p><h3 id=11-为什么-docker-不够用>1.1 为什么 Docker 不够用？</h3><p>先看一个关键区别：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>传统 Web 应用：
+</span></span><span class=line><span class=cl>  用户请求 → 应用服务器（预编译代码）→ 数据库
+</span></span><span class=line><span class=cl>  └─ 代码是开发者写的，经过审查，可信
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>AI Agent 系统：
+</span></span><span class=line><span class=cl>  用户请求 → LLM 推理 → 生成代码 → 沙箱执行 → 调用工具
+</span></span><span class=line><span class=cl>  └─ 代码是 LLM 实时生成的，未经审查，不可信
+</span></span></code></pre></div><p>Blaxel 的安全指南里有一句话一针见血：</p><blockquote><p><em>&ldquo;Web 应用运行开发者编写的、经过审查的代码。Agent 运行 LLM 生成的、从未经审计的代码。一次边界失效，Agent 的推理链就会被污染，进而通过工具调用产生实际影响。爆炸半径只受限于 Agent 的工具权限。&rdquo;</em></p></blockquote><p>Docker 容器共享宿主内核，对于运行不可信代码的 Agent 沙箱来说，逃逸风险太高。</p><h3 id=12-计算隔离运行时技术选型>1.2 计算隔离：运行时技术选型</h3><table><thead><tr><th>技术</th><th>隔离级别</th><th>冷启动</th><th>安全性</th><th>适用场景</th></tr></thead><tbody><tr><td>Docker</td><td>命名空间 + cgroups</td><td>~100ms</td><td>⭐⭐ 共享内核</td><td>可信代码</td></tr><tr><td>gVisor</td><td>用户态内核</td><td>~300ms</td><td>⭐⭐⭐ 系统调用拦截</td><td>中等安全需求</td></tr><tr><td>Kata Containers</td><td>轻量 VM</td><td>~500ms</td><td>⭐⭐⭐⭐ 独立内核</td><td>高安全需求</td></tr><tr><td>Firecracker</td><td>MicroVM</td><td>~150ms</td><td>⭐⭐⭐⭐⭐ 硬件级隔离</td><td>多租户不可信代码</td></tr></tbody></table><p><strong>推荐策略</strong>：生产级多租户 Agent 平台，至少使用 gVisor，高安全场景使用 Firecracker。</p><h3 id=13-firecracker-microvm-架构>1.3 Firecracker MicroVM 架构</h3><p>Firecracker 是 AWS 为 Lambda 和 Fargate 开发的 MicroVM 运行时，结合了容器的速度和虚拟机的安全性：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Firecracker 架构：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>┌─────────────────────────────────────────────┐
+</span></span><span class=line><span class=cl>│  Host OS (Linux)                            │
+</span></span><span class=line><span class=cl>│  ┌───────────┐  ┌───────────┐  ┌─────────┐ │
+</span></span><span class=line><span class=cl>│  │ MicroVM 1 │  │ MicroVM 2 │  │ MicroVM N│ │
+</span></span><span class=line><span class=cl>│  │ ┌───────┐ │  │ ┌───────┐ │  │ ┌──────┐ │ │
+</span></span><span class=line><span class=cl>│  │ │Kernel │ │  │ │Kernel │ │  │ │Kernel│ │ │
+</span></span><span class=line><span class=cl>│  │ │(独立) │ │  │ │(独立) │ │  │ │(独立)│ │ │
+</span></span><span class=line><span class=cl>│  │ └───────┘ │  │ └───────┘ │  │ └──────┘ │ │
+</span></span><span class=line><span class=cl>│  │ ┌───────┐ │  │ ┌───────┐ │  │ ┌──────┐ │ │
+</span></span><span class=line><span class=cl>│  │ │Agent  │ │  │ │Agent  │ │  │ │Agent │ │ │
+</span></span><span class=line><span class=cl>│  │ │代码   │ │  │ │代码   │ │  │ │代码  │ │ │
+</span></span><span class=line><span class=cl>│  │ └───────┘ │  │ └───────┘ │  │ └──────┘ │ │
+</span></span><span class=line><span class=cl>│  └───────────┘  └───────────┘  └─────────┘ │
+</span></span><span class=line><span class=cl>│  ┌───────────────────────────────────────┐  │
+</span></span><span class=line><span class=cl>│  │       KVM (Hardware Virtualization)   │  │
+</span></span><span class=line><span class=cl>│  └───────────────────────────────────────┘  │
+</span></span><span class=line><span class=cl>└─────────────────────────────────────────────┘
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>每个 MicroVM：
+</span></span><span class=line><span class=cl>  • 独立内核 — 无共享内核逃逸风险
+</span></span><span class=line><span class=cl>  • ~5MB 内存开销 — 单机可跑数千个
+</span></span><span class=line><span class=cl>  • ~150ms 冷启动 — 接近容器速度
+</span></span><span class=line><span class=cl>  • 最小设备模型 — 攻击面极小
+</span></span></code></pre></div><h3 id=14-安全加固基线>1.4 安全加固基线</h3><p>无论选择哪种运行时，以下加固措施都是 Day 1 必须落地的：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span><span class=p>,</span> <span class=n>field</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Optional</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>SandboxSecurityConfig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Agent 沙箱安全配置 — Day 1 基线&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 文件系统</span>
+</span></span><span class=line><span class=cl>    <span class=n>readonly_rootfs</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>    <span class=n>writable_tmpfs</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>    <span class=n>tmpfs_size_mb</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>512</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 网络</span>
+</span></span><span class=line><span class=cl>    <span class=n>network_mode</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;restricted&#34;</span>  <span class=c1># restricted | isolated | full</span>
+</span></span><span class=line><span class=cl>    <span class=n>egress_allowlist</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=n>field</span><span class=p>(</span><span class=n>default_factory</span><span class=o>=</span><span class=nb>list</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>dns_policy</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;None&#34;</span>  <span class=c1># 自定义 DNS，防止 DNS 隧道</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 资源限制</span>
+</span></span><span class=line><span class=cl>    <span class=n>cpu_limit</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;2&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>memory_limit</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;4Gi&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>pids_limit</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>256</span>  <span class=c1># 防止 fork bomb</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 系统调用</span>
+</span></span><span class=line><span class=cl>    <span class=n>seccomp_profile</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;RuntimeDefault&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>apparmor_profile</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;runtime/default&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 权限</span>
+</span></span><span class=line><span class=cl>    <span class=n>run_as_non_root</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>    <span class=n>allow_privilege_escalation</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>    <span class=n>drop_capabilities</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=n>field</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>default_factory</span><span class=o>=</span><span class=k>lambda</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;ALL&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>add_capabilities</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=n>field</span><span class=p>(</span><span class=n>default_factory</span><span class=o>=</span><span class=nb>list</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 生命周期</span>
+</span></span><span class=line><span class=cl>    <span class=n>max_lifetime_seconds</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>86400</span>  <span class=c1># 24h 最大存活</span>
+</span></span><span class=line><span class=cl>    <span class=n>idle_timeout_seconds</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>1800</span>   <span class=c1># 30min 空闲超时</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>validate</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>bool</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;验证安全配置是否符合基线要求&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>allow_privilege_escalation</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span><span class=s2>&#34;特权提升必须禁止&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s2>&#34;ALL&#34;</span> <span class=ow>not</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>drop_capabilities</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span><span class=s2>&#34;必须 drop ALL capabilities&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>readonly_rootfs</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span><span class=s2>&#34;根文件系统必须只读&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># generated by hugo AI</span>
+</span></span></code></pre></div><h3 id=15-数据隔离workspace-模型>1.5 数据隔离：Workspace 模型</h3><p>文件系统是隔离最薄弱的环节。最佳实践是将每个操作绑定到 <code>Workspace ID</code>：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Workspace 数据流：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  用户上传文件
+</span></span><span class=line><span class=cl>       │
+</span></span><span class=line><span class=cl>       ▼
+</span></span><span class=line><span class=cl>┌──────────────────┐
+</span></span><span class=line><span class=cl>│  Ingestion       │  文件立即标记 Workspace ID
+</span></span><span class=line><span class=cl>│  • Tag: ws_abc   │  元数据写入: { workspace_id, tenant_id, hash }
+</span></span><span class=line><span class=cl>└────────┬─────────┘
+</span></span><span class=line><span class=cl>         │
+</span></span><span class=line><span class=cl>         ▼
+</span></span><span class=line><span class=cl>┌──────────────────┐
+</span></span><span class=line><span class=cl>│  RAG Pipeline    │  Embeddings 存入 tenant namespace
+</span></span><span class=line><span class=cl>│  • Chunk &amp; Embed │  Vector DB: namespace=&#34;tenant_acme&#34;
+</span></span><span class=line><span class=cl>│  • Index         │  Metadata: { tenant_id: &#34;acme&#34;, ws_id: &#34;ws_abc&#34; }
+</span></span><span class=line><span class=cl>└────────┬─────────┘
+</span></span><span class=line><span class=cl>         │
+</span></span><span class=line><span class=cl>         ▼
+</span></span><span class=line><span class=cl>┌──────────────────┐
+</span></span><span class=line><span class=cl>│  Agent Retrieval │  搜索强制限定 namespace
+</span></span><span class=line><span class=cl>│  • Search tool   │  query.filter = { tenant_id: &#34;acme&#34; }
+</span></span><span class=line><span class=cl>│  • Namespace     │  返回结果二次验证 tenant_id
+</span></span><span class=line><span class=cl>│    filter        │
+</span></span><span class=line><span class=cl>└──────────────────┘
+</span></span></code></pre></div><p><strong>向量数据库隔离关键规则</strong>：</p><ol><li>每个向量必须带 <code>tenant_id</code> metadata</li><li>所有查询<strong>强制</strong>携带 <code>tenant_id</code> 过滤条件 — 不是可选的</li><li>返回结果<strong>二次验证</strong> <code>tenant_id</code> — 防止向量数据库 bug 导致串数据</li><li>高合规租户使用独立索引，不依赖逻辑隔离</li></ol><h3 id=16-权限隔离身份传播链>1.6 权限隔离：身份传播链</h3><p>Agent 不是用户的简单代理，它有自主决策能力。因此 Agent 需要<strong>独立的工作负载身份</strong>，而不是直接传递用户会话：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>身份传播链：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  用户 (User Identity)
+</span></span><span class=line><span class=cl>    │ OIDC Token
+</span></span><span class=line><span class=cl>    ▼
+</span></span><span class=line><span class=cl>┌──────────────────┐
+</span></span><span class=line><span class=cl>│  API Gateway     │  ← 验证用户身份，注入 tenant_id
+</span></span><span class=line><span class=cl>│  • 鉴权          │
+</span></span><span class=line><span class=cl>│  • Tenant 解析   │
+</span></span><span class=line><span class=cl>└────────┬─────────┘
+</span></span><span class=line><span class=cl>         │ Authorization Envelope:
+</span></span><span class=line><span class=cl>         │ { user_id, tenant_id, scope, expires_at }
+</span></span><span class=line><span class=cl>         ▼
+</span></span><span class=line><span class=cl>┌──────────────────┐
+</span></span><span class=line><span class=cl>│  Agent Runtime   │  ← 获取短期工作负载凭证
+</span></span><span class=line><span class=cl>│  • Workload ID   │     (STS AssumeRole / OIDC Federation)
+</span></span><span class=line><span class=cl>│  • Token 交换    │
+</span></span><span class=line><span class=cl>└────────┬─────────┘
+</span></span><span class=line><span class=cl>         │ Short-lived Credential (TTL &lt; 15min)
+</span></span><span class=line><span class=cl>         ▼
+</span></span><span class=line><span class=cl>┌──────────────────┐
+</span></span><span class=line><span class=cl>│  Tool Execution  │  ← 凭证限定工具权限范围
+</span></span><span class=line><span class=cl>│  • Scoped MCP    │
+</span></span><span class=line><span class=cl>│  • Egress ACL    │
+</span></span><span class=line><span class=cl>└──────────────────┘
+</span></span></code></pre></div><p>关键原则：</p><ul><li><strong>Gateway 层强制注入 tenant context</strong> — 在 LLM 处理之前就确定租户边界，用确定性 token claim，不是 LLM 指令</li><li><strong>短期凭证</strong> — 使用 STS 或 Workload Identity Federation，凭证 TTL &lt; 15 分钟</li><li><strong>最小权限</strong> — Agent 的工具权限按需授予，不是继承用户全量权限</li></ul><p>MCP 工具的权限必须严格限定在租户范围内：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>ScopedToolContext</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;限定范围的工具执行上下文&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>tenant_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>workspace_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>user_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>allowed_paths</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=n>allowed_domains</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=n>max_output_bytes</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>1_000_000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>validate_file_access</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>bool</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;验证文件访问是否在允许范围内&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>resolved</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>realpath</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>any</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>resolved</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=n>allowed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span> <span class=n>allowed</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>allowed_paths</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>validate_network_access</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>url</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>bool</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;验证网络访问是否在白名单内&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=kn>from</span> <span class=nn>urllib.parse</span> <span class=kn>import</span> <span class=n>urlparse</span>
+</span></span><span class=line><span class=cl>        <span class=n>host</span> <span class=o>=</span> <span class=n>urlparse</span><span class=p>(</span><span class=n>url</span><span class=p>)</span><span class=o>.</span><span class=n>hostname</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>any</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>host</span><span class=o>.</span><span class=n>endswith</span><span class=p>(</span><span class=n>domain</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span> <span class=n>domain</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>allowed_domains</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># generated by hugo AI</span>
+</span></span></code></pre></div><h3 id=17-防嘈杂邻居速率限制>1.7 防"嘈杂邻居"：速率限制</h3><p>一个租户的 Agent 不应该影响其他租户的性能。需要在多个层面实施限流：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>限流层级：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>┌──────────────────────────────────────────┐
+</span></span><span class=line><span class=cl>│  全局限流                                │
+</span></span><span class=line><span class=cl>│  • 总并发 Sandbox 数                     │
+</span></span><span class=line><span class=cl>│  • 总 GPU/CPU 配额                       │
+</span></span><span class=line><span class=cl>├──────────────────────────────────────────┤
+</span></span><span class=line><span class=cl>│  租户限流                                │
+</span></span><span class=line><span class=cl>│  • 每租户最大 Sandbox 数                 │
+</span></span><span class=line><span class=cl>│  • 每租户 LLM API 调用 QPS               │
+</span></span><span class=line><span class=cl>│  • 每租户网络带宽                        │
+</span></span><span class=line><span class=cl>├──────────────────────────────────────────┤
+</span></span><span class=line><span class=cl>│  会话限流                                │
+</span></span><span class=line><span class=cl>│  • 单会话最大执行时间                    │
+</span></span><span class=line><span class=cl>│  • 单会话最大内存                        │
+</span></span><span class=line><span class=cl>│  • 单会话最大文件 I/O                    │
+</span></span><span class=line><span class=cl>└──────────────────────────────────────────┘
+</span></span></code></pre></div><h2 id=二状态持久化>二、状态持久化</h2><p>Agent 沙箱与传统容器最大的区别之一，是它需要持久化大量有状态的数据。这些数据不是一次性的，而是贯穿 Agent 的整个生命周期。</p><h3 id=21-四类持久化数据>2.1 四类持久化数据</h3><table><thead><tr><th>数据类型</th><th>内容</th><th>存储方案</th><th>隔离方式</th></tr></thead><tbody><tr><td><strong>会话状态</strong></td><td>对话历史、推理链、中间结果</td><td>Redis/PostgreSQL</td><td>Row-Level Security</td></tr><tr><td><strong>文件系统</strong></td><td>代码文件、构建产物、上传文件</td><td>对象存储 + 本地缓存</td><td>Per-tenant prefix</td></tr><tr><td><strong>向量索引</strong></td><td>RAG 文档 embeddings</td><td>向量数据库</td><td>Namespace per tenant</td></tr><tr><td><strong>长期记忆</strong></td><td>用户偏好、项目上下文</td><td>专用 Memory Store</td><td>Schema per tenant</td></tr></tbody></table><h3 id=22-pauseresume-模式>2.2 Pause/Resume 模式</h3><p>沙箱不应该在空闲时被销毁，而应该<strong>暂停和恢复</strong>。<a href=https://e2b.dev>E2B</a> 是目前最成熟的实现方案之一：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>enum</span> <span class=kn>import</span> <span class=n>Enum</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>SandboxState</span><span class=p>(</span><span class=n>Enum</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>RUNNING</span> <span class=o>=</span> <span class=s2>&#34;running&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>PAUSED</span> <span class=o>=</span> <span class=s2>&#34;paused&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>TERMINATED</span> <span class=o>=</span> <span class=s2>&#34;terminated&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>SandboxLifecycle</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Agent 沙箱生命周期管理 — Pause/Resume 模式&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>sandbox_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>state</span><span class=p>:</span> <span class=n>SandboxState</span> <span class=o>=</span> <span class=n>SandboxState</span><span class=o>.</span><span class=n>RUNNING</span>
+</span></span><span class=line><span class=cl>    <span class=n>timeout_ms</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>30</span> <span class=o>*</span> <span class=mi>60</span> <span class=o>*</span> <span class=mi>1000</span>  <span class=c1># 30 分钟空闲超时</span>
+</span></span><span class=line><span class=cl>    <span class=n>auto_resume</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>def</span> <span class=nf>create</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>template</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;创建沙箱实例&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=c1># sandbox = await e2b.Sandbox.create(</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#     template=template,</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#     timeout_ms=self.timeout_ms,</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#     lifecycle={</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#         &#34;onTimeout&#34;: &#34;pause&#34;,</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#         &#34;autoResume&#34;: self.auto_resume,</span>
+</span></span><span class=line><span class=cl>        <span class=c1>#     }</span>
+</span></span><span class=line><span class=cl>        <span class=c1># )</span>
+</span></span><span class=line><span class=cl>        <span class=c1># return sandbox.sandbox_id</span>
+</span></span><span class=line><span class=cl>        <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>def</span> <span class=nf>pause</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;暂停沙箱 — 保存文件系统 + 内存状态&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=c1># await sandbox.pause()</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>state</span> <span class=o>=</span> <span class=n>SandboxState</span><span class=o>.</span><span class=n>PAUSED</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>def</span> <span class=nf>resume</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;恢复沙箱 — 从暂停时的状态继续&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=c1># sandbox = await e2b.Sandbox.connect(self.sandbox_id)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>state</span> <span class=o>=</span> <span class=n>SandboxState</span><span class=o>.</span><span class=n>RUNNING</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>def</span> <span class=nf>connect_or_create</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;连接已有沙箱或创建新的 — 自动恢复暂停的沙箱&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 如果沙箱存在（包括暂停状态），自动连接/恢复</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 否则创建新的</span>
+</span></span><span class=line><span class=cl>        <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># generated by hugo AI</span>
+</span></span></code></pre></div><p>关键特性：</p><ul><li><strong>空闲自动暂停</strong>：<code>onTimeout: "pause"</code> — 超时后保存状态，释放计算资源</li><li><strong>按需自动恢复</strong>：<code>autoResume: true</code> — 下次连接时自动恢复，&lt; 25ms</li><li><strong>状态完整保留</strong>：文件系统 + 内存状态 + 进程状态全部保留</li><li><strong>零空闲成本</strong>：暂停期间不消耗 CPU/GPU 资源</li></ul><h3 id=23-向量数据库隔离策略>2.3 向量数据库隔离策略</h3><p>向量数据库的数据隔离需要支持多种模式，根据租户的合规等级灵活选择：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>VectorIsolationConfig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;向量数据库多租户隔离配置&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>tenant_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>isolation_mode</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;namespace&#34;</span>  <span class=c1># namespace | shard | instance</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>get_collection_name</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>workspace_id</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;根据隔离模式生成集合名&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>isolation_mode</span> <span class=o>==</span> <span class=s2>&#34;namespace&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 共享实例，逻辑隔离 — 适合大多数租户</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=sa>f</span><span class=s2>&#34;tenant_</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>tenant_id</span><span class=si>}</span><span class=s2>_vectors&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=bp>self</span><span class=o>.</span><span class=n>isolation_mode</span> <span class=o>==</span> <span class=s2>&#34;shard&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 分片隔离，物理边界 — 适合 B2B 客户</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=sa>f</span><span class=s2>&#34;shard_</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>tenant_id</span><span class=si>}</span><span class=s2>_</span><span class=si>{</span><span class=n>workspace_id</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 独立实例，最强隔离 — 适合金融/医疗等强合规场景</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=sa>f</span><span class=s2>&#34;instance_</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>tenant_id</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>build_query_filter</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>dict</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;构建强制租户过滤条件 — 所有查询必须携带&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;tenant_id&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>tenant_id</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 防御性编程：即使 namespace 隔离，也加 metadata filter</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># generated by hugo AI</span>
+</span></span></code></pre></div><p>三种隔离模式的 trade-off：</p><table><thead><tr><th>模式</th><th>安全性</th><th>成本</th><th>运维复杂度</th><th>适用场景</th></tr></thead><tbody><tr><td>Namespace</td><td>⭐⭐⭐</td><td>低</td><td>低</td><td>大多数 SaaS 租户</td></tr><tr><td>Shard</td><td>⭐⭐⭐⭐</td><td>中</td><td>中</td><td>B2B 企业客户</td></tr><tr><td>Instance</td><td>⭐⭐⭐⭐⭐</td><td>高</td><td>高</td><td>金融/医疗/政府</td></tr></tbody></table><h2 id=三弹性调度>三、弹性调度</h2><p>Agent 的工作负载特征和传统 Web 服务完全不同：<strong>长时间空闲 + 突发活跃 + 需要挂起/恢复</strong>。这意味着弹性调度策略也需要重新设计。</p><h3 id=31-kubernetes-agent-sandbox-crd>3.1 Kubernetes Agent Sandbox CRD</h3><p>2026 年 3 月，Kubernetes SIG Apps 正式推出了 <a href=https://github.com/kubernetes-sigs/agent-sandbox>Agent Sandbox</a> 项目，这是 Kubernetes 原生支持 Agent 工作负载的标志性事件。</p><p>用 StatefulSet + Headless Service + PVC 来管理 Agent 沙箱，在规模上会变成运维噩梦。Agent Sandbox CRD 提供了原生抽象：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>sandbox.x-k8s.io/v1alpha1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Sandbox</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>agent-workspace-user-1234</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># 安全运行时 — 使用 gVisor 做内核隔离</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>runtimeClassName</span><span class=p>:</span><span class=w> </span><span class=l>gvisor</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># 持久化工作空间</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workspace</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>storageClassName</span><span class=p>:</span><span class=w> </span><span class=l>ssd</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>size</span><span class=p>:</span><span class=w> </span><span class=l>10Gi</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/workspace</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># 空闲时自动缩到零</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>lifecycle</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>idleTimeout</span><span class=p>:</span><span class=w> </span><span class=l>30m</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>scaleToZero</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c># 网络策略 — 只允许出站白名单</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>networkPolicy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>egress</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>to</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span>- <span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class=m>10.0.0.0</span><span class=l>/8 </span><span class=w> </span><span class=c># 内网 API</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>to</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span>- <span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class=m>0.0.0.0</span><span class=l>/0</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span>- <span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=m>443</span><span class=w>  </span><span class=c># 只允许 HTTPS</span><span class=w>
+</span></span></span></code></pre></div><h3 id=32-warm-pool-解决冷启动>3.2 Warm Pool 解决冷启动</h3><p>Agent 被挂起后，用户再次访问时需要快速恢复。标准 Pod 启动约 1 秒的延迟会打断交互连续性。Agent Sandbox 的 <code>SandboxWarmPool</code> 维护一组预热的沙箱：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>sandbox.x-k8s.io/v1alpha1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SandboxWarmPool</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>templateRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>python-agent-template</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>minReady</span><span class=p>:</span><span class=w> </span><span class=m>10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>maxReady</span><span class=p>:</span><span class=w> </span><span class=m>50</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>scalingPolicy</span><span class=p>:</span><span class=w> </span><span class=l>predictive </span><span class=w> </span><span class=c># 基于历史并发预测预热</span><span class=w>
+</span></span></span></code></pre></div><p>编排器通过 <code>SandboxClaim</code> 声明一个预热好的沙箱，控制器瞬间交付一个已隔离的环境。</p><h3 id=33-弹性伸缩架构>3.3 弹性伸缩架构</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>弹性伸缩三层架构：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  用户请求
+</span></span><span class=line><span class=cl>     │
+</span></span><span class=line><span class=cl>     ▼
+</span></span><span class=line><span class=cl>┌────────────┐     ┌──────────────┐     ┌──────────────┐
+</span></span><span class=line><span class=cl>│  API       │────▶│  Sandbox     │────▶│  Agent       │
+</span></span><span class=line><span class=cl>│  Gateway   │     │  Orchestrator│     │  Runtime     │
+</span></span><span class=line><span class=cl>│            │     │              │     │  (MicroVM)   │
+</span></span><span class=line><span class=cl>│ • 路由     │     │ • Claim/     │     │              │
+</span></span><span class=line><span class=cl>│ • 限流     │     │   Release    │     │ • LLM 推理   │
+</span></span><span class=line><span class=cl>│ • 鉴权     │     │ • Warm Pool  │     │ • 代码执行   │
+</span></span><span class=line><span class=cl>└────────────┘     │ • 生命周期   │     │ • 工具调用   │
+</span></span><span class=line><span class=cl>                   └──────┬───────┘     └──────────────┘
+</span></span><span class=line><span class=cl>                          │
+</span></span><span class=line><span class=cl>                   ┌──────▼───────┐
+</span></span><span class=line><span class=cl>                   │  Kubernetes  │
+</span></span><span class=line><span class=cl>                   │  HPA +       │
+</span></span><span class=line><span class=cl>                   │  Cluster     │
+</span></span><span class=line><span class=cl>                   │  Autoscaler  │
+</span></span><span class=line><span class=cl>                   └──────────────┘
+</span></span></code></pre></div><p>关键策略：</p><ul><li><strong>HPA（水平伸缩）</strong>：基于活跃 Sandbox 数量，而非 CPU/内存 — Agent 大部分时间 idle，CPU 指标没有意义</li><li><strong>Cluster Autoscaler</strong>：节点级别伸缩，支持 Spot 实例降低成本</li><li><strong>预测性伸缩</strong>：基于历史并发模式提前预热 Warm Pool</li></ul><h3 id=34-调度策略的-trade-off>3.4 调度策略的 Trade-off</h3><table><thead><tr><th>策略</th><th>冷启动延迟</th><th>资源利用率</th><th>成本</th><th>适用场景</th></tr></thead><tbody><tr><td>Always-On</td><td>0ms</td><td>低</td><td>高</td><td>VIP 客户/高并发租户</td></tr><tr><td>Warm Pool</td><td>~100ms</td><td>中</td><td>中</td><td>主流生产场景</td></tr><tr><td>Scale-to-Zero</td><td>~1-5s</td><td>高</td><td>低</td><td>低频使用/开发环境</td></tr><tr><td>Predictive</td><td>~100ms</td><td>高</td><td>中</td><td>有明显峰谷规律的场景</td></tr></tbody></table><h2 id=四合规治理>四、合规治理</h2><p>合规不是事后补的，而是 Day 1 就要设计的架构约束。Agent 平台的合规挑战比传统应用更复杂，因为 Agent 的推理链、工具调用、RAG 检索都会产生敏感数据。</p><h3 id=41-合规框架映射>4.1 合规框架映射</h3><table><thead><tr><th>合规要求</th><th>Agent 沙箱特殊挑战</th><th>解决方案</th></tr></thead><tbody><tr><td><strong>GDPR 删除权</strong></td><td>Agent 记忆分散在会话、向量、日志中</td><td>Crypto-Shredding + 全局数据清单</td></tr><tr><td><strong>SOC 2 审计</strong></td><td>Agent 推理链包含敏感上下文</td><td>结构化审计日志 + PII 脱敏</td></tr><tr><td><strong>数据主权</strong></td><td>沙箱可能跨 region 调度</td><td>Per-tenant region pinning</td></tr><tr><td><strong>OWASP LLM08</strong></td><td>RAG 跨租户数据泄露</td><td>强制 namespace filter + 二次验证</td></tr><tr><td><strong>MITRE ATLAS</strong></td><td>Prompt 注入导致权限提升</td><td>输入验证 + 沙箱 + 运行时监控</td></tr></tbody></table><h3 id=42-crypto-shredding密码学数据擦除>4.2 Crypto-Shredding：密码学数据擦除</h3><p>对于 Agent 平台，物理删除分散在各处的租户数据非常困难。Crypto-Shredding 提供了更优雅的解决方案：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Crypto-Shredding 架构：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>┌─────────────────────────────────────────────┐
+</span></span><span class=line><span class=cl>│  KMS (Key Management Service)               │
+</span></span><span class=line><span class=cl>│                                             │
+</span></span><span class=line><span class=cl>│  KEK_tenant_A  KEK_tenant_B  KEK_tenant_C   │
+</span></span><span class=line><span class=cl>│  (Key Encrypting Key per tenant)            │
+</span></span><span class=line><span class=cl>└──────────────┬──────────────────────────────┘
+</span></span><span class=line><span class=cl>               │ 加密
+</span></span><span class=line><span class=cl>               ▼
+</span></span><span class=line><span class=cl>┌─────────────────────────────────────────────┐
+</span></span><span class=line><span class=cl>│  DEK (Data Encrypting Keys)                 │
+</span></span><span class=line><span class=cl>│  ┌──────────┐ ┌──────────┐ ┌────────────┐  │
+</span></span><span class=line><span class=cl>│  │Session DB│ │Vector DB │ │Object Store│  │
+</span></span><span class=line><span class=cl>│  │(加密存储) │ │(加密存储) │ │(加密存储)  │  │
+</span></span><span class=line><span class=cl>│  └──────────┘ └──────────┘ └────────────┘  │
+</span></span><span class=line><span class=cl>└─────────────────────────────────────────────┘
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>删除租户 A 的数据：
+</span></span><span class=line><span class=cl>  1. 销毁 KEK_tenant_A
+</span></span><span class=line><span class=cl>  2. 所有用该 KEK 加密的数据立即不可读
+</span></span><span class=line><span class=cl>  3. 无需物理删除分散的数据块
+</span></span><span class=line><span class=cl>  4. 满足 GDPR &#34;Right to be Forgotten&#34;
+</span></span></code></pre></div><h3 id=43-审计日志>4.3 审计日志</h3><p>Agent 的审计日志比传统应用复杂得多，因为它需要记录推理链、工具调用、数据访问：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>dataclasses</span> <span class=kn>import</span> <span class=n>dataclass</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@dataclass</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>AgentAuditEntry</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Agent 审计日志条目 — SOC 2 合规要求&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>timestamp</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>tenant_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>user_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>sandbox_id</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 事件类型</span>
+</span></span><span class=line><span class=cl>    <span class=n>event_type</span><span class=p>:</span> <span class=nb>str</span>  <span class=c1># tool_call | file_access | memory_retrieval | network_request</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 事件详情</span>
+</span></span><span class=line><span class=cl>    <span class=n>action</span><span class=p>:</span> <span class=nb>str</span>  <span class=c1># 具体操作，如 &#34;read_file&#34;, &#34;search_vectors&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>resource</span><span class=p>:</span> <span class=nb>str</span>  <span class=c1># 访问的资源路径或 ID</span>
+</span></span><span class=line><span class=cl>    <span class=n>result</span><span class=p>:</span> <span class=nb>str</span>  <span class=c1># success | denied | error</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 安全上下文</span>
+</span></span><span class=line><span class=cl>    <span class=n>workload_identity</span><span class=p>:</span> <span class=nb>str</span>  <span class=c1># Agent 的工作负载身份</span>
+</span></span><span class=line><span class=cl>    <span class=n>source_ip</span><span class=p>:</span> <span class=nb>str</span>
+</span></span><span class=line><span class=cl>    <span class=n>tenant_context_verified</span><span class=p>:</span> <span class=nb>bool</span>  <span class=c1># 租户上下文是否通过验证</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 可选：敏感信息脱敏后的摘要</span>
+</span></span><span class=line><span class=cl>    <span class=n>sanitized_summary</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>to_json</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>dict</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;序列化为 JSON — 写入审计日志系统&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>k</span><span class=p>:</span> <span class=n>v</span> <span class=k>for</span> <span class=n>k</span><span class=p>,</span> <span class=n>v</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=vm>__dict__</span><span class=o>.</span><span class=n>items</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>v</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># generated by hugo AI</span>
+</span></span></code></pre></div><p>审计日志的关键要求：</p><ul><li><strong>每条日志必须包含 <code>tenant_id</code></strong> — 支持按租户隔离审计数据</li><li><strong>记录推理链摘要</strong> — 不只是请求/响应，还包括 Agent 的决策路径</li><li><strong>PII 脱敏</strong> — 使用 OpenTelemetry Collector transform processor 在写入前脱敏</li><li><strong>不可篡改</strong> — 写入 Append-only 存储，支持合规审计</li></ul><h3 id=44-nvidia-安全指导要点>4.4 NVIDIA 安全指导要点</h3><p>NVIDIA 最近发布的 <a href=https://developer.nvidia.com/blog/practical-security-guidance-for-sandboxing-agentic-workflows-and-managing-execution-risk/>Agent 沙箱安全指导</a> 强调了几个关键实践：</p><ol><li><strong>禁止写入工作空间外的文件</strong> — 防止持久化攻击和沙箱逃逸</li><li><strong>保护配置文件</strong> — Agent 不能修改 <code>.env</code>、<code>kubeconfig</code> 等敏感配置</li><li><strong>及时清理过期沙箱</strong> — 过期的沙箱中可能残留密钥和专有代码</li><li><strong>企业级策略强制执行</strong> — 不管用户是否手动批准，敏感操作必须被阻断</li></ol><h2 id=五方案对比与选型建议>五、方案对比与选型建议</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>┌──────────────┬──────────────┬──────────────┬──────────────┐
+</span></span><span class=line><span class=cl>│              │  自建 (K8s)  │  E2B         │  Blaxel      │
+</span></span><span class=line><span class=cl>├──────────────┼──────────────┼──────────────┼──────────────┤
+</span></span><span class=line><span class=cl>│ 隔离技术     │ 自选         │ Firecracker  │ MicroVM      │
+</span></span><span class=line><span class=cl>│ 持久化       │ 自行设计     │ Pause/Resume │ 永续沙箱     │
+</span></span><span class=line><span class=cl>│ 恢复速度     │ 取决于实现   │ ~1s          │ &lt;25ms        │
+</span></span><span class=line><span class=cl>│ 空闲成本     │ 需自行优化   │ 暂停零成本   │ 待机零成本   │
+</span></span><span class=line><span class=cl>│ 最大会话时长 │ 无限制       │ 24h (Pro)    │ 无限         │
+</span></span><span class=line><span class=cl>│ 多租户       │ 自行实现     │ 支持         │ 原生支持     │
+</span></span><span class=line><span class=cl>│ 合规支持     │ 自行实现     │ 基础         │ ZDR 原生     │
+</span></span><span class=line><span class=cl>│ 运维复杂度   │ 高           │ 低           │ 低           │
+</span></span><span class=line><span class=cl>│ 适合场景     │ 大规模/定制  │ 快速启动     │ 生产级 Agent │
+</span></span><span class=line><span class=cl>└──────────────┴──────────────┴──────────────┴──────────────┘
+</span></span></code></pre></div><p><strong>选型建议</strong>：</p><ul><li><strong>早期团队（&lt; 100 并发）</strong>：E2B 或 Blaxel，快速启动，专注业务逻辑</li><li><strong>中型团队（100-1000 并发）</strong>：K8s + gVisor + 自建持久化，平衡控制和成本</li><li><strong>大规模/高合规（> 1000 并发）</strong>：K8s Agent Sandbox CRD + Firecracker + Crypto-Shredding</li></ul><h2 id=六总结>六、总结</h2><p>云端大规模 Agent 沙箱的核心认知：</p><blockquote><p><strong>Agent 沙箱不是"给容器加个安全策略"，而是多租户隔离、状态持久化、弹性调度、合规治理四维度的系统工程。每个维度都有独立的失效模式，任何一个维度的缺失都会导致整个体系的崩溃。</strong></p></blockquote><p>四个维度的 Day 1 基线：</p><table><thead><tr><th>维度</th><th>Day 1 基线</th><th>进阶</th></tr></thead><tbody><tr><td><strong>多租户隔离</strong></td><td>gVisor + namespace filter + Gateway tenant injection</td><td>Firecracker + per-tenant KMS</td></tr><tr><td><strong>状态持久化</strong></td><td>Pause/Resume + 对象存储 + 向量 namespace</td><td>永续沙箱 + 多 region 复制</td></tr><tr><td><strong>弹性调度</strong></td><td>K8s HPA + Warm Pool + 租户限流</td><td>预测性伸缩 + Spot 实例</td></tr><tr><td><strong>合规治理</strong></td><td>审计日志 + PII 脱敏 + per-tenant KEK</td><td>Crypto-Shredding + 独立审计后端</td></tr></tbody></table><p>你在实际落地 Agent 沙箱时遇到过什么隔离或持久化的坑？欢迎留言讨论。</p><div class=blog-tags><a href=https://hugozhu.site/tags/agent-sandbox/>agent-sandbox</a>&nbsp;
+<a href=https://hugozhu.site/tags/multi-tenant/>multi-tenant</a>&nbsp;
+<a href=https://hugozhu.site/tags/system-design/>system-design</a>&nbsp;
+<a href=https://hugozhu.site/tags/cloud-native/>cloud-native</a>&nbsp;
+<a href=https://hugozhu.site/tags/security/>security</a>&nbsp;</div><hr><section id=social-share><div class="list-inline footer-links"><div class=share-box aria-hidden=true><ul class=share><li><a href="//twitter.com/share?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f&amp;text=%e4%ba%91%e7%ab%af%e5%a4%a7%e8%a7%84%e6%a8%a1%20Agent%20%e6%b2%99%e7%ae%b1%ef%bc%9a%e5%a4%9a%e7%a7%9f%e6%88%b7%e9%9a%94%e7%a6%bb%e3%80%81%e6%8c%81%e4%b9%85%e5%8c%96%e3%80%81%e5%bc%b9%e6%80%a7%e8%b0%83%e5%ba%a6%e4%b8%8e%e5%90%88%e8%a7%84%e6%b2%bb%e7%90%86&amp;via=" target=_blank title="Share on Twitter"><i class="fab fa-twitter"></i></a></li><li><a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f" target=_blank title="Share on Facebook"><i class="fab fa-facebook"></i></a></li><li><a href="//reddit.com/submit?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f&amp;title=%e4%ba%91%e7%ab%af%e5%a4%a7%e8%a7%84%e6%a8%a1%20Agent%20%e6%b2%99%e7%ae%b1%ef%bc%9a%e5%a4%9a%e7%a7%9f%e6%88%b7%e9%9a%94%e7%a6%bb%e3%80%81%e6%8c%81%e4%b9%85%e5%8c%96%e3%80%81%e5%bc%b9%e6%80%a7%e8%b0%83%e5%ba%a6%e4%b8%8e%e5%90%88%e8%a7%84%e6%b2%bb%e7%90%86" target=_blank title="Share on Reddit"><i class="fab fa-reddit"></i></a></li><li><a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f&amp;title=%e4%ba%91%e7%ab%af%e5%a4%a7%e8%a7%84%e6%a8%a1%20Agent%20%e6%b2%99%e7%ae%b1%ef%bc%9a%e5%a4%9a%e7%a7%9f%e6%88%b7%e9%9a%94%e7%a6%bb%e3%80%81%e6%8c%81%e4%b9%85%e5%8c%96%e3%80%81%e5%bc%b9%e6%80%a7%e8%b0%83%e5%ba%a6%e4%b8%8e%e5%90%88%e8%a7%84%e6%b2%bb%e7%90%86" target=_blank title="Share on LinkedIn"><i class="fab fa-linkedin"></i></a></li><li><a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f&amp;title=%e4%ba%91%e7%ab%af%e5%a4%a7%e8%a7%84%e6%a8%a1%20Agent%20%e6%b2%99%e7%ae%b1%ef%bc%9a%e5%a4%9a%e7%a7%9f%e6%88%b7%e9%9a%94%e7%a6%bb%e3%80%81%e6%8c%81%e4%b9%85%e5%8c%96%e3%80%81%e5%bc%b9%e6%80%a7%e8%b0%83%e5%ba%a6%e4%b8%8e%e5%90%88%e8%a7%84%e6%b2%bb%e7%90%86" target=_blank title="Share on StumbleUpon"><i class="fab fa-stumbleupon"></i></a></li><li><a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f&amp;description=%e4%ba%91%e7%ab%af%e5%a4%a7%e8%a7%84%e6%a8%a1%20Agent%20%e6%b2%99%e7%ae%b1%ef%bc%9a%e5%a4%9a%e7%a7%9f%e6%88%b7%e9%9a%94%e7%a6%bb%e3%80%81%e6%8c%81%e4%b9%85%e5%8c%96%e3%80%81%e5%bc%b9%e6%80%a7%e8%b0%83%e5%ba%a6%e4%b8%8e%e5%90%88%e8%a7%84%e6%b2%bb%e7%90%86" target=_blank title="Share on Pinterest"><i class="fab fa-pinterest"></i></a></li><li><a href="mailto:?body=https%3a%2f%2fhugozhu.site%2fpost%2f2026%2f189-cloud-agent-sandbox-architecture%2f&amp;subject=%e4%ba%91%e7%ab%af%e5%a4%a7%e8%a7%84%e6%a8%a1%20Agent%20%e6%b2%99%e7%ae%b1%ef%bc%9a%e5%a4%9a%e7%a7%9f%e6%88%b7%e9%9a%94%e7%a6%bb%e3%80%81%e6%8c%81%e4%b9%85%e5%8c%96%e3%80%81%e5%bc%b9%e6%80%a7%e8%b0%83%e5%ba%a6%e4%b8%8e%e5%90%88%e8%a7%84%e6%b2%bb%e7%90%86" title="Share via email"><i class="fab fa-at"></i></a></li></ul></div></div></section><h4 class=see-also>See also</h4><ul><li><a href=/post/2026/188-agent-task-recommendation-system/>能做事的 Agent，需要一个推荐系统</a></li><li><a href=/post/2026/187-ai-era-architect-growth-path/>AI 时代，校招生如何成为好架构师</a></li><li><a href=/post/2026/185-hermes-gateway-im-platforms-architecture/>Agent 如何同时活在钉钉、Telegram、Discord 和微信里？</a></li><li><a href=/post/2026/184-hermes-cli-tui-architecture-deep-dive/>解构 Agent CLI：从 React 子进程到 Python 回调的通信协议</a></li><li><a href=/post/2026/183-agent-skill-self-evolution/>Agent 的 Skill 自进化机制：它是如何自己长记性的</a></li></ul></article><ul class="pager blog-pager"><li class=previous><a href=https://hugozhu.site/post/2026/188-agent-task-recommendation-system/ data-toggle=tooltip data-placement=top title="能做事的 Agent，需要一个推荐系统">&larr; Previous Post</a></li></ul><div class=disqus-comments><button id=show-comments class="btn btn-default" type=button>Show <span class=disqus-comment-count data-disqus-url=https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture>comments</span></button><div id=disqus_thread></div><script type=text/javascript>var disqus_config=function(){this.page.url="https://hugozhu.site/post/2026/189-cloud-agent-sandbox-architecture"}</script></div></div></div></div><footer><div class=container><div class=row><div class=disclaimer><b>Disclaimer:</b> The opinions expressed herein are my own personal opinions and do not represent my company’s view in any way.</div></div><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
+2026
+&nbsp;&bull;&nbsp;
+<a href=https://hugozhu.site/>All about Raspberry Pi</a></p><p class="credits theme-by text-muted"><a href=https://gohugo.io>Hugo v0.160.1</a> powered &nbsp;&bull;&nbsp; Theme <a href=https://github.com/halogenica/beautifulhugo>Beautiful Hugo</a> adapted from <a href=https://deanattali.com/beautiful-jekyll/>Beautiful Jekyll</a></p></div></div></div></footer><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js integrity=sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6 crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js integrity=sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh crossorigin=anonymous onload=renderMathInElement(document.body)></script><script src=https://code.jquery.com/jquery-3.7.0.slim.min.js integrity=sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js integrity=sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd crossorigin=anonymous></script><script src=https://hugozhu.site/js/main.js></script><script src=https://hugozhu.site/js/highlight.min.js></script><script>hljs.initHighlightingOnLoad()</script><script>$(document).ready(function(){$("pre.chroma").css("padding","0")})</script><script src=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js integrity=sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy crossorigin=anonymous></script><script src=https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js integrity=sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q crossorigin=anonymous></script><script src=https://hugozhu.site/js/load-photoswipe.js></script><script type=text/javascript>$(function(){$("#show-comments").on("click",function(){var e="hugozhu";(function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="//"+e+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(t)})(),$(this).hide()})})</script><script id=dsq-count-scr src=//hugozhu.disqus.com/count.js async></script><script type=module crossorigin src=/assets/index-BgktQxq3.js></script></body></html>
