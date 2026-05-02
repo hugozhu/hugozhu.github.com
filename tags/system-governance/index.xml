@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>System-Governance on All about Raspberry Pi</title><link>https://hugozhu.site/tags/system-governance/</link><description>Recent content in System-Governance on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 02 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/system-governance/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 工程的 10X 生产力，藏在测试和监控里</title><link>https://hugozhu.site/post/2026/197-ai-engineering-10x-testing-monitoring/</link><pubDate>Sat, 02 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/197-ai-engineering-10x-testing-monitoring/</guid><description>&lt;p&gt;上周，隔壁组的小天在周会上很兴奋：&amp;ldquo;用 Cursor 一天写了 3000 行代码，这周迭代速度提升了一倍！&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;同一周，他的服务触发了 4 次线上告警。&lt;/p&gt;
+&lt;p&gt;原因不复杂：AI 生成的代码跑通了主流程，但边界条件没覆盖，异常处理有遗漏，依赖服务的超时场景没考虑到。3000 行代码里，有 800 行是&amp;quot;看起来能跑&amp;quot;的代码。&lt;/p&gt;
+&lt;p&gt;小天不是个例。过去一年，几乎所有团队都经历了同一个曲线：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;第一个月&lt;/strong&gt;：AI 编码工具让产出翻倍，团队欢呼&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二个月&lt;/strong&gt;：Bug 率上升，线上事故增多，开始还债&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第三个月&lt;/strong&gt;：实际交付速度回到了 AI 之前的水平，甚至更慢&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;问题出在哪里？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AI 降低了&amp;quot;写代码&amp;quot;的成本，但没有降低&amp;quot;交付可靠产品&amp;quot;的成本。&lt;/strong&gt; 而后者，才是生产力的真实度量。&lt;/p&gt;</description></item></channel></rss>
