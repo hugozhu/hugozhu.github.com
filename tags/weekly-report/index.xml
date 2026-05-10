@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Weekly-Report on All about Raspberry Pi</title><link>https://hugozhu.site/tags/weekly-report/</link><description>Recent content in Weekly-Report on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 10 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/weekly-report/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 时代的周报生存指南</title><link>https://hugozhu.site/post/2026/204-ai-era-weekly-report-survival-guide/</link><pubDate>Sun, 10 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/204-ai-era-weekly-report-survival-guide/</guid><description>&lt;p&gt;周五下午 5 点，App v2.5.0 刚刚发版。你合上测试报告，长舒一口气，准备迎接周末。&lt;/p&gt;
+&lt;p&gt;这时，钉钉弹出一条待办：「请提交本周工作周报」。&lt;/p&gt;
+&lt;p&gt;你打开空白文档，脑子里只有模糊的碎片：周一跟 iOS 吵了架构方案，周三凌晨修了个线上 Crash，周四拉着后端对了三天后的发版清单……具体改了哪些 Bug？阻塞了哪些需求？下周风险在哪？你开始疯狂翻聊天记录、邮件、Jira 看板。半小时过去了，周报还是只有干巴巴的三行：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;完成 v2.5.0 发版&lt;/li&gt;
+&lt;li&gt;跟进线上问题修复&lt;/li&gt;
+&lt;li&gt;规划 v2.6.0 需求&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;你的 Leader 看到这份周报，只会觉得你这周「好像没干什么」。但只有你自己知道，这周你协调了 4 个端、拦下了 3 个不合理需求、熬了 2 个夜。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这不是你的记忆力问题，而是你的日常记录方式出了问题。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;很多人以为 AI 时代来了，只要对大模型说一句「帮我写周报」，它就能自动汇总你的一周。但现实是：AI 不是读心术。如果你在日常工作中留下的都是碎片化、非结构化、缺乏上下文的数据痕迹，AI 能生成的，也只能是那份干巴巴的三行流水账。&lt;/p&gt;
+&lt;p&gt;高质量周报从来不是周五「写」出来的，而是每天「喂」给系统的。&lt;/p&gt;</description></item></channel></rss>
