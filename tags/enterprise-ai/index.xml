@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Enterprise-Ai on All about Raspberry Pi</title><link>https://hugozhu.site/tags/enterprise-ai/</link><description>Recent content in Enterprise-Ai on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 08 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/enterprise-ai/index.xml" rel="self" type="application/rss+xml"/><item><title>企业知识库新范式：从一亿预算到人在回路</title><link>https://hugozhu.site/post/2026/202-enterprise-knowledge-base-new-paradigm/</link><pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/202-enterprise-knowledge-base-new-paradigm/</guid><description>&lt;p&gt;上周和一位创业者吃饭，他刚帮一家大型企业做完知识图谱项目的评估。结论让人倒吸一口凉气：要达到替代中级岗位能力的水平，算上数据采集、清洗、标注、图谱构建和持续维护，预算需要一个亿。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Enterprise-Ai on All about Raspberry Pi</title><link>https://hugozhu.site/tags/enterprise-ai/</link><description>Recent content in Enterprise-Ai on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/enterprise-ai/index.xml" rel="self" type="application/rss+xml"/><item><title>企业级 Agent 落地：为什么「套个聊天框」注定失败</title><link>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</guid><description>&lt;p&gt;上周和一个做企业数字化的朋友吃饭。他公司去年花了两百多万，引入了一套&amp;quot;AI Agent 平台&amp;quot;。&lt;/p&gt;
+&lt;p&gt;销售演示的时候很惊艳：对着对话框说一句话，系统就能生成报表、审批流程、甚至写 SQL 查数据。&lt;/p&gt;
+&lt;p&gt;上线三个月后，他告诉我：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;员工用了两周就放弃了。现在那个系统成了公司最贵的摆设。&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我问他：系统出 Bug 了？&lt;/p&gt;
+&lt;p&gt;他说：不是。是系统&lt;strong&gt;不会变聪明&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;第一个月，Agent 回答问题的准确率大概 70%。第二个月还是 70%。第三个月，员工发现问同样的问题，得到的答案一模一样——系统完全没有从实际使用中学到任何东西。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;它就是个会说话的自动化脚本。&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句话戳中了一个很多人不愿承认的事实：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;今天市面上 90% 的&amp;quot;企业 Agent&amp;quot;，本质上只是给 LLM 套了个聊天框。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>企业知识库新范式：从一亿预算到人在回路</title><link>https://hugozhu.site/post/2026/202-enterprise-knowledge-base-new-paradigm/</link><pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/202-enterprise-knowledge-base-new-paradigm/</guid><description>&lt;p&gt;上周和一位创业者吃饭，他刚帮一家大型企业做完知识图谱项目的评估。结论让人倒吸一口凉气：要达到替代中级岗位能力的水平，算上数据采集、清洗、标注、图谱构建和持续维护，预算需要一个亿。&lt;/p&gt;
 &lt;p&gt;企业听完直接搁置了。&lt;/p&gt;
 &lt;p&gt;这不是个例。过去三年，我见过不下十个类似的项目——企业想做知识库，供应商画了一个「知识图谱+智能问答」的大饼，然后企业发现投入产出比根本算不过账。&lt;/p&gt;
 &lt;p&gt;但今年情况变了。模型能力的跃迁正在催生一个新范式：&lt;strong&gt;不再靠人工标注堆数据，而是让 LLM 做编排，结合企业搜索，人做优化调整和确认。&lt;/strong&gt;&lt;/p&gt;

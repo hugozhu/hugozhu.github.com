@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Agent on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-agent/</link><description>Recent content in Ai-Agent on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 12 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>中国 SaaS 厂商的护城河应该怎么建</title><link>https://hugozhu.site/post/2026/206-china-saas-moat-war-sequoia-keynote/</link><pubDate>Tue, 12 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/206-china-saas-moat-war-sequoia-keynote/</guid><description>&lt;p&gt;上周和一位做 HR SaaS 的创始人吃饭。他抛出一个困扰了很久的问题：&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Agent on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-agent/</link><description>Recent content in Ai-Agent on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>企业级 Agent 落地：为什么「套个聊天框」注定失败</title><link>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</guid><description>&lt;p&gt;上周和一个做企业数字化的朋友吃饭。他公司去年花了两百多万，引入了一套&amp;quot;AI Agent 平台&amp;quot;。&lt;/p&gt;
+&lt;p&gt;销售演示的时候很惊艳：对着对话框说一句话，系统就能生成报表、审批流程、甚至写 SQL 查数据。&lt;/p&gt;
+&lt;p&gt;上线三个月后，他告诉我：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;员工用了两周就放弃了。现在那个系统成了公司最贵的摆设。&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我问他：系统出 Bug 了？&lt;/p&gt;
+&lt;p&gt;他说：不是。是系统&lt;strong&gt;不会变聪明&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;第一个月，Agent 回答问题的准确率大概 70%。第二个月还是 70%。第三个月，员工发现问同样的问题，得到的答案一模一样——系统完全没有从实际使用中学到任何东西。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;它就是个会说话的自动化脚本。&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句话戳中了一个很多人不愿承认的事实：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;今天市面上 90% 的&amp;quot;企业 Agent&amp;quot;，本质上只是给 LLM 套了个聊天框。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>中国 SaaS 厂商的护城河应该怎么建</title><link>https://hugozhu.site/post/2026/206-china-saas-moat-war-sequoia-keynote/</link><pubDate>Tue, 12 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/206-china-saas-moat-war-sequoia-keynote/</guid><description>&lt;p&gt;上周和一位做 HR SaaS 的创始人吃饭。他抛出一个困扰了很久的问题：&lt;/p&gt;
 &lt;p&gt;&amp;ldquo;我们的 AI 简历解析准确率比竞品高 8%，但客户续约率还是在掉。竞品三个月就追平了准确率，价格还低 20%。&lt;strong&gt;技术优势在中国到底能维持多久？&lt;/strong&gt;&amp;rdquo;&lt;/p&gt;
 &lt;p&gt;我给的回答很直接：&lt;strong&gt;6 到 12 个月。&lt;/strong&gt; 然后就没有了。&lt;/p&gt;
 &lt;p&gt;这不是悲观，而是现实。中国企服市场的迭代速度让任何纯技术壁垒都迅速商品化。如果你的护城河是&amp;quot;我们的模型更准&amp;quot;&amp;ldquo;我们的算法更快&amp;rdquo;，那这条河很快就会干涸。&lt;/p&gt;

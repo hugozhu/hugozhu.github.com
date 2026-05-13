@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>System-Design on All about Raspberry Pi</title><link>https://hugozhu.site/tags/system-design/</link><description>Recent content in System-Design on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 11 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/system-design/index.xml" rel="self" type="application/rss+xml"/><item><title>红杉 2026 AI Keynote 启示录：中国 SaaS 的扩散差距与 Agent 重构</title><link>https://hugozhu.site/post/2026/205-sequoia-ai-keynote-china-saas-diffusion-gap/</link><pubDate>Mon, 11 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/205-sequoia-ai-keynote-china-saas-diffusion-gap/</guid><description>&lt;p&gt;上周六深夜，我通过钉钉听记完整记录了红杉资本 2026 AI Keynote。35 分钟的演讲中，有一个词反复刺痛了我：&lt;strong&gt;Diffusion Gap（扩散差距）&lt;/strong&gt;。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>System-Design on All about Raspberry Pi</title><link>https://hugozhu.site/tags/system-design/</link><description>Recent content in System-Design on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/system-design/index.xml" rel="self" type="application/rss+xml"/><item><title>企业级 Agent 落地：为什么「套个聊天框」注定失败</title><link>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</guid><description>&lt;p&gt;上周和一个做企业数字化的朋友吃饭。他公司去年花了两百多万，引入了一套&amp;quot;AI Agent 平台&amp;quot;。&lt;/p&gt;
+&lt;p&gt;销售演示的时候很惊艳：对着对话框说一句话，系统就能生成报表、审批流程、甚至写 SQL 查数据。&lt;/p&gt;
+&lt;p&gt;上线三个月后，他告诉我：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;员工用了两周就放弃了。现在那个系统成了公司最贵的摆设。&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我问他：系统出 Bug 了？&lt;/p&gt;
+&lt;p&gt;他说：不是。是系统&lt;strong&gt;不会变聪明&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;第一个月，Agent 回答问题的准确率大概 70%。第二个月还是 70%。第三个月，员工发现问同样的问题，得到的答案一模一样——系统完全没有从实际使用中学到任何东西。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;它就是个会说话的自动化脚本。&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句话戳中了一个很多人不愿承认的事实：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;今天市面上 90% 的&amp;quot;企业 Agent&amp;quot;，本质上只是给 LLM 套了个聊天框。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>红杉 2026 AI Keynote 启示录：中国 SaaS 的扩散差距与 Agent 重构</title><link>https://hugozhu.site/post/2026/205-sequoia-ai-keynote-china-saas-diffusion-gap/</link><pubDate>Mon, 11 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/205-sequoia-ai-keynote-china-saas-diffusion-gap/</guid><description>&lt;p&gt;上周六深夜，我通过钉钉听记完整记录了红杉资本 2026 AI Keynote。35 分钟的演讲中，有一个词反复刺痛了我：&lt;strong&gt;Diffusion Gap（扩散差距）&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;演讲者说：&amp;ldquo;基础模型能力的增长速度，远超企业采用速度。&amp;rdquo;&lt;/p&gt;
 &lt;p&gt;这句话翻译成中国 SaaS 市场的语境就是：你的客户还在用 Excel 管客户、用微信群发通知、用邮件批流程，而 AI Agent 已经能自主完成端到端任务了。&lt;strong&gt;这个差距不是 bug，是未来三年最大的商业机会。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>构建 Agent 的动态路由决策系统：千人千面的任务执行引擎</title><link>https://hugozhu.site/post/2026/201-dynamic-routing-decision-system-for-ai-agents/</link><pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/201-dynamic-routing-decision-system-for-ai-agents/</guid><description>&lt;p&gt;团队里的小王和小李都在用同一个 AI Agent 平台。&lt;/p&gt;
 &lt;p&gt;小王输入：「帮我总结一下今天群里的讨论。」&lt;/p&gt;
@@ -64,7 +77,7 @@
 &lt;p&gt;团队 B 用了两个月搭了个「粗糙」的系统：简单的单体应用、基础的日志收集、甚至有些地方用了硬编码。但他们在系统里埋了一个东西 —— 一套基于运行数据自动调优的反馈循环。&lt;/p&gt;
 &lt;p&gt;六个月后再看，团队 A 的系统依然「完美」，只是业务变了三次方向，每次都要拉齐五个服务重新发版，工程师疲于奔命。团队 B 的系统已经迭代了四十多个版本，配置参数自动优化了三轮，连架构都根据流量模式自动拆分了两个热点模块。&lt;/p&gt;
 &lt;p&gt;这不是关于谁的技术栈更好的故事。&lt;/p&gt;
-&lt;p&gt;这是关于 &lt;strong&gt;你在构建的是资产还是负债&lt;/strong&gt; 的故事。&lt;/p&gt;</description></item><item><title>如果你现在在做的系统不能自主进化，你已经落后了</title><link>https://hugozhu.site/post/2026/207-evolutionary-systems-or-falling-behind/</link><pubDate>Wed, 18 Jun 2025 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-evolutionary-systems-or-falling-behind/</guid><description>&lt;p&gt;去年双十一之后，我和两个不同团队的负责人聊了聊。&lt;/p&gt;
+&lt;p&gt;这是关于 &lt;strong&gt;你在构建的是资产还是负债&lt;/strong&gt; 的故事。&lt;/p&gt;</description></item><item><title>如果你现在在做的系统不能自主进化，你已经落后了</title><link>https://hugozhu.site/post/2026/208-evolutionary-systems-or-falling-behind/</link><pubDate>Tue, 13 May 2025 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/208-evolutionary-systems-or-falling-behind/</guid><description>&lt;p&gt;去年双十一之后，我和两个不同团队的负责人聊了聊。&lt;/p&gt;
 &lt;p&gt;团队 A 花了六个月打磨一套微服务架构：精致的 API 网关、完善的链路追踪、99.99% 的 SLA 承诺。上线那天，一切完美。&lt;/p&gt;
 &lt;p&gt;团队 B 用了两个月搭了个「粗糙」的系统：简单的单体应用、基础的日志收集、甚至有些地方用了硬编码。但他们在系统里埋了一个东西 —— 一套基于运行数据自动调优的反馈循环。&lt;/p&gt;
 &lt;p&gt;六个月后再看，团队 A 的系统依然「完美」，只是业务变了三次方向，每次都要拉齐五个服务重新发版，工程师疲于奔命。团队 B 的系统已经迭代了四十多个版本，配置参数自动优化了三轮，连架构都根据流量模式自动拆分了两个热点模块。&lt;/p&gt;
