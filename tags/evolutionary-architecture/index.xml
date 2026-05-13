@@ -3,4 +3,9 @@
 &lt;p&gt;团队 B 用了两个月搭了个「粗糙」的系统：简单的单体应用、基础的日志收集、甚至有些地方用了硬编码。但他们在系统里埋了一个东西 —— 一套基于运行数据自动调优的反馈循环。&lt;/p&gt;
 &lt;p&gt;六个月后再看，团队 A 的系统依然「完美」，只是业务变了三次方向，每次都要拉齐五个服务重新发版，工程师疲于奔命。团队 B 的系统已经迭代了四十多个版本，配置参数自动优化了三轮，连架构都根据流量模式自动拆分了两个热点模块。&lt;/p&gt;
 &lt;p&gt;这不是关于谁的技术栈更好的故事。&lt;/p&gt;
+&lt;p&gt;这是关于 &lt;strong&gt;你在构建的是资产还是负债&lt;/strong&gt; 的故事。&lt;/p&gt;</description></item><item><title>如果你现在在做的系统不能自主进化，你已经落后了</title><link>https://hugozhu.site/post/2026/207-evolutionary-systems-or-falling-behind/</link><pubDate>Wed, 18 Jun 2025 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-evolutionary-systems-or-falling-behind/</guid><description>&lt;p&gt;去年双十一之后，我和两个不同团队的负责人聊了聊。&lt;/p&gt;
+&lt;p&gt;团队 A 花了六个月打磨一套微服务架构：精致的 API 网关、完善的链路追踪、99.99% 的 SLA 承诺。上线那天，一切完美。&lt;/p&gt;
+&lt;p&gt;团队 B 用了两个月搭了个「粗糙」的系统：简单的单体应用、基础的日志收集、甚至有些地方用了硬编码。但他们在系统里埋了一个东西 —— 一套基于运行数据自动调优的反馈循环。&lt;/p&gt;
+&lt;p&gt;六个月后再看，团队 A 的系统依然「完美」，只是业务变了三次方向，每次都要拉齐五个服务重新发版，工程师疲于奔命。团队 B 的系统已经迭代了四十多个版本，配置参数自动优化了三轮，连架构都根据流量模式自动拆分了两个热点模块。&lt;/p&gt;
+&lt;p&gt;这不是关于谁的技术栈更好的故事。&lt;/p&gt;
 &lt;p&gt;这是关于 &lt;strong&gt;你在构建的是资产还是负债&lt;/strong&gt; 的故事。&lt;/p&gt;</description></item></channel></rss>
