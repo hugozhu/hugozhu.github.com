@@ -40,9 +40,4 @@
 &lt;p&gt;一个用户发了一个 GitHub 仓库链接，Agent 用浏览器沙箱打开了仓库首页，截取了 README 的前几屏，然后用一个 7B 的轻量模型生成了摘要——完全忽略了仓库里真正的核心代码和 issue 讨论。用户等了 40 秒，得到了一段废话。&lt;/p&gt;
 &lt;p&gt;同一个功能，另一个用户发了一个新闻网站链接，这次 Agent 反而用了最强的推理模型去处理——一个纯文本提取任务，花了不必要的 token 费用，还因为推理模型的&amp;quot;过度思考&amp;quot;把简单的新闻摘要写成了一篇分析报告。&lt;/p&gt;
 &lt;p&gt;某同事跑来找我：&amp;ldquo;模型能力明明够了，为什么用户体验这么差？&amp;rdquo;&lt;/p&gt;
-&lt;p&gt;我说：&amp;ldquo;你的问题不是模型不行，是你没有给任务找到合适的模型和执行环境。你缺的是一个推荐系统。&amp;rdquo;&lt;/p&gt;</description></item><item><title>如果你现在在做的系统不能自主进化，你已经落后了</title><link>https://hugozhu.site/post/2025/91-evolutionary-systems-or-falling-behind/</link><pubDate>Wed, 18 Jun 2025 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2025/91-evolutionary-systems-or-falling-behind/</guid><description>&lt;p&gt;去年双十一之后，我和两个不同团队的负责人聊了聊。&lt;/p&gt;
-&lt;p&gt;团队 A 花了六个月打磨一套微服务架构：精致的 API 网关、完善的链路追踪、99.99% 的 SLA 承诺。上线那天，一切完美。&lt;/p&gt;
-&lt;p&gt;团队 B 用了两个月搭了个「粗糙」的系统：简单的单体应用、基础的日志收集、甚至有些地方用了硬编码。但他们在系统里埋了一个东西 —— 一套基于运行数据自动调优的反馈循环。&lt;/p&gt;
-&lt;p&gt;六个月后再看，团队 A 的系统依然「完美」，只是业务变了三次方向，每次都要拉齐五个服务重新发版，工程师疲于奔命。团队 B 的系统已经迭代了四十多个版本，配置参数自动优化了三轮，连架构都根据流量模式自动拆分了两个热点模块。&lt;/p&gt;
-&lt;p&gt;这不是关于谁的技术栈更好的故事。&lt;/p&gt;
-&lt;p&gt;这是关于 &lt;strong&gt;你在构建的是资产还是负债&lt;/strong&gt; 的故事。&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;我说：&amp;ldquo;你的问题不是模型不行，是你没有给任务找到合适的模型和执行环境。你缺的是一个推荐系统。&amp;rdquo;&lt;/p&gt;</description></item></channel></rss>
