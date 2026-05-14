@@ -4,7 +4,7 @@
 &lt;p&gt;&amp;ldquo;写代码快了 10 倍，但端到端交付只快了 2 倍。剩下的时间差，全耗在给 AI 擦屁股上。&amp;rdquo;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;他给我看了一个真实案例。新人小李接到任务：&amp;ldquo;新增一个代码块类型，支持语法高亮和行号。&amp;rdquo;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;没有 Harness 的灾难&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;** 没有 Harness 的灾难 **：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;小李让 Agent 生成代码（5 分钟，看起来完美）&lt;/li&gt;
 &lt;li&gt;Agent 不知道团队半年前从&amp;quot;嵌套 JSON&amp;quot;迁移到&amp;quot;扁平化 parent_id&amp;quot;的架构决策，生成了嵌套方案&lt;/li&gt;
@@ -14,9 +14,9 @@
 &lt;li&gt;老王 Review 时发现 3 个深层问题：CRDT 冲突策略不对、离线同步没考虑、权限模型被破坏。打回。&lt;/li&gt;
 &lt;li&gt;反复 3 轮，耗时 2 天。老王叹气：&amp;ldquo;还不如我自己写。&amp;rdquo;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;问题本质&lt;/strong&gt;：AI 把编码压缩了，但把&lt;strong&gt;隐性知识的缺失放大了&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;过去靠&amp;quot;问老王&amp;quot;填补的架构决策、历史坑位、协作潜规则，AI 一概不知道。阿里技术许晓斌称之为&lt;strong&gt;人肉中间件现象&lt;/strong&gt;：员工沦为 AI 与业务系统间的手工搬运工。腾讯技术工程则指出：&lt;strong&gt;Harness 不是目的，知识才是护城河&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这篇文章，就以这个 5 人 Notion 团队为案例，完整拆解他们如何用**三层架构（组织 × 资产 × 工程）**构建 Harness 系统，把&amp;quot;给 AI 擦屁股&amp;quot;变成&amp;quot;AI 自主交付&amp;quot;，实现知识复利。&lt;/p&gt;</description></item><item><title>企业级 Agent 落地：要抓好左右手</title><link>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</guid><description>&lt;p&gt;上周和一个做企业数字化的朋友吃饭。他公司去年花了两百多万，引入了一套&amp;quot;AI Agent 平台&amp;quot;。&lt;/p&gt;
+&lt;p&gt;** 问题本质 **：AI 把编码压缩了，但把 ** 隐性知识的缺失放大了 **。&lt;/p&gt;
+&lt;p&gt;过去靠&amp;quot;问老王&amp;quot;填补的架构决策、历史坑位、协作潜规则，AI 一概不知道。阿里技术许晓斌称之为 ** 人肉中间件现象 **：员工沦为 AI 与业务系统间的手工搬运工。腾讯技术工程则指出：**Harness 不是目的，知识才是护城河 **。&lt;/p&gt;
+&lt;p&gt;这篇文章，就以这个 5 人 Notion 团队为案例，完整拆解他们如何用 ** 三层架构（组织 × 资产 × 工程）** 构建 Harness 系统，把&amp;quot;给 AI 擦屁股&amp;quot;变成&amp;quot;AI 自主交付&amp;quot;，实现知识复利。&lt;/p&gt;</description></item><item><title>企业级 Agent 落地：要抓好左右手</title><link>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/207-enterprise-agent-two-hands-framework/</guid><description>&lt;p&gt;上周和一个做企业数字化的朋友吃饭。他公司去年花了两百多万，引入了一套&amp;quot;AI Agent 平台&amp;quot;。&lt;/p&gt;
 &lt;p&gt;销售演示的时候很惊艳：对着对话框说一句话，系统就能生成报表、审批流程、甚至写 SQL 查数据。&lt;/p&gt;
 &lt;p&gt;上线三个月后，他告诉我：&lt;/p&gt;
 &lt;blockquote&gt;
