@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stripe on All about Raspberry Pi</title><link>https://hugozhu.site/tags/stripe/</link><description>Recent content in Stripe on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 16 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/stripe/index.xml" rel="self" type="application/rss+xml"/><item><title>基础设施比模型更重要：Stripe Minions 给 AI Agent 落地的启示</title><link>https://hugozhu.site/post/2026/214-infrastructure-over-models-ai-agent/</link><pubDate>Sat, 16 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/214-infrastructure-over-models-ai-agent/</guid><description>&lt;p&gt;昨晚在电子书上读到一段关于 Stripe Minions 的文字，让我停下来想了很久。&lt;/p&gt;
+&lt;p&gt;不是因为它用了什么惊艳的模型，而是因为它揭示了一个被大多数人忽略的事实：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Minions 能 work 的首要原因跟 AI 模型本身几乎无关，而是 Stripe 在 LLM 出现之前就为人类工程师建设了多年的基础设施。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;完整的代码树、成熟的构建系统、全面的测试覆盖、标准化的开发环境——这些不是为 AI 准备的，是十多年来为人类工程师准备的。AI Agent 到来时，直接继承了这套基础设施。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;好的人类工程基础设施，就是好的 AI 工程基础设施。&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
