@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>All about Raspberry Pi</title><link>https://hugozhu.site/</link><description>Recent content on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 19 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 时代的个人知识管理最佳实践：从笔记仓库到认知操作系统</title><link>https://hugozhu.site/post/2026/231-ai-era-personal-knowledge-management/</link><pubDate>Tue, 19 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/231-ai-era-personal-knowledge-management/</guid><description>&lt;p&gt;AI 时代，个人知识管理（PKM）正在经历一场根本性的范式转移。&lt;/p&gt;
 &lt;p&gt;最大的变化不是「记笔记的方式变了」，而是：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;** 你需要开始经营一套「可被 AI 理解、调用、推理、持续学习」的个人上下文系统 ** 。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;你需要开始经营一套「可被 AI 理解、调用、推理、持续学习」的个人上下文系统&lt;/strong&gt;。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;过去的知识管理是为「人脑回忆」设计的——核心动作是分类、收藏、归档。 AI 时代，知识管理是为「人 + AI 协同工作」设计的——核心变成了上下文（Context）、可计算（Computable）、可演化（Evolving）、可调用（Actionable）。&lt;/p&gt;
 &lt;p&gt;很多人还停留在 Obsidian 堆 Markdown、Notion 堆页面、收藏 5000 篇文章然后让 AI 帮忙总结的阶段。但真正有价值的，是一整套 AI 原生的知识管理体系。&lt;/p&gt;
