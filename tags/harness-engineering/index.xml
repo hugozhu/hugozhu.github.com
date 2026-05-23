@@ -20,4 +20,6 @@
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;问题本质&lt;/strong&gt;：AI 把编码压缩了，但把 &lt;strong&gt;隐性知识的缺失放大了&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;过去靠&amp;quot;问老王&amp;quot;填补的架构决策、历史坑位、协作潜规则，AI 一概不知道。阿里技术许晓斌称之为 &lt;strong&gt;人肉中间件现象&lt;/strong&gt;：员工沦为 AI 与业务系统间的手工搬运工。腾讯技术工程则指出：&lt;strong&gt;Harness 不是目的，知识才是护城河&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这篇文章，就以这个 5 人 Notion 团队为案例，完整拆解他们如何用 &lt;strong&gt;三层架构（组织 × 资产 × 工程）&lt;/strong&gt; 构建 Harness 系统，把&amp;quot;给 AI 擦屁股&amp;quot;变成&amp;quot;AI 自主交付&amp;quot;，实现知识复利。&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;这篇文章，就以这个 5 人 Notion 团队为案例，完整拆解他们如何用 &lt;strong&gt;三层架构（组织 × 资产 × 工程）&lt;/strong&gt; 构建 Harness 系统，把&amp;quot;给 AI 擦屁股&amp;quot;变成&amp;quot;AI 自主交付&amp;quot;，实现知识复利。&lt;/p&gt;</description></item><item><title>Context, is Control</title><link>https://hugozhu.site/post/2026/236-context-is-control/</link><pubDate>Fri, 23 May 2025 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/236-context-is-control/</guid><description>&lt;p&gt;Netflix 的「Context, not Control」曾经是最有影响力的管理理念之一。&lt;/p&gt;
+&lt;p&gt;它的核心假设很简单：给聪明人足够的上下文，他们会用你没想到的方式达成目标。你不需要控制过程，只需要提供信息、方向、约束。人的判断力、创造力、直觉——这些是 context 之外的东西，也是 Control 管不到的东西。&lt;/p&gt;
+&lt;p&gt;但这个理念套到 Agent 上，假设崩塌了。&lt;/p&gt;</description></item></channel></rss>
