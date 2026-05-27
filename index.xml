@@ -13,7 +13,8 @@
 &lt;p&gt;但如果你换一个角度看，SOP 沉淀的真正价值不是「把经验存起来」，而是 &lt;strong&gt;把经验变成可执行的系统行为&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这篇文章用一个完整案例来说明：一位 Windows 用户打开悟空发起任务，悟空报错「任务执行环境准备失败」，到 AI 定位根因、修复代码、验证、发布，全程 4 小时。每个环节 AI 做什么、人做什么、知识如何在这个过程中自然沉淀。&lt;/p&gt;</description></item><item><title>Context, is Control</title><link>https://hugozhu.site/post/2026/236-context-is-control/</link><pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/236-context-is-control/</guid><description>&lt;p&gt;Netflix 的「Context, not Control」曾经是最有影响力的管理理念之一。&lt;/p&gt;
 &lt;p&gt;它的核心假设很简单：给聪明人足够的上下文，他们会用你没想到的方式达成目标。你不需要控制过程，只需要提供信息、方向、约束。人的判断力、创造力、直觉——这些是 context 之外的东西，也是 Control 管不到的东西。&lt;/p&gt;
-&lt;p&gt;但这个理念套到 Agent 上，假设崩塌了。&lt;/p&gt;</description></item><item><title>Privacy Policy</title><link>https://hugozhu.site/page/privacy/</link><pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/page/privacy/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;但这个理念套到 Agent 上，假设崩塌了。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/236-context-is-control.png"&gt;&lt;img src="https://hugozhu.site/img/2026/236-context-is-control-thumb.jpg" alt="Context is Control：从 Prompt Engineering 到 Harness Engineering"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Privacy Policy</title><link>https://hugozhu.site/page/privacy/</link><pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/page/privacy/</guid><description>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
 &lt;p&gt;This privacy policy describes how blog.hugozhu.site collects and uses information when you visit this website.&lt;/p&gt;
 &lt;h2 id="information-we-collect"&gt;Information We Collect&lt;/h2&gt;
 &lt;h3 id="analytics"&gt;Analytics&lt;/h3&gt;
