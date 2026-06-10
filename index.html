@@ -16,7 +16,14 @@
 <a href=https://hugozhu.site/tags/loop-engineering/>loop-engineering</a>&nbsp;
 <a href=https://hugozhu.site/tags/harness-engineering/>harness-engineering</a>&nbsp;
 <a href=https://hugozhu.site/tags/system-design/>system-design</a>&nbsp;
-<a href=https://hugozhu.site/tags/enterprise/>enterprise</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/262-auto-optimize-agent-trajectory/><h2 class=post-title>自动优化 Agent 的执行轨迹</h2><h3 class=post-subtitle>Trajectory Optimization and Skill Distillation for AI Agents</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 9, 2026
+<a href=https://hugozhu.site/tags/enterprise/>enterprise</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/262-i-built-an-app-without-writing-a-single-line/><h2 class=post-title>我写了一行代码，AI 写了剩下 6773 行</h2><h3 class=post-subtitle>What a 100% AI-Generated Production App Teaches Us About Human-AI Collaboration</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 10, 2026
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;min
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;528&nbsp;words</span></p><div class=post-entry><p>6 月 9 日下午，我对 AI 说了一句「分析下本项目」。</p><p>4 秒后，它给了我一份完整的项目分析报告：13 个 JS 文件、6773 行代码、技术栈拆解、架构特点、功能清单。然后我说「在登录页面加个多语言切换」，它改了 3 个文件，跑了测试，commit，push，部署。全程我没打开过编辑器。</p><p>这不是一个 demo。这是一个跑在生产环境的全栈应用——带 CRDT 实时协同编辑、PWA 离线支持、三语国际化、OAuth 登录、AI 代理 Edge Function。35 次 commit，从 2 月到 6 月，每一行代码都是 AI 写的。</p><a href=https://hugozhu.site/post/2026/262-i-built-an-app-without-writing-a-single-line/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai-coding/>ai-coding</a>&nbsp;
+<a href=https://hugozhu.site/tags/vibe-coding/>vibe-coding</a>&nbsp;
+<a href=https://hugozhu.site/tags/full-stack/>full-stack</a>&nbsp;
+<a href=https://hugozhu.site/tags/collaborative-editing/>collaborative-editing</a>&nbsp;
+<a href=https://hugozhu.site/tags/human-ai-collaboration/>human-ai-collaboration</a>&nbsp;
+<a href=https://hugozhu.site/tags/workflow-design/>workflow-design</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/262-auto-optimize-agent-trajectory/><h2 class=post-title>自动优化 Agent 的执行轨迹</h2><h3 class=post-subtitle>Trajectory Optimization and Skill Distillation for AI Agents</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 9, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;min
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;965&nbsp;words</span></p><div class=post-entry><p>上个月有人问我一个问题：「我已经有 LLM-as-Judge 做 eval 了，能不能用它来自动优化 Agent 的执行路径？在不降质量的前提下，找到最省钱的轨迹，然后让 Agent 记住？」</p><p>这个问题的答案值得展开。答案是能，而且这可能是当前 Agent 优化里最值得投入的方向。但大多数团队理解错了「优化」的对象。</p><p><a href=/img/2026/auto-optimize-agent-trajectory.png><img src=/img/2026/auto-optimize-agent-trajectory-thumb.jpg alt="Agent 轨迹优化：从零规划到 Skill 蒸馏"></a></p><a href=https://hugozhu.site/post/2026/262-auto-optimize-agent-trajectory/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai-agent/>ai-agent</a>&nbsp;
 <a href=https://hugozhu.site/tags/trajectory-optimization/>trajectory-optimization</a>&nbsp;
@@ -67,13 +74,7 @@
 <a href=https://hugozhu.site/tags/browser-use/>browser-use</a>&nbsp;
 <a href=https://hugozhu.site/tags/rpa/>rpa</a>&nbsp;
 <a href=https://hugozhu.site/tags/automation/>automation</a>&nbsp;
-<a href=https://hugozhu.site/tags/cost-model/>cost-model</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/254-senior-engineers-value-in-ai-era/><h2 class=post-title>「老」工程师在 AI 时代的价值</h2><h3 class=post-subtitle>Why Senior Engineers Matter More Than Ever in the AI Era</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 2, 2026
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;219&nbsp;words</span></p><div class=post-entry><p>前几天，我的一位同事在内部发了一篇文章，标题是《AI 时代，工作十年的钉钉人如何从「专家」变成「乘数」》。起因是他读了另一篇关于校招生用 AI 加速成长的文章后，坐不住了——年轻人用 AI 一两周就跑通了以前需要几个月才能建立的工作节奏，那工作十多年的老同事呢？</p><p>他找了三位在钉钉超过十年的老架构师聊，得出了一个结论： <strong>AI 没有替代他们的经验，而是把经验变成了可以复制、可以扩展、可以乘以 N 的东西。</strong></p><p>我在评论区写了一段话，后来觉得值得展开写一篇。</p><p><a href=/img/2026/senior-engineers-value-in-ai-era.png><img src=/img/2026/senior-engineers-value-in-ai-era-thumb.jpg alt="隐性知识的乘数效应：从 1:1 师徒传递到 1:N 规模化传递"></a></p><a href=https://hugozhu.site/post/2026/254-senior-engineers-value-in-ai-era/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai-literacy/>ai-literacy</a>&nbsp;
-<a href=https://hugozhu.site/tags/career-growth/>career-growth</a>&nbsp;
-<a href=https://hugozhu.site/tags/tacit-knowledge/>tacit-knowledge</a>&nbsp;
-<a href=https://hugozhu.site/tags/engineering-culture/>engineering-culture</a>&nbsp;
-<a href=https://hugozhu.site/tags/skills/>skills</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=next><a href=https://hugozhu.site/page/2/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<a href=https://hugozhu.site/tags/cost-model/>cost-model</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=next><a href=https://hugozhu.site/page/2/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;
