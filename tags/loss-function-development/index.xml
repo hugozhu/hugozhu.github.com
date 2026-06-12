@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Loss-Function-Development on All about Raspberry Pi</title><link>https://hugozhu.site/tags/loss-function-development/</link><description>Recent content in Loss-Function-Development on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 12 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/loss-function-development/index.xml" rel="self" type="application/rss+xml"/><item><title>/goal 复制一切：当软件复制成本为零，谁来满足井喷的需求</title><link>https://hugozhu.site/post/2026/266-goal-replicate-everything/</link><pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/266-goal-replicate-everything/</guid><description>&lt;p&gt;上周，一个做 HR 的朋友给我发了张截图——某 SaaS 产品的面试评估表界面，问我：「这个东西，你们悟空能做吗？」&lt;/p&gt;
+&lt;p&gt;我没回答能不能做。我问她：「你手上有没有一个你已经在用的、类似的东西？哪怕是 Excel。」&lt;/p&gt;
+&lt;p&gt;她说有，一个用了两年的 Excel 模板，里面有公式、有下拉选项、有自动算分。&lt;/p&gt;
+&lt;p&gt;我说：「把它给我。」&lt;/p&gt;
+&lt;p&gt;拿到之后我想：如果我对悟空说一句 &lt;code&gt;/goal 复制这个 Excel 模板的功能，生成一个钉钉 AI 表格工作流，面试评估表自动算分，结果推送到群聊&lt;/code&gt;——悟空能不能跑通？&lt;/p&gt;
+&lt;p&gt;技术上完全可以。dws CLI 有 AI 表格的建表、写数据命令，有审批流的提交命令，有群消息的发送命令。数据统一存在钉钉平台上，悟空通过 CLI 就能访问。整个路径是通的。&lt;/p&gt;
+&lt;p&gt;问题不在技术。 &lt;strong&gt;问题在于：当每个 HR、每个运营、每个项目经理都看到「我也想要一个那样的东西」，这种需求的总量是无限的。谁来供给？&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
