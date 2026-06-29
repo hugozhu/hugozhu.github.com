@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dingtalk on All about Raspberry Pi</title><link>https://hugozhu.site/tags/dingtalk/</link><description>Recent content in Dingtalk on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/dingtalk/index.xml" rel="self" type="application/rss+xml"/><item><title>当 Agent 有了工牌：钉钉群里的 Agent IAM 架构设计</title><link>https://hugozhu.site/post/2026/273-claude-tag-dingtalk-agent-iam-architecture/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/273-claude-tag-dingtalk-agent-iam-architecture/</guid><description>&lt;p&gt;周一早上，运营群里有人 &lt;strong&gt;@了运营 Agent&lt;/strong&gt;：「帮我看看上周退款率为什么涨了」。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DingTalk on All about Raspberry Pi</title><link>https://hugozhu.site/tags/dingtalk/</link><description>Recent content in DingTalk on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/dingtalk/index.xml" rel="self" type="application/rss+xml"/><item><title>当 Agent 有了工牌：钉钉群里的 Agent IAM 架构设计</title><link>https://hugozhu.site/post/2026/273-claude-tag-dingtalk-agent-iam-architecture/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/273-claude-tag-dingtalk-agent-iam-architecture/</guid><description>&lt;p&gt;周一早上，运营群里有人 &lt;strong&gt;@了运营 Agent&lt;/strong&gt;：「帮我看看上周退款率为什么涨了」。&lt;/p&gt;
 &lt;p&gt;Agent 开始干活。它先查了 AI 表格里的退款明细，又调了客服工单系统的投诉分类，接着跑了一段 SQL 算出各渠道的退款占比，最后生成一份带趋势图的分析报告发到群里。整个过程 40 分钟，中间还主动追问了一句：「要不要把退款金额 &amp;gt; 500 的单独拉出来？」&lt;/p&gt;
 &lt;p&gt;报告质量不错。但安全团队事后审计时发现了三个问题：&lt;/p&gt;
 &lt;ol&gt;
@@ -8,7 +8,26 @@
 &lt;/ol&gt;
 &lt;p&gt;这是一个典型场景，我在不同企业里见过不同程度的版本。&lt;/p&gt;
 &lt;p&gt;在 &lt;a href="https://hugozhu.site/post/2026/272-claude-tag-agent-identity-enterprise-ai/"&gt;Claude Tag 的 Agent Identity：为什么这是 Agent 时代的 OAuth&lt;/a&gt; 中，我讨论了 Agent 为什么需要自己的身份。这篇接着往下走： &lt;strong&gt;当 Agent 进入钉钉群，权限、凭证、审计这套架构具体怎么设计？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/claude-tag-dingtalk-agent-iam.png"&gt;&lt;img src="https://hugozhu.site/img/2026/claude-tag-dingtalk-agent-iam-thumb.jpg" alt="Agent IAM 三层架构：Sandbox → Proxy → Bundle"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Claude Tag 的 Agent Identity：为什么这是 Agent 时代的 OAuth</title><link>https://hugozhu.site/post/2026/272-claude-tag-agent-identity-enterprise-ai/</link><pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/272-claude-tag-agent-identity-enterprise-ai/</guid><description>&lt;p&gt;上周，一个同事在工作群里 &lt;strong&gt;@了一个 AI Agent&lt;/strong&gt;，让它分析最近 30 天的客户退款数据。Agent 查了 CRM、翻了工单、跑了 SQL，两小时后在群里贴出一份报告。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/claude-tag-dingtalk-agent-iam.png"&gt;&lt;img src="https://hugozhu.site/img/2026/claude-tag-dingtalk-agent-iam-thumb.jpg" alt="Agent IAM 三层架构：Sandbox → Proxy → Bundle"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>钉钉 FDE 的一天：从业务调研到 Agent 上线</title><link>https://hugozhu.site/post/2026/275-dingtalk-fde-one-day/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/275-dingtalk-fde-one-day/</guid><description>&lt;p&gt;周一早上九点，小林到了客户的运营部。&lt;/p&gt;
+&lt;p&gt;他不是来做产品演示的，也不是来签合同的。他的工牌上写的是「Forward Deployed Engineer」——一个在钉钉内部新设立的岗位，外部还没有对应的职称。&lt;/p&gt;
+&lt;p&gt;上周客户提了一个需求：「每天有 20 个人整理会议纪要，能不能用 AI 提效？」&lt;/p&gt;
+&lt;p&gt;普通工程师听到这句话，想到的是做一个会议纪要工具。&lt;/p&gt;
+&lt;p&gt;小林想到的是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;会议
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;纪要
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;任务拆解
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;责任人
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;审批
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;提醒
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;知识沉淀
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;他要做的不是一个纪要工具，而是一个 &lt;strong&gt;会议 Agent&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/dingtalk-fde-one-day.png"&gt;&lt;img src="https://hugozhu.site/img/2026/dingtalk-fde-one-day-thumb.jpg" alt="钉钉 FDE 的一天"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Claude Tag 的 Agent Identity：为什么这是 Agent 时代的 OAuth</title><link>https://hugozhu.site/post/2026/272-claude-tag-agent-identity-enterprise-ai/</link><pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/272-claude-tag-agent-identity-enterprise-ai/</guid><description>&lt;p&gt;上周，一个同事在工作群里 &lt;strong&gt;@了一个 AI Agent&lt;/strong&gt;，让它分析最近 30 天的客户退款数据。Agent 查了 CRM、翻了工单、跑了 SQL，两小时后在群里贴出一份报告。&lt;/p&gt;
 &lt;p&gt;事后审计时，安全团队问了一个问题：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;「这个操作，日志里记的是谁？」&lt;/p&gt;
