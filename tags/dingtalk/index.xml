@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dingtalk on All about Raspberry Pi</title><link>https://hugozhu.site/tags/dingtalk/</link><description>Recent content in Dingtalk on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 02 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/dingtalk/index.xml" rel="self" type="application/rss+xml"/><item><title>管理者的第一个 Agent Skill：Loop 工程实现每周重要事项进展汇总</title><link>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</link><pubDate>Thu, 02 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</guid><description>&lt;p&gt;周五下午 4 点。你打开钉钉，你的D群里「本周的重点事项」消息已经发了 24 小时。16 位负责人被 @，每个人的进展回复散落在三个地方：有人私聊你说了三段话，有人在群里回了一个 emoji，还有人到现在一个字没发。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DingTalk on All about Raspberry Pi</title><link>https://hugozhu.site/tags/dingtalk/</link><description>Recent content in DingTalk on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 02 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/dingtalk/index.xml" rel="self" type="application/rss+xml"/><item><title>管理者的第一个 Agent Skill：Loop 工程实现每周重要事项进展汇总</title><link>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</link><pubDate>Thu, 02 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</guid><description>&lt;p&gt;周五下午 4 点。你打开钉钉，你的 D 群里「本周的重点事项」消息已经发了 24 小时。16 位负责人被 @，每个人的进展回复散落在三个地方：有人私聊你说了三段话，有人在群里回了一个 emoji，还有人到现在一个字没发。&lt;/p&gt;
 &lt;p&gt;你要整理的，是一份让所有人都看得懂、能 action 的结构化进度报告。&lt;/p&gt;
-&lt;p&gt;手动做这件事需要 2-3 小时（经验估算）。你打开 16 个单聊窗口 + 群聊消息列表，翻来翻去。做得再仔细，也跑不掉三个 bias：&lt;strong&gt;recency bias&lt;/strong&gt; ——最后看到的记得最清，&lt;strong&gt;salience bias&lt;/strong&gt; ——写了一大段的人得到最多篇幅，写了三个字的人被一笔带过。&lt;strong&gt;survivorship bias&lt;/strong&gt; ——没回复的人直接消失在你的视野里，而不是被明确标记。&lt;/p&gt;
+&lt;p&gt;手动做这件事需要 2-3 小时（经验估算）。你打开 16 个单聊窗口 + 群聊消息列表，翻来翻去。做得再仔细，也跑不掉三个 bias： &lt;strong&gt;recency bias&lt;/strong&gt; ——最后看到的记得最清， &lt;strong&gt;salience bias&lt;/strong&gt; ——写了一大段的人得到最多篇幅，写了三个字的人被一笔带过。 &lt;strong&gt;survivorship bias&lt;/strong&gt; ——没回复的人直接消失在你的视野里，而不是被明确标记。&lt;/p&gt;
 &lt;p&gt;我手动做了这件事好几个月。然后写了一个 Agent Skill 文件——不到 200 行的 Markdown，把你的工作流程像岗位说明书一样写清楚。跑起来之后的效果不是「更快了」，而是 &lt;strong&gt;总结质量比手动好&lt;/strong&gt;：每条来源可溯源、16 人全覆盖、没回复的标 ⚠️ 而不是消失。从 12 人扩到 16 人时，只改了 4 行映射表。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/loop-engineering.png"&gt;&lt;img src="https://hugozhu.site/img/2026/loop-engineering-thumb.jpg" alt="Loop Engineering 管理者的 Agent Skill"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;这篇文章讲的就是这个案例——以及如何把 Loop Engineering（让 Agent 自主跑到终点的工程方法）从写代码的场景，搬到管理协调的场景。&lt;/p&gt;
+&lt;p&gt;这个工程能落地，最关键的工具是 &lt;a href="https://open.dingtalk.com/dingtalk-cli"&gt;钉钉 DWS&lt;/a&gt;（DingTalk Workspace CLI）。DWS 是 Agent 与钉钉的统一接口层，它的设计让钉钉对 Agent 友好、对开发者友好。无论你使用哪款 Agent——OpenClaw、Hermes、OpenCode、悟空、MuleRun、WorkBuddy——都能通过 DWS 应用这套 AI 驱动的管理方法。Agent 是 fungible 的，接口层才是杠杆。&lt;/p&gt;
 &lt;table&gt;
  &lt;thead&gt;
  &lt;tr&gt;
@@ -15,7 +17,7 @@
  &lt;tr&gt;
  &lt;td&gt;耗时&lt;/td&gt;
  &lt;td&gt;2-3 小时（经验估算）&lt;/td&gt;
- &lt;td&gt;Agent 运行约 10 分钟 + 人工审阅约 5 分钟&lt;/td&gt;
+ &lt;td&gt;Agent 运行约 10 分钟 + 人工审阅约 5 分钟（基于实际运行经验）&lt;/td&gt;
  &lt;/tr&gt;
  &lt;tr&gt;
  &lt;td&gt;覆盖率&lt;/td&gt;
