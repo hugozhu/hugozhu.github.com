@@ -14,7 +14,16 @@
 &lt;p&gt;我说：你做了一个 &lt;strong&gt;分身&lt;/strong&gt;，但你需要的是一个 &lt;strong&gt;员工&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;他愣住了。&lt;/p&gt;
 &lt;p&gt;这不是个例。我观察到大量企业在启动 AI Agent 项目时，第一步就搞混了这两个概念——不是因为技术理解不够，而是因为 &lt;strong&gt;没有想清楚锚点在哪&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/digital-avatar-vs-digital-employee-mvp.png"&gt;&lt;img src="https://hugozhu.site/img/2026/digital-avatar-vs-digital-employee-mvp-thumb.jpg" alt="数字分身与数字员工：锚点决定一切"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>API 友好不等于开发者友好，也不等于模型友好</title><link>https://hugozhu.site/post/2026/285-three-levels-interface-design-api-developer-model/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/285-three-levels-interface-design-api-developer-model/</guid><description>&lt;p&gt;上周我让一个 Coding Agent 帮我用飞书发一条群消息。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/digital-avatar-vs-digital-employee-mvp.png"&gt;&lt;img src="https://hugozhu.site/img/2026/digital-avatar-vs-digital-employee-mvp-thumb.jpg" alt="数字分身与数字员工：锚点决定一切"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>面向 Agent 开发：可测试和可运维第一次真正成为前提条件</title><link>https://hugozhu.site/post/2026/289-agent-friendly-testability-operability/</link><pubDate>Tue, 07 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/289-agent-friendly-testability-operability/</guid><description>&lt;p&gt;上周 review 一个团队的代码。他们想做一个能自主修 bug 的 Agent，架构设计得很漂亮，模型选的也是最新的。但 Agent 跑起来后，改完代码就停了——它不知道怎么验证自己改得对不对。&lt;/p&gt;
+&lt;p&gt;我问他们：「测试覆盖率多少？」&lt;/p&gt;
+&lt;p&gt;「大概 30%，而且跑得慢，本地跑一次要 15 分钟。」&lt;/p&gt;
+&lt;p&gt;「日志呢？有结构化日志吗？」&lt;/p&gt;
+&lt;p&gt;「有，但格式不太统一，有时候打 JSON，有时候打纯文本。」&lt;/p&gt;
+&lt;p&gt;「Health Check 呢？」&lt;/p&gt;
+&lt;p&gt;「有个 &lt;code&gt;/ping&lt;/code&gt; 接口，返回 200。」&lt;/p&gt;
+&lt;p&gt;我说：那你的 Agent 改完代码之后，怎么知道改对了？怎么知道部署上去没炸？怎么知道要不要回滚？&lt;/p&gt;
+&lt;p&gt;他想了想：「只能让人看一眼。」&lt;/p&gt;
+&lt;p&gt;我说：对，这就是问题所在——&lt;strong&gt;你的系统不是为 Agent 设计的，是为人设计的。&lt;/strong&gt; 人可以用经验判断「这个改动应该没问题」，Agent 不行。Agent 只能依赖 &lt;strong&gt;可以调用、可以验证、可以反馈&lt;/strong&gt; 的能力。&lt;/p&gt;</description></item><item><title>API 友好不等于开发者友好，也不等于模型友好</title><link>https://hugozhu.site/post/2026/285-three-levels-interface-design-api-developer-model/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/285-three-levels-interface-design-api-developer-model/</guid><description>&lt;p&gt;上周我让一个 Coding Agent 帮我用飞书发一条群消息。&lt;/p&gt;
 &lt;p&gt;它读完了 &lt;code&gt;lark-cli im --help&lt;/code&gt;，看到了 &lt;code&gt;messages&lt;/code&gt; 子命令，继续往下翻——发现 &lt;code&gt;messages&lt;/code&gt; 下面只有 &lt;code&gt;delete&lt;/code&gt;、&lt;code&gt;forward&lt;/code&gt;、&lt;code&gt;urgent_app&lt;/code&gt; 这些操作。 &lt;strong&gt;没有 &lt;code&gt;send&lt;/code&gt;。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Agent 懵了。发消息这么基础的操作，怎么可能没有？&lt;/p&gt;
 &lt;p&gt;它又去翻了 raw API 路径 &lt;code&gt;lark-cli api POST /open-apis/im/v1/messages&lt;/code&gt;，拼了一大坨 JSON body，调通了。但这条路绕过了 CLI 的所有设计——参数校验、身份管理、错误处理——全部自己来。&lt;/p&gt;
