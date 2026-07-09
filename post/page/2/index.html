@@ -11,7 +11,14 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 9, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2026/281-ai-daily-report-flywheel/><h2 class=post-title>AI 写日报，是培养还是废人？</h2><h3 class=post-subtitle>AI daily reports as organizational flywheel — not efficiency tool</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 4, 2026
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words</span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2026/283-agent-experience-as-developer-experience/><h2 class=post-title>钉钉开放平台的第一用户不再是开发者，而是开发者的 Agent</h2><h3 class=post-subtitle>Agent Experience is the new Developer Experience</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 5, 2026
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;min
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;792&nbsp;words</span></p><div class=post-entry><p>昨晚我用 OpenCode 在钉钉上写一个会议通知 Agent。需求很简单：查日历找到明天的会议，给参会人发一条钉钉消息。</p><p>OpenCode 读完了 DWS CLI 的 help 文档，开始生成调用代码。它要发消息，看到了三个命令：<code>dws chat message send</code>、<code>dws chat message send-by-bot</code>、<code>dws chat message send-by-webhook</code>。它选了 <code>send</code>，传了 <code>--group</code> 和 <code>--text</code>，没传 <code>--title</code>。</p><p>返回了一个错误：<strong>「发群服务窗会话消息失败」。</strong></p><p>OpenCode 懵了。我也懵了。什么「服务窗」？我在发群消息，跟服务窗有什么关系？</p><p>后来我翻了 <code>dws chat message send --help</code>，在最底下发现了一行小字：</p><blockquote><p><code>--title</code> 是消息标题，群聊与单聊都必填（API 强制要求；缺失时返回误导性的「发群服务窗会话消息失败」）。</p></blockquote><p><strong>平台团队知道这个错误信息是误导性的，他们选择在 help 文档里标注「误导性」，而不是修复 API 的返回。</strong></p><p>但这还没完。OpenCode 继续工作，又遇到了第二个问题：<code>send</code> 命令有三个互斥的目标参数——<code>--group</code>（群聊）、<code>--user</code>（userId）、<code>--open-dingtalk-id</code>（openDingTalkId）。help 文档说「三者只能选其一」，但没有解释什么时候该用哪个。<code>userId</code> 和 <code>openDingTalkId</code> 的区别是什么？Agent 无从推理——它只能猜，猜错了再换。</p><p>这整个过程花了十几分钟。但这十几分钟本来不应该存在。</p><p><strong>这不是假设场景，这是 DWS 今天的真实状态。</strong></p><p><a href=/img/2026/agent-experience-as-developer-experience.png><img src=/img/2026/agent-experience-as-developer-experience-thumb.jpg alt="DX → AX：开放平台用户变迁——从人类开发者到 Coding Agent"></a></p><a href=https://hugozhu.site/post/2026/283-agent-experience-as-developer-experience/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/open-platform/>open-platform</a>&nbsp;
+<a href=https://hugozhu.site/tags/agent-experience/>agent-experience</a>&nbsp;
+<a href=https://hugozhu.site/tags/developer-experience/>developer-experience</a>&nbsp;
+<a href=https://hugozhu.site/tags/ai-coding/>ai-coding</a>&nbsp;
+<a href=https://hugozhu.site/tags/harness-engineering/>harness-engineering</a>&nbsp;
+<a href=https://hugozhu.site/tags/dingtalk/>dingtalk</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/281-ai-daily-report-flywheel/><h2 class=post-title>AI 写日报，是培养还是废人？</h2><h3 class=post-subtitle>AI daily reports as organizational flywheel — not efficiency tool</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on July 4, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;2&nbsp;min
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;266&nbsp;words</span></p><div class=post-entry><p>昨天一个校招生在钉钉上问我：「日报能不能让 AI 帮我写？我每天花 30 分钟凑那些东西，感觉像在演戏。」</p><p>我没有急着回答「能」或「不能」。因为这个问题的背后藏着一个更大的矛盾——</p><p>如果日报真的只是「写给主管看的汇报」，那让 AI 写完全合理，甚至应该让 AI 写。但如果日报的价值远不止于此，那用 AI 替代的可能恰恰是最不该被替代的部分。</p><p>问题不是「AI 能不能写日报」，而是： <strong>在一个 AI 能替你写字的时代，人还应该写什么？</strong></p><p><a href=/img/2026/ai-daily-report-flywheel.png><img src=/img/2026/ai-daily-report-flywheel-thumb.jpg alt="AI 日报：事实层与反思层分离"></a></p><a href=https://hugozhu.site/post/2026/281-ai-daily-report-flywheel/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai-agent/>ai-agent</a>&nbsp;
 <a href=https://hugozhu.site/tags/dingtalk/>dingtalk</a>&nbsp;
@@ -85,27 +92,7 @@
 <a href=https://hugozhu.site/tags/dingtalk/>dingtalk</a>&nbsp;
 <a href=https://hugozhu.site/tags/system-design/>system-design</a>&nbsp;
 <a href=https://hugozhu.site/tags/enterprise-ai/>enterprise-ai</a>&nbsp;
-<a href=https://hugozhu.site/tags/iam/>iam</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/275-dingtalk-fde-one-day/><h2 class=post-title>钉钉 FDE 的一天：从业务调研到 Agent 上线</h2><h3 class=post-subtitle>A Day in the Life of DingTalk Forward Deployed Engineer</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on June 29, 2026
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;726&nbsp;words</span></p><div class=post-entry><p>周一早上九点，小林到了客户的运营部。</p><p>他不是来做产品演示的，也不是来签合同的。他的工牌上写的是「Forward Deployed Engineer」——一个在钉钉内部新设立的岗位，外部还没有对应的职称。</p><p>上周客户提了一个需求：「每天有 20 个人整理会议纪要，能不能用 AI 提效？」</p><p>普通工程师听到这句话，想到的是做一个会议纪要工具。</p><p>小林想到的是：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>会议
-</span></span><span class=line><span class=cl>    ↓
-</span></span><span class=line><span class=cl>纪要
-</span></span><span class=line><span class=cl>    ↓
-</span></span><span class=line><span class=cl>任务拆解
-</span></span><span class=line><span class=cl>    ↓
-</span></span><span class=line><span class=cl>责任人
-</span></span><span class=line><span class=cl>    ↓
-</span></span><span class=line><span class=cl>审批
-</span></span><span class=line><span class=cl>    ↓
-</span></span><span class=line><span class=cl>提醒
-</span></span><span class=line><span class=cl>    ↓
-</span></span><span class=line><span class=cl>知识沉淀
-</span></span></code></pre></div><p>他要做的不是一个纪要工具，而是一个 <strong>会议 Agent</strong>。</p><p><a href=/img/2026/dingtalk-fde-one-day.png><img src=/img/2026/dingtalk-fde-one-day-thumb.jpg alt="钉钉 FDE 的一天"></a></p><a href=https://hugozhu.site/post/2026/275-dingtalk-fde-one-day/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/dingtalk/>dingtalk</a>&nbsp;
-<a href=https://hugozhu.site/tags/fde/>fde</a>&nbsp;
-<a href=https://hugozhu.site/tags/ai-agent/>ai-agent</a>&nbsp;
-<a href=https://hugozhu.site/tags/enterprise-ai/>enterprise-ai</a>&nbsp;
-<a href=https://hugozhu.site/tags/workflow/>workflow</a>&nbsp;
-<a href=https://hugozhu.site/tags/organization/>organization</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/post/page/1/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/post/page/3/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<a href=https://hugozhu.site/tags/iam/>iam</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/post/page/1/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/post/page/3/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;
