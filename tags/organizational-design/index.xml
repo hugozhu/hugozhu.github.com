@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Organizational-Design on All about Raspberry Pi</title><link>https://hugozhu.site/tags/organizational-design/</link><description>Recent content in Organizational-Design on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 18 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/organizational-design/index.xml" rel="self" type="application/rss+xml"/><item><title>数字员工驱动的工作流：数字原生工作方式的转折点</title><link>https://hugozhu.site/post/2026/298-digital-native-workflow-turning-point/</link><pubDate>Sat, 18 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/298-digital-native-workflow-turning-point/</guid><description>&lt;p&gt;上个月，我去一个客户的运营部门看他们的周报流程。&lt;/p&gt;
+&lt;p&gt;过去的方式：周五下午，运营主管花两小时从三个系统里扒数据，手动填 Excel，写总结，发邮件给 VP。每周一早上开会讨论。&lt;/p&gt;
+&lt;p&gt;现在的方式：周一早上 8 点，数字员工「数据周报 Agent」自动从三个系统拉数据，生成周报，发到运营群里。主管花 10 分钟审核、批注，回复两个字：「OK」。&lt;/p&gt;
+&lt;p&gt;这看起来只是效率提升——从两小时变成 10 分钟。但仔细看，主语变了。&lt;/p&gt;
+&lt;p&gt;过去的周报流程，主语是 &lt;strong&gt;人&lt;/strong&gt;：人去扒数据、人去写报告、人去发邮件。AI 最多是个辅助工具。&lt;/p&gt;
+&lt;p&gt;现在的周报流程，主语是 &lt;strong&gt;Agent&lt;/strong&gt;：Agent 去拉数据、Agent 去生成报告、Agent 去发送。人变成了审核者和决策者。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这不是工具升级。这是工作流范式的迁移。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/digital-native-workflow-turning-point.png"&gt;&lt;img src="https://hugozhu.site/img/2026/digital-native-workflow-turning-point-thumb.jpg" alt="数字原生工作方式的转折点"&gt;&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
