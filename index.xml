@@ -9,7 +9,15 @@
 &lt;p&gt;五个人面面相觑。代码不是问题。 &lt;strong&gt;问题是代码写完之后的所有事。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;那一刻我意识到：AI 时代最稀缺的能力，不是写代码，而是 &lt;strong&gt;把一个 Agent 从 Demo 变成生产系统，再把它运营成一个靠谱的数字员工&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;做这件事的人，我称之为 &lt;strong&gt;Agent 应用工程师&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/agent-application-engineer.png"&gt;&lt;img src="https://hugozhu.site/img/2026/agent-application-engineer-thumb.jpg" alt="Agent 应用工程师：三层分工金字塔"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>SFT、RL 与 Self-RL：从大模型训练到团队管理的优化系统</title><link>https://hugozhu.site/post/2026/305-sft-rl-self-rl-optimization-system/</link><pubDate>Wed, 22 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/305-sft-rl-self-rl-optimization-system/</guid><description>&lt;p&gt;去年年底，一个带三十人团队的朋友跟我吐槽：「我团队执行力特别强，交代什么做什么，但就是没人主动提新想法。」&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/agent-application-engineer.png"&gt;&lt;img src="https://hugozhu.site/img/2026/agent-application-engineer-thumb.jpg" alt="Agent 应用工程师：三层分工金字塔"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>AI 时代产品迭代速度提升一倍：不只是编码快了</title><link>https://hugozhu.site/post/2026/308-ai-product-iteration-full-chain-compression/</link><pubDate>Thu, 23 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/308-ai-product-iteration-full-chain-compression/</guid><description>&lt;p&gt;上个月和一个做 SaaS 的朋友吃饭。他的产品刚上线四个月，已经迭代了 9 个版本。&lt;/p&gt;
+&lt;p&gt;我说：「你以前在互联网公司，一个季度能发几个版本？」&lt;/p&gt;
+&lt;p&gt;他想了想：「两个。还得是顺利的情况下。」&lt;/p&gt;
+&lt;p&gt;「现在呢？」&lt;/p&gt;
+&lt;p&gt;「一个月两个。有时候三个。」&lt;/p&gt;
+&lt;p&gt;我问他为什么快了这么多。他的回答让我愣了一下：&lt;/p&gt;
+&lt;p&gt;「不只是写代码快了。是 &lt;strong&gt;所有事&lt;/strong&gt; 都快了。调研快了，做素材快了，看数据快了，连决定砍哪个功能都快了。」&lt;/p&gt;
+&lt;p&gt;这句话比「AI 让编程效率提升 10 倍」重要得多。因为它指向一个被严重低估的变化： &lt;strong&gt;AI 压缩的不是产品迭代的某一个环节，而是全链路。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/ai-product-iteration-full-chain.png"&gt;&lt;img src="https://hugozhu.site/img/2026/ai-product-iteration-full-chain-thumb.jpg" alt="产品迭代全链路压缩"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>SFT、RL 与 Self-RL：从大模型训练到团队管理的优化系统</title><link>https://hugozhu.site/post/2026/305-sft-rl-self-rl-optimization-system/</link><pubDate>Wed, 22 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/305-sft-rl-self-rl-optimization-system/</guid><description>&lt;p&gt;去年年底，一个带三十人团队的朋友跟我吐槽：「我团队执行力特别强，交代什么做什么，但就是没人主动提新想法。」&lt;/p&gt;
 &lt;p&gt;我问他：「你的绩效考核怎么算的？」&lt;/p&gt;
 &lt;p&gt;他说：「Bug 修复数、代码行数、需求交付准时率。」&lt;/p&gt;
 &lt;p&gt;我说：「那你训练出来的不是工程师，是 KPI 优化器。他们不是不会探索，是探索了没奖励。」&lt;/p&gt;
