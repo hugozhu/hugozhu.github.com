@@ -2,7 +2,7 @@
 &lt;p&gt;我说没关系，打开看看。&lt;/p&gt;
 &lt;p&gt;代码确实漂亮。命名规范，类型标注完整，docstring 齐全，错误处理滴水不漏。如果这是三年前，我会觉得这是一个高级工程师的作品。但现在我知道，这些是任何一个会用 Cursor 的人都能产出的。AI 的默认输出就是 80 分——格式正确、风格一致、看起来专业。&lt;/p&gt;
 &lt;p&gt;我真正想看的东西，不在代码里。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/engineering-taste-where.png"&gt;&lt;img src="https://hugozhu.site/img/2026/engineering-taste-where-thumb.jpg" alt="品味住在哪里"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>AI 操作你的电脑，最大的对手不是防火墙</title><link>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</guid><description>&lt;p&gt;上周帮一个朋友调他的 AI Agent。需求很简单：自动登录一个政府网站，填三张表，提交。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/engineering-taste-where.png"&gt;&lt;img src="https://hugozhu.site/img/2026/engineering-taste-where-thumb.jpg" alt="品味住在哪里"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>AI 操作你的电脑，最大的对手不是防火墙</title><link>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</guid><description>&lt;p&gt;上周帮一个朋友调他的 AI Agent。需求很简单：自动登录一个美国政府网站，填三张表，提交。&lt;/p&gt;
 &lt;p&gt;他选了 VNC 路线——Agent 通过远程桌面连上一台真实 Mac，操作真实的 Chrome 浏览器。逻辑很对：真实浏览器没有 &lt;code&gt;navigator.webdriver&lt;/code&gt; 标记，没有 CDP 连接痕迹，TLS 指纹是真的，Canvas 指纹是真的。从浏览器的视角看，就是一个正常用户坐在键盘前。&lt;/p&gt;
 &lt;p&gt;他很有信心。然后 Agent 在第二步就被拦住了。&lt;/p&gt;
 &lt;p&gt;不是被防火墙拦的，不是被反爬拦的。是 Cloudflare Turnstile 弹了一个无感验证，Agent 的鼠标 &lt;strong&gt;瞬移&lt;/strong&gt; 到了按钮上， &lt;strong&gt;零毫秒&lt;/strong&gt; 完成点击。没有移动轨迹，没有加速度变化，没有人类手指的微颤。&lt;/p&gt;
