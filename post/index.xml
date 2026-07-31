@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on All about Raspberry Pi</title><link>https://hugozhu.site/post/</link><description>Recent content in Posts on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 30 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/post/index.xml" rel="self" type="application/rss+xml"/><item><title>代码是 AI 写的了，品味住在哪里</title><link>https://hugozhu.site/post/2026/317-engineering-taste-where/</link><pubDate>Thu, 30 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/317-engineering-taste-where/</guid><description>&lt;p&gt;上个月面试一个候选人。他带了一个 GitHub 项目，说「大部分代码是 AI 写的」。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on All about Raspberry Pi</title><link>https://hugozhu.site/post/</link><description>Recent content in Posts on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 31 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/post/index.xml" rel="self" type="application/rss+xml"/><item><title>克制是文明最贵的表达</title><link>https://hugozhu.site/post/2026/319-restraint-civilization-engineering-taste/</link><pubDate>Fri, 31 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/319-restraint-civilization-engineering-taste/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;人的放纵是本能，自律才是修行。短时间让你快乐的东西，一定能够让你感到痛苦；反之，那些让你痛苦的东西，最终都能让你功成名就。低级的欲望，放纵即可获得；高级的欲望，只有克制才能达到。&lt;/p&gt;
+&lt;p&gt;——一段常被归于罗素的话&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;上周一个工程师跟我说：「我让 AI 写了一个模块，它给我吐了四万行代码。我看了两天，删了三万行。」&lt;/p&gt;
+&lt;p&gt;我问他：删的时候什么感受？&lt;/p&gt;
+&lt;p&gt;他说：「心疼。每一行看起来都有道理。但我知道如果留着，这个模块就死了。」&lt;/p&gt;
+&lt;p&gt;同一天晚上，我女儿问我一道数学题。她卡在第二步。我张嘴就要说「你试试把等式两边同时除以——」，话到嘴边咽回去了。我说：「你再看看题目里哪个条件你还没用上。」她想了四十秒，自己做了出来。&lt;/p&gt;
+&lt;p&gt;两件事。一个是删代码，一个是忍住不说。本质一样： &lt;strong&gt;你有能力做，你选择不做。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/restraint-civilization-engineering-taste.png"&gt;&lt;img src="https://hugozhu.site/img/2026/restraint-civilization-engineering-taste-thumb.jpg" alt="Restraint Is the Most Expensive Expression of Civilization"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>代码是 AI 写的了，品味住在哪里</title><link>https://hugozhu.site/post/2026/317-engineering-taste-where/</link><pubDate>Thu, 30 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/317-engineering-taste-where/</guid><description>&lt;p&gt;上个月面试一个候选人。他带了一个 GitHub 项目，说「大部分代码是 AI 写的」。&lt;/p&gt;
 &lt;p&gt;我说没关系，打开看看。&lt;/p&gt;
 &lt;p&gt;代码确实漂亮。命名规范，类型标注完整，docstring 齐全，错误处理滴水不漏。如果这是三年前，我会觉得这是一个高级工程师的作品。但现在我知道，这些是任何一个会用 Cursor 的人都能产出的。AI 的默认输出就是 80 分——格式正确、风格一致、看起来专业。&lt;/p&gt;
 &lt;p&gt;我真正想看的东西，不在代码里。&lt;/p&gt;
