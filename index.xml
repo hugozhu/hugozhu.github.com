@@ -7,7 +7,11 @@
 &lt;p&gt;他说：「心疼。每一行看起来都有道理。但我知道如果留着，这个模块就死了。」&lt;/p&gt;
 &lt;p&gt;同一天晚上，我女儿问我一道数学题。她卡在第二步。我张嘴就要说「你试试把等式两边同时除以——」，话到嘴边咽回去了。我说：「你再看看题目里哪个条件你还没用上。」她想了四十秒，自己做了出来。&lt;/p&gt;
 &lt;p&gt;两件事。一个是删代码，一个是忍住不说。本质一样： &lt;strong&gt;你有能力做，你选择不做。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/restraint-civilization-engineering-taste.png"&gt;&lt;img src="https://hugozhu.site/img/2026/restraint-civilization-engineering-taste-thumb.jpg" alt="Restraint Is the Most Expensive Expression of Civilization"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>代码是 AI 写的了，品味住在哪里</title><link>https://hugozhu.site/post/2026/317-engineering-taste-where/</link><pubDate>Thu, 30 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/317-engineering-taste-where/</guid><description>&lt;p&gt;上个月面试一个候选人。他带了一个 GitHub 项目，说「大部分代码是 AI 写的」。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/restraint-civilization-engineering-taste.png"&gt;&lt;img src="https://hugozhu.site/img/2026/restraint-civilization-engineering-taste-thumb.jpg" alt="Restraint Is the Most Expensive Expression of Civilization"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>用一张钉钉表格，统一管理所有 Agent 的定时任务</title><link>https://hugozhu.site/post/2026/320-dingtalk-table-agent-cron/</link><pubDate>Fri, 31 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/320-dingtalk-table-agent-cron/</guid><description>&lt;h2 id="一个越来越具体的烦恼"&gt;一个越来越具体的烦恼&lt;/h2&gt;
+&lt;p&gt;给 AI Agent 排定时任务，正在变成一件新的麻烦事。&lt;/p&gt;
+&lt;p&gt;最早我们写 cron，后来写脚本，再后来各种 Agent 框架自带调度器。结果是：定时配置散落在 crontab、launchd、代码常量、框架配置文件里，改一个执行时间要翻好几个地方；想知道「现在到底有哪些任务在跑、几点跑、跑完发到哪」，没有任何一个地方能一眼看全。&lt;/p&gt;
+&lt;p&gt;任务本身其实很简单——「每天下午一点，去小红书搜几个关键词，各出一份报告」。难的不是执行，而是管理：谁来记、谁来改、谁来排查。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/dingtalk-table-agent-cron.png"&gt;&lt;img src="https://hugozhu.site/img/2026/dingtalk-table-agent-cron-thumb.jpg" alt="One DingTalk Table to Rule All Agent Cron Jobs"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>代码是 AI 写的了，品味住在哪里</title><link>https://hugozhu.site/post/2026/317-engineering-taste-where/</link><pubDate>Thu, 30 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/317-engineering-taste-where/</guid><description>&lt;p&gt;上个月面试一个候选人。他带了一个 GitHub 项目，说「大部分代码是 AI 写的」。&lt;/p&gt;
 &lt;p&gt;我说没关系，打开看看。&lt;/p&gt;
 &lt;p&gt;代码确实漂亮。命名规范，类型标注完整，docstring 齐全，错误处理滴水不漏。如果这是三年前，我会觉得这是一个高级工程师的作品。但现在我知道，这些是任何一个会用 Cursor 的人都能产出的。AI 的默认输出就是 80 分——格式正确、风格一致、看起来专业。&lt;/p&gt;
 &lt;p&gt;我真正想看的东西，不在代码里。&lt;/p&gt;
