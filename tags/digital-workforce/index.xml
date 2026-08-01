@@ -8,7 +8,11 @@
 &lt;p&gt;「两个 agent 对同一件事判断冲突了，谁说了算？」&lt;/p&gt;
 &lt;p&gt;沉默。&lt;/p&gt;
 &lt;p&gt;12 个靠人盯，200 个靠什么？这不是「多部署几个」的问题。这是架构问题。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/architecture-decides-the-battle.png"&gt;&lt;img src="https://hugozhu.site/img/2026/architecture-decides-the-battle-thumb.jpg" alt="Architecture Decides the Battle Before It Starts"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>你的下一个下属，不需要工位</title><link>https://hugozhu.site/post/2026/322-your-next-report-no-desk/</link><pubDate>Fri, 31 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/322-your-next-report-no-desk/</guid><description>&lt;p&gt;上个月一个客户请我们做数字员工。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/architecture-decides-the-battle.png"&gt;&lt;img src="https://hugozhu.site/img/2026/architecture-decides-the-battle-thumb.jpg" alt="Architecture Decides the Battle Before It Starts"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>钉钉的护城河不是更好用的 App，是组织世界的信任基础设施</title><link>https://hugozhu.site/post/2026/324-dingtalk-trust-infrastructure/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/324-dingtalk-trust-infrastructure/</guid><description>&lt;p&gt;前两天看到一篇文章，标题很刺激：「飞书被收编，钉钉要改名，企业微信慌不慌？」&lt;/p&gt;
+&lt;p&gt;核心论证链很锋利：互联网办公平台第一次降维打击了传统企业软件，然后 AI Agent 第二次降维打击了超级 App。结论是 To B 软件只剩两种位置——要么成为入口，要么成为入口背后绕不开的系统。&lt;/p&gt;
+&lt;p&gt;写得很好。但我读完之后一直在想一个问题： &lt;strong&gt;他说的「绕不开的系统」，对钉钉来说到底意味着什么？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不是「钉钉也能活下来」这种防御性思考。而是：如果钉钉主动选择，它应该把资源押在哪里？&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/dingtalk-trust-infrastructure.png"&gt;&lt;img src="https://hugozhu.site/img/2026/dingtalk-trust-infrastructure-thumb.jpg" alt="DingTalk&amp;rsquo;s Moat Is Trust Infrastructure, Not a Better App"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>你的下一个下属，不需要工位</title><link>https://hugozhu.site/post/2026/322-your-next-report-no-desk/</link><pubDate>Fri, 31 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/322-your-next-report-no-desk/</guid><description>&lt;p&gt;上个月一个客户请我们做数字员工。&lt;/p&gt;
 &lt;p&gt;老板看完 demo，很兴奋。大模型能写邮件、做总结、回答制度问题，他觉得万事俱备。&lt;/p&gt;
 &lt;p&gt;「给销售、采购、客服各配一个数字员工，下个月上岗。」&lt;/p&gt;
 &lt;p&gt;工程师于是创建了几个角色，写了几段提示词，把聊天窗口换成了公司 Logo。&lt;/p&gt;
