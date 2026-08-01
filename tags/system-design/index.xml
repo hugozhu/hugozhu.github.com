@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>System-Design on All about Raspberry Pi</title><link>https://hugozhu.site/tags/system-design/</link><description>Recent content in System-Design on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 29 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/system-design/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 操作你的电脑，最大的对手不是防火墙</title><link>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</guid><description>&lt;p&gt;上周帮一个朋友调他的 AI Agent。需求很简单：自动登录一个美国政府网站，填三张表，提交。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>System-Design on All about Raspberry Pi</title><link>https://hugozhu.site/tags/system-design/</link><description>Recent content in System-Design on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 01 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/system-design/index.xml" rel="self" type="application/rss+xml"/><item><title>架构决定战役成败</title><link>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</guid><description>&lt;p&gt;上个月一个团队找我聊数字员工落地。&lt;/p&gt;
+&lt;p&gt;他们已经有 12 个 agent 在跑了。销售助手、客服助手、HR 问答、会议纪要……每个都是独立项目，独立部署，独立维护。&lt;/p&gt;
+&lt;p&gt;CTO 说：「我们想扩到 200 个。」&lt;/p&gt;
+&lt;p&gt;我问：「现在 12 个的权限怎么管的？」&lt;/p&gt;
+&lt;p&gt;他愣了一下：「每个 agent 一个 API key，配在环境变量里。」&lt;/p&gt;
+&lt;p&gt;「记忆呢？A 部门的 agent 会不会读到 B 部门的会议纪要？」&lt;/p&gt;
+&lt;p&gt;「……应该不会吧。」&lt;/p&gt;
+&lt;p&gt;「两个 agent 对同一件事判断冲突了，谁说了算？」&lt;/p&gt;
+&lt;p&gt;沉默。&lt;/p&gt;
+&lt;p&gt;12 个靠人盯，200 个靠什么？这不是「多部署几个」的问题。这是架构问题。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/architecture-decides-the-battle.png"&gt;&lt;img src="https://hugozhu.site/img/2026/architecture-decides-the-battle-thumb.jpg" alt="Architecture Decides the Battle Before It Starts"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>AI 操作你的电脑，最大的对手不是防火墙</title><link>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/316-computer-use-real-adversary/</guid><description>&lt;p&gt;上周帮一个朋友调他的 AI Agent。需求很简单：自动登录一个美国政府网站，填三张表，提交。&lt;/p&gt;
 &lt;p&gt;他选了 VNC 路线——Agent 通过远程桌面连上一台真实 Mac，操作真实的 Chrome 浏览器。逻辑很对：真实浏览器没有 &lt;code&gt;navigator.webdriver&lt;/code&gt; 标记，没有 CDP 连接痕迹，TLS 指纹是真的，Canvas 指纹是真的。从浏览器的视角看，就是一个正常用户坐在键盘前。&lt;/p&gt;
 &lt;p&gt;他很有信心。然后 Agent 在第二步就被拦住了。&lt;/p&gt;
 &lt;p&gt;不是被防火墙拦的，不是被反爬拦的。是 Cloudflare Turnstile 弹了一个无感验证，Agent 的鼠标 &lt;strong&gt;瞬移&lt;/strong&gt; 到了按钮上， &lt;strong&gt;零毫秒&lt;/strong&gt; 完成点击。没有移动轨迹，没有加速度变化，没有人类手指的微颤。&lt;/p&gt;

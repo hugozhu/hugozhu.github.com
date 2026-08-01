@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Architecture on All about Raspberry Pi</title><link>https://hugozhu.site/tags/architecture/</link><description>Recent content in Architecture on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>一个 Thread 的六分钟：Claude Tag 的 Session 生命周期全拆解</title><link>https://hugozhu.site/post/2026/274-one-thread-six-minutes-claude-tag-session-lifecycle/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/274-one-thread-six-minutes-claude-tag-session-lifecycle/</guid><description>&lt;p&gt;周一早上，#platform-eng 频道。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Architecture on All about Raspberry Pi</title><link>https://hugozhu.site/tags/architecture/</link><description>Recent content in Architecture on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 01 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>架构决定战役成败</title><link>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</guid><description>&lt;p&gt;上个月一个团队找我聊数字员工落地。&lt;/p&gt;
+&lt;p&gt;他们已经有 12 个 agent 在跑了。销售助手、客服助手、HR 问答、会议纪要……每个都是独立项目，独立部署，独立维护。&lt;/p&gt;
+&lt;p&gt;CTO 说：「我们想扩到 200 个。」&lt;/p&gt;
+&lt;p&gt;我问：「现在 12 个的权限怎么管的？」&lt;/p&gt;
+&lt;p&gt;他愣了一下：「每个 agent 一个 API key，配在环境变量里。」&lt;/p&gt;
+&lt;p&gt;「记忆呢？A 部门的 agent 会不会读到 B 部门的会议纪要？」&lt;/p&gt;
+&lt;p&gt;「……应该不会吧。」&lt;/p&gt;
+&lt;p&gt;「两个 agent 对同一件事判断冲突了，谁说了算？」&lt;/p&gt;
+&lt;p&gt;沉默。&lt;/p&gt;
+&lt;p&gt;12 个靠人盯，200 个靠什么？这不是「多部署几个」的问题。这是架构问题。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/architecture-decides-the-battle.png"&gt;&lt;img src="https://hugozhu.site/img/2026/architecture-decides-the-battle-thumb.jpg" alt="Architecture Decides the Battle Before It Starts"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>一个 Thread 的六分钟：Claude Tag 的 Session 生命周期全拆解</title><link>https://hugozhu.site/post/2026/274-one-thread-six-minutes-claude-tag-session-lifecycle/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/274-one-thread-six-minutes-claude-tag-session-lifecycle/</guid><description>&lt;p&gt;周一早上，#platform-eng 频道。&lt;/p&gt;
 &lt;p&gt;Leo 发了一条消息：「checkout 今早变慢了，有人遇到吗？」&lt;/p&gt;
 &lt;p&gt;Dana 秒回：「我也是。」然后她 &lt;strong&gt;@了 Claude&lt;/strong&gt;：「查一下今早部署的 diff，对比延迟数据，找出原因。」&lt;/p&gt;
 &lt;p&gt;接下来六分钟里发生的事，值得每个做 Agent 架构的人仔细看一遍。&lt;/p&gt;
