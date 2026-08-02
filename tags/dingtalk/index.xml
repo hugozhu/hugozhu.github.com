@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DingTalk on All about Raspberry Pi</title><link>https://hugozhu.site/tags/dingtalk/</link><description>Recent content in DingTalk on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 01 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/dingtalk/index.xml" rel="self" type="application/rss+xml"/><item><title>钉钉的护城河不是更好用的 App，是组织世界的信任基础设施</title><link>https://hugozhu.site/post/2026/324-dingtalk-trust-infrastructure/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/324-dingtalk-trust-infrastructure/</guid><description>&lt;p&gt;前两天看到一篇文章，标题很刺激：&lt;a href="https://mp.weixin.qq.com/s/sIw8xrQjwosSGqCZqIlv1Q"&gt;「飞书被收编，钉钉要改名，企业微信慌不慌？」&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dingtalk on All about Raspberry Pi</title><link>https://hugozhu.site/tags/dingtalk/</link><description>Recent content in Dingtalk on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/dingtalk/index.xml" rel="self" type="application/rss+xml"/><item><title>私有 Eval 是终极护城河</title><link>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</guid><description>&lt;p&gt;上个月和一位做 HR SaaS 的朋友吃饭。他刚花了两百万买了一批行业测评数据，准备训练自己的垂直模型。&lt;/p&gt;
+&lt;p&gt;我问他：「竞品如果也买同样的数据呢？」&lt;/p&gt;
+&lt;p&gt;他愣了一下：「那……我们还有先发优势。」&lt;/p&gt;
+&lt;p&gt;「先发多少？」&lt;/p&gt;
+&lt;p&gt;「大概……半年？」&lt;/p&gt;
+&lt;p&gt;半年。这就是原始数据作为护城河的保质期。&lt;/p&gt;
+&lt;p&gt;三个月前，我写了一篇 &lt;a href="https://hugozhu.site/post/2026/206-china-saas-moat-war-sequoia-keynote/"&gt;中国 SaaS 厂商的护城河应该怎么建&lt;/a&gt;，核心公式是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;护城河 = 垂直行业数据资产 × 行业 Know-How × 客户成功体系 × 生态协同&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;那篇文章里，我把「数据壁垒」放在七大维度的第一位，画了一个数据飞轮：客户使用 → 数据沉淀 → 模型训练 → 更精准的服务 → 更多客户使用。&lt;/p&gt;
+&lt;p&gt;三个月后，我要修正自己。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;飞轮里转的不是数据，是 eval。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/private-evals-ultimate-moat.png"&gt;&lt;img src="https://hugozhu.site/img/2026/private-evals-ultimate-moat-thumb.jpg" alt="Private Evals Are the Ultimate Moat"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>钉钉的护城河不是更好用的 App，是组织世界的信任基础设施</title><link>https://hugozhu.site/post/2026/324-dingtalk-trust-infrastructure/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/324-dingtalk-trust-infrastructure/</guid><description>&lt;p&gt;前两天看到一篇文章，标题很刺激：&lt;a href="https://mp.weixin.qq.com/s/sIw8xrQjwosSGqCZqIlv1Q"&gt;「飞书被收编，钉钉要改名，企业微信慌不慌？」&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;核心论证链很锋利：互联网办公平台第一次降维打击了传统企业软件，然后 AI Agent 第二次降维打击了超级 App。结论是 To B 软件只剩两种位置——要么成为入口，要么成为入口背后绕不开的系统。&lt;/p&gt;
 &lt;p&gt;写得很好。但我读完之后一直在想一个问题： &lt;strong&gt;他说的「绕不开的系统」，对钉钉来说到底意味着什么？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;不是「钉钉也能活下来」这种防御性思考。而是：如果钉钉主动选择，它应该把资源押在哪里？&lt;/p&gt;

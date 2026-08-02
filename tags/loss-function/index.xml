@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Loss-Function on All about Raspberry Pi</title><link>https://hugozhu.site/tags/loss-function/</link><description>Recent content in Loss-Function on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/loss-function/index.xml" rel="self" type="application/rss+xml"/><item><title>Evals 是新的 PRD</title><link>https://hugozhu.site/post/2026/326-evals-are-the-new-prd/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/326-evals-are-the-new-prd/</guid><description>&lt;p&gt;上个月，我们团队一位产品经理花了两周写了一份 40 页的 PRD，描述一个智能审批 Agent 的需求。用户故事、流程图、异常分支、验收标准，写得滴水不漏。&lt;/p&gt;
+&lt;p&gt;她把 PRD 丢给 Coding Agent，说：「按这个做。」&lt;/p&gt;
+&lt;p&gt;三天后 Agent 交付了。代码能跑，测试通过，接口对齐。但她试了五分钟就皱眉：「这不是我要的东西。」&lt;/p&gt;
+&lt;p&gt;哪里不对？她说不清。审批流程是对的，权限校验是对的，消息通知是对的。但 Agent 处理「领导已读不回超过 48 小时」的策略，不是她脑子里想的那个。PRD 里写的是「超时后自动提醒」，Agent 就老老实实给所有超时审批发了一轮提醒——包括那些「领导出差没看手机」的非紧急件。她真正想要的是「先判断这条审批是否紧急，紧急的才提醒，不紧急的等下次汇总」。&lt;/p&gt;
+&lt;p&gt;这个判断，她没写进 PRD。因为她觉得这是「常识」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Agent 没有常识。Agent 只有你给它的判据。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/evals-are-the-new-prd.png"&gt;&lt;img src="https://hugozhu.site/img/2026/evals-are-the-new-prd-thumb.jpg" alt="Evals Are the New PRD"&gt;&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Moat on All about Raspberry Pi</title><link>https://hugozhu.site/tags/moat/</link><description>Recent content in Moat on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 18 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/moat/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 钉钉的护城河不在 AI，而在组织图谱与协同飞轮</title><link>https://hugozhu.site/post/2026/297-dingtalk-moat-org-graph-collaboration-flywheel/</link><pubDate>Sat, 18 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/297-dingtalk-moat-org-graph-collaboration-flywheel/</guid><description>&lt;p&gt;上个月，一个做汽车零部件的客户给我看他们的数字员工矩阵。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Moat on All about Raspberry Pi</title><link>https://hugozhu.site/tags/moat/</link><description>Recent content in Moat on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/moat/index.xml" rel="self" type="application/rss+xml"/><item><title>私有 Eval 是终极护城河</title><link>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</guid><description>&lt;p&gt;上个月和一位做 HR SaaS 的朋友吃饭。他刚花了两百万买了一批行业测评数据，准备训练自己的垂直模型。&lt;/p&gt;
+&lt;p&gt;我问他：「竞品如果也买同样的数据呢？」&lt;/p&gt;
+&lt;p&gt;他愣了一下：「那……我们还有先发优势。」&lt;/p&gt;
+&lt;p&gt;「先发多少？」&lt;/p&gt;
+&lt;p&gt;「大概……半年？」&lt;/p&gt;
+&lt;p&gt;半年。这就是原始数据作为护城河的保质期。&lt;/p&gt;
+&lt;p&gt;三个月前，我写了一篇 &lt;a href="https://hugozhu.site/post/2026/206-china-saas-moat-war-sequoia-keynote/"&gt;中国 SaaS 厂商的护城河应该怎么建&lt;/a&gt;，核心公式是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;护城河 = 垂直行业数据资产 × 行业 Know-How × 客户成功体系 × 生态协同&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;那篇文章里，我把「数据壁垒」放在七大维度的第一位，画了一个数据飞轮：客户使用 → 数据沉淀 → 模型训练 → 更精准的服务 → 更多客户使用。&lt;/p&gt;
+&lt;p&gt;三个月后，我要修正自己。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;飞轮里转的不是数据，是 eval。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/private-evals-ultimate-moat.png"&gt;&lt;img src="https://hugozhu.site/img/2026/private-evals-ultimate-moat-thumb.jpg" alt="Private Evals Are the Ultimate Moat"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>AI 钉钉的护城河不在 AI，而在组织图谱与协同飞轮</title><link>https://hugozhu.site/post/2026/297-dingtalk-moat-org-graph-collaboration-flywheel/</link><pubDate>Sat, 18 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/297-dingtalk-moat-org-graph-collaboration-flywheel/</guid><description>&lt;p&gt;上个月，一个做汽车零部件的客户给我看他们的数字员工矩阵。&lt;/p&gt;
 &lt;p&gt;七个 Agent，分布在不同的钉钉群里，覆盖销售跟进、采购审批、质检报告、供应商对账、项目进度追踪、会议纪要生成、新员工入职引导。每个 Agent 都有组织身份——有工号、有权限、有审批链、有审计日志。它们不是独立的聊天机器人，而是组织的一部分。&lt;/p&gt;
 &lt;p&gt;然后他问了一个让我想了很久的问题：&lt;strong&gt;「如果有人要换掉钉钉，这七个 Agent 能带走吗？」&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;答案是不能。不是技术上搬不走——代码和数据可以导出。而是这七个 Agent 的每一个都 &lt;strong&gt;深度嵌入&lt;/strong&gt; 了钉钉的组织图谱：审批链上的层级关系、群里的权限配置、通讯录里的汇报线、上下游组织的合同状态。换一个平台，这些上下文全部归零。&lt;/p&gt;
