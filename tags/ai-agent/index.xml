@@ -10,7 +10,7 @@
 &lt;p&gt;然后呢？ &lt;strong&gt;太平洋汽车什么都没得到。&lt;/strong&gt; 没有访问，没有注册，没有广告展示，没有用户画像。内容被吃干抹净，连渣都没剩。&lt;/p&gt;
 &lt;p&gt;这个故事来自极客公园上周的一篇报道，讲的是 AI 时代互联网流量的大崩塌。但让我想了很久的不是流量问题——而是一个更底层的问题：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;如果内容本身不是最有价值的资产，那什么才是？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/intelligence-exhaust-data-value.png"&gt;&lt;img src="https://hugozhu.site/img/2026/intelligence-exhaust-data-value-thumb.jpg" alt="Intelligence Exhaust: The Data Asset Enterprises Must Protect"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>模型越快，架构越重要</title><link>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</guid><description>&lt;p&gt;上个月一个团队找我聊数字员工落地。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/intelligence-exhaust-data-value.png"&gt;&lt;img src="https://hugozhu.site/img/2026/intelligence-exhaust-data-value-thumb.jpg" alt="Intelligence Exhaust: The Data Asset Enterprises Must Protect"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>模型迭代越快，架构越重要</title><link>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</link><pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/323-architecture-decides-the-battle/</guid><description>&lt;p&gt;上个月一个团队找我聊数字员工落地。&lt;/p&gt;
 &lt;p&gt;他们已经有 12 个 agent 在跑了。销售助手、客服助手、HR 问答、会议纪要……每个都是独立项目，独立部署，独立维护。&lt;/p&gt;
 &lt;p&gt;CTO 说：「我们想扩到 200 个。」&lt;/p&gt;
 &lt;p&gt;我问：「现在 12 个的权限怎么管的？」&lt;/p&gt;
