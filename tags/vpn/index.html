@@ -11,14 +11,16 @@
 </button>
 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=tags-heading><h1>VPN</h1><hr class=small></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/openvpn-multiple-ports/><h2 class=post-title>OpenVPN使用多个端口</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 2, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;23&nbsp;words</span></p><div class=post-entry><p>Openvpn本身不能设置多个端口，使用iptables可以解决这个问题 （假设openvpn本来56788端口）：</p><pre><code>for port in {56780..56787}
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;23&nbsp;words
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><p>Openvpn本身不能设置多个端口，使用iptables可以解决这个问题 （假设openvpn本来56788端口）：</p><pre><code>for port in {56780..56787}
 do 
     iptables -t nat -A PREROUTING -p tcp -d &lt;your_external_ip&gt; --dport $port -j REDIRECT --to-port 56788
 done
 </code></pre></div><div class=blog-tags><a href=https://hugozhu.site/tags/linux/>Linux</a>&nbsp;
 <a href=https://hugozhu.site/tags/vpn/>VPN</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/setup-l2tp-pptp-openvpn-on-ubuntu/><h2 class=post-title>在Ubuntu上配置L2TP，PPTP和OpenVPN服务</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 1, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;510&nbsp;words</span></p><div class=post-entry><h2 id=overview>Overview</h2><p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p><p>先打开内核的IP转发，修改 /etc/sysctl.conf</p><pre><code>net.ipv4.ip_forward=1
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;510&nbsp;words
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><h2 id=overview>Overview</h2><p>MacOS, Windows, iOS都内置支持PPTP，L2TP；OpenVPN需要安装客户端，手机上一般不支持。</p><p>先打开内核的IP转发，修改 /etc/sysctl.conf</p><pre><code>net.ipv4.ip_forward=1
 </code></pre><p>执行下面命令以生效</p><pre><code>sudo sysctl -p
 </code></pre><h2 id=pptp>PPTP</h2><p>安装pptpd</p><pre><code>apt-get install pptpd
 </code></pre><p>编辑 /etc/pptpd.conf，下面两行取消注释</p><pre><code>localip 192.168.0.1
