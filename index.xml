@@ -5,7 +5,12 @@
 &lt;p&gt;这件事让我更确认了一个琢磨了很久的判断：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;对于 Coding Agent，最重要的基础设施不是更聪明的模型，不是 Benchmark，而是端到端（E2E）Test Harness。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>数字员工是下一个十年的故事</title><link>https://hugozhu.site/post/2026/329-digital-employee-next-decade/</link><pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/329-digital-employee-next-decade/</guid><description>&lt;p&gt;我的钉钉组织里有两名不领工资的「员工」。一个负责开发、测试、部署另一个；另一个在用户群里服务真实的同事。两个的主管都是我。&lt;/p&gt;
+&lt;/blockquote&gt;</description></item><item><title>我刚写完数字员工十年论，就有人拿千万融资验证它</title><link>https://hugozhu.site/post/2026/330-collaboration-collaboration-on-facts/</link><pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/330-collaboration-collaboration-on-facts/</guid><description>&lt;p&gt;上周我刚发布《&lt;a href="https://hugozhu.site/post/2026/329-digital-employee-next-decade/"&gt;数字员工是下一个十年的故事&lt;/a&gt;》。今天读到一篇 36 氪 首发：清华背景的团队奇点逃逸完成千万级种子轮融资，做 AI 原生团队协作操作系统 Nexus。&lt;/p&gt;
+&lt;p&gt;读完之后我的第一反应不是「又一个竞品」，而是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;这个命题，正在从一个人的判断，变成一个被资本定价的方向。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这不是巧合。当一个论点独立地从不同起点被推导出来——我做企业协作基础设施，他们做多智能体研究——它大概率触到了某个真实的结构。&lt;/p&gt;</description></item><item><title>数字员工是下一个十年的故事</title><link>https://hugozhu.site/post/2026/329-digital-employee-next-decade/</link><pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/329-digital-employee-next-decade/</guid><description>&lt;p&gt;我的钉钉组织里有两名不领工资的「员工」。一个负责开发、测试、部署另一个；另一个在用户群里服务真实的同事。两个的主管都是我。&lt;/p&gt;
 &lt;p&gt;经常有人问我：这两个东西到底是什么？Agent？机器人？助手？&lt;/p&gt;
 &lt;p&gt;我的答案是： &lt;strong&gt;它们是岗位。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这个回答背后，藏着一个我琢磨了很久的判断：&lt;/p&gt;
