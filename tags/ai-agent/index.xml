@@ -4,7 +4,7 @@
 &lt;p&gt;哪里不对？她说不清。审批流程是对的，权限校验是对的，消息通知是对的。但 Agent 处理「领导已读不回超过 48 小时」的策略，不是她脑子里想的那个。PRD 里写的是「超时后自动提醒」，Agent 就老老实实给所有超时审批发了一轮提醒——包括那些「领导出差没看手机」的非紧急件。她真正想要的是「先判断这条审批是否紧急，紧急的才提醒，不紧急的等下次汇总」。&lt;/p&gt;
 &lt;p&gt;这个判断，她没写进 PRD。因为她觉得这是「常识」。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Agent 没有常识。Agent 只有你给它的判据。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/evals-are-the-new-prd.png"&gt;&lt;img src="https://hugozhu.site/img/2026/evals-are-the-new-prd-thumb.jpg" alt="Evals Are the New PRD"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>企业最有价值的 AI 训练数据，不是内容，是隐性知识</title><link>https://hugozhu.site/post/2026/325-intelligence-exhaust-data-value/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/325-intelligence-exhaust-data-value/</guid><description>&lt;p&gt;太平洋汽车的内容被豆包、千问和 DeepSeek 引用之后，合计触达了 1237 万用户。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/evals-are-the-new-prd.png"&gt;&lt;img src="https://hugozhu.site/img/2026/evals-are-the-new-prd-thumb.jpg" alt="Evals Are the New PRD"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>企业最有价值的 AI 训练数据，不是文档内容，是隐性知识</title><link>https://hugozhu.site/post/2026/325-intelligence-exhaust-data-value/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/325-intelligence-exhaust-data-value/</guid><description>&lt;p&gt;太平洋汽车的内容被豆包、千问和 DeepSeek 引用之后，合计触达了 1237 万用户。&lt;/p&gt;
 &lt;p&gt;这个数字是太平洋汽车 App 自有流量的 &lt;strong&gt;113.8 倍&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;一百一十三倍。超过一百倍的用户通过 AI 平台「消费」了太平洋汽车的内容——他们在豆包的聊天窗口里问了一个关于买车的问题，豆包引用太平洋汽车的评测给出了答案，用户满意地关掉了对话。&lt;/p&gt;
 &lt;p&gt;然后呢？ &lt;strong&gt;太平洋汽车什么都没得到。&lt;/strong&gt; 没有访问，没有注册，没有广告展示，没有用户画像。内容被吃干抹净，连渣都没剩。&lt;/p&gt;
