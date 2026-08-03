@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Infrastructure on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-infrastructure/</link><description>Recent content in Ai-Infrastructure on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 03 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-infrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>对 Coding Agent 最友好的，是端到端测试 Harness</title><link>https://hugozhu.site/post/2026/328-e2e-harness-coding-agent-infrastructure/</link><pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/328-e2e-harness-coding-agent-infrastructure/</guid><description>&lt;p&gt;上周我让一个 Coding Agent 给一个 Web 应用实现登录功能。三轮迭代之后，它汇报：「完成了，所有测试通过。」&lt;/p&gt;
+&lt;p&gt;我打开浏览器一看：登录按钮不见了。&lt;/p&gt;
+&lt;p&gt;我把截图丢回去，它看了一眼，回复：「抱歉，上一轮我把按钮组件误删了。」&lt;/p&gt;
+&lt;p&gt;有意思的不是 Agent 会犯错——犯错很正常。有意思的是： &lt;strong&gt;它直到看见那张截图，才知道自己犯了错。&lt;/strong&gt; 那三轮迭代里，它有编译反馈，有测试报告，但它没有任何办法知道最终页面长什么样。它的「世界」是残缺的。&lt;/p&gt;
+&lt;p&gt;这件事让我更确认了一个琢磨了很久的判断：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;对于 Coding Agent，最重要的基础设施不是更聪明的模型，不是 Benchmark，而是端到端（E2E）Test Harness。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>
