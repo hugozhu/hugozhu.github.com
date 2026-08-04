@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Agent on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-agent/</link><description>Recent content in Ai-Agent on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>Evals 是新的 PRD</title><link>https://hugozhu.site/post/2026/326-evals-are-the-new-prd/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/326-evals-are-the-new-prd/</guid><description>&lt;p&gt;上个月，我们团队一位产品经理花了两周写了一份 40 页的 PRD，描述一个智能审批 Agent 的需求。用户故事、流程图、异常分支、验收标准，写得滴水不漏。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Agent on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-agent/</link><description>Recent content in Ai-Agent on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>五个问题，判断一个岗位能不能交给数字员工</title><link>https://hugozhu.site/post/2026/331-not-every-job-can-sustain-a-digital-employee/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/331-not-every-job-can-sustain-a-digital-employee/</guid><description>&lt;p&gt;上周有人请我整理一套数字员工的术语，用途是整理会议纪要。&lt;/p&gt;
+&lt;p&gt;整理的时候我意识到一件事：会议纪要看起来是最容易交给 AI 的岗位。语音识别模型足够强，转写免费，人人会用。按常理，它应该是数字员工最先上岗的岗位。&lt;/p&gt;
+&lt;p&gt;但我们真动手做的时候，发现不是这样。&lt;/p&gt;
+&lt;p&gt;第一版会议纪要机器人，把会议里的每一句话都转写出来了，非常准确。问题是，没人看得懂：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;「关于上次说的那件事，就按讨论的办。」——哪件事？怎么讨论的？&lt;/p&gt;
+&lt;p&gt;「这个意见我同意。」——谁的意见？&lt;/p&gt;
+&lt;p&gt;「后续小王跟进一下。」——哪个小王？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转写是准确的。但它转写出来的是「话」，不是「会议」。&lt;/p&gt;
+&lt;p&gt;缺的不是智能，是上下文——这些人是谁、属于哪个项目、上次讨论了什么决定、谁负责什么事。&lt;/p&gt;
+&lt;p&gt;这次经历让我们得到一个后来反复验证的判断： &lt;strong&gt;数字员工不是任何岗位都能做，只有「上下文充分」的岗位才能做好。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;判断一个岗位是否适合数字员工，只需要看五件事。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/not-every-job-can-sustain-a-digital-employee.png"&gt;&lt;img src="https://hugozhu.site/img/2026/not-every-job-can-sustain-a-digital-employee-thumb.jpg" alt="Not Every Job Can Sustain a Digital Employee"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Evals 是新的 PRD</title><link>https://hugozhu.site/post/2026/326-evals-are-the-new-prd/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/326-evals-are-the-new-prd/</guid><description>&lt;p&gt;上个月，我们团队一位产品经理花了两周写了一份 40 页的 PRD，描述一个智能审批 Agent 的需求。用户故事、流程图、异常分支、验收标准，写得滴水不漏。&lt;/p&gt;
 &lt;p&gt;她把 PRD 丢给 Coding Agent，说：「按这个做。」&lt;/p&gt;
 &lt;p&gt;三天后 Agent 交付了。代码能跑，测试通过，接口对齐。但她试了五分钟就皱眉：「这不是我要的东西。」&lt;/p&gt;
 &lt;p&gt;哪里不对？她说不清。审批流程是对的，权限校验是对的，消息通知是对的。但 Agent 处理「领导已读不回超过 48 小时」的策略，不是她脑子里想的那个。PRD 里写的是「超时后自动提醒」，Agent 就老老实实给所有超时审批发了一轮提醒——包括那些「领导出差没看手机」的非紧急件。她真正想要的是「先判断这条审批是否紧急，紧急的才提醒，不紧急的等下次汇总」。&lt;/p&gt;
