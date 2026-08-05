@@ -12,7 +12,11 @@
 &lt;p&gt;其实是同一个问题：缺上下文。术语转不准，是因为模型的词典里没有你公司的词；看不懂，是因为纪要里没有这些人是谁、属于哪个项目、上次讨论了什么决定、谁负责什么事。&lt;/p&gt;
 &lt;p&gt;这次经历让我们得到一个后来反复验证的判断： &lt;strong&gt;数字员工不是任何岗位都能做，只有「上下文充分」的岗位才能做好。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;判断一个岗位是否适合数字员工，只需要看五件事。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/not-every-job-can-sustain-a-digital-employee.png"&gt;&lt;img src="https://hugozhu.site/img/2026/not-every-job-can-sustain-a-digital-employee-thumb.jpg" alt="Not Every Job Can Sustain a Digital Employee"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>对 Coding Agent 最友好的，是端到端测试 Harness</title><link>https://hugozhu.site/post/2026/328-e2e-harness-coding-agent-infrastructure/</link><pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/328-e2e-harness-coding-agent-infrastructure/</guid><description>&lt;p&gt;上周我让一个 Coding Agent 给一个 Web 应用实现登录功能。三轮迭代之后，它汇报：「完成了，所有测试通过。」&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/not-every-job-can-sustain-a-digital-employee.png"&gt;&lt;img src="https://hugozhu.site/img/2026/not-every-job-can-sustain-a-digital-employee-thumb.jpg" alt="Not Every Job Can Sustain a Digital Employee"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>数字员工背后的 Agent，是五层基础设施的叠加</title><link>https://hugozhu.site/post/2026/332-five-layers-behind-a-digital-employee/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/332-five-layers-behind-a-digital-employee/</guid><description>&lt;p&gt;上周整理数字员工的术语，有人在讨论里问了一个问题：&lt;/p&gt;
+&lt;p&gt;「数字员工背后的 Agent，具体实现上是一套什么东西？」&lt;/p&gt;
+&lt;p&gt;这个问题问得好。市面上大多数回答是这样的：一个模型加一段 Prompt，接一个知识库，套一个对话框。听起来也没错——demo 确实就是这么做出来的。&lt;/p&gt;
+&lt;p&gt;但 demo 和员工是两回事。我们做会议纪要数字员工的时候，第一版正是「模型 + Prompt + 转写」，能跑，但没人敢用：纪要里全是「小王跟进一下」，没人知道是哪个小王；待办派错了人，也没有任何机制能发现。&lt;/p&gt;
+&lt;p&gt;后来它变成一个真正能干活的数字员工，靠的不是换更强的模型——模型一直没换。靠的是在模型外面，一层一层搭起来的东西。&lt;/p&gt;</description></item><item><title>对 Coding Agent 最友好的，是端到端测试 Harness</title><link>https://hugozhu.site/post/2026/328-e2e-harness-coding-agent-infrastructure/</link><pubDate>Mon, 03 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/328-e2e-harness-coding-agent-infrastructure/</guid><description>&lt;p&gt;上周我让一个 Coding Agent 给一个 Web 应用实现登录功能。三轮迭代之后，它汇报：「完成了，所有测试通过。」&lt;/p&gt;
 &lt;p&gt;我打开浏览器一看：登录按钮不见了。&lt;/p&gt;
 &lt;p&gt;我把截图丢回去，它看了一眼，回复：「抱歉，上一轮我把按钮组件误删了。」&lt;/p&gt;
 &lt;p&gt;有意思的不是 Agent 会犯错——犯错很正常。有意思的是： &lt;strong&gt;它直到看见那张截图，才知道自己犯了错。&lt;/strong&gt; 那三轮迭代里，它有编译反馈，有测试报告，但它没有任何办法知道最终页面长什么样。它的「世界」是残缺的。&lt;/p&gt;
