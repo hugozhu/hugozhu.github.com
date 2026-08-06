@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Agent-Governance on All about Raspberry Pi</title><link>https://hugozhu.site/tags/agent-governance/</link><description>Recent content in Agent-Governance on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/agent-governance/index.xml" rel="self" type="application/rss+xml"/><item><title>Agent 进入企业，还差一个工位</title><link>https://hugozhu.site/post/2026/311-agent-workstation-five-layers/</link><pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/311-agent-workstation-five-layers/</guid><description>&lt;p&gt;七月的 WAIC 展馆，人声鼎沸。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Agent-Governance on All about Raspberry Pi</title><link>https://hugozhu.site/tags/agent-governance/</link><description>Recent content in Agent-Governance on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 06 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/agent-governance/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 的三代进化：Chatbot、数字分身、数字员工</title><link>https://hugozhu.site/post/2026/334-three-generations-of-ai/</link><pubDate>Thu, 06 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/334-three-generations-of-ai/</guid><description>&lt;p&gt;我名下有两个数字员工，一个负责开发、测试、部署另一个，一个在用户群里服务真实的同事。岗位一立起来，一个问题就自然跟着来了：&lt;/p&gt;
+&lt;p&gt;「如果它批错了一张审批单，造成了损失，谁来负责？」&lt;/p&gt;
+&lt;p&gt;这个问题不难答——难的是我发现，市面上绝大多数 AI 产品，从来没准备回答这个问题，因为它们压根不是「员工」。&lt;/p&gt;
+&lt;p&gt;Chatbot、数字分身、数字员工，这三个词正在被混着用。很多人以为它们只是同一类产品的不同营销话术：能力弱一点的叫 Chatbot，能力强的叫数字员工。&lt;/p&gt;
+&lt;p&gt;但我的判断是： &lt;strong&gt;它们是三代不同的东西。&lt;/strong&gt; 区分代际的不是模型有多聪明，而是两个更根本的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;它的 Source of Truth 是什么？它出了错，谁来负责？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;想清楚这两个问题，很多关于企业 AI 的争论会立刻变得清晰。&lt;/p&gt;</description></item><item><title>Agent 进入企业，还差一个工位</title><link>https://hugozhu.site/post/2026/311-agent-workstation-five-layers/</link><pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/311-agent-workstation-five-layers/</guid><description>&lt;p&gt;七月的 WAIC 展馆，人声鼎沸。&lt;/p&gt;
 &lt;p&gt;大模型展台前挤满了人，Demo 屏幕上的 Agent 行云流水——自动写代码、自动做报表、自动回客户邮件。观众鼓掌，媒体拍照，投资人交换名片。&lt;/p&gt;
 &lt;p&gt;然后你回到公司，打开内部系统，发现你的 Agent 连个工号都没有。&lt;/p&gt;
 &lt;p&gt;它没有账号登录 CRM，没有权限查数据库，没有工位接收任务，出了错不知道找谁。它站在企业大门外，能力满分，但进不来。&lt;/p&gt;

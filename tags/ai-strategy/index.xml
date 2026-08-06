@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Strategy on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-strategy/</link><description>Recent content in Ai-Strategy on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-strategy/index.xml" rel="self" type="application/rss+xml"/><item><title>私有 Eval 是终极护城河</title><link>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</guid><description>&lt;p&gt;上个月和一位做 HR SaaS 的朋友吃饭。他刚花了两百万买了一批行业测评数据，准备训练自己的垂直模型。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai-Strategy on All about Raspberry Pi</title><link>https://hugozhu.site/tags/ai-strategy/</link><description>Recent content in Ai-Strategy on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 06 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/ai-strategy/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 的三代进化：Chatbot、数字分身、数字员工</title><link>https://hugozhu.site/post/2026/334-three-generations-of-ai/</link><pubDate>Thu, 06 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/334-three-generations-of-ai/</guid><description>&lt;p&gt;我名下有两个数字员工，一个负责开发、测试、部署另一个，一个在用户群里服务真实的同事。岗位一立起来，一个问题就自然跟着来了：&lt;/p&gt;
+&lt;p&gt;「如果它批错了一张审批单，造成了损失，谁来负责？」&lt;/p&gt;
+&lt;p&gt;这个问题不难答——难的是我发现，市面上绝大多数 AI 产品，从来没准备回答这个问题，因为它们压根不是「员工」。&lt;/p&gt;
+&lt;p&gt;Chatbot、数字分身、数字员工，这三个词正在被混着用。很多人以为它们只是同一类产品的不同营销话术：能力弱一点的叫 Chatbot，能力强的叫数字员工。&lt;/p&gt;
+&lt;p&gt;但我的判断是： &lt;strong&gt;它们是三代不同的东西。&lt;/strong&gt; 区分代际的不是模型有多聪明，而是两个更根本的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;它的 Source of Truth 是什么？它出了错，谁来负责？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;想清楚这两个问题，很多关于企业 AI 的争论会立刻变得清晰。&lt;/p&gt;</description></item><item><title>私有 Eval 是终极护城河</title><link>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</link><pubDate>Sun, 02 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/327-private-evals-ultimate-moat/</guid><description>&lt;p&gt;上个月和一位做 HR SaaS 的朋友吃饭。他刚花了两百万买了一批行业测评数据，准备训练自己的垂直模型。&lt;/p&gt;
 &lt;p&gt;我问他：「竞品如果也买同样的数据呢？」&lt;/p&gt;
 &lt;p&gt;他愣了一下：「那……我们还有先发优势。」&lt;/p&gt;
 &lt;p&gt;「先发多少？」&lt;/p&gt;

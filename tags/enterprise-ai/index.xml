@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Enterprise-Ai on All about Raspberry Pi</title><link>https://hugozhu.site/tags/enterprise-ai/</link><description>Recent content in Enterprise-Ai on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/enterprise-ai/index.xml" rel="self" type="application/rss+xml"/><item><title>五个问题，判断一个岗位能不能交给数字员工</title><link>https://hugozhu.site/post/2026/331-not-every-job-can-sustain-a-digital-employee/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/331-not-every-job-can-sustain-a-digital-employee/</guid><description>&lt;p&gt;上周有人请我整理一套数字员工的术语，用途是整理会议纪要。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Enterprise-Ai on All about Raspberry Pi</title><link>https://hugozhu.site/tags/enterprise-ai/</link><description>Recent content in Enterprise-Ai on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 06 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/enterprise-ai/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 的三代进化：Chatbot、数字分身、数字员工</title><link>https://hugozhu.site/post/2026/334-three-generations-of-ai/</link><pubDate>Thu, 06 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/334-three-generations-of-ai/</guid><description>&lt;p&gt;我名下有两个数字员工，一个负责开发、测试、部署另一个，一个在用户群里服务真实的同事。岗位一立起来，一个问题就自然跟着来了：&lt;/p&gt;
+&lt;p&gt;「如果它批错了一张审批单，造成了损失，谁来负责？」&lt;/p&gt;
+&lt;p&gt;这个问题不难答——难的是我发现，市面上绝大多数 AI 产品，从来没准备回答这个问题，因为它们压根不是「员工」。&lt;/p&gt;
+&lt;p&gt;Chatbot、数字分身、数字员工，这三个词正在被混着用。很多人以为它们只是同一类产品的不同营销话术：能力弱一点的叫 Chatbot，能力强的叫数字员工。&lt;/p&gt;
+&lt;p&gt;但我的判断是： &lt;strong&gt;它们是三代不同的东西。&lt;/strong&gt; 区分代际的不是模型有多聪明，而是两个更根本的问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;它的 Source of Truth 是什么？它出了错，谁来负责？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;想清楚这两个问题，很多关于企业 AI 的争论会立刻变得清晰。&lt;/p&gt;</description></item><item><title>五个问题，判断一个岗位能不能交给数字员工</title><link>https://hugozhu.site/post/2026/331-not-every-job-can-sustain-a-digital-employee/</link><pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/331-not-every-job-can-sustain-a-digital-employee/</guid><description>&lt;p&gt;上周有人请我整理一套数字员工的术语，用途是整理会议纪要。&lt;/p&gt;
 &lt;p&gt;整理的时候我意识到一件事：会议纪要看起来是最容易交给 AI 的岗位。语音识别模型足够强，转写免费，人人会用。按常理，它应该是数字员工最先上岗的岗位。&lt;/p&gt;
 &lt;p&gt;但我们真动手做的时候，发现不是这样。&lt;/p&gt;
 &lt;p&gt;第一版会议纪要机器人，把会议里的每一句话都转写出来了。问题是，没人看得懂：&lt;/p&gt;
