@@ -9,10 +9,154 @@
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on August 10, 2026
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><header class=header-section><div class="intro-header no-img"><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=post-heading><h1>Posts</h1><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on August 12, 2026
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;min
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words
-&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/21-realtime-online-user-counter/><h2 class=post-title>个人网站实时在线人数接口</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 27, 2013
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></div></div></div></div></div></header><div class=container role=main><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class=posts-list><article class=post-preview><a href=https://hugozhu.site/post/2013/24-google-channel-service/><h2 class=post-title>在Raspberry Pi上使用Google Channel服务搭建实时应用</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on April 3, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;min
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;521&nbsp;words
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><p>前面提到了有关个人网站的<a href=http://hugozhu.myalert.info/2013/03/27/21-realtime-online-user-counter.html>实时在线人数</a>问题，本文要讨论的是如何自己来实现一个这样的统计服务。因为网站也同时部署在Github上，海外用户访问Github镜像网站的访问日志Pi是拿不到的，这怎么办？</p><h1 id=google-channel-service>Google Channel Service</h1><p><a href=https://developers.google.com/appengine/docs/go/channel/overview>Google Channel Service</a>允许应用和<a href=http://appengine.google.com/>GAE (Google App Engine)</a> 保持一个长连接，允许应用实时发送消息给JavaScript客户端，而不用让客户端用效率很低的定时轮询获取新消息。这个服务是允许有多个发布者和多个订阅者，也能创建多个主题来关联发布者和订阅者。</p><p>使用这个服务分两步：</p><ol><li><p>客户端请求服务器端（部署在GAE上）获取一个Channel的Token：
+<img src=https://developers.google.com/appengine/images/channel_overview01.png></p></li><li><p>客户端根据Channel Token和服务器建立长连接，并开始接收消息，这时其它的客户端（或服务器端）可以想这个通道发送消息
+<img src=https://developers.google.com/appengine/images/channel_overview02.png></p></li></ol><h1 id=在线人数统计实现>在线人数统计实现</h1><h2 id=在页面上部署beacon>在页面上部署beacon</h2><p>通常的网站流量统计是依赖部署在页面上的beacon（Javascript或图片标签）来实现的，这样做的好处是可以直接过滤掉一些机器流量，并且可以将日志集中存储在日志收集服务器上，和网站分离开。</p><p>于是可以利用GAE实现一个简单的Beacon服务，这里采用Go语言来实现，用Java或Python也是可以的。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>package</span> <span class=n>counter</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;encoding/base64&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;net/http&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;appengine&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s2>&#34;appengine/channel&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>var</span> <span class=n>GIF</span> <span class=p>[]</span><span class=n>byte</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=n>TOPIC</span> <span class=o>=</span> <span class=s2>&#34;counter&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>init</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>GIF</span><span class=p>,</span> <span class=n>_</span> <span class=o>=</span> <span class=n>base64</span><span class=o>.</span><span class=n>StdEncoding</span><span class=o>.</span><span class=n>DecodeString</span><span class=p>(</span><span class=s2>&#34;R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>	<span class=n>http</span><span class=o>.</span><span class=n>HandleFunc</span><span class=p>(</span><span class=s2>&#34;/beacon.gif&#34;</span><span class=p>,</span> <span class=n>handler</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>http</span><span class=o>.</span><span class=n>HandleFunc</span><span class=p>(</span><span class=s2>&#34;/new_token&#34;</span><span class=p>,</span> <span class=n>handler_new_token</span><span class=p>)</span>	
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>handler</span><span class=p>(</span><span class=n>w</span> <span class=n>http</span><span class=o>.</span><span class=n>ResponseWriter</span><span class=p>,</span> <span class=n>r</span> <span class=o>*</span><span class=n>http</span><span class=o>.</span><span class=n>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>context</span> <span class=p>:</span><span class=o>=</span> <span class=n>appengine</span><span class=o>.</span><span class=n>NewContext</span><span class=p>(</span><span class=n>r</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>now</span> <span class=p>:</span><span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>Now</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=n>expire</span> <span class=p>:</span><span class=o>=</span> <span class=n>now</span><span class=o>.</span><span class=n>AddDate</span><span class=p>(</span><span class=mi>30</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>zcookie</span><span class=p>,</span> <span class=n>_</span> <span class=p>:</span><span class=o>=</span> <span class=n>r</span><span class=o>.</span><span class=n>Cookie</span><span class=p>(</span><span class=s2>&#34;z&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>zcookie</span> <span class=o>==</span> <span class=n>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>zcookie</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>http</span><span class=o>.</span><span class=n>Cookie</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>		<span class=n>zcookie</span><span class=o>.</span><span class=n>Name</span> <span class=o>=</span> <span class=s2>&#34;z&#34;</span>
+</span></span><span class=line><span class=cl>		<span class=n>zcookie</span><span class=o>.</span><span class=n>Value</span> <span class=o>=</span> <span class=n>make_hash</span><span class=p>(</span><span class=s2>&#34;&lt;your_salt&gt;&#34;</span><span class=p>,</span> <span class=n>r</span><span class=o>.</span><span class=n>RemoteAddr</span><span class=p>,</span> <span class=n>now</span><span class=o>.</span><span class=n>UnixNano</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>		<span class=n>zcookie</span><span class=o>.</span><span class=n>Expires</span> <span class=o>=</span> <span class=n>expire</span>
+</span></span><span class=line><span class=cl>		<span class=n>zcookie</span><span class=o>.</span><span class=n>Path</span> <span class=o>=</span> <span class=s2>&#34;/&#34;</span>
+</span></span><span class=line><span class=cl>		<span class=n>http</span><span class=o>.</span><span class=n>SetCookie</span><span class=p>(</span><span class=n>w</span><span class=p>,</span> <span class=n>zcookie</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>w</span><span class=o>.</span><span class=n>Header</span><span class=p>()</span><span class=o>.</span><span class=n>Set</span><span class=p>(</span><span class=s2>&#34;Content-type&#34;</span><span class=p>,</span> <span class=s2>&#34;image/gif&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>w</span><span class=o>.</span><span class=n>Header</span><span class=p>()</span><span class=o>.</span><span class=n>Set</span><span class=p>(</span><span class=s2>&#34;Cache-control&#34;</span><span class=p>,</span> <span class=s2>&#34;no-cache, must-revalidate&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>w</span><span class=o>.</span><span class=n>Header</span><span class=p>()</span><span class=o>.</span><span class=n>Set</span><span class=p>(</span><span class=s2>&#34;Expires&#34;</span><span class=p>,</span> <span class=s2>&#34;Sat, 26 Jul 1997 05:00:00 GMT&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>fmt</span><span class=o>.</span><span class=n>Fprintf</span><span class=p>(</span><span class=n>w</span><span class=p>,</span> <span class=s2>&#34;</span><span class=si>%s</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>GIF</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=n>channel</span><span class=o>.</span><span class=n>Send</span><span class=p>(</span><span class=n>context</span><span class=p>,</span> <span class=n>TOPIC</span><span class=p>,</span> <span class=n>zcookie</span><span class=o>.</span><span class=n>Value</span><span class=o>+</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=o>+</span><span class=n>r</span><span class=o>.</span><span class=n>RemoteAddr</span><span class=o>+</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=o>+</span><span class=n>r</span><span class=o>.</span><span class=n>Referer</span><span class=p>()</span><span class=o>+</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=o>+</span><span class=n>r</span><span class=o>.</span><span class=n>UserAgent</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>func</span> <span class=n>handler_new_token</span><span class=p>(</span><span class=n>w</span> <span class=n>http</span><span class=o>.</span><span class=n>ResponseWriter</span><span class=p>,</span> <span class=n>r</span> <span class=o>*</span><span class=n>http</span><span class=o>.</span><span class=n>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>c</span> <span class=p>:</span><span class=o>=</span> <span class=n>appengine</span><span class=o>.</span><span class=n>NewContext</span><span class=p>(</span><span class=n>r</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>tok</span><span class=p>,</span> <span class=n>err</span> <span class=p>:</span><span class=o>=</span> <span class=n>channel</span><span class=o>.</span><span class=n>Create</span><span class=p>(</span><span class=n>c</span><span class=p>,</span> <span class=n>TOPIC</span><span class=p>)</span>	
+</span></span><span class=line><span class=cl>	<span class=n>callback</span> <span class=p>:</span><span class=o>=</span> <span class=n>r</span><span class=o>.</span><span class=n>FormValue</span><span class=p>(</span><span class=s2>&#34;callback&#34;</span><span class=p>)</span>	
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>err</span> <span class=o>!=</span> <span class=n>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>http</span><span class=o>.</span><span class=n>Error</span><span class=p>(</span><span class=n>w</span><span class=p>,</span> <span class=s2>&#34;Couldn&#39;t create Channel&#34;</span><span class=p>,</span> <span class=n>http</span><span class=o>.</span><span class=n>StatusInternalServerError</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>c</span><span class=o>.</span><span class=n>Errorf</span><span class=p>(</span><span class=s2>&#34;channel.Create: %v&#34;</span><span class=p>,</span> <span class=n>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>callback</span> <span class=o>==</span> <span class=s2>&#34;&#34;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>w</span><span class=o>.</span><span class=n>Header</span><span class=p>()</span><span class=o>.</span><span class=n>Set</span><span class=p>(</span><span class=s2>&#34;Content-type&#34;</span><span class=p>,</span> <span class=s2>&#34;text/javascript&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>fmt</span><span class=o>.</span><span class=n>Fprintf</span><span class=p>(</span><span class=n>w</span><span class=p>,</span> <span class=s2>&#34;</span><span class=si>%s</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>tok</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>fmt</span><span class=o>.</span><span class=n>Fprintf</span><span class=p>(</span><span class=n>w</span><span class=p>,</span> <span class=n>callback</span><span class=o>+</span><span class=s2>&#34;(&#39;</span><span class=si>%s</span><span class=s2>&#39;)&#34;</span><span class=p>,</span> <span class=n>tok</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>代码最后一行是将访问日志实时通过Channel发送出去，该通道有一个指定的主题，这样订阅该主题的客户端都可以收到相应的消息。</p><a href=https://hugozhu.site/post/2013/24-google-channel-service/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/golang/>Golang</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/23-arduino-1st-day/><h2 class=post-title>Arduino初试</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 28, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;min
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;142&nbsp;words
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><p>今天拿到一块Arduino UNO R3板，迫不及待就开始试用了。相比Raspberry Pi是一个全能的电脑，Arduino则是个硬件开源的单片机，因为开源，资料和配件网上就很很多了，也就容易让初学者上手了。</p><p>Arduino特点:</p><ol><li>开源，硬件标准化，配套传感器等模块很多；</li><li>结构简单</li><li>实时系统，稳定，启动只要0.5秒</li></ol><h1 id=arduino-ide>Arduino IDE</h1><p><a href=http://arduino.cc/en/Main/Software>下载Arduino IDE</a></p><h1 id=上电测试>上电测试</h1><p>用USB线接在电脑USB口，然后在GND和PIN 13上插一个二极管，注意二极管正极插在PIN 13上, 如下图：
+<img src=http://ww1.sinaimg.cn/bmiddle/6bc40342jw1e35tmsg0tjj.jpg></p><p>(注：还应该串联一个300欧姆的限流电阻才保险！)</p><h1 id=上传代码>上传代码</h1><p>在Arduino IDE编辑好下面的代码，然后点Upload后就会运行了，会看到LED一闪一闪。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>/*
+</span></span><span class=line><span class=cl>  Blink
+</span></span><span class=line><span class=cl>  Turns on an LED on for one second, then off for one second, repeatedly.
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  This example code is in the public domain.
+</span></span><span class=line><span class=cl> */
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>// Pin 13 has an LED connected on most Arduino boards.
+</span></span><span class=line><span class=cl>// give it a name:
+</span></span><span class=line><span class=cl>int led = 13;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// the setup routine runs once when you press reset:
+</span></span><span class=line><span class=cl>void setup() {                
+</span></span><span class=line><span class=cl>  // initialize the digital pin as an output.
+</span></span><span class=line><span class=cl>  pinMode(led, OUTPUT);     
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// the loop routine runs over and over again forever:
+</span></span><span class=line><span class=cl>void loop() {
+</span></span><span class=line><span class=cl>  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+</span></span><span class=line><span class=cl>  delay(1000);               // wait for a second
+</span></span><span class=line><span class=cl>  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+</span></span><span class=line><span class=cl>  delay(1000);               // wait for a second
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></div><h1 id=参考链接>参考链接</h1><ol><li><a href=http://arduino.cc/en/Tutorial/Blink>http://arduino.cc/en/Tutorial/Blink</a></li></ol></div><div class=blog-tags><a href=https://hugozhu.site/tags/arduino/>Arduino</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/22-memory-barriers-or-fences/><h2 class=post-title>并发编程之内存屏障</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 28, 2013
+&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;min
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;149&nbsp;words
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><p>原文地址：<a href=http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html><code>http://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</code></a> 或 <a href=http://ifeve.com/memory-barriersfences/><code>http://ifeve.com/memory-barriersfences/</code></a></p><p>关键词：Load Barrier, Store Barrier, Full Barrier</p><p>本文我将和大家讨论并发编程中最基础的一项技术：内存屏障或内存栅栏，也就是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p><p>CPU使用了很多优化技术来达成一个事实：CPU执行单元的速度要远超主存访问速度。在我上一篇文章 &ldquo;Write Combing - 合并写"中我已经介绍了其中的一项技术。CPU避免内存访问延迟最常见的技术是将指令管道化，然后尽量重排这些管道的执行以最大利用缓存而把因为缓存未命中引起的延迟降到最小。</p><p>当一个程序执行时指令是否被重排并不重要，只要最终的结果是一样的。例如，在一个循环里，如果循环体内没用到这个计数器，循环的计数器什么时候更新（在循环开始，中间还是最后）并不重要。编译器和CPU可以自由的重排指令以最佳的利用CPU，只要下一次循环前更新该计数器即可。并且在循环执行中，这个变量可能一直存在寄存器上，并没有被推到缓存或主存，这样这个变量对其他CPU来说一直都是不可见的。</p><p>CPU核内部包含了多个执行单元。例如，现代Intel CPU包含了6个执行单元，可以组合进行算术运算，逻辑条件判断及内存操作。每个执行单元可以执行上述任务的某种组合。这些执行单元是并行执行的，这样指令也就是在并行执行。但如果站在另一个CPU角度看，这也就产生了程序顺序的另一种不确定性。</p><p>最后，当一个缓存失效发生时，现代CPU可以先假设一个内存载入的值并根据这个假设值继续执行，直到内存载入返回确切的值。</p><img src=http://ifeve.com/wp-content/uploads/2013/03/cpu.png><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>CPU核
+</span></span><span class=line><span class=cl>  |
+</span></span><span class=line><span class=cl>  V
+</span></span><span class=line><span class=cl>寄存器
+</span></span><span class=line><span class=cl>  |
+</span></span><span class=line><span class=cl>  V
+</span></span><span class=line><span class=cl>执行单元 -&gt; Load/Store缓冲区-&gt;L1 Cache ---&gt;L3 Cache--&gt;内存控制器--&gt;主存
+</span></span><span class=line><span class=cl>       |                                   |
+</span></span><span class=line><span class=cl>       +-&gt; Write Combine缓冲区-&gt;L2 Cache ---+
+</span></span></code></pre></div><p>代码顺序并不是真正的执行顺序，CPU和编译器可以各种优化只要有空间提高性能。缓存和主存的读取会利用load, store和write-combining缓冲区来缓冲和重排。这些缓冲区是查找速度很快的关联队列，当一个后来发生的load需要读取上一个store的值，而该值还没有到达缓存，查找是必需的，上图描绘的是一个简化的现代多核CPU，从上图可以看出执行单元可以利用本地寄存器和缓冲区来管理和缓存子系统的交互。</p><p>在多线程环境里需要使用技术来使得程序结果尽快可见。这篇文章里我不会涉及到 Cache Conherence 的概念。请先假定一个事实：一旦内存数据被推送到缓存，就会有消息协议来确保所有的缓存会对所有的共享数据同步并保持一致。这个使内存数据对CPU核可见的技术被称为内存屏障或内存栅栏。</p><p>内存屏障提供了两个功能。首先，它们通过确保从另一个CPU来看屏障的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性；其次它们可以实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。</p><p>大多数的内存屏障都是复杂的话题。在不同的CPU架构上内存屏障的实现非常不一样。相对来说Intel CPU的强内存模型比DEC Alpha的弱复杂内存模型（缓存不仅分层了，还分区了）更简单。因为x86处理器是在多线程编程中最常见的，下面我尽量用x86的架构来阐述。</p><h1 id=store-barrier>Store Barrier</h1><p>Store屏障，是x86的&rdquo;<strong>sfence</strong>&ldquo;指令，强制所有在store屏障指令之前的store指令，都在该store屏障指令执行之前被执行，并把store缓冲区的数据都刷到CPU缓存。这会使得程序状态对其它CPU可见，这样其它CPU可以根据需要介入。一个实际的好例子是Disruptor中的<a href=http://code.google.com/p/disruptor/source/browse/trunk/code/src/main/com/lmax/disruptor/BatchEventProcessor.java>BatchEventProcessor</a>。当序列Sequence被一个消费者更新时，其它消费者(Consumers)和生产者（Producers）知道该消费者的进度，因此可以采取合适的动作。所以屏障之前发生的内存更新都可见了。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>private volatile long sequence = RingBuffer.INITIAL_CURSOR_VALUE;
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>// from inside the run() method
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>T event = null;
+</span></span><span class=line><span class=cl>long nextSequence = sequence.get() + 1L;
+</span></span><span class=line><span class=cl>while (running)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    try
+</span></span><span class=line><span class=cl>    {
+</span></span><span class=line><span class=cl>        final long availableSequence = barrier.waitFor(nextSequence);
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>        while (nextSequence &lt;= availableSequence)
+</span></span><span class=line><span class=cl>        {
+</span></span><span class=line><span class=cl>            event = ringBuffer.get(nextSequence);
+</span></span><span class=line><span class=cl>            boolean endOfBatch = nextSequence == availableSequence;
+</span></span><span class=line><span class=cl>            eventHandler.onEvent(event, nextSequence, endOfBatch);
+</span></span><span class=line><span class=cl>            nextSequence++;
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>        sequence.set(nextSequence - 1L); 
+</span></span><span class=line><span class=cl>        // store barrier inserted here !!!
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>    catch (final Exception ex)
+</span></span><span class=line><span class=cl>    {
+</span></span><span class=line><span class=cl>        exceptionHandler.handle(ex, nextSequence, event);
+</span></span><span class=line><span class=cl>        sequence.set(nextSequence);
+</span></span><span class=line><span class=cl>        // store barrier inserted here !!!
+</span></span><span class=line><span class=cl>        nextSequence++;
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></div><h1 id=load-barrier>Load Barrier</h1><p>Load屏障，是x86上的&rdquo;<strong>ifence</strong>&ldquo;指令，强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。这使得从其它CPU暴露出来的程序状态对该CPU可见，这之后CPU可以进行后续处理。一个好例子是上面的BatchEventProcessor的sequence对象是放在屏障后被生产者或消费者使用。</p><a href=https://hugozhu.site/post/2013/22-memory-barriers-or-fences/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/java/>Java</a>&nbsp;
+<a href=https://hugozhu.site/tags/concurrent-programming/>Concurrent Programming</a>&nbsp;
+<a href=https://hugozhu.site/tags/%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91/>文章翻译</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/21-realtime-online-user-counter/><h2 class=post-title>个人网站实时在线人数接口</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 27, 2013
 &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;min
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;26&nbsp;words
 &nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><p>感觉把个人网站正在访问的在线人数显示在Nokia 5110液晶屏挺好玩，就稍微研究了一下如何提取实时在线人数。</p><h1 id=实现方法>实现方法</h1><h2 id=google-analytics>Google Analytics</h2><p>Google Analytics具有很强大的实时流量分析功能，不过网站主必须登陆到后台才能看，但并没有提供Open API，所以就不能用这个服务了。</p><h2 id=日志分析>日志分析</h2><p>不修改网站通过web服务器的日志分析，用一个脚本统计15分钟内日志的Unique IP可以粗略的获得一个在线人数。
@@ -399,65 +543,7 @@
 </span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=mi>0</span><span class=p>;</span>	
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></div><p>WiringPi也有Python, Perl, PHP, Ruby的接口包装，按<a href=https://github.com/wiringPi>这里</a>，怎么没有Go的呢。。。</p><h2 id=rpigpio>RPi.GPIO</h2><p>这是GPIO的Python库，地址在：<a href=https://pypi.python.org/pypi/RPi.GPIO>https://pypi.python.org/pypi/RPi.GPIO</a>
-这里建议用python2，原因是web.py还不支持python 3 &mldr;</p><a href=https://hugozhu.site/post/2013/vistor-on-homepage-led-indicator/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/><h2 class=post-title>在Raspberry Pi上安装ArchLinux</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 9, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;4&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;812&nbsp;words
-&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><h1 id=介绍>介绍</h1><p>之前买的Raspberry Pi因为要跑<a href=http://hugozhu.myalert.info>这个网站</a>，不能经常拔下来玩别的，所以又买了一个，这次安装的是<a href=https://www.archlinux.org>Arch Linux</a>。这个发行版安装好后非常基础，占用的空间也只有600M不到，比较合适已有Linux基础的同学玩。初学者可以玩官方推荐的<a href=http://www.raspbian.org>Raspbian</a>。</p><p>Arch Linux特点：</p><ol><li>启动快，上电后只要3s完成启动</li><li>安装完没有图形界面，干净</li><li>面向开发者的系统</li><li>包管理系统pacman很好用，一个命令就可以完成各种操作</li><li>ArchLinux缺省账号和密码是root/root，弄好了后要记得修改root密码</li><li>从中国用下载包很快，比Raspbian的源快多了</li></ol><h1 id=增加sudo用户>增加sudo用户</h1><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>   useradd hugo
-</span></span><span class=line><span class=cl>   passwd hugo
-</span></span><span class=line><span class=cl>   mkdir /home/hugo
-</span></span><span class=line><span class=cl>   chown hugo:hugo /home/hugo   
-</span></span><span class=line><span class=cl>   pacman -S sudo
-</span></span><span class=line><span class=cl>   visudo   
-</span></span><span class=line><span class=cl>   
-</span></span></code></pre></div><p>执行<code>visudo</code>把新用户设置成管理员（增加sudo权限），最后面增加下面一行：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    hugo ALL=(ALL) NOPASSWD: ALL
-</span></span></code></pre></div><h1 id=usb盘>USB盘</h1><p>插上USB盘后，ArchLinux并不会自动mount，手动mount的过程如下:
-插上USB前后执行两次 <code>lsblk -o name,kname,uuid</code>，那么输出上多出的那行就是该USB的设备名，或UUID，找到该行后就可以执行mount命令了（注意sda这个符号不同机器可能不一样）</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    [root@raspberrypi2 ~]# lsblk -o name,kname,uuid   
-</span></span><span class=line><span class=cl>    NAME        KNAME     UUID
-</span></span><span class=line><span class=cl>    sda         sda       001B-9622
-</span></span><span class=line><span class=cl>    mmcblk0     mmcblk0   
-</span></span><span class=line><span class=cl>    ├─mmcblk0p1 mmcblk0p1 44C8-CEF1
-</span></span><span class=line><span class=cl>    └─mmcblk0p2 mmcblk0p2 fcee8534-f5f0-42ee-83ac-f943f878ee67
-</span></span><span class=line><span class=cl>    
-</span></span><span class=line><span class=cl>    mkdir /mnt/usb
-</span></span><span class=line><span class=cl>    mount /dev/sda /mnt/usb 
-</span></span><span class=line><span class=cl>    或 
-</span></span><span class=line><span class=cl>    mount -U 001B-9622 /mnt/usb
-</span></span></code></pre></div><p>格式化整个USB盘可以用<code>mkfs.ext4 /dev/sda</code>
-然后在/etc/fstab里增加一行，以后重启就会自动mount了：</p><a href=https://hugozhu.site/post/2013/setup-archliunx-on-raspberry-pi/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/block_failed_ssh_attempts_with_iptable/><h2 class=post-title>如何封杀尝试Raspberry Pi SSH密码的来源IP</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 8, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;131&nbsp;words
-&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><p>Raspberry Pi整天开着，如果用缺省SSH端口对外开放，就会经常遇到扫描SSH密码的肉鸡。虽然密码不是很简单，但还是感觉很不安全的。</p><p>系统的ssh登录日志文件在：/var/log/auth.log，登录失败时会记录以下格式的日志：</p><pre><code>Mar  7 10:31:51 raspberrypi sshd[24510]: Failed password for root from 221.8.19.129 port 4066 ssh2
-Mar  7 10:31:55 raspberrypi sshd[24514]: Failed password for root from 221.8.19.129 port 4079 ssh2
-Mar  7 10:31:56 raspberrypi sshd[24518]: Failed password for sshd from 221.8.19.129 port 4080 ssh2
-Mar  7 10:32:26 raspberrypi sshd[24522]: Failed password for sshd from 221.8.19.129 port 4149 ssh2
-</code></pre><p>用最简单的Shell脚本来解决这个问题：</p><h3 id=guardsh>guard.sh</h3><pre><code>#!/bin/bash
-
-last_ip=&quot;&quot;
-tail -f /var/log/auth | while read LINE; do
-{
-    if [[ &quot;${LINE}&quot; =~ &quot;Failed&quot; ]]; then            
-        ip=&quot;$(echo ${LINE} | awk '{print $(NF-3)}')&quot;
-        if [[ &quot;$last_ip&quot; == &quot;$ip&quot; ]]; then
-             echo &quot;block $ip&quot;
-             #curl -s --data-ascii &quot;uuid=&lt;my iphone's uuid&gt;&quot; --data &quot;body=${LINE}&quot; http://raspberrypi/pushme                 
-             iptables -A INPUT -s &quot;$ip&quot; -j DROP
-        fi
-        last_ip=$ip
-        echo $LINE
-    fi
-}
-done
-</code></pre><p>用root用户执行以下命令，也可以放到启动脚本里：/etc/rc.local</p><a href=https://hugozhu.site/post/2013/block_failed_ssh_attempts_with_iptable/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/linux/>Linux</a>&nbsp;
-<a href=https://hugozhu.site/tags/network/>Network</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2013/raspberry-pi-with-xmbc/><h2 class=post-title>Raspberry Pi做BT下载机+高清播放器</h2></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;Posted on March 6, 2013
-&nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;min
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;122&nbsp;words
-&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a></span></p><div class=post-entry><h2 id=介绍>介绍</h2><p>首先高清播放器功能只是Raspberry Pi的一个小功能，如果你只需要高清播放功能又不想折腾，那还是买个<a href="http://s.taobao.com/search?q=%B8%DF%C7%E5%B2%A5%B7%C5%C6%F7&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;initiative_id=tbindexz_20130306">山寨的</a>的更简单。。。</p><p>Raspberry Pi的图形处理器规格：Broadcom VideoCore IV, OpenGL ES 2.0, 1080p 30 h.264/MPEG-4 AVC 高清解码器，内存和CPU共享（可设置成256M），性能还是很强劲的。HDMI支持640x350和1920×1200（1080P）的分辨率。安装了<a href=http://xbmc.org>XBMC</a>，基本上可以实现包括Airplay在内的Apple TV上的大部分功能，但价格只有其一半不到，可以播放下载的视频或观看在线视频，如<a href=http://yisou.com>一搜</a>，优酷，搜狐视频，奇艺等。</p><h2 id=外设>外设</h2><p>除了Pi单片机外，你还需要以下外设附件：</p><ol><li>5V-1A左右的电源，可以用iPhone或iPad的充电电源，或手机的充电器，电流最少要800毫安</li><li>micro USB线一根，和Kindle以及大多数android手机充电USB线一样</li><li>HDMI线一根，接电视机</li><li>SD卡一张，最少2G</li></ol><h2 id=raspbmc>Raspbmc</h2><p><a href=http://www.raspbmc.com/>Raspbmc</a> 是专为在Raspberry Pi上运行<a href=http://xbmc.org>XBMC</a>的定制Linux。最小化的安装，减少了不必要的软件和资源占用，简化了安装和配置，没有Linux知识也可以上手。这个版本的维护者是一个19岁的小朋友Sam Nazarko。有时间折腾的同学可以自己编译XMBC安装。</p><h3 id=特点>特点：</h3><ol><li>免费，开源</li><li>支持多语言</li><li>支持1080P回放</li><li>支持直接播放NFS，SMB，FTP,HTTP或USB硬盘的有视频文件，支持大多数格式</li><li>支持AirPlay或AirTune功能，可以把iPhone/iPad上的视频或音乐通过Pi投放到电视上，这点和Apple TV功能一样</li><li>支持GPIO</li><li>基于Debian，可以从Debian的软件源安装其它软件</li><li>支持1080P DTS软解，这个不少播放器是不支持的，需要额外License</li><li>内置了以下服务:<ol><li>Samba</li><li>TVHeadend Server</li><li>FTP Server</li><li>SSH Server</li></ol></li></ol><h3 id=安装>安装</h3><ol><li><p>Windows下载<a href=http://download.raspbmc.com/downloads/bin/installers/raspbmc-win32.zip>安装程序</a>，运行即可。</p><p><img src=http://www.raspbmc.com/wp-content/uploads/2012/06/ins-300x165.jpg alt=image></p></li><li><p>Linux/Mac:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>curl -O http://svn.stmlabs.com/svn/raspbmc/testing/installers/python/install.py
-</span></span><span class=line><span class=cl>chmod +x install.py
-</span></span><span class=line><span class=cl>sudo python install.py
-</span></span></code></pre></div><p><img src=http://www.raspbmc.com/wp-content/uploads/2012/06/installPython.png alt=image></p></li><li><p>或直接下载<a href=http://download.raspbmc.com/downloads/bin/ramdistribution/installer.img.gz>安装包</a>安装</p></li></ol><h3 id=下载>下载</h3><p>你可以在Pi上外接一个USB移动硬盘，但要注意硬盘要有自己电源，也可以mount网络上的硬盘分区。然后运行transmission软件下载视频。</p><h4 id=transmission>Transmission</h4><ol><li><p>安装</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo apt-get install transmission-daemon
-</span></span><span class=line><span class=cl>sudo /etc/init.d/transmission-daemon stop
-</span></span><span class=line><span class=cl>sudo nano /etc/transmission-daemon/settings.json
-</span></span></code></pre></div></li><li><p>配置</p><a href=https://hugozhu.site/post/2013/raspberry-pi-with-xmbc/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/post/page/31/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/post/page/33/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+这里建议用python2，原因是web.py还不支持python 3 &mldr;</p><a href=https://hugozhu.site/post/2013/vistor-on-homepage-led-indicator/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/raspberry-pi/>Raspberry Pi</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=previous><a href=https://hugozhu.site/post/page/31/>&larr; Newer Posts</a></li><li class=next><a href=https://hugozhu.site/post/page/33/>Older Posts &rarr;</a></li></ul></div></div></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/post/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;
