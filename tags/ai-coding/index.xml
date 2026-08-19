@@ -3,7 +3,12 @@
 &lt;p&gt;我问了一个问题：「那挑一个 5 人天的真实需求，从提 Issue 到验收关闭，让 AI 端到端跑一遍给我看。」&lt;/p&gt;
 &lt;p&gt;会议室安静了几秒。安静不是因为没用过 AI，而是因为这条链路从来没有人完整走通过。AI 写过代码的片段，但片段之后是谁在收尾，说不清楚。&lt;/p&gt;
 &lt;p&gt;这个安静就是分界线：&lt;strong&gt;AI 写过代码，不等于工程 AI 化&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/engineering-ai-maturity-six-criteria.png"&gt;&lt;img src="https://hugozhu.site/img/2026/engineering-ai-maturity-six-criteria-thumb.jpg" alt="Six Acceptance Criteria for a Truly AI-Native Engineering Team"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>老板 AI 量的不是工程师，是老板自己的品味</title><link>https://hugozhu.site/post/2026/335-boss-ai-measures-taste/</link><pubDate>Fri, 07 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/335-boss-ai-measures-taste/</guid><description>&lt;p&gt;李开复在他的新书《AI 未来已来》里讲了一件微软旧事。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/engineering-ai-maturity-six-criteria.png"&gt;&lt;img src="https://hugozhu.site/img/2026/engineering-ai-maturity-six-criteria-thumb.jpg" alt="Six Acceptance Criteria for a Truly AI-Native Engineering Team"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>软件工厂 3.0：从卖人月到卖模具</title><link>https://hugozhu.site/post/2026/356-software-factory-3-0-selling-molds/</link><pubDate>Wed, 19 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/356-software-factory-3-0-selling-molds/</guid><description>&lt;p&gt;一个做外包的朋友上个月跟我抱怨：客户现在拿 AI 写的代码来压价。「你们报 30 人月，客户自己用 Claude Code 一周出了个 demo，问你们凭什么值这个钱。」&lt;/p&gt;
+&lt;p&gt;我问他：那个 demo 上线了吗？&lt;/p&gt;
+&lt;p&gt;他说没有。客户自己人测了一周，测出一堆问题，又回来找他们修。&lt;/p&gt;
+&lt;p&gt;我说：那你应该换个报价方式。不报人月，报模具费。&lt;/p&gt;
+&lt;p&gt;他没听懂。这就是这篇文章要讲的事。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/software-factory-3-0-selling-molds.png"&gt;&lt;img src="https://hugozhu.site/img/2026/software-factory-3-0-selling-molds-thumb.jpg" alt="Software Factory 3.0 — From Selling Person-Months to Selling Molds"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>老板 AI 量的不是工程师，是老板自己的品味</title><link>https://hugozhu.site/post/2026/335-boss-ai-measures-taste/</link><pubDate>Fri, 07 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/335-boss-ai-measures-taste/</guid><description>&lt;p&gt;李开复在他的新书《AI 未来已来》里讲了一件微软旧事。&lt;/p&gt;
 &lt;p&gt;2000 年他升任微软全球副总裁，后来才知道，在他毫不知情的时候，总部一年一度的人才盘点已经把他摆上了桌面——比尔·盖茨和鲍尔默认为他最适合出任一个新事业部的副总裁。他第一次意识到：在这家公司，顶尖人才的去向不是哪个部门领导的家务事，而是最高层亲自过问的大事。&lt;/p&gt;
 &lt;p&gt;更让他震撼的是制度本身：微软每年把最顶尖的 1% 员工挑出来，不论资历，只看潜力。首席人力资源官告诉他，鲍尔默睡前的功课之一，就是几十份几十份地翻看这些人的资料，确保他们的奖励到位、能感受到最高层的关注。鲍尔默对副总裁们说过一句狠话：&lt;/p&gt;
 &lt;blockquote&gt;
