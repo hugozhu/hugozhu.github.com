@@ -3,7 +3,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;如果我让数字员工承担一部分技术开发工作，它将面对非常复杂的场景和长周期的任务。长周期任务下，执行的成功率会一路衰减。请问你们的数字员工能不能解决复杂的长期问题？如果不能……&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;「如果不能」悬在半空。我当时的回答很直接： &lt;strong&gt;钉钉做的是让 AI 能进入企业组织架构的基建——数字员工账号、权限管控、运行审计、入转调离的全生命周期管理、拟人化交互等能力，但还不能对企业自建或生态交付的数字员工的产出效果负责。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;「如果不能」悬在半空。我当时的回答很直接： &lt;strong&gt;钉钉做的是让 AI 能进入企业组织架构的基建——数字员工账号、连接多 Agent，权限管控、运行审计、知识管理，为任务提供上下文等基础能力，还提供入转调离全生命周期管理、执行前主管审批确认放行、岗位能力评测、拟人化交互考核等功能，但还不能对企业自建或生态交付的数字员工的产出效果负责。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;分享结束后，我把这四个问题记了下来。它们看似散，其实指向同一件事：&lt;strong&gt;数字员工的落地卡点，从来不是模型能力，而是四个组织问题。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/digital-employee-four-org-questions.png"&gt;&lt;img src="https://hugozhu.site/img/2026/digital-employee-four-org-questions-thumb.jpg" alt="DingTalk Digital Employee: Architecture and Implementation Practices"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>AI Native 组织的第一生产力，是敢被蒸馏的管理者</title><link>https://hugozhu.site/post/2026/372-manager-distilled-ai-native-org/</link><pubDate>Thu, 27 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/372-manager-distilled-ai-native-org/</guid><description>&lt;p&gt;上周一个老板问我：他想像同行那样，用 3 个真人带 30 个数字员工跑业务（这个比例是我们推演的示意，不是他的真实编制）。卡点在哪？&lt;/p&gt;
 &lt;p&gt;不是模型不够聪明，也不是工具不够多。卡在一个很朴素的地方：&lt;strong&gt;没有一个中层愿意把自己的判断标准写成文档。&lt;/strong&gt;&lt;/p&gt;
