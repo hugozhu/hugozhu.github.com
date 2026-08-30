@@ -7,7 +7,16 @@
 &lt;p&gt;这周日，我只说了一句话：开始整理本周的周报。&lt;/p&gt;
 &lt;p&gt;AI 同事加载技能，按流程执行：读上周远端文档定结构、批量收集十个来源、报「已收/未交」清单、按字典压缩入稿—— &lt;strong&gt;不到十五分钟，一份质量过关的周报草稿出来了，全是重点信息。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;省下来的时间，我去做了真正值钱的事：写下业务、产品、组织面对客户与竞争的方向判断，预演 CEO 的追问，补上风险与决策请求，再把待确认的问题分发给责任人。下面是这份周报背后的五个细节。前四个发生在十五分钟里，第五个，是十五分钟和 AI 都替代不了的。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/weekly-report-distilled-into-a-skill.png"&gt;&lt;img src="https://hugozhu.site/img/2026/weekly-report-distilled-into-a-skill-thumb.jpg" alt="From Three Hours to Fifteen Minutes: Distilling My Weekly Report into a Skill"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>管理者的第一个 Agent Skill：Loop 工程实现每周重要事项进展汇总</title><link>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</link><pubDate>Thu, 02 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</guid><description>&lt;p&gt;周五下午 4 点。你打开钉钉，你的 D 群里「本周的重点事项」消息已经发了 24 小时。16 位负责人被 @，每个人的进展回复散落在三个地方：有人私聊你说了三段话，有人在群里回了一个 emoji，还有人到现在一个字没发。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/weekly-report-distilled-into-a-skill.png"&gt;&lt;img src="https://hugozhu.site/img/2026/weekly-report-distilled-into-a-skill-thumb.jpg" alt="From Three Hours to Fifteen Minutes: Distilling My Weekly Report into a Skill"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>我的公众号排版 Skill，每一行都是一次翻车</title><link>https://hugozhu.site/post/2026/377-every-line-a-crash-report/</link><pubDate>Sun, 30 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/377-every-line-a-crash-report/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;本文全部时间线与数字来自 2026-08-30 一次真实执行记录，可在本机数据库逐条复核。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;昨天傍晚六点三十七分，我中断了一个正在跑的任务。&lt;/p&gt;
+&lt;p&gt;任务叫 &lt;code&gt;wx post 376&lt;/code&gt;——一句话，AI 同事全套接管：把博客文章排版成公众号 HTML、钉钉投递、生成朋友圈文案、发到树莓派群让另一个 agent 转发 X，最后驱动已登录的 Chrome 进公众号后台，把标题、正文、作者、封面、原创声明一项项填进编辑器存草稿。&lt;/p&gt;
+&lt;p&gt;它跑了四十分钟，干完了八成。然后，在赞赏设置成功后的第十四秒，会话被我中断，留下一份半成品草稿。&lt;/p&gt;
+&lt;p&gt;今天我对 AI 同事说了一句话：&lt;strong&gt;「回顾下处理 376 的整个过程，找出优化空间。」&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它做了三件事：从本地数据库里挖出自己的完整执行历史，重建逐分钟时间线；找出六个优化点；当场把 Skill 改写为 v2.2.0。&lt;/p&gt;
+&lt;p&gt;这篇想写的就是这个过程给我的冲击——&lt;strong&gt;一个 Skill 里最值钱的不是流程，是翻车记录；而这份事故报告，可以不用人来写。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/every-line-a-crash-report.png"&gt;&lt;img src="https://hugozhu.site/img/2026/every-line-a-crash-report-thumb.jpg" alt="Every Line of My Publishing Skill Is a Crash Report"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>管理者的第一个 Agent Skill：Loop 工程实现每周重要事项进展汇总</title><link>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</link><pubDate>Thu, 02 Jul 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/280-managerial-loop-agent-skill/</guid><description>&lt;p&gt;周五下午 4 点。你打开钉钉，你的 D 群里「本周的重点事项」消息已经发了 24 小时。16 位负责人被 @，每个人的进展回复散落在三个地方：有人私聊你说了三段话，有人在群里回了一个 emoji，还有人到现在一个字没发。&lt;/p&gt;
 &lt;p&gt;你要整理的，是一份让所有人都看得懂、能 action 的结构化进度报告。&lt;/p&gt;
 &lt;p&gt;手动做这件事需要 2-3 小时（经验估算）。你打开 16 个单聊窗口 + 群聊消息列表，翻来翻去。做得再仔细，也跑不掉三个 bias： &lt;strong&gt;recency bias&lt;/strong&gt; ——最后看到的记得最清， &lt;strong&gt;salience bias&lt;/strong&gt; ——写了一大段的人得到最多篇幅，写了三个字的人被一笔带过。 &lt;strong&gt;survivorship bias&lt;/strong&gt; ——没回复的人直接消失在你的视野里，而不是被明确标记。&lt;/p&gt;
 &lt;p&gt;我手动做了这件事好几个月。然后写了一个 Agent Skill 文件——不到 200 行的 Markdown，把你的工作流程像岗位说明书一样写清楚。跑起来之后的效果不是「更快了」，而是 &lt;strong&gt;总结质量比手动好&lt;/strong&gt;：每条来源可溯源、16 人全覆盖、没回复的标 ⚠️ 而不是消失。从 12 人扩到 16 人时，只改了 4 行映射表。&lt;/p&gt;
