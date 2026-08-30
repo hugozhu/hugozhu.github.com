@@ -8,7 +8,7 @@
 &lt;p&gt;如果我让数字员工承担一部分技术开发工作，它将面对非常复杂的场景和长周期的任务。长周期任务下，执行的成功率会一路衰减。请问你们的数字员工能不能解决复杂的长期问题？如果不能……&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;「如果不能」悬在半空。我当时的回答很直接： &lt;strong&gt;钉钉做的是让 AI 能进入企业组织架构的基建——数字员工账号、连接多 Agent，权限管控、运行审计、知识管理，为任务提供上下文等基础能力，还提供入转调离全生命周期管理、执行前主管审批确认放行、岗位能力评估和考核、拟人化交互等功能，但还不能对企业自建或生态交付给企业客户的数字员工的产出效果来负责。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;分享结束后，我把这四个问题记了下来。它们看似散，其实指向同一件事：&lt;strong&gt;数字员工的落地卡点，从来不是模型能力，而是四个组织问题。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;分享结束后，我把这四个问题记了下来。它们看似散，其实指向同一件事： &lt;strong&gt;数字员工的落地卡点，从来不是模型能力，而是四个组织问题。&lt;/strong&gt; 而四个问题说到底，又可以归到一个词上： &lt;strong&gt;委托&lt;/strong&gt; ——把工作交给 AI 之后，这份委托如何在组织里被信任。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/digital-employee-four-org-questions.png"&gt;&lt;img src="https://hugozhu.site/img/2026/digital-employee-four-org-questions-thumb.jpg" alt="DingTalk Digital Employee: Architecture and Implementation Practices"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>健康检查全绿，数字员工失联了 16 分钟：生产交付的几个关键实践</title><link>https://hugozhu.site/post/2026/365-digital-employee-harness-production-lessons/</link><pubDate>Mon, 24 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/365-digital-employee-harness-production-lessons/</guid><description>&lt;p&gt;2026 年 8 月 8 日下午，我们的数字员工失联了 16 分钟。监控这边，它一切正常。&lt;/p&gt;
 &lt;p&gt;说「失联」其实不准确——从所有监控指标的视角看，它一直活得好好的：进程存活检查正常，HTTP /session 探测返回 200，健康检查每 5 分钟跑一次，次次报「健康」。唯一的异常是：群里任何人 @ 它，它都不回。最早的「告警」是一个人在钉钉里发现不对劲——这比我们任何一条监控都快。&lt;/p&gt;
 &lt;p&gt;16 分钟不长，但足够让人意识到一件事：我们精心搭建的监控体系，监控的根本不是「数字员工在工作」，而是「装着数字员工的那个容器还在」。&lt;/p&gt;

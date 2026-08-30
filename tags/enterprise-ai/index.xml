@@ -8,7 +8,7 @@
 &lt;p&gt;如果我让数字员工承担一部分技术开发工作，它将面对非常复杂的场景和长周期的任务。长周期任务下，执行的成功率会一路衰减。请问你们的数字员工能不能解决复杂的长期问题？如果不能……&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;「如果不能」悬在半空。我当时的回答很直接： &lt;strong&gt;钉钉做的是让 AI 能进入企业组织架构的基建——数字员工账号、连接多 Agent，权限管控、运行审计、知识管理，为任务提供上下文等基础能力，还提供入转调离全生命周期管理、执行前主管审批确认放行、岗位能力评估和考核、拟人化交互等功能，但还不能对企业自建或生态交付给企业客户的数字员工的产出效果来负责。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;分享结束后，我把这四个问题记了下来。它们看似散，其实指向同一件事：&lt;strong&gt;数字员工的落地卡点，从来不是模型能力，而是四个组织问题。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;分享结束后，我把这四个问题记了下来。它们看似散，其实指向同一件事： &lt;strong&gt;数字员工的落地卡点，从来不是模型能力，而是四个组织问题。&lt;/strong&gt; 而四个问题说到底，又可以归到一个词上： &lt;strong&gt;委托&lt;/strong&gt; ——把工作交给 AI 之后，这份委托如何在组织里被信任。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/digital-employee-four-org-questions.png"&gt;&lt;img src="https://hugozhu.site/img/2026/digital-employee-four-org-questions-thumb.jpg" alt="DingTalk Digital Employee: Architecture and Implementation Practices"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>大多数企业 AI 的终点是人，Palantir 的终点是业务</title><link>https://hugozhu.site/post/2026/370-palantir-ai-ends-at-business/</link><pubDate>Thu, 27 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/370-palantir-ai-ends-at-business/</guid><description>&lt;p&gt;上周，我翻我们数字员工的一条真实执行链路：一条消息进来，Agent 理解意图，调用 dws 能力执行，结果回到钉钉。全程没有「人看报表」这一环——数据的终点不是被谁看见，而是业务本身被改变。&lt;/p&gt;
 &lt;p&gt;这条链路短到不起眼。但它让我意识到，自己正在做一件大多数企业 AI 还没做成的事——同一时间，绝大多数企业的 AI 项目，正卡在「把结果给人看」这一步出不来。&lt;/p&gt;
 &lt;p&gt;最近读到「森林瀑布」的一篇长文《Palantir 还是太全面了》，把 Palantir 的官网和产品文档逐页扒了一遍。文章里有一句话，我认为点破了企业 AI 的分水岭：&lt;/p&gt;
