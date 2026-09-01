@@ -7,7 +7,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;git、gh、uv、node、pnpm、rg、curl 在；docker、jq、fzf、tmux、direnv、just、mise 一个都没有。机器没罢工，Agent 每天照样在上面干活。&lt;/p&gt;
 &lt;p&gt;所以我没有急着去补齐那 8 个缺口，而是先问了一个更基本的问题：&lt;strong&gt;这份清单是按什么标准选的？是给人用的，还是给 Agent 用的？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这两个问题的答案，会导出两份完全不同的清单。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/agent-first-toolchain.png"&gt;&lt;img src="https://hugozhu.site/img/2026/agent-first-toolchain-thumb.jpg" alt="An Agent-First Toolchain — Criteria Matter More Than the List"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>我的公众号排版 Skill，每一行都是一次翻车</title><link>https://hugozhu.site/post/2026/377-every-line-a-crash-report/</link><pubDate>Sun, 30 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/377-every-line-a-crash-report/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/agent-first-toolchain.png"&gt;&lt;img src="https://hugozhu.site/img/2026/agent-first-toolchain-thumb.jpg" alt="An Agent-First Toolchain — Criteria Matter More Than the List"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>递归式自我改进从 Harness 开始，但它吃的是数据</title><link>https://hugozhu.site/post/2026/380-harness-rsi-runs-on-production-data/</link><pubDate>Mon, 31 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/380-harness-rsi-runs-on-production-data/</guid><description>&lt;p&gt;最近读了一篇关于 Harness 自进化的报道，里面有个细节让我停下来想了很久。&lt;/p&gt;
+&lt;p&gt;停下来的原因，是我们自己也卡在这里：数字员工上线一段时间了，它好像变「顺手」了，但说不清是不是变「聪明」了。这个模糊感，恰好被报道里的三个数字点破。&lt;/p&gt;
+&lt;p&gt;报道里那家公司说（厂商自报口径）：他们平台上 95% 以上的 Agent 被每天重复运行；在留存用户中，93.4% 的操作是系统自触发的；超过六成的自动化流程持续运行了一个月以上。&lt;/p&gt;
+&lt;p&gt;大多数人读到这三个数字，看到的是「这家公司用户很多」。我看到的是另一件事：&lt;strong&gt;这三个数字加起来，恰好是递归式自我改进（RSI）最稀缺的原料。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/harness-rsi-production-data.png"&gt;&lt;img src="https://hugozhu.site/img/2026/harness-rsi-production-data-thumb.jpg" alt="Harness RSI Runs on Production Data, Not Algorithms"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>我的公众号排版 Skill，每一行都是一次翻车</title><link>https://hugozhu.site/post/2026/377-every-line-a-crash-report/</link><pubDate>Sun, 30 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/377-every-line-a-crash-report/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;本文全部时间线与数字来自 2026-08-30 一次真实执行记录，可在本机数据库逐条复核。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;昨天傍晚六点三十七分，我中断了一个正在跑的任务。&lt;/p&gt;
