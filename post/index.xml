@@ -7,7 +7,16 @@
 &lt;p&gt;起初我以为是个体差异。但和几位同样在带数字员工的同事交流后，发现大家的处境差不多：Agent 越多，人在 IM 里花的时间越多。&lt;/p&gt;
 &lt;p&gt;这让我必须把一个判断写下来：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;AI 不会造出新入口，只会加深你对旧入口的依赖。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/im-entry-point-trust-ladder.png"&gt;&lt;img src="https://hugozhu.site/img/2026/im-entry-point-trust-ladder-thumb.jpg" alt="AI Won&amp;rsquo;t Build a New Entry Point — It Deepens Your Dependence on the Old One"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>麦肯锡终于说了：Agent 也要绩效考核——但他们没说怎么考</title><link>https://hugozhu.site/post/2026/381-mckinsey-agent-performance-eval/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/381-mckinsey-agent-performance-eval/</guid><description>&lt;p&gt;8 月底，麦肯锡的播客 &lt;em&gt;McKinsey Talks Talent&lt;/em&gt; 里，主持人 Lucia Rahilly 抛出了一个很多公司都在回避的问题：Agent 进了核心工作流，谁来管它？&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/im-entry-point-trust-ladder.png"&gt;&lt;img src="https://hugozhu.site/img/2026/im-entry-point-trust-ladder-thumb.jpg" alt="AI Won&amp;rsquo;t Build a New Entry Point — It Deepens Your Dependence on the Old One"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>评测集是一份没人签字的文件</title><link>https://hugozhu.site/post/2026/384-eval-set-needs-a-signature/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/384-eval-set-needs-a-signature/</guid><description>&lt;p&gt;最近读到一篇两万字的 Agent 自进化方法论，写得相当扎实。其中记了一条血泪教训：有团队在某个场景上连续 20 多轮自动迭代，效果一直不提升——最后发现根因根本不在配置层，而在工具层。20 多轮里，系统忠实地修 Prompt、改 Skill，每一轮都按评测信号在优化。&lt;/p&gt;
+&lt;p&gt;回头看，最惊人的不是根因藏得深，而是这 20 多轮里，&lt;strong&gt;没有一个人问过：这批评测 case 本身，选对了吗？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;没人问，因为没人需要问——这份评测集没有主人。&lt;/p&gt;
+&lt;p&gt;这篇方法论（作者 yannisyang、ethanytzhou）把评测、记忆、落地、控制四个环节拆成飞轮：评测是眼睛，记忆是大脑，落地是手脚，人机协作是方向盘。四个齿怎么建、坑在哪、从零到一怎么落地，都讲了。它最有价值的一句话是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大多数团队的问题恰恰在于：每个组件内部做得还行，但组件之间的「箭头」没有自动化。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;飞轮的瓶颈不在齿，在齿与齿之间的通路。我完全同意——但沿着这句话再往下推一步，会发现一个这篇两万字没有回答的问题：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所有箭头里最上游的那一条——「什么叫好」——它的定义权在谁手里？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/eval-set-needs-a-signature.png"&gt;&lt;img src="https://hugozhu.site/img/2026/eval-set-needs-a-signature-thumb.jpg" alt="An Unsigned Eval Set Is a Flywheel Without an Owner"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>麦肯锡终于说了：Agent 也要绩效考核——但他们没说怎么考</title><link>https://hugozhu.site/post/2026/381-mckinsey-agent-performance-eval/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/381-mckinsey-agent-performance-eval/</guid><description>&lt;p&gt;8 月底，麦肯锡的播客 &lt;em&gt;McKinsey Talks Talent&lt;/em&gt; 里，主持人 Lucia Rahilly 抛出了一个很多公司都在回避的问题：Agent 进了核心工作流，谁来管它？&lt;/p&gt;
 &lt;p&gt;资深合伙人 Brooke Weddle 的回答很直接：&lt;strong&gt;「HR 管理的不再只是人类的绩效，现在还有数字员工。」&lt;/strong&gt; 全球技术与 AI 负责人 Kate Smaje 接着把问题拆成了三问：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;「我到底有多少个 Agent？谁对它们的绩效负责或担责？它们创造了多少价值？」&lt;/p&gt;
