@@ -2,7 +2,15 @@
 &lt;p&gt;274,608 个字符，超过 4 万个英文单词。&lt;/p&gt;
 &lt;p&gt;大多数人听到「系统提示词」会想到一段开场白：「你是一个乐于助人的 AI，请礼貌、安全地回答。」我以前也是这个印象。但把这份文件从头到尾读完之后，我改变了判断：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;这不是提示词，这是一套个人操作系统。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/claude-personal-os.png"&gt;&lt;img src="https://hugozhu.site/img/2026/claude-personal-os-thumb.jpg" alt="Claude&amp;rsquo;s System Prompt Is Not a Prompt — It Is a Personal Operating System"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>数字员工上岗半年，我在钉钉上的时间翻了一倍</title><link>https://hugozhu.site/post/2026/382-im-entry-point-trust-ladder/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/382-im-entry-point-trust-ladder/</guid><description>&lt;p&gt;半年前，我给自己上了第一批数字员工。上岗之前，我的想象是这样的：任务交给 Agent，我只管派活和收结果，我在钉钉上的时间应该大幅下降。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/claude-personal-os.png"&gt;&lt;img src="https://hugozhu.site/img/2026/claude-personal-os-thumb.jpg" alt="Claude&amp;rsquo;s System Prompt Is Not a Prompt — It Is a Personal Operating System"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>从会做 Agent 到制造 Agent：一个应用工程师的成长路线</title><link>https://hugozhu.site/post/2026/385-agent-engineer-four-levels/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/385-agent-engineer-four-levels/</guid><description>&lt;p&gt;今天和一个朋友聊天。他说自己做了一个非常精简的 Agent Harness，准备开源，让大家可以直接用。&lt;/p&gt;
+&lt;p&gt;我第一反应不是问他写了多少代码，而是问：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你看过 Pi Agent、OpenCode、DSH 吗？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;他说，没有深入研究过。&lt;/p&gt;
+&lt;p&gt;那一刻我没有继续追问，但一个问题在我脑子里转了一下午：&lt;strong&gt;今天成为一个 Agent 应用工程师，真正重要的到底是什么？&lt;/strong&gt; 是能够自己写一个 Agent Loop，还是能够把 Agent 真正做成一个有价值、能生产、能赚钱的产品？&lt;/p&gt;
+&lt;p&gt;这篇文章把那条成长路线完整画出来。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/agent-engineer-four-levels.png"&gt;&lt;img src="https://hugozhu.site/img/2026/agent-engineer-four-levels-thumb.jpg" alt="From Building Agents to Manufacturing Agents: A Growth Path for Agent Engineers"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>数字员工上岗半年，我在钉钉上的时间翻了一倍</title><link>https://hugozhu.site/post/2026/382-im-entry-point-trust-ladder/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/382-im-entry-point-trust-ladder/</guid><description>&lt;p&gt;半年前，我给自己上了第一批数字员工。上岗之前，我的想象是这样的：任务交给 Agent，我只管派活和收结果，我在钉钉上的时间应该大幅下降。&lt;/p&gt;
 &lt;p&gt;半年后，我打开自己的屏幕时间统计：我在钉钉上的时间没有下降——&lt;strong&gt;翻了一倍&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;起初我以为是个体差异。但和几位同样在带数字员工的同事交流后，发现大家的处境差不多：Agent 越多，人在 IM 里花的时间越多。&lt;/p&gt;
 &lt;p&gt;这让我必须把一个判断写下来：&lt;/p&gt;
