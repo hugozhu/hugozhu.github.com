@@ -6,7 +6,22 @@
 &lt;p&gt;但同一页往下翻，还有一行写给企业用户的小字：&lt;strong&gt;加入 waitlist&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;喊得最响的「可以把真实工作交给它」，到了企业门口，只换来一句排队等候。这个反差值得认真对待：Grok Bot 上线 24 天，验证了什么？它又到底卡在哪？&lt;/p&gt;
 &lt;p&gt;先说结论： &lt;strong&gt;Grok Bot 验证了「持续角色」这个产品形态，但企业要的是「岗位」。从角色到岗位，差的最后一段不是模型能力，而是组织基础设施。&lt;/strong&gt; 而这一段，恰恰是企业现在就应该开始在钉钉里上岗数字员工的原因。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/grok-bot-teammate-not-employee.png"&gt;&lt;img src="https://hugozhu.site/img/2026/grok-bot-teammate-not-employee-thumb.jpg" alt="From AI Teammate to Digital Employee: Why Onboarding Starts Now"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Anthropic 给 Claude 装了一套个人操作系统</title><link>https://hugozhu.site/post/2026/383-claude-personal-os/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/383-claude-personal-os/</guid><description>&lt;p&gt;前两天我拿到一份文件：Claude 最新旗舰模型 Fable 5.1 在 claude.ai 消费端的完整系统提示词。不是泄露的片段，不是网友总结的版本——是完整原文。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/grok-bot-teammate-not-employee.png"&gt;&lt;img src="https://hugozhu.site/img/2026/grok-bot-teammate-not-employee-thumb.jpg" alt="From AI Teammate to Digital Employee: Why Onboarding Starts Now"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Runbook：把「代码为什么是现在这样」写进版本库</title><link>https://hugozhu.site/post/2026/388-runbook-write-why-into-repo/</link><pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/388-runbook-write-why-into-repo/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;写给 Agent 应用工程师。案例是这个仓库的 &lt;code&gt;docs/runbook/&lt;/code&gt;：一条自动抄录与 Claude Code
+的每一轮交互、再提炼成三份签入文档的管线。这篇讲三件事：它值在哪、怎么做的、以及
+那份「提炼契约」里有哪些可以直接抄走的规矩。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="先说结论"&gt;先说结论&lt;/h2&gt;
+&lt;p&gt;这套 runbook 最大的价值不是「有了历史记录」—— 那部分靠会话 transcript 本来就有，
+不用额外做任何事。它干的是一件更特殊的活：&lt;strong&gt;把「为什么现在的代码是现在这样」从某个
+人的脑子里搬到版本库里，并且用机器去逼它对齐提交历史。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CLAUDE.md 自己写着这条链路的痛苦：「改动前先知道为什么是现在这样，否则很容易改回去」。
+这个仓库改回去的代价特别高 —— 它有一串静默失败模式：eval 的 answer 闸门一旦放宽，
+分数一夜之间虚高接近满分；泄漏闸门漏扫中文路径，整片文档静默地不在检查范围内；
+&lt;code&gt;--flatten&lt;/code&gt; 丢一个标记位，防自环就失效。每一条都是「当时为什么这么写」一旦丢了，
+就会被「顺手改回正常」重新放出来的东西。而这些为什么大概率不在代码里，也不在任何
+issue 里。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/runbook-write-why-into-repo.png"&gt;&lt;img src="https://hugozhu.site/img/2026/runbook-write-why-into-repo-thumb.jpg" alt="Write the Why into the Repo — A Self-Auditing Runbook Pipeline"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Anthropic 给 Claude 装了一套个人操作系统</title><link>https://hugozhu.site/post/2026/383-claude-personal-os/</link><pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/383-claude-personal-os/</guid><description>&lt;p&gt;前两天我拿到一份文件：Claude 最新旗舰模型 Fable 5.1 在 claude.ai 消费端的完整系统提示词。不是泄露的片段，不是网友总结的版本——是完整原文。&lt;/p&gt;
 &lt;p&gt;274,608 个字符，超过 4 万个英文单词。&lt;/p&gt;
 &lt;p&gt;大多数人听到「系统提示词」会想到一段开场白：「你是一个乐于助人的 AI，请礼貌、安全地回答。」我以前也是这个印象。但把这份文件从头到尾读完之后，我改变了判断：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;这不是提示词，这是一套个人操作系统。&lt;/strong&gt;&lt;/p&gt;

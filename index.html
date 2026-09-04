@@ -16,7 +16,23 @@
 <a href=https://hugozhu.site/tags/digital-employee/>digital-employee</a>&nbsp;
 <a href=https://hugozhu.site/tags/dingtalk/>dingtalk</a>&nbsp;
 <a href=https://hugozhu.site/tags/enterprise-ai/>enterprise-ai</a>&nbsp;
-<a href=https://hugozhu.site/tags/agent-identity/>agent-identity</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/383-claude-personal-os/><h2 class=post-title>Anthropic 给 Claude 装了一套个人操作系统</h2><h3 class=post-subtitle>Claude's System Prompt Is Not a Prompt — It Is a Personal Operating System</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;September 2, 2026
+<a href=https://hugozhu.site/tags/agent-identity/>agent-identity</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/388-runbook-write-why-into-repo/><h2 class=post-title>Runbook：把「代码为什么是现在这样」写进版本库</h2><h3 class=post-subtitle>Write the Why into the Repo — A Self-Auditing Runbook Pipeline</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;September 4, 2026
+&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;714&nbsp;tokens
+&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a>
+&nbsp;|&nbsp;<a href=https://mp.weixin.qq.com/s/lpNNynSWB6VAuzgJRDoZ_g target=_blank rel=noopener><i class="fab fa-weixin"></i> <b>hugozhu.site</b></a></span></p><div class=post-entry><blockquote><p>写给 Agent 应用工程师。案例是这个仓库的 <code>docs/runbook/</code>：一条自动抄录与 Claude Code
+的每一轮交互、再提炼成三份签入文档的管线。这篇讲三件事：它值在哪、怎么做的、以及
+那份「提炼契约」里有哪些可以直接抄走的规矩。</p></blockquote><h2 id=先说结论>先说结论</h2><p>这套 runbook 最大的价值不是「有了历史记录」—— 那部分靠会话 transcript 本来就有，
+不用额外做任何事。它干的是一件更特殊的活：<strong>把「为什么现在的代码是现在这样」从某个
+人的脑子里搬到版本库里，并且用机器去逼它对齐提交历史。</strong></p><p>CLAUDE.md 自己写着这条链路的痛苦：「改动前先知道为什么是现在这样，否则很容易改回去」。
+这个仓库改回去的代价特别高 —— 它有一串静默失败模式：eval 的 answer 闸门一旦放宽，
+分数一夜之间虚高接近满分；泄漏闸门漏扫中文路径，整片文档静默地不在检查范围内；
+<code>--flatten</code> 丢一个标记位，防自环就失效。每一条都是「当时为什么这么写」一旦丢了，
+就会被「顺手改回正常」重新放出来的东西。而这些为什么大概率不在代码里，也不在任何
+issue 里。</p><p><a href=/img/2026/runbook-write-why-into-repo.png><img src=/img/2026/runbook-write-why-into-repo-thumb.jpg alt="Write the Why into the Repo — A Self-Auditing Runbook Pipeline"></a></p><a href=https://hugozhu.site/post/2026/388-runbook-write-why-into-repo/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/runbook/>runbook</a>&nbsp;
+<a href=https://hugozhu.site/tags/claude-code/>claude-code</a>&nbsp;
+<a href=https://hugozhu.site/tags/agent-engineering/>agent-engineering</a>&nbsp;
+<a href=https://hugozhu.site/tags/silent-failure/>silent-failure</a>&nbsp;
+<a href=https://hugozhu.site/tags/knowledge-management/>knowledge-management</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/383-claude-personal-os/><h2 class=post-title>Anthropic 给 Claude 装了一套个人操作系统</h2><h3 class=post-subtitle>Claude's System Prompt Is Not a Prompt — It Is a Personal Operating System</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;September 2, 2026
 &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;226&nbsp;tokens
 &nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a>
 &nbsp;|&nbsp;<a href=https://mp.weixin.qq.com/s/lpNNynSWB6VAuzgJRDoZ_g target=_blank rel=noopener><i class="fab fa-weixin"></i> <b>hugozhu.site</b></a></span></p><div class=post-entry><p>前两天我拿到一份文件：Claude 最新旗舰模型 Fable 5.1 在 claude.ai 消费端的完整系统提示词。不是泄露的片段，不是网友总结的版本——是完整原文。</p><p>274,608 个字符，超过 4 万个英文单词。</p><p>大多数人听到「系统提示词」会想到一段开场白：「你是一个乐于助人的 AI，请礼貌、安全地回答。」我以前也是这个印象。但把这份文件从头到尾读完之后，我改变了判断：</p><p><strong>这不是提示词，这是一套个人操作系统。</strong></p><p><a href=/img/2026/claude-personal-os.png><img src=/img/2026/claude-personal-os-thumb.jpg alt="Claude&rsquo;s System Prompt Is Not a Prompt — It Is a Personal Operating System"></a></p><a href=https://hugozhu.site/post/2026/383-claude-personal-os/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/claude/>claude</a>&nbsp;
@@ -76,14 +92,7 @@
 <a href=https://hugozhu.site/tags/harness/>harness</a>&nbsp;
 <a href=https://hugozhu.site/tags/self-improvement/>self-improvement</a>&nbsp;
 <a href=https://hugozhu.site/tags/digital-employee/>digital-employee</a>&nbsp;
-<a href=https://hugozhu.site/tags/data-flywheel/>data-flywheel</a>&nbsp;</div></article><article class=post-preview><a href=https://hugozhu.site/post/2026/379-jianghu-still-that-jianghu/><h2 class=post-title>江湖还是那个江湖，但选择可以更从容</h2><h3 class=post-subtitle>The Jianghu Remains — But Your Choices Can Be Lighter Now</h3></a><p class=post-meta><span class=post-meta><i class="fas fa-calendar"></i>&nbsp;August 31, 2026
-&nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;151&nbsp;tokens
-&nbsp;|&nbsp;<a href=https://x.com/HugoSkills target=_blank rel=noopener><i class="fab fa-x-twitter"></i> <b>@HugoSkills</b></a>
-&nbsp;|&nbsp;<a href=https://mp.weixin.qq.com/s/lpNNynSWB6VAuzgJRDoZ_g target=_blank rel=noopener><i class="fab fa-weixin"></i> <b>hugozhu.site</b></a></span></p><div class=post-entry><p>8 月 31 日，离职高发的异动日。下定决心的已经走了，还在犹豫的，犹豫到最后一刻。</p><p>今晚和一位同事吃饭，酒过三巡，他问我：你对未来怎么看？</p><p>我没给宏图大略，只说了几件我越来越相信的事。写下来，分享给所有觉得自己无从选择的朋友。</p><p><a href=/img/2026/jianghu-still-that-jianghu.png><img src=/img/2026/jianghu-still-that-jianghu-thumb.jpg alt="The Jianghu Remains — But Your Choices Can Be Lighter Now"></a></p><a href=https://hugozhu.site/post/2026/379-jianghu-still-that-jianghu/ class=post-read-more>[Read More]</a></div><div class=blog-tags><a href=https://hugozhu.site/tags/ai/>ai</a>&nbsp;
-<a href=https://hugozhu.site/tags/career/>career</a>&nbsp;
-<a href=https://hugozhu.site/tags/personal-growth/>personal-growth</a>&nbsp;
-<a href=https://hugozhu.site/tags/ai-era/>ai-era</a>&nbsp;
-<a href=https://hugozhu.site/tags/middle-age/>middle-age</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=next><a href=https://hugozhu.site/page/2/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
+<a href=https://hugozhu.site/tags/data-flywheel/>data-flywheel</a>&nbsp;</div></article></div><ul class="pager main-pager"><li class=next><a href=https://hugozhu.site/page/2/>Older Posts &rarr;</a></li></ul></div></div></div><div class=page-meta></div><footer><div class=container><div class=row><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href=/index.xml title=RSS><span class="fa-stack fa-lg"><i class="fas fa-circle fa-stack-2x"></i>
 <i class="fas fa-rss fa-stack-1x fa-inverse"></i></span></a></li></ul><p class="credits copyright text-muted">&nbsp;&bull;&nbsp;&copy;
 2026
 &nbsp;&bull;&nbsp;

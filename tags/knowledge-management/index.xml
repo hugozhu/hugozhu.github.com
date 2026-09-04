@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Knowledge-Management on All about Raspberry Pi</title><link>https://hugozhu.site/tags/knowledge-management/</link><description>Recent content in Knowledge-Management on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 13 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/knowledge-management/index.xml" rel="self" type="application/rss+xml"/><item><title>一场 AI native 的战略会：开完之后，组织比开之前更聪明</title><link>https://hugozhu.site/post/2026/343-an-ai-native-strategy-meeting-closed-loop/</link><pubDate>Thu, 13 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/343-an-ai-native-strategy-meeting-closed-loop/</guid><description>&lt;p&gt;这周二，我开了一场 AI 钉钉的战略沟通会。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Knowledge-Management on All about Raspberry Pi</title><link>https://hugozhu.site/tags/knowledge-management/</link><description>Recent content in Knowledge-Management on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 04 Sep 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/knowledge-management/index.xml" rel="self" type="application/rss+xml"/><item><title>Runbook：把「代码为什么是现在这样」写进版本库</title><link>https://hugozhu.site/post/2026/388-runbook-write-why-into-repo/</link><pubDate>Fri, 04 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/388-runbook-write-why-into-repo/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;写给 Agent 应用工程师。案例是这个仓库的 &lt;code&gt;docs/runbook/&lt;/code&gt;：一条自动抄录与 Claude Code
+的每一轮交互、再提炼成三份签入文档的管线。这篇讲三件事：它值在哪、怎么做的、以及
+那份「提炼契约」里有哪些可以直接抄走的规矩。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="先说结论"&gt;先说结论&lt;/h2&gt;
+&lt;p&gt;这套 runbook 最大的价值不是「有了历史记录」—— 那部分靠会话 transcript 本来就有，
+不用额外做任何事。它干的是一件更特殊的活：&lt;strong&gt;把「为什么现在的代码是现在这样」从某个
+人的脑子里搬到版本库里，并且用机器去逼它对齐提交历史。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CLAUDE.md 自己写着这条链路的痛苦：「改动前先知道为什么是现在这样，否则很容易改回去」。
+这个仓库改回去的代价特别高 —— 它有一串静默失败模式：eval 的 answer 闸门一旦放宽，
+分数一夜之间虚高接近满分；泄漏闸门漏扫中文路径，整片文档静默地不在检查范围内；
+&lt;code&gt;--flatten&lt;/code&gt; 丢一个标记位，防自环就失效。每一条都是「当时为什么这么写」一旦丢了，
+就会被「顺手改回正常」重新放出来的东西。而这些为什么大概率不在代码里，也不在任何
+issue 里。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/runbook-write-why-into-repo.png"&gt;&lt;img src="https://hugozhu.site/img/2026/runbook-write-why-into-repo-thumb.jpg" alt="Write the Why into the Repo — A Self-Auditing Runbook Pipeline"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>一场 AI native 的战略会：开完之后，组织比开之前更聪明</title><link>https://hugozhu.site/post/2026/343-an-ai-native-strategy-meeting-closed-loop/</link><pubDate>Thu, 13 Aug 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/343-an-ai-native-strategy-meeting-closed-loop/</guid><description>&lt;p&gt;这周二，我开了一场 AI 钉钉的战略沟通会。&lt;/p&gt;
 &lt;p&gt;会开完了，按惯例，事情应该到此为止——大家听完、散场、各自回去干活。但这一次我盯着会后那张评估问卷的回收数据，突然意识到一件事：这场会从头到尾，没有一个环节是「用完就扔」的。&lt;/p&gt;
 &lt;p&gt;HR 在会前一周就用 AI 表格收集了同学们的问题，其中大家最关心的是千问办公和钉钉的关系；我基于这些真实问题，用千问办公读我的个人 wiki，生成了一份沟通会叙述稿，自己调整之后做成 PPT；会后，HR 又用千问办公加 AI 表格技能，基于沟通内容生成了一张调研问卷，回收数据，再用千问办公对整场会的效果做了评估。&lt;/p&gt;
 &lt;p&gt;一场内部沟通会的完整生命周期——从「同学们关心什么」到「这场会到底有没有效」——全部跑在 AI 工具上，而且每一环的输出都是下一环的输入。&lt;/p&gt;
