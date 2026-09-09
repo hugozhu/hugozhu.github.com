@@ -1,0 +1,14 @@
+Compare VidHub vs Infuse
+In this post, we are going to compare two high-profile media players : VidHub and Infuse. While they all have their own advantages and disadvantages, they are all capable of providing users with a high-quality media experience in different scenarios.
+Price advantage: VidHub is free to use on all iOS/Mac/tvOS platforms, which saves users a lot of money. In comparison, the price of the Infuse is on the more expensive side, and the buyout requires 698, but the dirt area will be a little more cost-effective.
+Speed VidHub is known for its fast presentation of information and scraping speed, smooth playback experience, and blazing fast refresh speed. In contrast, Infuse has a slower scanning speed and can be a little inconvenient for users.
+Multiple Platforms Support VidHub not only supports local directories and network shares, but also makes it easy to mount a variety of domestic and foreign servers: Netdisk, Alibaba Cloud Disk, Premiumize, etc., provide users with more convenient ways to access media.
+Media Library &amp; Emby Standalone Display VidHub&rsquo;s homepage is clean and clear, and the media library is displayed separately from Emby, avoiding clutter. Some Emby servers may not support Infuse, and Infuse&rsquo;s large cache settings are not adjustable, which may be subject to server rate limiting, while VidHub is not affected by this.
+Fast playback with Emby Emby&rsquo;s fast playback speed: The new version of VidHub has additional optimizations for Emby&rsquo;s playback speed and loading speed, which will make it feel better than Infuse.
+Powerful Full features: VidHub provides a lot of handy features such as batch renaming, and users can even use VidHub to rename in batches and then play with Infuse, which greatly enhances the user&rsquo;s operational flexibility
+Fast Response Fast feedback: VidHub is fast at fixing bugs, and generally problems will be solved in the next version, making the user experience more stable and reliable.
+Variery of Resolution options: Supports a variety of resolution options: Unlike Infuse, VidHub not only supports original picture playback, but also supports multiple resolution options such as 720P, 480P, P, etc., providing users with more room for choice.
+Pros of Infuse: Dolby License: Infuse has Dolby Vision and Dolby Atmos licenses on all Apple platforms, providing users with a more powerful audiovisual experience. In contrast, VidHub currently only solves the Dolby color cast problem and does not enable the full Dolby experience.
+Decoding Advantages: Infuse is even better at decoding, providing higher quality playback for a clearer and smoother viewing experience.
+Blu-ray playback: Infuse supports Blu-ray playback, providing users with a more diverse media choice.
+To summarize, both VidHub and Infuse have their own unique advantages and features. Users can choose according to their needs and preferences to get the best media experience.

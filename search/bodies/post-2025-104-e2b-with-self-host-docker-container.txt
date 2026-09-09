@@ -1,0 +1,4 @@
+E2B是一个专为AI代码执行设计的沙盒环境，通过Docker容器提供安全隔离的代码运行空间。相比传统执行方式，E2B具有显著优势： 安全性方面完全隔离宿主机，防止恶意代码损害 便捷性上提供开箱即用的Python环境和丰富的预装库 稳定性强，支持长时间运行和状态保持 可扩展性好，支持多语言和自定义环境配置。 特别适合AI助手、代码生成工具、在线编程教育等场景，让AI生成的代码能够安全、快速地验证和执行。
+服务器docker-compose.yaml配置，关键是E2B_LOCAL=True
+version: &#39;3.8&#39; services: e2b-sandbox: image: e2bdev/code-interpreter:latest container_name: e2b-sandbox ports: - &#34;49999:49999&#34; # 本地端口映射，供 Python SDK 连接 environment: - TOKEN=dev - E2B_LOCAL=True volumes: - ./workspace:/home/user/workspace # 可选，挂载工作目录 restart: unless-stopped 客户端代码：关键是debug=True
+# pip install e2b-code-interpreter from e2b_code_interpreter import Sandbox # Create a E2B Sandbox with Sandbox( debug=True, api_key=&#34;dev&#34; ) as sandbox: # Run code sandbox.run_code(&#34;x = 1&#34;) execution = sandbox.run_code(&#34;x+=1; x&#34;) print(execution.text) # outputs 2 

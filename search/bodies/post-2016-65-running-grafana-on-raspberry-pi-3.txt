@@ -1,0 +1,8 @@
+Grafana是一个优秀的开源图表系统，支持多种数据源，其中包括 InfluxDB和Prometheus
+安装 export GOPATH=`pwd` go get github.com/grafana/grafana cd $GOPATH/src/github.com/grafana/grafana go run build.go setup # (only needed once to install godep) $GOPATH/bin/godep restore # (will pull down all golang lib dependencies in your current GOPATH) go run build.go build # (or &#39;go build .&#39;) 编译好后会在bin目录下生成grafana-server和grafana-cli
+第二步需要生成资源文件，但是从源代码编译会遇到phantomjs-prebuild依赖包不存在arm版本的问题，可以直接下载windows版本解开里面的public目录到bin/public下
+启动 在bin/conf下拷贝生成defaults.ini文件，执行 ./grafana-server即可
+配置 用浏览器打开 http://&lt;pi:ip&gt;:3000 用帐号：admin，密码：admin 登录
+首先要配置好Prometheus数据源：
+下面是获取网络的上下行流量数据的采集脚本，通过Prometheus Push Gateway提交，可以每5分钟运行一次
+DATA=`ifconfig eth1 | grep bytes | sed &#39;s/:/ /g&#39; | awk &#39;{print &#34;bytes_rx &#34;$3&#34;\nbytes_tx &#34;$8}&#39;` cat &lt;&lt;EOF | curl --data-binary @- http://pi3:9091/metrics/job/raspberrypi/instance/test $DATA EOF 然后在Grafana里可以按下图方式增加一个每小时网络流量的图表，increase(bytes_rx[1h])是Prometheus所支持的查询表达式。

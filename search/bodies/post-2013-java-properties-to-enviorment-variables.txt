@@ -1,0 +1,8 @@
+Overview 在Java程序中使用properties文件很方便，但有时候需要和脚本配合使用时，需要把properties文件内的多个变量转换成环境变量，本文提供一个转换脚本示范：
+比如env.properties如下（=附近可以有空格，也可以有空行）
+MYSQL_URL = jdbc:mysql://localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk MYSQL_USER = root MYSQL_PASS = 执行下面的脚本后就相当于
+export MYSQL_URL=&quot;//localhost:3306/test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=gbk&quot; export MYSQL_USER=&quot;root&quot; export MYSQL_PASS=&quot;&quot; env.sh脚本代码
+#!/bin/bash property_file=env.properties
+get_prop(){ propfile=$1 key=$2 grep &quot;^${2}=&quot; ${1}| sed &quot;s%${2}=(.*)%\1%&quot; }
+trim() { trimmed=$1 trimmed=${trimmed%% } trimmed=${trimmed## } echo &quot;$trimmed&quot; }
+grep -v &amp;quot;^#&amp;quot; $property_file | sed -e '/^$/d' | while read line do key=$(echo $line | awk -F &amp;quot;=&amp;quot; '{print $1}') trimmed_key=$(trim $key) trimmed_val=$(trim $(get_prop $property_file &amp;quot;$key&amp;quot;) echo &amp;quot;export $trimmed_key=\&amp;quot;$trimmed_val\&amp;quot;)&amp;quot; done 
