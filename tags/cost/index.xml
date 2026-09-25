@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cost on All about Raspberry Pi</title><link>https://hugozhu.site/tags/cost/</link><description>Recent content in Cost on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 25 Sep 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/cost/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 的账单搬家了：从 token 到轮次</title><link>https://hugozhu.site/post/2026/418-the-bill-has-moved/</link><pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/418-the-bill-has-moved/</guid><description>&lt;p&gt;Anthropic 昨天发布 Opus 5.5，标题新闻是降价：同样的工作负载，成本比上一代低约 40%。&lt;/p&gt;
+&lt;p&gt;但这篇发布博客里最值钱的不是降价，是一组没上标题的数据。他们拉了 2026 年 3 月到 9 月 Claude Code 的聚合账单，发现每个请求的 &lt;strong&gt;输入与输出 token 之比，从 189:1 涨到了 324:1&lt;/strong&gt;——六个月内，每个请求的上下文膨胀了 2.6 倍。&lt;/p&gt;
+&lt;p&gt;翻译一下：&lt;strong&gt;你的 AI 账单，早就不是「写」出来的，是「读」出来的。&lt;/strong&gt; 输出只占 token 总量的千分之三；就算算上输出单价通常是输入的三五倍，砍掉一半输出，账单也就省下不到一个百分点。生成是零头，重读上下文才是大头。&lt;/p&gt;
+&lt;p&gt;而且账单还在搬。博客里引用开发者 Addy 的一句话，我认为是全文最重要的一句：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;减少一个轮次，比一个缓存 token 还要更省成本。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;token 之后是缓存，缓存之后是轮次。今天把这条搬家路线讲清楚——因为它直接决定你该在哪里省钱、在哪里花钱。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/the-bill-has-moved.png"&gt;&lt;img src="https://hugozhu.site/img/2026/the-bill-has-moved-thumb.jpg" alt="The Bill Has Moved: From Tokens to Turns"&gt;&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
