@@ -1,3 +1,3 @@
 export default {
-  "buildId": "fe625b85daa7"
+  "buildId": "2436712524ac"
 }
