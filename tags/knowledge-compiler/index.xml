@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Knowledge-Compiler on All about Raspberry Pi</title><link>https://hugozhu.site/tags/knowledge-compiler/</link><description>Recent content in Knowledge-Compiler on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 04 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/tags/knowledge-compiler/index.xml" rel="self" type="application/rss+xml"/><item><title>299 美金的本地助理：我用一块边缘 AI 板子，实测了个人知识库</title><link>https://hugozhu.site/post/2026/432-local-knowledge-compiler-299-board/</link><pubDate>Sun, 04 Oct 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/432-local-knowledge-compiler-299-board/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;当 Muse 们把助理跑在云上，你的数据该放在哪里？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;项目地址：&lt;strong&gt;&lt;a href="https://github.com/hugozhu/knowledge-compiler"&gt;https://github.com/hugozhu/knowledge-compiler&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="一muse-很火但火的方向有点让人不安"&gt;一、Muse 很火，但火的方向有点让人不安&lt;/h2&gt;
+&lt;p&gt;9 月 8 日，Meta 发布了个人 AI Agent &lt;strong&gt;Muse&lt;/strong&gt;：能收发邮件、订机票、网购、管日程，几天内冲上美区 App Store 榜首，随后登陆 Mac。它背后是一整套云端架构——每个用户一个专属云虚拟机，模型是 Meta 的 Muse Spark。OpenAI 随即用 &lt;strong&gt;Dots&lt;/strong&gt; 应战，Instinct 等新玩家也在猛冲融资。&lt;/p&gt;
+&lt;p&gt;热度之下，争议也在发酵：有用户发现 Muse 读取了自己没有授权的消息，有人被它在 Facebook Marketplace 上泄露了地址。更现实的是企业侧——&lt;strong&gt;「数据不出域」是硬约束&lt;/strong&gt;，把邮件、日历、聊天记录交给云端 Agent，很多公司根本过不了合规那关。&lt;/p&gt;
+&lt;p&gt;于是形成了一个清晰的空档：&lt;strong&gt;云助理把能力做到了极致，但「数据留在自己盒子里」的版本，迟早会有人做。&lt;/strong&gt; 我的判断是：带本地算力的「硬」桌面个人助理一定会出现，并且会流行。&lt;/p&gt;
+&lt;p&gt;问题是：本地算力够吗？我手里正好有一块 &lt;strong&gt;299 美金的 Arduino VENTUNO Q&lt;/strong&gt;（Qualcomm Dragonwing IQ8，Hexagon NPU 40 TOPS，16GB 内存，跑 Ubuntu 24.04），于是拿它做了一个实测。&lt;/p&gt;</description></item></channel></rss>
