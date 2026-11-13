@@ -4,6 +4,9 @@
 &lt;p&gt;排名做出来之后我想明白了一件事：难点根本不在统计，在四件性质完全不同的事——&lt;strong&gt;认人、算数、取证、判断&lt;/strong&gt;。而让 AI 做效能度量，成败取决于你有没有把这四件事分给不同的角色。&lt;/p&gt;
 &lt;p&gt;这篇把我此后一直遵守的通律写下来：&lt;strong&gt;AI 度量研发效能，精度分三层——事实高、判断中、因果低。&lt;/strong&gt; 以及一个更反直觉的结论：&lt;strong&gt;排名只是副产品，真正的资产是它底下那层确定性事实——建好之后，一整张管理问题表都是近零边际成本白得的。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/what-ai-may-rank.png"&gt;&lt;img src="https://hugozhu.site/img/2026/what-ai-may-rank-thumb.jpg" alt="What AI May Rank — and What It Must Never Rank"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>从群聊到数字员工：AI 正在编译企业的影子工作系统</title><link>https://hugozhu.site/post/2026/450-shadow-work-system-digital-employee/</link><pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/450-shadow-work-system-digital-employee/</guid><description>&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/shadow-work-system-digital-employee.png"&gt;&lt;img src="https://hugozhu.site/img/2026/shadow-work-system-digital-employee-thumb.jpg" alt="From Group Chat to Digital Employee: AI Is Compiling the Enterprise&amp;rsquo;s Shadow Work System"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我先讲一个自己跑了一段时间的实验：让一个 Agent 每天读我的一千多条钉钉消息，先编译、再开口——我拍过什么板、许过什么诺、哪些事还没落地、哪些风险没人提醒我（详见&lt;a href="https://hugozhu.site/post/2026/444-muse-compile-work-stream-before-speaking/"&gt;每天 1000 条钉钉消息，我让一个 Agent 先编译再开口&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;这个实验让我确认了一件更朴素的事：这些真正推动我工作的东西，一直躺在聊天记录里，从来没有被任何正式系统替我记住过。&lt;/p&gt;
+&lt;p&gt;我个人的困境，放大几个数量级，就是企业的困境。&lt;/p&gt;
 &lt;h2 id="一企业真正的工作系统藏在影子里"&gt;一、企业真正的工作系统，藏在影子里&lt;/h2&gt;
 &lt;p&gt;每个企业都有一套正式的工作系统。&lt;/p&gt;
 &lt;p&gt;项目管理软件里有任务，CRM 里有客户，ERP 里有订单，OA 里有审批。它们共同构成了企业的信息化基础设施。&lt;/p&gt;
