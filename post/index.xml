@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on All about Raspberry Pi</title><link>https://hugozhu.site/post/</link><description>Recent content in Posts on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 03 Nov 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/post/index.xml" rel="self" type="application/rss+xml"/><item><title>知识编译最佳工程实践</title><link>https://hugozhu.site/post/2026/447-knowledge-compilation-engineering-best-practices/</link><pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/447-knowledge-compilation-engineering-best-practices/</guid><description>&lt;p&gt;前阵子给工作助理 Muse 算账的时候，我发现一个很尴尬的数字：它每天写一篇工作日记，最早的做法是让模型带着工具自己去翻素材，一次要烧掉约 83 万 token，因为同一份上下文被来回重发了 9 次左右。改成「代码先把素材采齐、模型只调用一次」之后，降到约 6 万 token，耗时几乎不变。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on All about Raspberry Pi</title><link>https://hugozhu.site/post/</link><description>Recent content in Posts on All about Raspberry Pi</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 13 Nov 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://hugozhu.site/post/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 能排什么，不能排什么</title><link>https://hugozhu.site/post/2026/448-what-ai-may-rank/</link><pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/448-what-ai-may-rank/</guid><description>&lt;p&gt;前几天我手工做了一份研发效能排名，把一群工程师某两天的 PR 产出按质量和效率排了个序。做完之后，记住的是两件事。&lt;/p&gt;
+&lt;p&gt;第一件：评审记录里抓出一个极端案例——评审意见指出问题之后 &lt;strong&gt;54 秒&lt;/strong&gt;，代码就合入了。这种事实只能靠把时间戳逐条比对出来。它躺在数据里，但没有任何模型会替你「读」出来。&lt;/p&gt;
+&lt;p&gt;第二件：这份排名差点在第一步就错了。GitHub 账号、IM 身份、群里的那个「人」，是三套账号体系。有个账号明明就是某位工程师，但证据只有群里几句「@某某 #PR 号」的交叉引用。如果我图省事直接猜合，就会把别人的产出算到他头上——&lt;strong&gt;这是这类系统能犯的最坏的错。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;排名做出来之后我想明白了一件事：难点根本不在统计，在四件性质完全不同的事——&lt;strong&gt;认人、算数、取证、判断&lt;/strong&gt;。而让 AI 做效能度量，成败取决于你有没有把这四件事分给不同的角色。&lt;/p&gt;
+&lt;p&gt;这篇把我此后一直遵守的通律写下来：&lt;strong&gt;AI 度量研发效能，精度分三层——事实高、判断中、因果低。&lt;/strong&gt; 以及一个更反直觉的结论：&lt;strong&gt;排名只是副产品，真正的资产是它底下那层确定性事实——建好之后，一整张管理问题表都是近零边际成本白得的。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/what-ai-may-rank.png"&gt;&lt;img src="https://hugozhu.site/img/2026/what-ai-may-rank-thumb.jpg" alt="What AI May Rank — and What It Must Never Rank"&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>群聊就是影子项目管理系统</title><link>https://hugozhu.site/post/2026/449-group-chat-shadow-pmo/</link><pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/449-group-chat-shadow-pmo/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;写给偏传统团队的项目管理者：没有 Jira、没有 Notion，或者买了但没人更新的那种。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://hugozhu.site/img/2026/group-chat-shadow-pmo.png"&gt;&lt;img src="https://hugozhu.site/img/2026/group-chat-shadow-pmo-thumb.jpg" alt="The Group Chat Is the Shadow Project Management System"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="一思考为什么是钉钉群--ai-底层"&gt;一、思考：为什么是「钉钉群 + AI 底层」&lt;/h2&gt;
+&lt;h3 id="11-传统团队的真实项目管理系统是群聊"&gt;1.1 传统团队的真实项目管理系统，是群聊&lt;/h3&gt;
+&lt;p&gt;偏传统团队的项目管理现状：没有 Jira、没有 Notion，或者买了但没人更新。真正承载项目的是钉钉群——重大讨论在群里、每日例会在群里、日报周报在群里、风险同步在群里、甚至口头承诺和拍板决策也在群里。&lt;/p&gt;
+&lt;p&gt;群聊是事实上的「影子项目管理系统」：信息全在里面，但是非结构化、易逝、依赖人脑记忆。产品机会不是再造一个系统让团队搬家，而是把这个影子系统编译成正式系统。&lt;/p&gt;
+&lt;p&gt;这正是 &lt;a href="https://hugozhu.site/post/2026/445-enterprise-context-compiler/"&gt;从程序编译器到企业上下文编译器&lt;/a&gt; 那条判断在一个具体场景里的落地：记录不等于理解，消息不等于组织状态——但消息可以被编译成组织状态。&lt;/p&gt;
+&lt;h3 id="12-传统项目的三大损耗"&gt;1.2 传统项目的三大损耗&lt;/h3&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;损耗&lt;/th&gt;
+ &lt;th&gt;表现&lt;/th&gt;
+ &lt;th&gt;代价&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;记忆损耗&lt;/td&gt;
+ &lt;td&gt;「上周拍板的事谁还记得？」「那个风险谁在跟？」&lt;/td&gt;
+ &lt;td&gt;决策重复讨论、承诺无人认领、风险靠人记忆&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;编译损耗&lt;/td&gt;
+ &lt;td&gt;PM 每天手工翻群拼日报、周会前突击汇总&lt;/td&gt;
+ &lt;td&gt;PM 80% 时间花在信息搬运，不是判断&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;响应损耗&lt;/td&gt;
+ &lt;td&gt;延期 3–5 天才被想起来上报&lt;/td&gt;
+ &lt;td&gt;风险发现永远滞后于风险发生&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="13-ai-原生工作流的定义人不变底层变"&gt;1.3 AI 原生工作流的定义：人不变，底层变&lt;/h3&gt;
+&lt;p&gt;AI 原生 ≠ 让人学会用 AI 工具。&lt;/p&gt;
+&lt;p&gt;对传统团队，「原生」指的是工作流的产物机器可读、步骤 agent 可执行、闭环可自我迭代——而人留在自己的原生环境（群）里，习惯一点不改。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;传统工作流：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;人聊天 → 人记忆 → 人手工编译 → 人写日报 → 人追风险 → 人回答「那事怎么样了」
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;AI 原生工作流：
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;人聊天（不变）→ AI 编译（时间线/承诺台账/风险册）→ AI 召回（日报/预警/问答）
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; → 人做判断（高质量输入 + 决策）→ 反馈回写，闭环迭代
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# generated by hugo AI
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们的共识是：预配置数字员工可承接 80% 日常项目管理工作，人只负责提供高质量输入和线索。但有一个前提——agent 弥补不了人的不齐：团队没有 spec/规范共识，agent 也跑不顺。所以规范先行，不是工具先行。&lt;/p&gt;</description></item><item><title>知识编译最佳工程实践</title><link>https://hugozhu.site/post/2026/447-knowledge-compilation-engineering-best-practices/</link><pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate><guid>https://hugozhu.site/post/2026/447-knowledge-compilation-engineering-best-practices/</guid><description>&lt;p&gt;前阵子给工作助理 Muse 算账的时候，我发现一个很尴尬的数字：它每天写一篇工作日记，最早的做法是让模型带着工具自己去翻素材，一次要烧掉约 83 万 token，因为同一份上下文被来回重发了 9 次左右。改成「代码先把素材采齐、模型只调用一次」之后，降到约 6 万 token，耗时几乎不变。&lt;/p&gt;
 &lt;p&gt;省钱只是表面。更让我在意的是，第一种做法里模型每次都在 &lt;strong&gt;重新理解同一批原始消息&lt;/strong&gt;：谁是谁、哪句话是承诺、哪件事已经关掉了。理解了一遍又扔掉，下次再来一遍，而且每次理解的结果还不完全一样。&lt;/p&gt;
 &lt;p&gt;这件事让我对知识编译（Knowledge Compilation）形成了一个明确的判断：&lt;/p&gt;
 &lt;blockquote&gt;
